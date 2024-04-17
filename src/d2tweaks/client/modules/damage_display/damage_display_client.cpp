@@ -10,12 +10,6 @@
 #include <d2tweaks/ui/ui_manager.h>
 #include <diablo2/d2win.h>
 
-#include <windows.h>
-
-#include <iostream>   // std::cout
-#include <string>     // std::string, std::to_string
-
-
 #include <fw/pool.h>
 
 #include <diablo2/structures/gfxdata.h>
@@ -54,9 +48,10 @@ struct damage_label {
 	}
 };
 
+
 static growing_object_pool<damage_label> g_label_pool([]() {
 	return new damage_label();
-});
+	});
 
 static const size_t DAMAGE_LABELS_SIZE = 1024;
 static damage_label* g_labels[DAMAGE_LABELS_SIZE]{ nullptr };
@@ -120,51 +115,6 @@ static void draw_damage_labels() {
 
 	const auto font = diablo2::d2_win::get_current_font();
 
-	/*for (size_t i = 0; i < DAMAGE_LABELS_SIZE; i++) {
-		const auto label = g_labels[i];
-
-		if (label == nullptr) {
-			auto next = g_labels[i + 1];
-
-			if (updatedLabels == g_labels_count)
-				break;
-
-			continue;
-		}
-
-		const auto delta = currentTime - label->start;
-
-		if (delta >= DISPLAY_TIME) {
-			remove_label(i);
-			g_label_pool.put(label);
-			continue;
-		}
-
-		updatedLabels++;
-
-		if (label->screen_space) {
-			mx = label->x;
-			my = label->y;
-			diablo2::d2_win::set_current_font((diablo2::ui_font_t)g_font_player);
-		} else {
-			diablo2::utils::screen::world_to_screen(label->x, label->y, mx, my);
-			diablo2::d2_win::set_current_font((diablo2::ui_font_t)g_font_enemy);
-		}
-
-		const auto offset = static_cast<int32_t>(lerp(static_cast<float>(label->unit_height) + 5.f,
-													  static_cast<float>(label->unit_height) + 30.f,
-													  static_cast<float>(delta) / static_cast<float>(DISPLAY_TIME)));
-
-		mx -= label->text_width / 2;
-		mx -= label->unit_width / 2;
-		my -= offset;
-
-		diablo2::d2_win::draw_text(label->text,
-								   mx,
-								   my,
-								   label->color, 0);
-	}*/
-
 	for (size_t i = 0; i < DAMAGE_LABELS_SIZE; i++) {
 		const auto label = g_labels[i];
 
@@ -211,7 +161,7 @@ static void draw_damage_labels() {
 			// Draw player label
 			std::wstring dmgText = std::to_wstring(label->damage);
 			const wchar_t* dmgTextPtr = dmgText.c_str();
-			diablo2::d2_win::set_current_font((diablo2::ui_font_t)g_font_player);
+			diablo2::d2_win::set_current_font(diablo2::UI_FONT_16);
 			diablo2::d2_win::draw_text(const_cast<wchar_t*>(dmgTextPtr), mx, my, label->color, 0);
 		}
 		else {
@@ -265,10 +215,10 @@ static void draw_damage_labels() {
 				//diablo2::d2_win::draw_text(const_cast<wchar_t*>(combinedText.c_str()), textX, textY, textColor, 0);
 				//diablo2::d2_win::draw_boxed_text(const_cast<wchar_t*>(fractionStr.c_str()), textX + label->unit_width/2, textY - 12, 0, 0, textColor);
 
-				diablo2::d2_win::set_current_font((diablo2::ui_font_t)g_font_enemy); // Set font to FONT16
+				diablo2::d2_win::set_current_font(diablo2::UI_FONT_6); // Set font to FONT16
 				diablo2::d2_win::draw_text(const_cast<wchar_t*>(fractionStr.c_str()), textX + diablo2::d2_win::get_text_pixel_width(const_cast<wchar_t*>(combinedTextPtr)) / 2, textY - 12, textColor, 0);
 
-				diablo2::d2_win::set_current_font((diablo2::ui_font_t)g_font_enemy); // Set font to FONT6
+				diablo2::d2_win::set_current_font(diablo2::UI_FONT_6); // Set font to FONT6
 				diablo2::d2_win::draw_text(const_cast<wchar_t*>(combinedText.c_str()), textX, textY, textColor, 0);
 
 				//diablo2::d2_win::draw_boxed_text(const_cast<wchar_t*>(combinedText.c_str()), textX, textY, 0, 0, textColor);
@@ -280,7 +230,7 @@ static void draw_damage_labels() {
 				// Draw damage label
 				std::wstring dmgText = L" " + std::to_wstring(label->damage) + L" ";
 				const wchar_t* dmgTextPtr = dmgText.c_str();
-				diablo2::d2_win::set_current_font((diablo2::ui_font_t)g_font_enemy);
+				diablo2::d2_win::set_current_font(diablo2::UI_FONT_6);
 				diablo2::d2_win::draw_text(const_cast<wchar_t*>(dmgTextPtr), textX + diablo2::d2_win::get_text_pixel_width(const_cast<wchar_t*>(combinedTextPtr)) / 2, my + label->unit_height / 2, textColor, 0);
 
 			}
@@ -288,8 +238,6 @@ static void draw_damage_labels() {
 
 		}
 	}
-
-
 
 	diablo2::d2_win::set_current_font(font);
 }
@@ -302,13 +250,13 @@ static void __fastcall draw_game_ui(int32_t a1) {
 
 static diablo2::ui_color_t damage_type_to_color(d2_tweaks::common::damage_type_t type) {
 	switch (type) {
-		case d2_tweaks::common::DAMAGE_TYPE_PHYSICAL: return diablo2::UI_COLOR_GREY;
-		case d2_tweaks::common::DAMAGE_TYPE_COLD: return diablo2::UI_COLOR_BLUE;
-		case d2_tweaks::common::DAMAGE_TYPE_FIRE: return diablo2::UI_COLOR_RED;
-		case d2_tweaks::common::DAMAGE_TYPE_LIGHTNING: return diablo2::UI_COLOR_YELLOW;
-		case d2_tweaks::common::DAMAGE_TYPE_POISON: return diablo2::UI_COLOR_GREEN;
-		case d2_tweaks::common::DAMAGE_TYPE_MAGIC: return diablo2::UI_COLOR_PURPLE;
-		default: return diablo2::UI_COLOR_BLACK;
+	case d2_tweaks::common::DAMAGE_TYPE_PHYSICAL: return diablo2::UI_COLOR_GREY;
+	case d2_tweaks::common::DAMAGE_TYPE_COLD: return diablo2::UI_COLOR_BLUE;
+	case d2_tweaks::common::DAMAGE_TYPE_FIRE: return diablo2::UI_COLOR_RED;
+	case d2_tweaks::common::DAMAGE_TYPE_LIGHTNING: return diablo2::UI_COLOR_YELLOW;
+	case d2_tweaks::common::DAMAGE_TYPE_POISON: return diablo2::UI_COLOR_GREEN;
+	case d2_tweaks::common::DAMAGE_TYPE_MAGIC: return diablo2::UI_COLOR_PURPLE;
+	default: return diablo2::UI_COLOR_BLACK;
 	}
 }
 
@@ -343,15 +291,20 @@ void d2_tweaks::client::modules::damage_display::handle_packet(common::packet_he
 	if (player == nullptr)
 		return;
 
+	const auto px = diablo2::d2_common::get_unit_x(player->path);
+	const auto py = diablo2::d2_common::get_unit_y(player->path);
+
 	if (info->unit_type == 0x00 && info->guid == player->guid) {
 		const auto label = g_label_pool.get();
 		label->screen_space = true;
 		label->color = damage_type_to_color(info->damage_type);
 		label->unit_width = 0;
 		label->unit_height = 0;
-		label->x = g_player_label_posx;
-		label->y = g_player_label_posy;
+		label->x = px;
+		label->y = py;
 		label->damage = info->damage;
+		label->currentHp = info->currentHp;  // Set currentHp value
+		label->maxHp = info->maxHp;          // Set maxHp value
 		label->start = GetTickCount64();
 		swprintf_s(label->text, L"%u", label->damage);
 		label->text_width = diablo2::d2_win::get_text_pixel_width(label->text);
@@ -386,7 +339,8 @@ void d2_tweaks::client::modules::damage_display::handle_packet(common::packet_he
 		gfxdata.cell_init) {
 		label->unit_width = gfxdata.cell_init->width + gfxdata.cell_init->offset_x;
 		label->unit_height = gfxdata.cell_init->height - gfxdata.cell_init->offset_y;
-	} else {
+	}
+	else {
 		label->unit_width = 0;
 		label->unit_height = 0;
 	}
@@ -395,6 +349,8 @@ void d2_tweaks::client::modules::damage_display::handle_packet(common::packet_he
 	label->x = mx;
 	label->y = my;
 	label->damage = info->damage;
+	label->currentHp = info->currentHp;  // Set currentHp value
+	label->maxHp = info->maxHp;          // Set maxHp value
 	label->start = GetTickCount64();
 	swprintf_s(label->text, L"%i", label->damage);
 	label->text_width = diablo2::d2_win::get_text_pixel_width(label->text);
