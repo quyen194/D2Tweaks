@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<interface>
+  <menu name="autosort" default_pos_x="0" default_pos_y="0" width="-1" height="-1">
+    <button name="m_sort_inventory_btn" 
+        default_pos_x="676" 
+        default_pos_y="476"
+        resolution_count="1"
+        width="32" 
+        height="32" 
+        image="d2tweaks\assets\buttons" 
+        frameDown="1" 
+        frameUp="0" 
+        clickSound="4" 
+        popup="Sort inventory"
+        
+        res1_x="800"  pos1_x="676"
+        res1_y="600"  pos1_y="476"
+    />
+    <button name="m_sort_stash_btn" 
+        default_pos_x="508" 
+        default_pos_y="688"
+        resolution_count="1"
+        width="32" 
+        height="32" 
+        image="d2tweaks\assets\buttons" 
+        frameDown="1" 
+        frameUp="0" 
+        clickSound="4" 
+        popup="Sort stash"
+    
+        res1_x="800"  pos1_x="137"
+        res1_y="600"  pos1_y="476"
+    />
+    <button name="m_sort_cube_btn" 
+        default_pos_x="518" 
+        default_pos_y="272"
+        resolution_count="1"
+        width="32" 
+        height="32" 
+        image="d2tweaks\assets\buttons" 
+        frameDown="1" 
+        frameUp="0" 
+        clickSound="4" 
+        popup="Sort cube"
+    
+        res1_x="800"  pos1_x="95"
+        res1_y="600"  pos1_y="476"
+    />
+  </menu>
+</interface>

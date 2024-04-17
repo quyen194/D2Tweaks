@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<interface>
+  <menu name="reloaditems" default_pos_x="0" default_pos_y="0" width="-1" height="-1">
+    <button name="m_reload_items_btn" 
+        default_pos_x="0" 
+        default_pos_y="0" 
+        width="32" 
+        height="32" 
+        image="d2tweaks\assets\buttons" 
+        frameDown="10" 
+        frameUp="9" 
+        clickSound="4" 
+        popup="Reload items" 
+        resolution_count="6"
+    
+        res1_x="1024"  pos1_x="270"
+        res1_y="700"   pos1_y="551"
+                    
+        res2_x="1280"  pos2_x="398"
+        res2_y="700"   pos2_y="551"
+                    
+        res3_x="1024"  pos3_x="270"
+        res3_y="720"   pos3_y="561"
+                    
+        res4_x="1280"  pos4_x="398"
+        res4_y="720"   pos4_y="561"
+         
+        res5_x="1024" pos5_x="270"
+        res5_y="768"  pos5_y="585"
+        
+        res6_x="1280" pos6_x="398"
+        res6_y="768"  pos6_y="585"
+    />
+  </menu>
+</interface>

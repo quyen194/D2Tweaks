@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<interface>
+  <menu name="reloaditems" default_pos_x="0" default_pos_y="0" width="-1" height="-1">
+    <button name="m_reload_items_btn" 
+        default_pos_x="92" 
+        default_pos_y="476" 
+        width="32" 
+        height="32" 
+        image="d2tweaks\assets\buttons" 
+        frameDown="10" 
+        frameUp="9" 
+        clickSound="4" 
+        popup="Reload items" 
+        resolution_count="15"
+    
+        res1_x="800"  pos1_x="92"
+        res1_y="600"  pos1_y="476"
+                    
+        res2_x="1068" pos2_x="226"
+        res2_y="600"  pos2_y="476"
+        
+        res3_x="960"  pos3_x="172"
+        res3_y="720"  pos3_y="536"
+        
+        res4_x="1280" pos4_x="332"
+        res4_y="720"  pos4_y="536"
+        
+        res5_x="1024" pos5_x="204"
+        res5_y="768"  pos5_y="560"
+        
+        res6_x="1280" pos6_x="332"
+        res6_y="768"  pos6_y="560"
+        
+        res7_x="1280" pos7_x="332"
+        res7_y="960"  pos7_y="656"
+        
+        res8_x="1200" pos8_x="292"
+        res8_y="900"  pos8_y="626"
+        
+        res9_x="1600" pos9_x="492"
+        res9_y="900"  pos9_y="626"
+        
+        res10_x="1920" pos10_x="652"
+        res10_y="1080" pos10_y="716"
+        
+        res11_x="1366"  pos11_x="375"
+        res11_y="768"   pos11_y="560"
+        
+        res12_x="1360"  pos12_x="372"
+        res12_y="768"   pos12_y="560"
+        
+        res13_x="1440"  pos13_x="412"
+        res13_y="900"   pos13_y="626"
+        
+        res14_x="1152"  pos14_x="268"
+        res14_y="864"  pos14_y="608"
+        
+        res15_x=""  pos15_x=""
+        res15_y=""  pos15_y=""
+    />
+  </menu>
+</interface>

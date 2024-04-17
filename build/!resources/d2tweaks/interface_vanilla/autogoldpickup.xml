@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<interface>
+  <menu name="autogoldpickup" default_pos_x="0" default_pos_y="0" width="-1" height="-1">
+    <label
+        name="m_gold_label"
+        default_pos_x="600" 
+        default_pos_y="540" 
+        text="" 
+        color="7" 
+        font="2" 
+        resolution_count="1"
+        
+        res1_x="800"  pos1_x="600"
+        res1_y="600"  pos1_y="540"
+    />
+  </menu>
+</interface>

@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34723.18
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "D2tweaks", "D2tweaks.vcxproj", "{FD312A97-7B2C-4922-B2F5-7969DA0396F8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FD312A97-7B2C-4922-B2F5-7969DA0396F8}.Debug|x86.ActiveCfg = Debug|Win32
+		{FD312A97-7B2C-4922-B2F5-7969DA0396F8}.Debug|x86.Build.0 = Debug|Win32
+		{FD312A97-7B2C-4922-B2F5-7969DA0396F8}.Release|x86.ActiveCfg = Release|Win32
+		{FD312A97-7B2C-4922-B2F5-7969DA0396F8}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8F0108AD-9A15-43A0-A115-910627CF0586}
+	EndGlobalSection
+EndGlobal

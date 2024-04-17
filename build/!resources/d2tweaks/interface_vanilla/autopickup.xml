@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<interface>
+  <menu name="autopickup" default_pos_x="0" default_pos_y="0" width="-1" height="-1">
+    <button name="m_auto_pickup_btn" 
+        default_pos_x="597" 
+        default_pos_y="593" 
+        width="32" 
+        height="32" 
+        image="d2tweaks\assets\buttons" 
+        frameDown="8" 
+        frameUp="6" 
+        clickSound="4" 
+        popup="Auto pickup"
+        resolution_count="1"
+        
+        res1_x="800"  pos1_x="597"
+        res1_y="600"  pos1_y="593"
+    />
+  </menu>
+</interface>

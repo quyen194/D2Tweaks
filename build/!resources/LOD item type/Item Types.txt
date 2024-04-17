@@ -1,0 +1,101 @@
+ItemType               Code       Equiv1    Equiv2
+
+Shield                 shie       shld
+Armor                  tors       armo
+Gold                   gold       misc
+Bow Quiver             bowq       misl
+Crossbow Quiver        xboq       misl
+Player Body Part       play       misc
+Herb                   herb       misc
+Potion                 poti       misc
+Ring                   ring       misc
+Elixir                 elix       misc
+Amulet                 amul       misc
+Charm                  char       misc
+Boots                  boot       armo
+Gloves                 glov       armo
+Book                   book       misc
+Belt                   belt       armo
+Gem                    gem        sock
+Torch                  torc       misc
+Scroll                 scro       misc
+Not Used
+Scepter                scep       rod
+Wand                   wand       rod
+Staff                  staf       rod
+Bow                    bow        miss
+Axe                    axe        mele
+Club                   club       blun
+Sword                  swor       mele
+Hammer                 hamm       blun
+Knife                  knif       mele
+Spear                  spea       mele
+Polearm                pole       mele
+Crossbow               xbow       miss
+Mace                   mace       blun
+Helm                   helm       armo
+Missile Potion         tpot       thro
+Quest                  ques
+Body Part              body       misc
+Key                    key        misc
+Throwing Knife         tkni       comb      knif
+Throwing Axe           taxe       comb      axe
+Javelin                jave       comb      spea
+Weapon                 weap
+Melee Weapon           mele       weap
+Missile Weapon         miss       weap
+Thrown Weapon          thro       weap
+Combo Weapon           comb       mele      thro
+Any Armor              armo
+Any Shield             shld       armo      seco
+Miscellaneous          misc
+Socket Filler          sock       misc
+Second Hand            seco
+Staves And Rods        rod        blun
+Missile                misl       misc
+Blunt                  blun       mele
+Jewel                  jewl       sock
+Class Specific         clas
+Amazon Item            amaz       clas
+Barbarian Item         barb       clas
+Necromancer Item       necr       clas
+Paladin Item           pala       clas
+Sorceress Item         sorc       clas
+Assassin Item          assn       clas
+Druid Item             drui       clas
+Hand to Hand           h2h        mele      assn
+Orb                    orb        weap      sorc
+Voodoo Heads           head       shld      necr
+Auric Shields          ashd       shld      pala
+Primal Helm            phlm       helm      barb
+Pelt                   pelt       helm      drui
+Cloak                  cloa       tors      assn
+Rune                   rune       sock
+Circlet                circ       helm
+Healing Potion         hpot       poti
+Mana Potion            mpot       poti
+Rejuv Potion           rpot       hpot      mpot
+Stamina Potion         spot       poti
+Antidote Potion        apot       poti
+Thawing Potion         wpot       poti
+Small Charm            scha       char
+Medium Charm           mcha       char
+Large Charm            lcha       char
+Amazon Bow             abow       bow       amaz
+Amazon Spear           aspe       spea      amaz
+Amazon Javelin         ajav       jave      amaz
+Hand to Hand 2         h2h2       h2h
+Magic Bow Quiv         mboq       bowq
+Magic Xbow Quiv        mxbq       xboq
+Chipped Gem            gem0       gem
+Flawed Gem             gem1       gem
+Standard Gem           gem2       gem
+Flawless Gem           gem3       gem
+Perfect Gem            gem4       gem
+Amethyst               gema       gem
+Diamond                gemd       gem
+Emerald                geme       gem
+Ruby                   gemr       gem
+Sapphire               gems       gem
+Topaz                  gemt       gem
+Skull                  gemz       gem

@@ -1,0 +1,70 @@
+# Visual Studio 2022 specific files and directories
+.vs
+_ReSharper
+_AnalysisTools
+*.user
+*.suo
+*.sln.docx
+
+# Compiler cache and object binaries
+**/.dll.pdb
+**/bin/
+**/obj/
+**/\.vs\*
+**/BuildLogs/
+**/TemporaryItems/
+**/Release/
+**/AppData/Local/Microsoft/VisualStudio/**
+**/ClientAppData/
+
+# IDE and editor temporary files
+**.vscode/**
+**.vsct**
+**.openproject**
+**.idea/**
+**.globe**
+**.sublime-workspace**
+**.atom-workspace.json**
+**.editorconfig**
+**.editorconfig.xml**
+
+# Misc build artifacts, logs, etc.
+**/logs/**
+**/_build/**
+**/output/**
+**/publish/**
+**/testResults/**
+**/coverage/**
+**/_deployments/**
+**/_migrations/**
+
+# Node.js and Yarn
+**/node_modules/**
+**/yarn.lock
+**/package-lock.json
+
+# Gradle and IntelliJ caches
+**/caches/**
+**/build-cache/**
+**/generated/**
+**/local-repository/**
+**/m2repository/**
+**/settings.gradle
+**/wrapper/**
+**/groovy/**
+
+# NuGet and Package Manager Console
+**.nuget/**
+**/.packagemanager/**
+**/.paket/**
+**/.paket.dependency.json**
+
+# Other miscellaneous files
+**.env**
+**.sqlite_prf**
+**.sqlite_stat**
+**.sqlite_master**
+**.bak**
+**.old**
+**.swp**
+**.DS_Store**

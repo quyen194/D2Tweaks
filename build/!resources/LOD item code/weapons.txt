@@ -1,0 +1,306 @@
+Ancient Axe            9gi
+Ancient Sword          9wd
+Arbalest               8lx
+Archon Staff           6ws
+Ashwood Bow            am6
+Ataghan                7sm
+Axe                    axe
+Balanced Axe           bal
+Balanced Knife         bkf
+Balista                8hx
+Balrog Blade           7gs
+Balrog Spear           7s7
+Barbed Club            9sp
+Bardiche               bar
+Bastard Sword          bsw
+Battle Axe             btx
+Battle Cestus          7cs
+Battle Dart            9tk
+Battle Hammer          9wh
+Battle Scythe          9s8
+Battle Staff           bst
+Battle Sword           9bs
+Bearded Axe            9ba
+Bec-de-Corbin          9h9
+Berserker Axe          7wa
+Bill                   9vo
+Blade                  bld
+Blade Bow              6hb
+Blade Talons           btl
+Bone Knife             7dg
+Bone Wand              bwn
+Brandistock            brn
+Broad Axe              bax
+Broad Sword            bsd
+Burnt Wand             9wn
+Caduceus               7ws
+Cedar Bow              8lb
+Cedar Staff            8cs
+Ceremonial Bow         am7
+Ceremonial Javelin     ama
+Ceremonial Pike        am9
+Ceremonial Spear       am8
+Cestus                 ces
+Champion Axe           7ga
+Champion Sword         7b7
+Choking Gas Potion     gpm
+Chu-Ko-Nu              8rx
+Cinquedeas             9kr
+Clasped Orb            ob4
+Claws                  clw
+Claymore               clm
+Cleaver                9ax
+Cloudy Sphere          ob8
+Club                   clb
+Colossal Sword         7fb
+Colossus Blade         7gd
+Colossus Crossbow      6hx
+Colossus Voulge        7vo
+Composite Bow          cbw
+Conquest Sword         7bs
+Crossbow               mxb
+Crowbill               9mp
+Crusader Bow           6l7
+Cryptic Axe            7pa
+Cryptic Sword          7ls
+Crystal Sword          crs
+Crystalline Globe      ob7
+Cudgel                 9cl
+Cutlass                9sm
+Dacian Falx            9cm
+Dagger                 dgr
+Decapitator            7bt
+Demon Crossbow         6rx
+Demon Heart            obd
+Devil Star             7mt
+Diamond Bow            6s7
+Dimensional Blade      9cr
+Dimensional Shard      obf
+Dirk                   dir
+Divine Scepter         9ws
+Double Axe             2ax
+Double Bow             8cb
+Dragon Stone           ob5
+Eagle Orb              ob1
+Edge Bow               8sb
+Elder Staff            6cs
+Eldritch Orb           obc
+Elegant Blade          7sb
+Espadon                92h
+Ettin Axe              72a
+Executioner Sword      9gd
+Exploding Potion       opm
+Falcata                7ss
+Falchion               flc
+Fanged Knife           7kr
+Fascia                 9xf
+Feral Axe              7la
+Feral Claws            7lw
+Flail                  fla
+Flamberge              flb
+Flanged Mace           9ma
+Flying Axe             7ta
+Flying Knife           7tk
+Francisca              9ta
+Fulminating Potion     opl
+Fuscina                9tr
+Ghost Glaive           7gl
+Ghost Spear            7st
+Ghost Wand             7yw
+Giant Axe              gix
+Giant Sword            gis
+Giant Thresher         7wc
+Gidbinn                g33
+Gladius                9ss
+Glaive                 glv
+Glorious Axe           7gi
+Glowing Orb            ob6
+Gnarled Staff          cst
+Gorgon Crossbow        6mx
+Gothic Axe             9ga
+Gothic Bow             8lw
+Gothic Staff           8bs
+Gothic Sword           9b9
+Grand Matron Bow       amc
+Grand Scepter          gsc
+Grave Wand             9gw
+Great Axe              gax
+Great Bow              6cb
+Great Maul             gma
+Great Pilum            9pi
+Great Poleaxe          7h7
+Great Sword            gsd
+Greater Claws          9lw
+Greater Talons         9tw
+Grim Scythe            9wc
+Grim Wand              gwn
+Halberd                hal
+Hand Axe               hax
+Hand Scythe            9cs
+Harpoon                9ts
+Hatchet                9ha
+Hatchet Hands          axf
+Heavenly Stone         obb
+Heavy Crossbow         hxb
+Hellforge Hammer       hfh
+Highland Blade         7cm
+Holy Water Sprinkler   9qs
+Horadric Malus         hdm
+Horadric Staff         hst
+Hunter's Bow           hbw
+Hurlbat                9b8
+Hydra Bow              6lw
+Hydra Edge             7fc
+Hyperion Javelin       7ja
+Hyperion Spear         7sr
+Jagged Star            9mt
+Javelin                jav
+Jo Staff               8ss
+Katar                  ktr
+KhalimFlail            qf1
+Knout                  9fl
+Kriss                  kri
+Lance                  9p9
+Large Axe              lax
+Legend Spike           7bl
+Legend Sword           72h
+Legendary Mallet       7wh
+Lich Wand              7bw
+Light Crossbow         lxb
+Lochaber Axe           9b7
+Long Battle Bow        lbb
+Long Bow               lbw
+Long Siege Bow         8l8
+Long Staff             lst
+Long Sword             lsd
+Long War Bow           lwb
+Mace                   mac
+Maiden Javelin         am5
+Maiden Pike            am4
+Maiden Spear           am3
+Mancatcher             7br
+Martel de Fer          9gm
+Matriarchal Bow        amb
+Matriarchal Pike       ame
+Matriarchal Spear      amd
+MatriarchalJavelin     amf
+Maul                   mau
+Mighty Scepter         7sc
+Military Axe           9la
+Military Pick          mpi
+Mithral Point          7di
+Morning Star           mst
+Mythical Sword         7wd
+Naga                   9wa
+Ogre Axe               7o7
+Ogre Maul              7m7
+Oil Potion             ops
+Partizan               9pa
+Pellet Bow             6lx
+Petrified Wand         9yw
+Phase Blade            7cr
+Pike                   pik
+Pilum                  pil
+Poignard               9dg
+Poleaxe                pax
+Polished Wand          7wn
+Quarterstaff           8ls
+Quhab                  9ar
+Rancid Gas Potion      gps
+Razor Bow              8hb
+Reflex Bow             am2
+Reinforced Mace        7ma
+Repeating Crossbow     rxb
+Rondel                 9di
+Rune Bow               8sw
+Rune Scepter           9sc
+Rune Staff             8ws
+Rune Sword             9ls
+Runic Talons           7tw
+Saber                  sbr
+Sacred Globe           ob2
+Scepter                scp
+Scimitar               scm
+Scissors Katar         skr
+Scissors Quhab         9qr
+Scissors Suwayyah      7qr
+Scourge                7fl
+Scythe                 scy
+Seraph Rod             7qs
+Shadow Bow             6lb
+Shamshir               9sb
+Shillelah              6bs
+Short Battle Bow       sbb
+Short Bow              sbw
+Short Siege Bow        8s8
+Short Spear            ssp
+Short Staff            sst
+Short Sword            ssd
+Short War Bow          swb
+Siege Crossbow         8mx
+Silver Edged Axe       7ba
+Simbilan               9s9
+Small Crescent         7ax
+Smoked Sphere          ob3
+Sparkling Ball         ob9
+Spear                  spr
+Spetum                 spt
+Spiculum               9gl
+Spider Bow             6sb
+Spiked Club            spc
+Staff of the Kings     msf
+Stag Bow               am1
+Stalagmite             6ls
+Stilleto               9bl
+Strangling Gas Potion  gpl
+Stygian Pike           7tr
+Stygian Pilum          7pi
+SuperKhalimFlail       qf2
+Suwayyah               7ar
+Swirling Crystal       oba
+Tabar                  9bt
+Thresher               7s8
+Throwing Axe           tax
+Throwing Knife         tkf
+Throwing Spear         tsp
+Thunder Maul           7gm
+Tomahawk               7ha
+Tomb Wand              9bw
+Trident                tri
+Truncheon              7cl
+Tulwar                 9fc
+Tusk Sword             9gs
+Twin Axe               92a
+Two-Handed Sword       2hs
+Tyrant Club            7sp
+Unearthed Wand         7gw
+Vortex Orb             obe
+Voulge                 vou
+Walking Stick          6ss
+Wand                   wnd
+War Axe                wax
+War Club               9m9
+War Dart               9bk
+War Fist               7xf
+War Fork               9br
+War Hammer             whm
+War Javelin            9ja
+War Pike               7p7
+War Scepter            wsp
+War Scythe             wsc
+War Spear              9sr
+War Spike              7mp
+War Staff              wst
+War Sword              wsd
+Ward Bow               6sw
+Winged Axe             7b8
+Winged Harpoon         7ts
+Winged Knife           7bk
+Wirt's Leg             leg
+Wrist Blade            wrb
+Wrist Spike            9wb
+Wrist Sword            7wb
+Yari                   9st
+Yew Wand               ywn
+Zweihander             9fb
+decoy dagger           d33

@@ -1,0 +1,7 @@
+Package: pugixml
+Version: 1.11.4
+Architecture: x86-windows-static
+Multi-Arch: same
+Abi: cb41855ca2d2d4983204936a9eeaf071d5d10ea9
+Description: Light-weight, simple and fast XML parser for C++ with XPath support
+Type: Port
