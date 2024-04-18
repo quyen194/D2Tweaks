@@ -43,7 +43,7 @@
 #include <functional>
 #include <vector>
 #include <string>
-
+#include <map>
 
 
 #include <DllNotify.h>
@@ -69,6 +69,25 @@ enum ColorEnum {
 	DARK_WHITE = diablo2::ui_color_t::UI_COLOR_DARK_WHITE,
 	LIGHT_GREY = diablo2::ui_color_t::UI_COLOR_LIGHT_GREY
 };
+
+// Mapping from int to ui_font_t
+std::map<int, diablo2::ui_font_t> fontMap = {
+	{0, diablo2::ui_font_t::UI_FONT_8},
+	{1, diablo2::ui_font_t::UI_FONT_16},
+	{2, diablo2::ui_font_t::UI_FONT_30},
+	{3, diablo2::ui_font_t::UI_FONT_42},
+	{4, diablo2::ui_font_t::UI_FONT_FORMAL10},
+	{5, diablo2::ui_font_t::UI_FONT_FORMAL12},
+	{6, diablo2::ui_font_t::UI_FONT_6},
+	{7, diablo2::ui_font_t::UI_FONT_24},
+	{8, diablo2::ui_font_t::UI_FONT_FORMAL11},
+	{9, diablo2::ui_font_t::UI_FONT_EXOCET10},
+	{10, diablo2::ui_font_t::UI_FONT_RIDICULOUS},
+	{11, diablo2::ui_font_t::UI_FONT_EXOCET8},
+	{12, diablo2::ui_font_t::UI_FONT_REALLYTHELASTSUCKER},
+	{13, diablo2::ui_font_t::UI_FONT_INGAMECHAT}
+};
+
 
 class inventory_sort_menu : public d2_tweaks::ui::menu {
 	d2_tweaks::common::asset* m_buttons_img;
@@ -1138,6 +1157,7 @@ public:
 
 	};
 
+	int statsFont = GetPrivateProfileIntA("Options", "statsFont", 0, "./d2tweaks.ini");
 
 	void OnLoad() {
 		srand(time(NULL));
@@ -1344,15 +1364,15 @@ public:
 				&& !diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_SCROLL)) {
 
 				// Draw stats
-				diablo2::d2_win::set_current_font(diablo2::UI_FONT_6); // Set font to FONT16
+				diablo2::d2_win::set_current_font(fontMap[statsFont]); // Set font to FONT16
 				diablo2::d2_win::draw_text(const_cast<wchar_t*>(statText.c_str()), stat.x1, stat.y1 + textOffset, stat.colorStat, 0);
 
-				diablo2::d2_win::set_current_font(diablo2::UI_FONT_6); // Set font to FONT16
+				diablo2::d2_win::set_current_font(fontMap[statsFont]); // Set font to FONT16
 				diablo2::d2_win::draw_text(const_cast<wchar_t*>(statValueStr.c_str()), stat.x2, stat.y2 + textOffset, stat.colorStatValue, 0);
 
 
 				//diablo2::d2_win::draw_boxed_text(const_cast<wchar_t*>(statText.c_str()), stat.x1, stat.y1 + textOffset, 1, 0, stat.colorStat);
-				//diablo2::d2_win::draw_boxed_text(const_cast<wchar_t*>(statValueStr.c_str()), stat.x2, stat.y2 + textOffset, 1, 1, statValueColor);
+				//diablo2::d2_win::draw_boxed_text(const_cast<wchar_t*>(statValueStr.c_str()), stat.x2, stat.y2 + textOffset, 1, 4, stat.colorStatValue);
 
 				// diablo2::d2_win::set_current_font(diablo2::UI_FONT_16); // Set font to FONT16
 
