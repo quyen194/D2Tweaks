@@ -1,28 +1,5 @@
-﻿  client.cpp
+﻿C:\Program Files\Microsoft Visual Studio\2022\Enterprise\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(517,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
   autosort_client.cpp
-  auto_gold_pickup_client.cpp
-  auto_item_pickup_client.cpp
-  damage_display_client.cpp
-  item_drop_message_client.cpp
-  item_move_client.cpp
-D:\VSCode\D2tweaks_src_17.04.2024\src\d2tweaks\client\modules\item_move\item_move_client.cpp(99,33): warning C4018: '<': signed/unsigned mismatch
-  loot_filter.cpp
-  loot_filter_settings_menu.cpp
-  loot_filter_settings_toggle_menu.cpp
-  trader_update_client.cpp
-  transmute_client.cpp
-  autosort_server.cpp
-  auto_gold_pickup_server.cpp
-D:\VSCode\D2tweaks_src_17.04.2024\src\d2tweaks\server\modules\auto_gold_pickup\auto_gold_pickup_server.cpp(51,33): warning C4018: '>': signed/unsigned mismatch
-  auto_item_pickup_server.cpp
-  damage_display_server.cpp
-  identify_on_pickup_server.cpp
-  item_drop_message_server.cpp
-  item_move_server.cpp
-  trader_update_server.cpp
-  transmute_server.cpp
-  server.cpp
-  main.cpp
-  D2Template.cpp
-  DllNotify.cpp
-  D2tweaks.vcxproj -> D:\VSCode\D2tweaks_src_17.04.2024\Build\Debug\D2tweaks.dll
+D:\VSCode\d2tweaks-rnd2k\src\d2tweaks\client\modules\autosort\autosort_client.cpp(1163,13): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+D:\VSCode\d2tweaks-rnd2k\src\d2tweaks\client\modules\autosort\autosort_client.cpp(1168,32): warning C4244: '=': conversion from 'ULONGLONG' to 'long', possible loss of data
+  D2tweaks.vcxproj -> D:\Diablo II\MODS\ironman-dev\D2tweaks.dll

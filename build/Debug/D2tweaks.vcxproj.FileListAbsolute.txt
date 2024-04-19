@@ -1,1 +1,2 @@
 D:\VSCode\D2tweaks_src_17.04.2024\Build\Debug\D2tweaks.dll
+D:\VSCode\d2tweaks-rnd2k\Build\Debug\D2tweaks.dll

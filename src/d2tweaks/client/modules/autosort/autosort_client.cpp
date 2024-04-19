@@ -1226,174 +1226,175 @@ public:
 		// Initialize statValue
 		int32_t statValue = 0;
 
-		for (const auto& stat : stats) {
+		if (m_stats_enabled) {
+			for (const auto& stat : stats) {
 
-			double param = 6;
+				double param = 6;
 
-			int32_t spirits = diablo2::d2_common::get_stat(player, static_cast<diablo2::unit_stats_t>(185), NULL);
-			int32_t soulscaptured = statValue = diablo2::d2_common::get_stat(player, static_cast<diablo2::unit_stats_t>(184), NULL);
+				int32_t spirits = diablo2::d2_common::get_stat(player, static_cast<diablo2::unit_stats_t>(185), NULL);
+				int32_t soulscaptured = statValue = diablo2::d2_common::get_stat(player, static_cast<diablo2::unit_stats_t>(184), NULL);
 
-			switch (stat.stat) {
-				// 2. (statValue <- this is probably op stat1 ? * baseValue <- this is probably op base ) / 2 ^ param
+				switch (stat.stat) {
+					// 2. (statValue <- this is probably op stat1 ? * baseValue <- this is probably op base ) / 2 ^ param
 
-				// (op stat1 value *  base stat value) / (2 ^ param) 
-				// let's try this fucking thing
+					// (op stat1 value *  base stat value) / (2 ^ param) 
+					// let's try this fucking thing
 
-			case 190: {
-				// str/spirits
-				statValue = static_cast<int32_t>((1 * spirits) / pow(2, param)); // what is the value of opStat_str
-				break;
-			}
-			case 191: {
-				// dex/spirits
-				statValue = static_cast<int32_t>((1 * spirits) / pow(2, param)); // what is the value of opStat_str
-				break;
-			}
-			case 192: {
-				// vit/spirits
-				statValue = static_cast<int32_t>((1 * spirits) / pow(2, param)); // what is the value of opStat_str
-				break;
-			}
-			case 193: {
-				// enr/spirits
-				statValue = static_cast<int32_t>((1 * spirits) / pow(2, param)); // what is the value of opStat_str
-				break;
-			}
-			case 200: {
-				// skills/souls
-				param = 8;
-				statValue = static_cast<int32_t>((1 * soulscaptured) / pow(2, param)); // what is the value of opStat_str
-				break;
-			}
+				case 190: {
+					// str/spirits
+					statValue = static_cast<int32_t>((1 * spirits) / pow(2, param)); // what is the value of opStat_str
+					break;
+				}
+				case 191: {
+					// dex/spirits
+					statValue = static_cast<int32_t>((1 * spirits) / pow(2, param)); // what is the value of opStat_str
+					break;
+				}
+				case 192: {
+					// vit/spirits
+					statValue = static_cast<int32_t>((1 * spirits) / pow(2, param)); // what is the value of opStat_str
+					break;
+				}
+				case 193: {
+					// enr/spirits
+					statValue = static_cast<int32_t>((1 * spirits) / pow(2, param)); // what is the value of opStat_str
+					break;
+				}
+				case 200: {
+					// skills/souls
+					param = 8;
+					statValue = static_cast<int32_t>((1 * soulscaptured) / pow(2, param)); // what is the value of opStat_str
+					break;
+				}
 
-			case 301: {
-				for (auto item : items) {
-					const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
-					if (record->type == 104) {
-						statValue = diablo2::d2_common::get_stat(item, static_cast<diablo2::unit_stats_t>(stat.stat), NULL);
+				case 301: {
+					for (auto item : items) {
+						const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
+						if (record->type == 104) {
+							statValue = diablo2::d2_common::get_stat(item, static_cast<diablo2::unit_stats_t>(stat.stat), NULL);
+						}
+					}
+					break;
+				}
+
+				case 304: {
+					for (auto item : items) {
+						const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
+						if (record->type == 104) {
+							statValue = diablo2::d2_common::get_stat(item, static_cast<diablo2::unit_stats_t>(stat.stat), NULL);
+						}
+					}
+					break;
+				}
+
+				default: {
+					// By default, get player stats
+					statValue = diablo2::d2_common::get_stat(player, static_cast<diablo2::unit_stats_t>(stat.stat), NULL);
+					break;
+
+				}
+				}
+
+				/*
+				int32_t diablo2::d2_common::set_stat(structures::unit* unit, unit_stats_t stat, uint32_t value, int16_t param) {
+						static wrap_func_std_import<int32_t(structures::unit*, int32_t, int32_t, int32_t)> set_stat(10517, get_base());
+						return set_stat(unit, stat, value, param);
+					}
+
+				std::random_device rd;
+				std::mt19937 gen(rd());
+				std::uniform_int_distribution<> dis(randStatRangeLow, randStatRangeHigh);
+				unsigned int randomNumber = dis(gen);
+
+				std::random_device rdb;
+				std::mt19937 genb(rdb());
+				std::uniform_int_distribution<> randBool(1, 2);
+				unsigned int randomBool = randBool(genb) - 1;
+
+				if (stat.is_item_stat == 1) {
+					for (auto item : items) {
+						const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
+						int RandStatValue = diablo2::d2_common::get_stat(item, static_cast<diablo2::unit_stats_t>(randStat), NULL);
+
+						if (record->type == stat.item_type_id && RandStatValue != 0) {
+							// set randStat value to random number 1 and 2^(32) = 4294967296
+							diablo2::d2_common::set_stat(item, static_cast<diablo2::unit_stats_t>(randStat), randomNumber, 0);
+							diablo2::d2_common::set_stat(item, static_cast<diablo2::unit_stats_t>(randStatBool), randomBool, 0);
+						}
 					}
 				}
-				break;
-			}
+				else {
+					// set randStat value to random number 1 and 2^(32) = 4294967296
+					//diablo2::d2_common::set_stat(player, static_cast<diablo2::unit_stats_t>(randStat), randomNumber, 0);
+					//diablo2::d2_common::set_stat(player, static_cast<diablo2::unit_stats_t>(randStatBool), randomBool, 0);
 
-			case 304: {
-				for (auto item : items) {
-					const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
-					if (record->type == 104) {
-						statValue = diablo2::d2_common::get_stat(item, static_cast<diablo2::unit_stats_t>(stat.stat), NULL);
+					int statValue1 = diablo2::d2_common::get_stat(player, static_cast<diablo2::unit_stats_t>(randStat), NULL);
+					int statValue2 = diablo2::d2_common::get_stat(player, static_cast<diablo2::unit_stats_t>(randStatBool), NULL);
+
+					if (statValue1 > 0 ) {
+						diablo2::d2_common::set_stat(player, static_cast<diablo2::unit_stats_t>(randStat), 0, 0);
+						diablo2::d2_common::set_stat(player, static_cast<diablo2::unit_stats_t>(randStatBool), 0, 0);
 					}
+
 				}
-				break;
-			}
+				*/
+				auto statValueStr = std::to_wstring(statValue);
+				std::wstring statText = std::wstring(stat.stat_display_string);// .append(L" " + statValueStr);
 
-			default: {
-				// By default, get player stats
-				statValue = diablo2::d2_common::get_stat(player, static_cast<diablo2::unit_stats_t>(stat.stat), NULL);
-				break;
+				if (!diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_STASH)
+					&& !diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_CHARACTER)
+					// && !diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_INVENTORY)
+					// && !diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_SKILL)
+					&& !diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_CHAT)
+					&& !diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_NPCMENU)
+					&& !diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_MAINMENU)
+					&& !diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_CONFIG)
+					&& !diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_NPCSHOP)
+					&& !diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_ANVIL)
+					&& !diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_QUEST)
+					&& !diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_QUESTLOG)
+					&& !diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_STATUSAREA)
+					&& !diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_WPMENU)
+					&& !diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_PARTY)
+					&& !diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_TRADE)
+					&& !diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_MSGS)
+					&& !diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_CUBE)
+					&& !diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_BELT)
+					&& !diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_HELP)
+					&& !diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_MERC)
+					&& !diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_SCROLL)) {
 
-			}
-			}
+					// Draw stats
+					diablo2::d2_win::set_current_font(fontMap[statsFont]); // Set font to FONT16
+					diablo2::d2_win::draw_text(const_cast<wchar_t*>(statText.c_str()), stat.x1, stat.y1 + textOffset, stat.colorStat, 0);
 
-			/*
-			int32_t diablo2::d2_common::set_stat(structures::unit* unit, unit_stats_t stat, uint32_t value, int16_t param) {
-					static wrap_func_std_import<int32_t(structures::unit*, int32_t, int32_t, int32_t)> set_stat(10517, get_base());
-					return set_stat(unit, stat, value, param);
+					diablo2::d2_win::set_current_font(fontMap[statsFont]); // Set font to FONT16
+					diablo2::d2_win::draw_text(const_cast<wchar_t*>(statValueStr.c_str()), stat.x2, stat.y2 + textOffset, stat.colorStatValue, 0);
+
+
+					//diablo2::d2_win::draw_boxed_text(const_cast<wchar_t*>(statText.c_str()), stat.x1, stat.y1 + textOffset, 1, 0, stat.colorStat);
+					//diablo2::d2_win::draw_boxed_text(const_cast<wchar_t*>(statValueStr.c_str()), stat.x2, stat.y2 + textOffset, 1, 4, stat.colorStatValue);
+
+					// diablo2::d2_win::set_current_font(diablo2::UI_FONT_16); // Set font to FONT16
+
+
+					//diablo2::structures::d2_cmp::init_gfx_data(&g_gfxdata);
+
+					//diablo2::d2_gfx::draw_image(&g_gfxdata, 200, 200, 1, 5, 0);
+
+					// instead try to load direct jpg with gdi and insetad ofloading jpg file, specify it bb64 encoded and decode it.
+
+					diablo2::ui_color_t::UI_COLOR_WHITE;
+
+
+
+					OnDraw();
+
+
+
 				}
-
-			std::random_device rd;
-			std::mt19937 gen(rd());
-			std::uniform_int_distribution<> dis(randStatRangeLow, randStatRangeHigh);
-			unsigned int randomNumber = dis(gen);
-
-			std::random_device rdb;
-			std::mt19937 genb(rdb());
-			std::uniform_int_distribution<> randBool(1, 2);
-			unsigned int randomBool = randBool(genb) - 1;
-
-			if (stat.is_item_stat == 1) {
-				for (auto item : items) {
-					const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
-					int RandStatValue = diablo2::d2_common::get_stat(item, static_cast<diablo2::unit_stats_t>(randStat), NULL);
-
-					if (record->type == stat.item_type_id && RandStatValue != 0) {
-						// set randStat value to random number 1 and 2^(32) = 4294967296
-						diablo2::d2_common::set_stat(item, static_cast<diablo2::unit_stats_t>(randStat), randomNumber, 0);
-						diablo2::d2_common::set_stat(item, static_cast<diablo2::unit_stats_t>(randStatBool), randomBool, 0);
-					}
-				}
-			}
-			else {
-				// set randStat value to random number 1 and 2^(32) = 4294967296
-				//diablo2::d2_common::set_stat(player, static_cast<diablo2::unit_stats_t>(randStat), randomNumber, 0);
-				//diablo2::d2_common::set_stat(player, static_cast<diablo2::unit_stats_t>(randStatBool), randomBool, 0);
-
-				int statValue1 = diablo2::d2_common::get_stat(player, static_cast<diablo2::unit_stats_t>(randStat), NULL);
-				int statValue2 = diablo2::d2_common::get_stat(player, static_cast<diablo2::unit_stats_t>(randStatBool), NULL);
-
-				if (statValue1 > 0 ) {
-					diablo2::d2_common::set_stat(player, static_cast<diablo2::unit_stats_t>(randStat), 0, 0);
-					diablo2::d2_common::set_stat(player, static_cast<diablo2::unit_stats_t>(randStatBool), 0, 0);
-				}
-
-			}
-			*/
-			auto statValueStr = std::to_wstring(statValue);
-			std::wstring statText = std::wstring(stat.stat_display_string);// .append(L" " + statValueStr);
-
-			if (!diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_STASH)
-				&& !diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_CHARACTER)
-				// && !diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_INVENTORY)
-				// && !diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_SKILL)
-				&& !diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_CHAT)
-				&& !diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_NPCMENU)
-				&& !diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_MAINMENU)
-				&& !diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_CONFIG)
-				&& !diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_NPCSHOP)
-				&& !diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_ANVIL)
-				&& !diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_QUEST)
-				&& !diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_QUESTLOG)
-				&& !diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_STATUSAREA)
-				&& !diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_WPMENU)
-				&& !diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_PARTY)
-				&& !diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_TRADE)
-				&& !diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_MSGS)
-				&& !diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_CUBE)
-				&& !diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_BELT)
-				&& !diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_HELP)
-				&& !diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_MERC)
-				&& !diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_SCROLL)) {
-
-				// Draw stats
-				diablo2::d2_win::set_current_font(fontMap[statsFont]); // Set font to FONT16
-				diablo2::d2_win::draw_text(const_cast<wchar_t*>(statText.c_str()), stat.x1, stat.y1 + textOffset, stat.colorStat, 0);
-
-				diablo2::d2_win::set_current_font(fontMap[statsFont]); // Set font to FONT16
-				diablo2::d2_win::draw_text(const_cast<wchar_t*>(statValueStr.c_str()), stat.x2, stat.y2 + textOffset, stat.colorStatValue, 0);
-
-
-				//diablo2::d2_win::draw_boxed_text(const_cast<wchar_t*>(statText.c_str()), stat.x1, stat.y1 + textOffset, 1, 0, stat.colorStat);
-				//diablo2::d2_win::draw_boxed_text(const_cast<wchar_t*>(statValueStr.c_str()), stat.x2, stat.y2 + textOffset, 1, 4, stat.colorStatValue);
-
-				// diablo2::d2_win::set_current_font(diablo2::UI_FONT_16); // Set font to FONT16
-
-
-				//diablo2::structures::d2_cmp::init_gfx_data(&g_gfxdata);
-
-				//diablo2::d2_gfx::draw_image(&g_gfxdata, 200, 200, 1, 5, 0);
-
-				// instead try to load direct jpg with gdi and insetad ofloading jpg file, specify it bb64 encoded and decode it.
-
-				diablo2::ui_color_t::UI_COLOR_WHITE;
-
-
-
-				OnDraw();
-
-
-
 			}
 		}
-
 		if (!should_draw()) {
 			m_sort_inventory_btn->set_enabled(false);
 			m_sort_inventory_btn->set_visible(false);

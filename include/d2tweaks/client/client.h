@@ -25,6 +25,9 @@ extern int randStatRangeLow;
 extern int randStatRangeHigh;
 extern int randStatBool;
 
+
+extern bool m_stats_enabled;
+
 namespace diablo2 {
 	namespace structures {
 		struct unit;

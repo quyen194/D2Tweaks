@@ -9,6 +9,8 @@
 #include <DllNotify.h>
 #include <D2Template.h>
 
+bool m_stats_enabled = false;
+
 d2_tweaks::client::modules::loot_filter_settings_toggle_menu::loot_filter_settings_toggle_menu(token) {
 	m_show = false;
 
@@ -23,13 +25,20 @@ d2_tweaks::client::modules::loot_filter_settings_toggle_menu::loot_filter_settin
 	if (DLLBASE_SGD2FREERES == 0 && DLLBASE_D2EXPRES == 0)
 		load_xml("d2tweaks\\interface_vanilla\\loot_filter_settings_toggle_menu.xml");
 
-	m_toggle_filter_settings_btn = static_cast<ui::controls::button*>(
-		get_control("m_toggle_filter_settings_btn"));
+	m_toggle_filter_settings_btn = static_cast<ui::controls::button*>(get_control("m_toggle_filter_settings_btn"));
 	m_toggle_filter_settings_btn->set_enabled(false);
 	m_toggle_filter_settings_btn->set_visible(false);
 	m_toggle_filter_settings_btn->set_on_click(std::bind(&loot_filter_settings_toggle_menu::toggle_filter_settings_click, this));
 
 	m_filter_settings_menu = singleton<ui::ui_manager>::instance().get_menu("loot_filter_settings_menu");
+
+
+	m_btn_toggle_stats = static_cast<ui::controls::button*>(get_control("m_toggle_stats"));
+	m_btn_toggle_stats->set_enabled(true);
+	m_btn_toggle_stats->set_visible(true);
+	m_btn_toggle_stats->set_on_click(std::bind(&loot_filter_settings_toggle_menu::toggle_stats_settings_click, this));
+
+
 }
 
 void d2_tweaks::client::modules::loot_filter_settings_toggle_menu::toggle_filter_settings_click() {
@@ -37,9 +46,18 @@ void d2_tweaks::client::modules::loot_filter_settings_toggle_menu::toggle_filter
 
 	m_filter_settings_menu->set_enabled(m_show);
 	m_filter_settings_menu->set_visible(m_show);
+
+	m_btn_toggle_stats->set_enabled(true);
+	m_btn_toggle_stats->set_visible(true);
+}
+
+void d2_tweaks::client::modules::loot_filter_settings_toggle_menu::toggle_stats_settings_click() {
+	m_stats_enabled = !m_stats_enabled;
 }
 
 void d2_tweaks::client::modules::loot_filter_settings_toggle_menu::draw() {
+	m_btn_toggle_stats->set_enabled(diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_INTERFACE));
+	m_btn_toggle_stats->set_visible(diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_INTERFACE));
 	m_toggle_filter_settings_btn->set_enabled(diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_INTERFACE));
 	m_toggle_filter_settings_btn->set_visible(diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_INTERFACE));
 

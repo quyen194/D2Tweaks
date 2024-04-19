@@ -50,6 +50,7 @@ int randStatRangeLow;
 int randStatRangeHigh;
 int randStatBool;
 
+
 std::wstring ConvertCharToWString(const std::string& charString) {
 	std::wstring_convert<std::codecvt_utf8<wchar_t>> converter;
 	return converter.from_bytes(charString);
@@ -271,14 +272,14 @@ void d2_tweaks::client::client::init() {
 		if (m_module == nullptr)
 			break;
 
-		randStat = GetPrivateProfileIntA("RandStat", "stat", 0, lpIniFilePath);
-		randStatRangeLow = GetPrivateProfileIntA("RandStat", "statRangeLow", 0, lpIniFilePath);
-		randStatRangeHigh = GetPrivateProfileIntA("RandStat", "statRangeHigh", 0, lpIniFilePath);
-		randStatBool = GetPrivateProfileIntA("RandStat", "statBool", 0, lpIniFilePath);
+		//randStat = GetPrivateProfileIntA("RandStat", "stat", 0, lpIniFilePath);
+		//randStatRangeLow = GetPrivateProfileIntA("RandStat", "statRangeLow", 0, lpIniFilePath);
+		//randStatRangeHigh = GetPrivateProfileIntA("RandStat", "statRangeHigh", 0, lpIniFilePath);
+		//randStatBool = GetPrivateProfileIntA("RandStat", "statBool", 0, lpIniFilePath);
 
-		spdlog::info("randStat = {0}", randStat);
-		spdlog::info("randStatRangeLow = {0}", randStatRangeLow);
-		spdlog::info("randStatRangeHigh = {0}", randStatRangeHigh);
+		//spdlog::info("randStat = {0}", randStat);
+		//spdlog::info("randStatRangeLow = {0}", randStatRangeLow);
+		//spdlog::info("randStatRangeHigh = {0}", randStatRangeHigh);
 
 
 
