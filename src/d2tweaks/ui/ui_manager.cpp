@@ -5,9 +5,21 @@
 
 #include <common/hooking.h>
 
+
+#include <d2tweaks/common/protocol.h>
+
+
 #include <d2tweaks/ui/menu.h>
+
 #include <diablo2/d2win.h>
+#include <diablo2/d2client.h>
+#include <diablo2/d2common.h>
+#include <diablo2/d2game.h>
 #include <spdlog/spdlog.h>
+
+#include <Windows.h>
+
+diablo2::structures::unit* g_item1;
 
 static LRESULT(__stdcall* g_wnd_proc_original)(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
@@ -58,10 +70,104 @@ void d2_tweaks::ui::ui_manager::draw() {
 	}
 }
 
+struct D2InventoryGridInfoStrc
+{
+	BYTE nGridX;                            //0x00
+	BYTE nGridY;                            //0x01
+	WORD pad0x02;                            //0x02
+	int nGridLeft;                            //0x04
+	int nGridRight;                            //0x08
+	int nGridTop;                            //0x0C
+	int nGridBottom;                        //0x10
+	BYTE nGridBoxWidth;                        //0x14
+	BYTE nGridBoxHeight;                    //0x15
+	WORD pad0x16;                            //0x16
+};
+
 LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 	static auto& instance = singleton<ui_manager>::instance();
 
 	bool block;
+
+	// Send transmute packet
+	if (wParam == 'X') {
+		diablo2::d2_client::send_to_server_7(0x4F, 0x18, 0, 0);
+		block = true; // block the game from processing this key
+	}
+
+	//// Send item move packet
+	//if (wParam == 'Z') {
+	//	// Call the item_click function using the function pointer
+	//	const auto g_hoverItem = (*reinterpret_cast<diablo2::structures::unit**>(diablo2::d2_client::get_base() + 0x1158F4));
+
+	//	if (g_hoverItem != 0) {
+	//		char currentPage = diablo2::d2_common::get_item_page(g_hoverItem);
+
+	//		// Create the packet
+	//		static d2_tweaks::common::item_move_cs packet;
+	//		packet.item_guid = g_hoverItem->guid;
+
+	//		if (currentPage == 0) { //item is in inventory
+	//			if (diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_STASH))
+	//				packet.target_page = 4;
+
+	//			if (diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_CUBE))
+	//				packet.target_page = 3;
+	//		}
+	//		diablo2::d2_client::send_to_server(&packet, sizeof packet);
+	//	}
+	//	block = true; // block the game from processing this key
+	//}
+
+		// Send item move packet
+	// Send item move packet
+	if (wParam == 'Z') {
+		// Call the item_click function using the function pointer
+		const auto g_hoverItem = (*reinterpret_cast<diablo2::structures::unit**>(diablo2::d2_client::get_base() + 0x1158F4));
+
+		if (g_hoverItem != 0) {
+			char currentPage = diablo2::d2_common::get_item_page(g_hoverItem);
+
+			// Create the packet
+			static d2_tweaks::common::item_move_cs packet;
+			packet.item_guid = g_hoverItem->guid;
+
+			if (currentPage == 0) { //item is in inventory
+				if (diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_STASH))
+					packet.target_page = 4;
+
+				if (diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_CUBE))
+					packet.target_page = 3;
+			}
+			else {
+				packet.target_page = 0;
+			}
+
+			diablo2::d2_client::send_to_server(&packet, sizeof packet);
+			(*reinterpret_cast<diablo2::structures::unit**>(diablo2::d2_client::get_base() + 0x1158F4)) = nullptr;
+		}
+		block = true; // block the game from processing this key
+	}
+
+	// Send item move packet
+	if ((wParam == 'Z') && (GetKeyState(VK_SHIFT) & 0x8000)) {
+		// Call the item_click function using the function pointer
+		const auto g_hoverItem = (*reinterpret_cast<diablo2::structures::unit**>(diablo2::d2_client::get_base() + 0x1158F4));
+
+		if (g_hoverItem != 0) {
+			char currentPage = diablo2::d2_common::get_item_page(g_hoverItem);
+
+			// Create the packet
+			static d2_tweaks::common::item_move_cs packet;
+			packet.item_guid = g_hoverItem->guid;
+
+			if (currentPage > 0) { //item is in inventory
+				packet.target_page = 0;
+			}
+			diablo2::d2_client::send_to_server(&packet, sizeof packet);
+		}
+		block = true; // block the game from processing this key
+	}
 
 	switch (msg) {
 		case WM_LBUTTONDOWN:

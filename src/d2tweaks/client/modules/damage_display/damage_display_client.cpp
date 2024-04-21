@@ -53,7 +53,7 @@ static growing_object_pool<damage_label> g_label_pool([]() {
 	return new damage_label();
 	});
 
-static const size_t DAMAGE_LABELS_SIZE = 1024;
+static const size_t DAMAGE_LABELS_SIZE = 1023;
 static damage_label* g_labels[DAMAGE_LABELS_SIZE]{ nullptr };
 static size_t g_labels_count = 0;
 static uint32_t DISPLAY_TIME = 500;

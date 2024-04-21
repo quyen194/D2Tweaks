@@ -16,8 +16,6 @@ bool diablo2::d2_client::is_lod() {
 	return *reinterpret_cast<int*>(get_base() + 0x1077C4) > 0;
 }
 
-
-
 diablo2::structures::unit* diablo2::d2_client::get_local_player() {
 	static wrap_func_std<structures::unit * ()> get_local_player(0x883D0, get_base());
 	return get_local_player();
@@ -52,6 +50,7 @@ uint32_t diablo2::d2_client::get_mouse_y() {
 	static wrap_func_std<uint32_t()> get_mouse_y(0xB7BD0, get_base());
 	return get_mouse_y();
 }
+
 
 bool diablo2::d2_client::get_ui_window_state(const ui_window_t window) {
 	static auto ui_states = reinterpret_cast<BOOL*>(get_base() + 0x11A6A8);
