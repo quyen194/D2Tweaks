@@ -99,6 +99,55 @@ static unsigned int g_font_player = 1;
 static unsigned int g_player_label_posx = 70;
 static unsigned int g_player_label_posy = 500;
 
+
+HWND findDiabloIIWindow() {
+	return FindWindow(nullptr, TEXT("Diablo II")); // Change "Diablo II" to the exact title of the game window
+}
+
+
+// Function to draw the health bar using Windows GDI
+void drawHealthBar(HWND hWnd, int x, int y, int maxWidth, int height, float healthPercentage, COLORREF fillColor, COLORREF outlineColor) {
+	HDC hdc = GetDC(hWnd);
+
+	// Calculate the width of the filled portion of the health bar
+	int barWidth = static_cast<int>(maxWidth * healthPercentage);
+
+	// Draw the outline of the health bar
+	HPEN hOutlinePen = CreatePen(PS_SOLID, 1, outlineColor);
+	SelectObject(hdc, hOutlinePen);
+	Rectangle(hdc, x, y, x + maxWidth, y + height);
+
+	// Draw the filled portion of the health bar
+	HBRUSH hFillBrush = CreateSolidBrush(fillColor);
+	SelectObject(hdc, hFillBrush);
+	Rectangle(hdc, x, y, x + barWidth, y + height);
+
+	// Clean up resources
+	DeleteObject(hOutlinePen);
+	DeleteObject(hFillBrush);
+
+	ReleaseDC(hWnd, hdc);
+}
+
+int frame = 0;
+long nEndTime = 0;
+int nTip = 0;
+long DURATION = 500;
+
+void OnLoad() {
+	srand(time(NULL));
+}
+
+static void onDraw(HWND hWnd, int x, int y, int maxWidth, int height, float healthPercentage, COLORREF fillColor, COLORREF outlineColor) {
+
+	if (GetTickCount64() >= nEndTime) {
+		nEndTime = GetTickCount64() + DURATION;
+	}
+	drawHealthBar(hWnd, x, y, maxWidth, height, healthPercentage, fillColor, outlineColor);
+
+}
+
+
 static void draw_damage_labels() {
 	const auto player = diablo2::d2_client::get_local_player();
 
@@ -182,17 +231,21 @@ static void draw_damage_labels() {
 					textColor = diablo2::UI_COLOR_YELLOW;
 				}
 
-				int bMaxWidth = 100;
+				int bMaxWidth = 10;
 
 				// Calculate the width of the health bar based on the percentage (max width is 10 characters)
 				uint32_t barWidth = static_cast<uint32_t>(healthPercentage * 10.0f);
 				barWidth = (barWidth > bMaxWidth) ? bMaxWidth : barWidth; // Ensure barWidth doesn't exceed 10
 				barWidth = (label->currentHp > 0 && barWidth == 0) ? 1 : barWidth; // Ensure at least one '#' if currentHp is not 0
 
+				char barChar[1]; GetPrivateProfileStringA("Options", "char", "", barChar, sizeof(barChar), "./D2Tweaks.ini");
+
+				LPWSTR barCharW = reinterpret_cast<LPWSTR>(barChar);
+
 				// Construct the health bar string representation
 				std::wstring barText;
 				for (uint32_t i = 0; i < barWidth; ++i) {
-					barText.append(L"!"); // Use '#' to represent filled portion of the bar
+					barText.append(barCharW); // Use '#' to represent filled portion of the bar
 				}
 				for (uint32_t i = barWidth; i < bMaxWidth; ++i) {
 					barText.append(L""); // Use '-' to represent empty portion of the bar
@@ -215,13 +268,26 @@ static void draw_damage_labels() {
 				//diablo2::d2_win::draw_text(const_cast<wchar_t*>(combinedText.c_str()), textX, textY, textColor, 0);
 				//diablo2::d2_win::draw_boxed_text(const_cast<wchar_t*>(fractionStr.c_str()), textX + label->unit_width/2, textY - 12, 0, 0, textColor);
 
-				diablo2::d2_win::set_current_font(diablo2::UI_FONT_6); // Set font to FONT16
-				diablo2::d2_win::draw_text(const_cast<wchar_t*>(fractionStr.c_str()), textX + diablo2::d2_win::get_text_pixel_width(const_cast<wchar_t*>(combinedTextPtr)) / 2, textY - 12, textColor, 0);
+				diablo2::d2_win::set_current_font(diablo2::UI_FONT_8); // Set font to FONT16
+				//diablo2::d2_win::draw_text(const_cast<wchar_t*>(fractionStr.c_str()), textX + diablo2::d2_win::get_text_pixel_width(const_cast<wchar_t*>(combinedTextPtr)) / 2, textY - 12, textColor, 0);
 
-				diablo2::d2_win::set_current_font(diablo2::UI_FONT_6); // Set font to FONT6
-				diablo2::d2_win::draw_text(const_cast<wchar_t*>(combinedText.c_str()), textX, textY, textColor, 0);
+				diablo2::d2_win::set_current_font(diablo2::UI_FONT_8); // Set font to FONT6
+				//diablo2::d2_win::draw_text(const_cast<wchar_t*>(combinedText.c_str()), textX, textY, textColor, 0);
 
-				//diablo2::d2_win::draw_boxed_text(const_cast<wchar_t*>(combinedText.c_str()), textX, textY, 0, 0, textColor);
+				HWND hWndDiabloII = findDiabloIIWindow();
+
+
+				int _barHeight = GetPrivateProfileIntA("Options", "barHeight", 0, "./D2Tweaks.ini");
+				int _barWidth = GetPrivateProfileIntA("Options", "barWidth", 0, "./D2Tweaks.ini");
+				
+				if (GetTickCount64() >= nEndTime) {
+					nEndTime = GetTickCount64() + DURATION;
+				}
+				//drawHealthBar(hWndDiabloII, textX, textY, _barWidth, _barHeight, healthPercentage, RGB(255, 0, 0), RGB(0, 0, 0));
+
+				onDraw(hWndDiabloII, textX, textY, _barWidth, _barHeight, healthPercentage, RGB(255, 0, 0), RGB(0, 0, 0));
+
+				diablo2::d2_win::draw_boxed_text(const_cast<wchar_t*>(combinedText.c_str()), textX, textY, 0, 3, textColor);
 
 
 				const auto offset = static_cast<int32_t>(lerp(static_cast<float>(label->unit_height) + 5.f, static_cast<float>(label->unit_height) + 30.f, static_cast<float>(delta) / static_cast<float>(DISPLAY_TIME)));

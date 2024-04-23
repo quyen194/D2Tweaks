@@ -95,31 +95,6 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 		block = true; // block the game from processing this key
 	}
 
-	//// Send item move packet
-	//if (wParam == 'Z') {
-	//	// Call the item_click function using the function pointer
-	//	const auto g_hoverItem = (*reinterpret_cast<diablo2::structures::unit**>(diablo2::d2_client::get_base() + 0x1158F4));
-
-	//	if (g_hoverItem != 0) {
-	//		char currentPage = diablo2::d2_common::get_item_page(g_hoverItem);
-
-	//		// Create the packet
-	//		static d2_tweaks::common::item_move_cs packet;
-	//		packet.item_guid = g_hoverItem->guid;
-
-	//		if (currentPage == 0) { //item is in inventory
-	//			if (diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_STASH))
-	//				packet.target_page = 4;
-
-	//			if (diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_CUBE))
-	//				packet.target_page = 3;
-	//		}
-	//		diablo2::d2_client::send_to_server(&packet, sizeof packet);
-	//	}
-	//	block = true; // block the game from processing this key
-	//}
-
-		// Send item move packet
 	// Send item move packet
 	if (wParam == 'Z') {
 		// Call the item_click function using the function pointer
@@ -149,25 +124,7 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 		block = true; // block the game from processing this key
 	}
 
-	// Send item move packet
-	if ((wParam == 'Z') && (GetKeyState(VK_SHIFT) & 0x8000)) {
-		// Call the item_click function using the function pointer
-		const auto g_hoverItem = (*reinterpret_cast<diablo2::structures::unit**>(diablo2::d2_client::get_base() + 0x1158F4));
 
-		if (g_hoverItem != 0) {
-			char currentPage = diablo2::d2_common::get_item_page(g_hoverItem);
-
-			// Create the packet
-			static d2_tweaks::common::item_move_cs packet;
-			packet.item_guid = g_hoverItem->guid;
-
-			if (currentPage > 0) { //item is in inventory
-				packet.target_page = 0;
-			}
-			diablo2::d2_client::send_to_server(&packet, sizeof packet);
-		}
-		block = true; // block the game from processing this key
-	}
 
 	switch (msg) {
 		case WM_LBUTTONDOWN:
