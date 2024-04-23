@@ -17,5 +17,7 @@ namespace diablo2 {
 		static int32_t adjust_perspective_coords(int32_t x, int32_t y, int32_t* adjustX, int32_t* adjustY);
 		static int32_t get_resolution_mode();
 		static void draw_image(structures::gfxdata* data, uint32_t x, uint32_t y, int32_t gamma, int32_t drawType, void* palette);
+		static void draw_filled_rect(int left, int top, int right, int bottom, ULONG color, ULONG transTbl);
+
 	};
 }

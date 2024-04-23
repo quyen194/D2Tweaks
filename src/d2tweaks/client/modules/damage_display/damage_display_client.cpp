@@ -9,7 +9,7 @@
 #include <diablo2/d2client.h>
 #include <d2tweaks/ui/ui_manager.h>
 #include <diablo2/d2win.h>
-
+#include <diablo2/d2gfx.h>
 #include <fw/pool.h>
 
 #include <diablo2/structures/gfxdata.h>
@@ -231,7 +231,7 @@ static void draw_damage_labels() {
 					textColor = diablo2::UI_COLOR_YELLOW;
 				}
 
-				int bMaxWidth = 10;
+				int bMaxWidth = 100;
 
 				// Calculate the width of the health bar based on the percentage (max width is 10 characters)
 				uint32_t barWidth = static_cast<uint32_t>(healthPercentage * 10.0f);
@@ -255,7 +255,7 @@ static void draw_damage_labels() {
 				std::wstring fractionStr = std::to_wstring(label->currentHp) + L"/" + std::to_wstring(label->maxHp);
 
 				// Combine the strings for health percentage and bar text
-				std::wstring combinedText = std::to_wstring(static_cast<int>(healthPercentage * 100.0f)) + L"% " + barText;
+				std::wstring combinedText = std::to_wstring(static_cast<int>(healthPercentage * 100.0f)) + L"% [" + fractionStr + L"]";
 
 				const WCHAR* combinedTextPtr = combinedText.c_str();
 
@@ -265,13 +265,13 @@ static void draw_damage_labels() {
 
 
 				// Draw the combined text (health percentage and bar text)
-				//diablo2::d2_win::draw_text(const_cast<wchar_t*>(combinedText.c_str()), textX, textY, textColor, 0);
+				//diablo2::d2_win::draw_text(const_cast<wchar_t*>(combinedTcombinedTextext.c_str()), textX, textY, textColor, 0);
 				//diablo2::d2_win::draw_boxed_text(const_cast<wchar_t*>(fractionStr.c_str()), textX + label->unit_width/2, textY - 12, 0, 0, textColor);
 
-				diablo2::d2_win::set_current_font(diablo2::UI_FONT_8); // Set font to FONT16
+				diablo2::d2_win::set_current_font(diablo2::UI_FONT_6); // Set font to FONT16
 				//diablo2::d2_win::draw_text(const_cast<wchar_t*>(fractionStr.c_str()), textX + diablo2::d2_win::get_text_pixel_width(const_cast<wchar_t*>(combinedTextPtr)) / 2, textY - 12, textColor, 0);
 
-				diablo2::d2_win::set_current_font(diablo2::UI_FONT_8); // Set font to FONT6
+				diablo2::d2_win::set_current_font(diablo2::UI_FONT_6); // Set font to FONT6
 				//diablo2::d2_win::draw_text(const_cast<wchar_t*>(combinedText.c_str()), textX, textY, textColor, 0);
 
 				HWND hWndDiabloII = findDiabloIIWindow();
@@ -285,9 +285,14 @@ static void draw_damage_labels() {
 				}
 				//drawHealthBar(hWndDiabloII, textX, textY, _barWidth, _barHeight, healthPercentage, RGB(255, 0, 0), RGB(0, 0, 0));
 
-				onDraw(hWndDiabloII, textX, textY, _barWidth, _barHeight, healthPercentage, RGB(255, 0, 0), RGB(0, 0, 0));
+				//onDraw(hWndDiabloII, textX, textY, _barWidth, _barHeight, healthPercentage, RGB(255, 0, 0), RGB(0, 0, 0));
 
-				diablo2::d2_win::draw_boxed_text(const_cast<wchar_t*>(combinedText.c_str()), textX, textY, 0, 3, textColor);
+				//diablo2::d2_win::draw_boxed_text(const_cast<wchar_t*>(combinedText.c_str()), textX, textY, 0, 3, textColor);
+
+				diablo2::d2_win::draw_text(const_cast<wchar_t*>(combinedText.c_str()), textX, textY, textColor, 0);
+				diablo2::d2_gfx::draw_filled_rect(textX, textY, textX + healthPercentage  * 60, textY + _barHeight, 9, 7);
+
+
 
 
 				const auto offset = static_cast<int32_t>(lerp(static_cast<float>(label->unit_height) + 5.f, static_cast<float>(label->unit_height) + 30.f, static_cast<float>(delta) / static_cast<float>(DISPLAY_TIME)));

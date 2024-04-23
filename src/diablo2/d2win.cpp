@@ -22,6 +22,8 @@ void diablo2::d2_win::draw_boxed_text(wchar_t* str, uint32_t x, uint32_t y, int3
 	draw_boxed_text(str, x, y, paletteIndex, transTbl, color);
 }
 
+
+
 void diablo2::d2_win::set_popup_properties(wchar_t* str, uint32_t x, uint32_t y, ui_color_t color, int32_t align) {
 	static wrap_func_fast_import<void(wchar_t*, uint32_t, uint32_t, int32_t, int32_t)> hover_text(10129, get_base());
 	hover_text(str, x, y, color, align);
