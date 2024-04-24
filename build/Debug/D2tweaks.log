@@ -1,5 +1,3 @@
 ﻿C:\Program Files\Microsoft Visual Studio\2022\Enterprise\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(517,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
   autosort_client.cpp
-D:\VSCode\d2tweaks-rnd2k\src\d2tweaks\client\modules\autosort\autosort_client.cpp(1163,13): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-D:\VSCode\d2tweaks-rnd2k\src\d2tweaks\client\modules\autosort\autosort_client.cpp(1168,32): warning C4244: '=': conversion from 'ULONGLONG' to 'long', possible loss of data
   D2tweaks.vcxproj -> D:\Diablo II\MODS\ironman-dev\D2tweaks.dll

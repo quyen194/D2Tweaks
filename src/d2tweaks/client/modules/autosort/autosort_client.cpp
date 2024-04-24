@@ -117,6 +117,20 @@ public:
 
 
 
+	// Function to find the Diablo II window handle
+	HWND FindDiabloIIWindow() {
+		return FindWindow(NULL, "Diablo II");
+	}
+
+	// Function to draw a filled rectangle using GDI
+	void DrawFilledRect(HWND hwnd, int left, int top, int right, int bottom, COLORREF color) {
+		HDC hdc = GetDC(hwnd);
+		HBRUSH hBrush = CreateSolidBrush(color);
+		RECT rect = { left, top, right, bottom };
+		FillRect(hdc, &rect, hBrush);
+		DeleteObject(hBrush);
+		ReleaseDC(hwnd, hdc);
+	}
 
 
 
@@ -302,6 +316,56 @@ public:
 
 					diablo2::ui_color_t::UI_COLOR_WHITE;
 
+
+					// print player health, mana, and stamina bars, lastexp, nextexp, and level
+					// Get current HP, Mana, and Stamina along with their maximum values
+					int statHP = diablo2::d2_common::get_stat(player, static_cast<diablo2::unit_stats_t>(6), NULL);
+					int statMaxHP = diablo2::d2_common::get_stat(player, static_cast<diablo2::unit_stats_t>(7), NULL);
+					int statMana = diablo2::d2_common::get_stat(player, static_cast<diablo2::unit_stats_t>(8), NULL);
+					int statMaxMana = diablo2::d2_common::get_stat(player, static_cast<diablo2::unit_stats_t>(9), NULL);
+					int statStamina = diablo2::d2_common::get_stat(player, static_cast<diablo2::unit_stats_t>(10), NULL);
+					int statMaxStamina = diablo2::d2_common::get_stat(player, static_cast<diablo2::unit_stats_t>(11), NULL);
+
+					// Calculate the percentages of current HP, Mana, and Stamina
+					float healthPercentage = static_cast<float>(statHP) / static_cast<float>(statMaxHP);
+					float manaPercentage = static_cast<float>(statMana) / static_cast<float>(statMaxMana);
+					float staminaPercentage = static_cast<float>(statStamina) / static_cast<float>(statMaxStamina);
+
+					// Define the dimensions for the bars
+					int barWidth = 200; // Width of the bars
+					int barHeight = 10; // Height of the bars
+
+					// Define the coordinates for the bars
+					int barX = 15; // Left coordinate of the bars
+					int barY_HP = 600; // Top coordinate of the HP bar
+					int barY_Mana = barY_HP + barHeight + 4; // Top coordinate of the Mana bar with separator
+					int barY_Stamina = barY_Mana + barHeight + 4; // Top coordinate of the Stamina bar with separator
+
+
+
+					// Calculate the filled widths of the bars
+					int filledHPWidth = static_cast<int>(healthPercentage * barWidth);
+					int filledManaWidth = static_cast<int>(manaPercentage * barWidth);
+					int filledStaminaWidth = static_cast<int>(staminaPercentage * barWidth);
+
+					HWND diabloIIWnd = FindDiabloIIWindow();
+
+					// Draw the filled HP bar
+					// diablo2::d2_gfx::draw_filled_rect(barX, barY_HP, barX + filledHPWidth, barY_HP + barHeight, 1, 7);
+					DrawFilledRect(diabloIIWnd, barX, barY_HP, barX + filledHPWidth, barY_HP + barHeight, RGB(255, 0, 0)); // Red color for HP
+
+					
+					// Draw the filled Mana bar
+					// diablo2::d2_gfx::draw_filled_rect(barX, barY_Mana, barX + filledManaWidth, barY_Mana + barHeight, 3, 7);
+					DrawFilledRect(diabloIIWnd, barX, barY_Mana, barX + filledManaWidth, barY_Mana + barHeight, RGB(100, 100, 255)); // Blue color for Mana
+
+					// Draw the filled Stamina bar
+					// diablo2::d2_gfx::draw_filled_rect(barX, barY_Stamina, barX + filledStaminaWidth, barY_Stamina + barHeight, 9, 7);
+					DrawFilledRect(diabloIIWnd, barX, barY_Stamina, barX + filledStaminaWidth, barY_Stamina + barHeight, RGB(255, 255, 0)); // Green color for Stamina
+					
+					int statLevel = diablo2::d2_common::get_stat(player, static_cast<diablo2::unit_stats_t>(12), NULL);
+					int statLastExp = diablo2::d2_common::get_stat(player, static_cast<diablo2::unit_stats_t>(29), NULL);
+					int statNextExp = diablo2::d2_common::get_stat(player, static_cast<diablo2::unit_stats_t>(30), NULL);
 
 
 
