@@ -342,19 +342,30 @@ public:
 					float manaPercentage = static_cast<float>(statMana) / static_cast<float>(statMaxMana);
 					float staminaPercentage = static_cast<float>(statStamina) / static_cast<float>(statMaxStamina);
 
+
+					int sHeight = 768;
+					int sWidth = 1280;
+
+					int sHCenter = sHeight / 2;
+					int sWCenter = sWidth / 2;
+
 					// Define the dimensions for the bars
 					int barWidth = 200; // Width of the bars
 					int barHeight = 16; // Height of the bars
 
 					// Define the coordinates for the bars
-					int barX = 245; // Left coordinate of the bars
-					int barY_HP = 728; // Top coordinate of the HP bar
+					int barX = sWCenter - 100; // Left coordinate of the bars
+					int barY_HP = 654; // Top coordinate of the HP bar
 					int barY_Mana = barY_HP + barHeight + 4; // Top coordinate of the Mana bar with separator
 					int barY_Stamina = barY_Mana + barHeight + 4; // Top coordinate of the Stamina bar with separator
 
-					std::wstring life = strHP + L" / " + strMaxHP;
-					std::wstring mana = strMana + L" / " + strMaxMana;
-					std::wstring stamina = strStamina + L" / " + strMaxStamina;
+					std::wstring life = L"L: " + strHP + L" / " + strMaxHP;
+					std::wstring mana = L"M: " + strMana + L" / " + strMaxMana;
+					std::wstring stamina = L"" + strStamina + L" / " + strMaxStamina;
+
+					int lifeWidth = diablo2::d2_win::get_text_pixel_width(const_cast<wchar_t*>(life.c_str()));
+					int manaWidth = diablo2::d2_win::get_text_pixel_width(const_cast<wchar_t*>(mana.c_str()));
+					int staminaWidth = diablo2::d2_win::get_text_pixel_width(const_cast<wchar_t*>(stamina.c_str()));
 
 
 					// Calculate the filled widths of the bars
@@ -367,15 +378,12 @@ public:
 					// Draw the filled HP bar
 					diablo2::d2_gfx::draw_filled_rect(barX, barY_HP, barX + filledHPWidth, barY_HP + barHeight, 10, 255);
 					//DrawFilledRect(diabloIIWnd, barX, barY_HP, barX + filledHPWidth, barY_HP + barHeight, RGB(255, 0, 0)); // Red color for HP
-					diablo2::d2_win::draw_text(const_cast<wchar_t*>(life.c_str()), barX + 20, barY_HP + 15, stat.colorStatValue, 0);
-
-
-
+					diablo2::d2_win::draw_text(const_cast<wchar_t*>(life.c_str()), sWCenter - (lifeWidth/2), barY_HP + 15, diablo2::ui_color_t::UI_COLOR_GOLD, 0);
 					
 					// Draw the filled Mana bar
 					diablo2::d2_gfx::draw_filled_rect(barX, barY_Mana, barX + filledManaWidth, barY_Mana + barHeight, 156, 255);
 					//DrawFilledRect(diabloIIWnd, barX, barY_Mana, barX + filledManaWidth, barY_Mana + barHeight, RGB(100, 100, 255)); // Blue color for Mana
-					diablo2::d2_win::draw_text(const_cast<wchar_t*>(mana.c_str()), barX + 20, barY_Mana + 15, stat.colorStatValue, 0);
+					diablo2::d2_win::draw_text(const_cast<wchar_t*>(mana.c_str()), sWCenter - (lifeWidth / 2), barY_Mana + 15, diablo2::ui_color_t::UI_COLOR_DARK_WHITE, 0);
 
 					/*
 					// Define the number of separators
