@@ -138,6 +138,7 @@ public:
 	int statsFont = GetPrivateProfileIntA("Options", "statsFont", 0, "./d2tweaks.ini");
 
 
+
 	void draw() override {
 		auto stats = globalStatsVector;
 		int textOffset = 40; // Initial offset for the first line
@@ -319,12 +320,22 @@ public:
 
 					// print player health, mana, and stamina bars, lastexp, nextexp, and level
 					// Get current HP, Mana, and Stamina along with their maximum values
-					int statHP = diablo2::d2_common::get_stat(player, static_cast<diablo2::unit_stats_t>(6), NULL);
-					int statMaxHP = diablo2::d2_common::get_stat(player, static_cast<diablo2::unit_stats_t>(7), NULL);
-					int statMana = diablo2::d2_common::get_stat(player, static_cast<diablo2::unit_stats_t>(8), NULL);
-					int statMaxMana = diablo2::d2_common::get_stat(player, static_cast<diablo2::unit_stats_t>(9), NULL);
-					int statStamina = diablo2::d2_common::get_stat(player, static_cast<diablo2::unit_stats_t>(10), NULL);
-					int statMaxStamina = diablo2::d2_common::get_stat(player, static_cast<diablo2::unit_stats_t>(11), NULL);
+					int statHP = diablo2::d2_common::get_stat(player, static_cast<diablo2::unit_stats_t>(6), NULL) / 256;
+					int statMaxHP = diablo2::d2_common::get_stat(player, static_cast<diablo2::unit_stats_t>(7), NULL) / 256;
+					int statMana = diablo2::d2_common::get_stat(player, static_cast<diablo2::unit_stats_t>(8), NULL) / 256;
+					int statMaxMana = diablo2::d2_common::get_stat(player, static_cast<diablo2::unit_stats_t>(9), NULL) / 256;
+					int statStamina = diablo2::d2_common::get_stat(player, static_cast<diablo2::unit_stats_t>(10), NULL) / 256;
+					int statMaxStamina = diablo2::d2_common::get_stat(player, static_cast<diablo2::unit_stats_t>(11), NULL) / 256;
+
+					// Convert the integer values to wide character strings
+					std::wstring strHP = std::to_wstring(statHP);
+					std::wstring strMaxHP = std::to_wstring(statMaxHP);
+					std::wstring strMana = std::to_wstring(statMana);
+					std::wstring strMaxMana = std::to_wstring(statMaxMana);
+					std::wstring strStamina = std::to_wstring(statStamina);
+					std::wstring strMaxStamina = std::to_wstring(statMaxStamina);
+
+					diablo2::d2_win::set_current_font(diablo2::UI_FONT_16); // Set font to FONT16
 
 					// Calculate the percentages of current HP, Mana, and Stamina
 					float healthPercentage = static_cast<float>(statHP) / static_cast<float>(statMaxHP);
@@ -333,14 +344,17 @@ public:
 
 					// Define the dimensions for the bars
 					int barWidth = 200; // Width of the bars
-					int barHeight = 10; // Height of the bars
+					int barHeight = 16; // Height of the bars
 
 					// Define the coordinates for the bars
-					int barX = 15; // Left coordinate of the bars
-					int barY_HP = 600; // Top coordinate of the HP bar
+					int barX = 245; // Left coordinate of the bars
+					int barY_HP = 728; // Top coordinate of the HP bar
 					int barY_Mana = barY_HP + barHeight + 4; // Top coordinate of the Mana bar with separator
 					int barY_Stamina = barY_Mana + barHeight + 4; // Top coordinate of the Stamina bar with separator
 
+					std::wstring life = strHP + L" / " + strMaxHP;
+					std::wstring mana = strMana + L" / " + strMaxMana;
+					std::wstring stamina = strStamina + L" / " + strMaxStamina;
 
 
 					// Calculate the filled widths of the bars
@@ -351,23 +365,59 @@ public:
 					HWND diabloIIWnd = FindDiabloIIWindow();
 
 					// Draw the filled HP bar
-					// diablo2::d2_gfx::draw_filled_rect(barX, barY_HP, barX + filledHPWidth, barY_HP + barHeight, 1, 7);
-					DrawFilledRect(diabloIIWnd, barX, barY_HP, barX + filledHPWidth, barY_HP + barHeight, RGB(255, 0, 0)); // Red color for HP
+					diablo2::d2_gfx::draw_filled_rect(barX, barY_HP, barX + filledHPWidth, barY_HP + barHeight, 10, 255);
+					//DrawFilledRect(diabloIIWnd, barX, barY_HP, barX + filledHPWidth, barY_HP + barHeight, RGB(255, 0, 0)); // Red color for HP
+					diablo2::d2_win::draw_text(const_cast<wchar_t*>(life.c_str()), barX + 20, barY_HP + 15, stat.colorStatValue, 0);
+
+
 
 					
 					// Draw the filled Mana bar
-					// diablo2::d2_gfx::draw_filled_rect(barX, barY_Mana, barX + filledManaWidth, barY_Mana + barHeight, 3, 7);
-					DrawFilledRect(diabloIIWnd, barX, barY_Mana, barX + filledManaWidth, barY_Mana + barHeight, RGB(100, 100, 255)); // Blue color for Mana
+					diablo2::d2_gfx::draw_filled_rect(barX, barY_Mana, barX + filledManaWidth, barY_Mana + barHeight, 156, 255);
+					//DrawFilledRect(diabloIIWnd, barX, barY_Mana, barX + filledManaWidth, barY_Mana + barHeight, RGB(100, 100, 255)); // Blue color for Mana
+					diablo2::d2_win::draw_text(const_cast<wchar_t*>(mana.c_str()), barX + 20, barY_Mana + 15, stat.colorStatValue, 0);
+
+					/*
+					// Define the number of separators
+					int numColors = 256;
+					int numColumns = 4;
+					int colorsPerColumn = numColors / numColumns;
+					int separatorHeight = 1; // Height of each separator
+					int columnOffset = 200; // Offset for each column
+
+					// Iterate over each column
+					for (int column = 0; column < numColumns; ++column) {
+						// Calculate the starting X coordinate for this column
+						int columnX = barX + (column * columnOffset);
+
+						// Draw the filled Mana bars for this column
+						for (int i = 0; i < colorsPerColumn; ++i) {
+							int colorIndex = column * colorsPerColumn + i;
+							int separatorY = barY_Mana + barHeight + i * (separatorHeight + barHeight);
+
+							// Draw the filled Mana bar
+							diablo2::d2_gfx::draw_filled_rect(columnX, separatorY, columnX + filledManaWidth, separatorY + barHeight, colorIndex, 255);
+
+							// Draw the index number at the same coordinates as the bar
+							std::wstring indexStr = std::to_wstring(colorIndex);
+							diablo2::d2_win::draw_text(const_cast<wchar_t*>(indexStr.c_str()), columnX - 20, separatorY, diablo2::UI_COLOR_DARK_GOLD, 0);
+						}
+					}
+					*/
+
+
+
+
 
 					// Draw the filled Stamina bar
-					// diablo2::d2_gfx::draw_filled_rect(barX, barY_Stamina, barX + filledStaminaWidth, barY_Stamina + barHeight, 9, 7);
-					DrawFilledRect(diabloIIWnd, barX, barY_Stamina, barX + filledStaminaWidth, barY_Stamina + barHeight, RGB(255, 255, 0)); // Green color for Stamina
+					// diablo2::d2_gfx::draw_filled_rect(barX, barY_Stamina, barX + filledStaminaWidth, barY_Stamina + barHeight, 12, 255);
+					//DrawFilledRect(diabloIIWnd, barX, barY_Stamina, barX + filledStaminaWidth, barY_Stamina + barHeight, RGB(255, 255, 0)); // Green color for Stamina
 					
 					int statLevel = diablo2::d2_common::get_stat(player, static_cast<diablo2::unit_stats_t>(12), NULL);
 					int statLastExp = diablo2::d2_common::get_stat(player, static_cast<diablo2::unit_stats_t>(29), NULL);
 					int statNextExp = diablo2::d2_common::get_stat(player, static_cast<diablo2::unit_stats_t>(30), NULL);
 
-
+					diablo2::d2_win::set_current_font(diablo2::UI_FONT_16); // Set font to FONT16
 
 
 				}
@@ -397,6 +447,7 @@ public:
 
 		menu::draw();
 	}
+
 private:
 	static bool should_draw() {
 		return diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_INVENTORY) ||

@@ -49,6 +49,7 @@ namespace diablo2 {
 		static void draw_text(wchar_t* str, uint32_t x, uint32_t y, ui_color_t color, int32_t transTbl);
 		static void draw_boxed_text(wchar_t* str, uint32_t x, uint32_t y, int32_t paletteIndex, int32_t transTbl, ui_color_t color);
 
+		static int32_t D2Win_10034_MixRGB(uint8_t nRed, uint8_t nGreen, uint8_t nBlue);
 
 		static void set_popup_properties(wchar_t* str, uint32_t x, uint32_t y, ui_color_t color, int32_t align);
 		static void draw_popup();

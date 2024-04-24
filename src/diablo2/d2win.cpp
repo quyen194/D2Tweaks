@@ -22,7 +22,11 @@ void diablo2::d2_win::draw_boxed_text(wchar_t* str, uint32_t x, uint32_t y, int3
 	draw_boxed_text(str, x, y, paletteIndex, transTbl, color);
 }
 
-
+int32_t diablo2::d2_win::D2Win_10034_MixRGB(uint8_t nRed, uint8_t nGreen, uint8_t nBlue) {
+	static wrap_func_fast_import<int32_t(uint8_t, uint8_t, uint8_t)> D2Win_10034_MixRGB(10034, get_base());
+	auto xColor = D2Win_10034_MixRGB(nRed, nGreen, nBlue);
+	return xColor;
+}
 
 void diablo2::d2_win::set_popup_properties(wchar_t* str, uint32_t x, uint32_t y, ui_color_t color, int32_t align) {
 	static wrap_func_fast_import<void(wchar_t*, uint32_t, uint32_t, int32_t, int32_t)> hover_text(10129, get_base());

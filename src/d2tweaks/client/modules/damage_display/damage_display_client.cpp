@@ -249,7 +249,7 @@ static void draw_damage_labels() {
 				int _barHeight = GetPrivateProfileIntA("Options", "barHeight", 0, "./D2Tweaks.ini");
 
 				diablo2::d2_win::draw_text(const_cast<wchar_t*>(combinedText.c_str()), textX, textY, textColor, 0);
-				diablo2::d2_gfx::draw_filled_rect(textX, textY, textX + healthPercentage * 60, textY + _barHeight, 9, 7);
+				diablo2::d2_gfx::draw_filled_rect(textX, textY, textX + healthPercentage * 60, textY + _barHeight, 9, 255);
 
 				const auto offset = static_cast<int32_t>(lerp(static_cast<float>(label->unit_height) + 5.f, static_cast<float>(label->unit_height) + 30.f, static_cast<float>(delta) / static_cast<float>(DISPLAY_TIME)));
 				my -= offset;

@@ -34,7 +34,7 @@ void diablo2::d2_gfx::draw_image(structures::gfxdata* data, uint32_t x, uint32_t
 }
 
 
-void diablo2::d2_gfx::draw_filled_rect(int left , int top, int right, int bottom, ULONG color, ULONG transTbl) {
-	static wrap_func_std_import<void(int, int, int, int, ULONG, ULONG)> draw_boxed_text(10055, get_base());
+void diablo2::d2_gfx::draw_filled_rect(int left , int top, int right, int bottom, DWORD color, int transTbl) {
+	static wrap_func_std_import<void(int, int, int, int, DWORD, int)> draw_boxed_text(10056, get_base());
 	draw_boxed_text(left, top, right, bottom, color, transTbl);
 }
