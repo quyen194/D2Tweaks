@@ -3,34 +3,31 @@
   autosort_client.cpp
   auto_gold_pickup_client.cpp
   auto_item_pickup_client.cpp
-  client_module.cpp
   damage_display_client.cpp
 D:\VSCode\d2tweaks-rnd2k\src\d2tweaks\client\modules\damage_display\damage_display_client.cpp(138,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
 D:\VSCode\d2tweaks-rnd2k\src\d2tweaks\client\modules\damage_display\damage_display_client.cpp(144,31): warning C4244: '=': conversion from 'ULONGLONG' to 'long', possible loss of data
-D:\VSCode\d2tweaks-rnd2k\src\d2tweaks\client\modules\damage_display\damage_display_client.cpp(252,59): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\VSCode\d2tweaks-rnd2k\src\d2tweaks\client\modules\damage_display\damage_display_client.cpp(267,59): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
   item_drop_message_client.cpp
   item_move_client.cpp
 D:\VSCode\d2tweaks-rnd2k\src\d2tweaks\client\modules\item_move\item_move_client.cpp(99,33): warning C4018: '<': signed/unsigned mismatch
   loot_filter_settings_menu.cpp
-  loot_filter_settings_toggle_menu.cpp
-  small_patches.cpp
   test.cpp
   trader_update_client.cpp
   transmute_client.cpp
-  asset_manager.cpp
+  autosort_server.cpp
+D:\VSCode\d2tweaks-rnd2k\src\d2tweaks\server\modules\autosort\autosort_server.cpp(348,25): warning C4018: '<=': signed/unsigned mismatch
+D:\VSCode\d2tweaks-rnd2k\src\d2tweaks\server\modules\autosort\autosort_server.cpp(349,26): warning C4018: '<=': signed/unsigned mismatch
+  auto_gold_pickup_server.cpp
+D:\VSCode\d2tweaks-rnd2k\src\d2tweaks\server\modules\auto_gold_pickup\auto_gold_pickup_server.cpp(51,33): warning C4018: '>': signed/unsigned mismatch
+  auto_item_pickup_server.cpp
+  damage_display_server.cpp
+  identify_on_pickup_server.cpp
+  item_drop_message_server.cpp
+  item_move_server.cpp
+  test.cpp
   trader_update_server.cpp
-  server.cpp
-  button.cpp
-  checkbox.cpp
-  group.cpp
-  image.cpp
-  label.cpp
-  menu.cpp
+  transmute_server.cpp
   ui_manager.cpp
-  d2gfx.cpp
-  d2win.cpp
-  main.cpp
-  D2Template.cpp
-  DllNotify.cpp
-  LINK : ..\..\Diablo II\MODS\ironman-dev\D2tweaks.dll not found or not built by the last incremental link; performing full link
+  d2common.cpp
+  screen.cpp
   D2tweaks.vcxproj -> D:\Diablo II\MODS\ironman-dev\D2tweaks.dll

@@ -22,6 +22,8 @@ namespace diablo2 {
 		struct statslistex;
 		struct quest_record;
 		struct npc_record;
+		
+
 
 		enum class unit_type_t : int32_t {
 			UNIT_TYPE_PLAYER = 0,
@@ -73,6 +75,8 @@ namespace diablo2 {
 			ITEMFLAG_SHOPITEM = 0x06000000,
 			ITEMFLAG_ITEM = 0x08000000
 		};
+
+
 
 		struct unit {
 			unit_type_t type;

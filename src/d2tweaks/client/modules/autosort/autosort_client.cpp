@@ -342,6 +342,26 @@ public:
 					float manaPercentage = static_cast<float>(statMana) / static_cast<float>(statMaxMana);
 					float staminaPercentage = static_cast<float>(statStamina) / static_cast<float>(statMaxStamina);
 
+					//spdlog::info("healthPercentage: {}", healthPercentage);
+					
+
+					// Define default bar color
+					DWORD barColor = 0;
+
+					// Determine bar color based on health percentage
+					if (healthPercentage > .80) {
+						barColor = 118;
+					}
+					else if (healthPercentage > .50) {
+						barColor = 13;
+					}
+					else {
+						barColor = 5;
+					}
+
+					//spdlog::info("barColor: {}", barColor);
+
+
 					// Define the dimensions for the bars
 					int barWidth = 200; // Width of the bars
 					int barHeight = 16; // Height of the bars
@@ -362,20 +382,21 @@ public:
 					int filledManaWidth = static_cast<int>(manaPercentage * barWidth);
 					int filledStaminaWidth = static_cast<int>(staminaPercentage * barWidth);
 
+					// at 345 we need to minus the width of the text
+					int sWCenter = barX + 100 - (diablo2::d2_win::get_text_pixel_width(const_cast<wchar_t*>(mana.c_str())) / 2);
+
 					HWND diabloIIWnd = FindDiabloIIWindow();
 
 					// Draw the filled HP bar
-					diablo2::d2_gfx::draw_filled_rect(barX, barY_HP, barX + filledHPWidth, barY_HP + barHeight, 10, 255);
+					diablo2::d2_gfx::draw_filled_rect(barX, barY_HP, barX + filledHPWidth, barY_HP + barHeight, barColor, 255);
 					//DrawFilledRect(diabloIIWnd, barX, barY_HP, barX + filledHPWidth, barY_HP + barHeight, RGB(255, 0, 0)); // Red color for HP
-					diablo2::d2_win::draw_text(const_cast<wchar_t*>(life.c_str()), barX + 20, barY_HP + 15, stat.colorStatValue, 0);
-
-
+					diablo2::d2_win::draw_text(const_cast<wchar_t*>(life.c_str()), sWCenter, barY_HP + 15, stat.colorStatValue, 0);
 
 					
 					// Draw the filled Mana bar
-					diablo2::d2_gfx::draw_filled_rect(barX, barY_Mana, barX + filledManaWidth, barY_Mana + barHeight, 156, 255);
+					diablo2::d2_gfx::draw_filled_rect(barX, barY_Mana, barX + filledManaWidth, barY_Mana + barHeight, 140, 255);
 					//DrawFilledRect(diabloIIWnd, barX, barY_Mana, barX + filledManaWidth, barY_Mana + barHeight, RGB(100, 100, 255)); // Blue color for Mana
-					diablo2::d2_win::draw_text(const_cast<wchar_t*>(mana.c_str()), barX + 20, barY_Mana + 15, stat.colorStatValue, 0);
+					diablo2::d2_win::draw_text(const_cast<wchar_t*>(mana.c_str()), sWCenter, barY_Mana + 15, stat.colorStatValue, 0);
 
 					/*
 					// Define the number of separators

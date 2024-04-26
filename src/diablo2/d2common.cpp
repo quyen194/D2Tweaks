@@ -1,5 +1,6 @@
 #include <diablo2/d2common.h>
 #include <common/ptr_wrapper.h>
+#include <d2tweaks/common/protocol.h>
 
 char* diablo2::d2_common::get_base() {
 	static auto base = reinterpret_cast<char*>(GetModuleHandle("d2common.dll"));
@@ -250,3 +251,8 @@ void diablo2::d2_common::update_trade(structures::inventory* inventory, structur
 //	static wrap_func_std_import<void(structures::unit* item, structures::itemflags_t dwFlag, bool bSet)> set_item_flags(10708, get_base());
 //	set_item_flags(item, dwFlag, bSet);
 //}
+
+void diablo2::d2_common::add_property(structures::unit* item, D2PropertyStrc* prop, int nUnused) {
+	static wrap_func_std_import<void(structures::unit* item, D2PropertyStrc* prop, int nUnused)> add_property(10868, get_base());
+	add_property(item, prop, nUnused);
+}

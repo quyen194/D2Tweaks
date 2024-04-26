@@ -235,6 +235,20 @@ static void draw_damage_labels() {
 				uint32_t textX = mx;
 				uint32_t textY = my;
 
+				// Define default bar color
+				diablo2::ui_color_t barColor;
+
+				// Determine bar color based on health percentage
+				if (healthPercentage > .80) {
+					barColor = diablo2::ui_color_t::UI_COLOR_DARK_GREEN;
+				}
+				else if (healthPercentage > .50) {
+					barColor = diablo2::ui_color_t::UI_COLOR_DARK_GOLD;
+				}
+				else {
+					barColor = diablo2::ui_color_t::UI_COLOR_RED;
+				}
+
 				// Draw the combined text (health percentage and bar text)
 				//diablo2::d2_win::draw_text(const_cast<wchar_t*>(combinedTcombinedTextext.c_str()), textX, textY, textColor, 0);
 				//diablo2::d2_win::draw_boxed_text(const_cast<wchar_t*>(fractionStr.c_str()), textX + label->unit_width/2, textY - 12, 0, 0, textColor);
@@ -248,11 +262,15 @@ static void draw_damage_labels() {
 
 				int _barHeight = GetPrivateProfileIntA("Options", "barHeight", 0, "./D2Tweaks.ini");
 
-				diablo2::d2_win::draw_text(const_cast<wchar_t*>(combinedText.c_str()), textX, textY, textColor, 0);
-				diablo2::d2_gfx::draw_filled_rect(textX, textY, textX + healthPercentage * 60, textY + _barHeight, 9, 255);
+				diablo2::d2_win::set_current_font(diablo2::UI_FONT_6); // Set font to FONT16
+				diablo2::d2_win::draw_text(const_cast<wchar_t*>(combinedText.c_str()), textX, textY, barColor, 0);
+				diablo2::d2_gfx::draw_filled_rect(textX, textY, textX + healthPercentage * 60, textY + _barHeight, 5, 255);
 
 				const auto offset = static_cast<int32_t>(lerp(static_cast<float>(label->unit_height) + 5.f, static_cast<float>(label->unit_height) + 30.f, static_cast<float>(delta) / static_cast<float>(DISPLAY_TIME)));
 				my -= offset;
+
+
+
 
 				// Draw damage label
 				std::wstring dmgText = L" " + std::to_wstring(label->damage) + L" ";
