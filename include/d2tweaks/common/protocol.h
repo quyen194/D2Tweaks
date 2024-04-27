@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdint>
+#include <diablo2/structures/unit.h>
 
 namespace d2_tweaks {
 	namespace common {
@@ -235,6 +236,10 @@ namespace d2_tweaks {
 		struct item_move_cs : packet_header {
 			uint32_t item_guid;
 			uint8_t target_page;
+			uint32_t bag_guid = 0;
+			bool updateBag;
+			int prop;
+			int val;
 
 			item_move_cs() : item_guid(0), target_page(0) {
 				message_type = MESSAGE_TYPE_ITEM_MOVE;
@@ -246,7 +251,10 @@ namespace d2_tweaks {
 			uint32_t tx;
 			uint32_t ty;
 			uint8_t target_page;
-
+			uint32_t bag_guid = 0;
+			bool updateBag;
+			int prop;
+			int val;
 			item_move_sc() : item_guid(0), tx(0), ty(0), target_page(0) {
 				message_type = MESSAGE_TYPE_ITEM_MOVE;
 			}
@@ -254,11 +262,14 @@ namespace d2_tweaks {
 
 		struct inventory_sort_cs : packet_header {
 			uint8_t page;
+			diablo2::structures::unit* item_to_remove;
+			bool remItem;
 
 			inventory_sort_cs() : page(0) {
 				message_type = MESSAGE_TYPE_INVENTORY_SORT;
 			}
 		};
+
 
 		struct inventory_sort_sc : packet_header {
 			uint8_t page;

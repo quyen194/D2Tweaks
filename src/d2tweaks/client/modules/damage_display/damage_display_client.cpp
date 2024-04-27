@@ -222,7 +222,7 @@ static void draw_damage_labels() {
 				// Determine the color based on healthPercentage
 				diablo2::ui_color_t textColor;
 
-				textColor = healthPercentage >= 0.67f ? diablo2::UI_COLOR_GREEN : (healthPercentage <= 0.33f ? diablo2::UI_COLOR_RED : diablo2::UI_COLOR_YELLOW);
+				textColor = healthPercentage >= 0.8f ? diablo2::UI_COLOR_GREEN : (healthPercentage <= 0.5f ? diablo2::UI_COLOR_RED : diablo2::UI_COLOR_YELLOW);
 
 				// Construct the health fraction string
 				std::wstring fractionStr = std::to_wstring(label->currentHp) + L"/" + std::to_wstring(label->maxHp);
@@ -234,6 +234,23 @@ static void draw_damage_labels() {
 				// Calculate text position for the combined text
 				uint32_t textX = mx;
 				uint32_t textY = my;
+
+				// Define default bar color
+				int barColor;
+
+				// Determine bar color based on health percentage
+				if (healthPercentage > .80) {
+					barColor = 132;
+				}
+				else if (healthPercentage > .50) {
+					barColor = 12;
+				}
+				else {
+					barColor = 10;
+				}
+
+				// Get the width of the combinedText string
+				int32_t combinedTextWidth = diablo2::d2_win::get_text_pixel_width(const_cast<wchar_t*>(combinedTextPtr));
 
 				// Draw the combined text (health percentage and bar text)
 				//diablo2::d2_win::draw_text(const_cast<wchar_t*>(combinedTcombinedTextext.c_str()), textX, textY, textColor, 0);
@@ -248,11 +265,15 @@ static void draw_damage_labels() {
 
 				int _barHeight = GetPrivateProfileIntA("Options", "barHeight", 0, "./D2Tweaks.ini");
 
+				diablo2::d2_win::set_current_font(diablo2::UI_FONT_6); // Set font to FONT16
 				diablo2::d2_win::draw_text(const_cast<wchar_t*>(combinedText.c_str()), textX, textY, textColor, 0);
-				diablo2::d2_gfx::draw_filled_rect(textX, textY, textX + healthPercentage * 60, textY + _barHeight, 9, 255);
+				diablo2::d2_gfx::draw_filled_rect(textX, textY, textX + healthPercentage * combinedTextWidth, textY + _barHeight, barColor, 255);
 
 				const auto offset = static_cast<int32_t>(lerp(static_cast<float>(label->unit_height) + 5.f, static_cast<float>(label->unit_height) + 30.f, static_cast<float>(delta) / static_cast<float>(DISPLAY_TIME)));
 				my -= offset;
+
+
+
 
 				// Draw damage label
 				std::wstring dmgText = L" " + std::to_wstring(label->damage) + L" ";

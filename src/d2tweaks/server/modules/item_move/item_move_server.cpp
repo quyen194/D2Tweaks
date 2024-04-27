@@ -11,6 +11,8 @@
 #include <diablo2/structures/item_data.h>
 #include <diablo2/structures/player_data.h>
 
+#include <spdlog/spdlog.h>
+
 MODULE_INIT(item_move)
 
 void d2_tweaks::server::modules::item_move::init() {
@@ -25,6 +27,8 @@ void d2_tweaks::server::modules::item_move::init() {
 	}
 }
 
+
+// handle packet coming from the client
 bool d2_tweaks::server::modules::item_move::handle_packet(diablo2::structures::game* game,
 														  diablo2::structures::unit* player, common::packet_header* packet) {
 	static common::item_move_sc resp;
@@ -32,6 +36,15 @@ bool d2_tweaks::server::modules::item_move::handle_packet(diablo2::structures::g
 
 	const auto itemMove = static_cast<common::item_move_cs*>(packet);
 	const auto item = instance.get_server_unit(game, itemMove->item_guid, diablo2::structures::unit_type_t::UNIT_TYPE_ITEM); //0x4 = item
+	const auto bag = instance.get_server_unit(game, itemMove->bag_guid, diablo2::structures::unit_type_t::UNIT_TYPE_ITEM); //0x4 = item
+
+	D2PropertyStrc itemProperty = {};
+	itemProperty.nProperty = itemMove->prop;
+	itemProperty.nLayer = 0;
+	itemProperty.nMin = itemMove->val;
+	itemProperty.nMax = itemMove->val;
+	diablo2::d2_common::add_property(bag, &itemProperty, 1);
+
 
 	if (item == nullptr)
 		return true; //block further packet processing

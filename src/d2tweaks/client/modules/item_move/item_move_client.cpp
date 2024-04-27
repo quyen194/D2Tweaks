@@ -138,6 +138,8 @@ void d2_tweaks::client::modules::item_move::init() {
 	}
 }
 
+
+// handle packet coming from the server
 void d2_tweaks::client::modules::item_move::handle_packet(common::packet_header* packet) {
 	static auto& instance = singleton<client>::instance();
 
