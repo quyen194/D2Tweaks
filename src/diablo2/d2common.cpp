@@ -256,3 +256,8 @@ void diablo2::d2_common::add_property(structures::unit* item, D2PropertyStrc* pr
 	static wrap_func_std_import<void(structures::unit* item, D2PropertyStrc* prop, int nUnused)> add_property(10868, get_base());
 	add_property(item, prop, nUnused);
 }
+
+void diablo2::d2_common::ITEMS_SetItemFlag(structures::unit* item, uint32_t dwFlag, BOOL bSet) {
+	static wrap_func_std_import<void(structures::unit* item, uint32_t dwFlag, BOOL bSet)> ITEMS_SetItemFlag(10708, get_base());
+	ITEMS_SetItemFlag(item, dwFlag, bSet);
+}

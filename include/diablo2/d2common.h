@@ -981,6 +981,7 @@ namespace diablo2 {
 		//static void diablo2::d2_common::set_item_flags(structures::unit* item, structures::itemflags_t dwFlag, bool bSet);
 
 		static void diablo2::d2_common::add_property(structures::unit* item, D2PropertyStrc* pProperty, int nUnused);
+		static void diablo2::d2_common::ITEMS_SetItemFlag(structures::unit* item, uint32_t dwFlag, BOOL bSet);
 
 	};
 }

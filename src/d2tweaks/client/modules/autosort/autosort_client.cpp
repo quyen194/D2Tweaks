@@ -157,6 +157,13 @@ public:
 		// Initialize statValue
 		int32_t statValue = 0;
 
+
+		if (diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_STASH)) {
+			diablo2::d2_gfx::draw_filled_rect(130, 48, 640, 155, 5, 50);
+		}
+
+
+
 		if (m_stats_enabled) {
 			for (const auto& stat : stats) {
 
@@ -439,6 +446,10 @@ public:
 					int statNextExp = diablo2::d2_common::get_stat(player, static_cast<diablo2::unit_stats_t>(30), NULL);
 
 					diablo2::d2_win::set_current_font(diablo2::UI_FONT_16); // Set font to FONT16
+
+
+
+
 
 
 				}
