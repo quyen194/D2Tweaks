@@ -403,7 +403,7 @@ public:
 					int filledStaminaWidth = static_cast<int>(staminaPercentage * barWidth);
 
 					// at 345 we need to minus the width of the text
-					int sWCenter = barX + 100 - (diablo2::d2_win::get_text_pixel_width(const_cast<wchar_t*>(mana.c_str())) / 2);
+					sWCenter = barX + 100 - (diablo2::d2_win::get_text_pixel_width(const_cast<wchar_t*>(mana.c_str())) / 2);
 
 					HWND diabloIIWnd = FindDiabloIIWindow();
 

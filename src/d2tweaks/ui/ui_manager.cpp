@@ -459,33 +459,33 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 			auto currentPage = diablo2::d2_common::get_item_page(g_hoverItem);
 
 			if (currentPage == 0 || currentPage == 3 || currentPage == 4) {
+				if (diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_STASH) || diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_CUBE) || diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_INVENTORY)) {
+					for (const auto& gem : gemTypes) {
+						// Accessing key and value
+						const std::string& key = gem.first;
+						const GemType& value = gem.second;
+						if (strncmp(normCode, key.c_str(), 3) == 0) {
+							D2PropertyStrc itemProperty = {};
+							itemProperty.nProperty = value.rowID - 3;
+							itemProperty.nLayer = 0;
+							itemProperty.nMin = value.chippedCount;
+							itemProperty.nMax = value.chippedCount;
+							diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
+							diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
 
-				for (const auto& gem : gemTypes) {
-					// Accessing key and value
-					const std::string& key = gem.first;
-					const GemType& value = gem.second;
-					if (strncmp(normCode, key.c_str(), 3) == 0) {
-						D2PropertyStrc itemProperty = {};
-						itemProperty.nProperty = value.rowID - 3;
-						itemProperty.nLayer = 0;
-						itemProperty.nMin = value.chippedCount;
-						itemProperty.nMax = value.chippedCount;
-						diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-						diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-
-						static d2_tweaks::common::item_move_cs packet;
-						packet.item_guid = g_hoverItem->guid;
-						packet.bag_guid = gemBagGuid;
-						packet.updateBag = 1;
-						packet.prop = itemProperty.nProperty;
-						packet.val = itemProperty.nMin;
-						packet.target_page = 99;
-						diablo2::d2_client::send_to_server(&packet, sizeof packet);
+							static d2_tweaks::common::item_move_cs packet;
+							packet.item_guid = g_hoverItem->guid;
+							packet.bag_guid = gemBagGuid;
+							packet.updateBag = 1;
+							packet.prop = itemProperty.nProperty;
+							packet.val = itemProperty.nMin;
+							packet.target_page = 99;
+							diablo2::d2_client::send_to_server(&packet, sizeof packet);
+						}
 					}
 				}
+
 			}
-
-
 		}
 
 		block = instance.process_right_mouse(false);
