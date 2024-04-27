@@ -5,9 +5,7 @@
 
 #include <common/hooking.h>
 
-
 #include <d2tweaks/common/protocol.h>
-
 
 #include <d2tweaks/ui/menu.h>
 
@@ -25,7 +23,6 @@
 
 #include <spdlog/spdlog.h>
 
-
 #include <d2tweaks/common/common.h>
 #include <d2tweaks/common/protocol.h>
 #include <d2tweaks/common/asset_manager.h>
@@ -40,7 +37,6 @@
 #include <diablo2/d2win.h>
 #include <diablo2/d2gfx.h>
 #include <diablo2/d2cmp.h>
-
 
 #include <diablo2/structures/unit.h>
 #include <diablo2/structures/inventory.h>
@@ -131,8 +127,6 @@ struct D2InventoryGridInfoStrc
 	WORD pad0x16;                            //0x16
 };
 
-
-
 LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 	static auto& instance = singleton<ui_manager>::instance();
 
@@ -170,7 +164,6 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 			diablo2::d2_client::send_to_server(&packet, sizeof packet);
 			(*reinterpret_cast<diablo2::structures::unit**>(diablo2::d2_client::get_base() + 0x1158F4)) = nullptr;
 		}
-
 
 		if (g_hoverItem != 0) {
 			const auto record = diablo2::d2_common::get_item_record(g_hoverItem->data_record_index);
@@ -246,9 +239,8 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 				strncmp(normCode, "r32", 3) == 0 ||
 				strncmp(normCode, "r33", 3) == 0 ||
 				strncmp(normCode, "ib2", 3) == 0
-				
-				) {
 
+				) {
 				char currentPage = diablo2::d2_common::get_item_page(g_hoverItem);
 
 				// Create the packet
@@ -314,7 +306,6 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 
 				stat++;
 
-
 				D2PropertyStrc itemProperty = {};
 
 				itemProperty.nProperty = 382 - 3;
@@ -322,917 +313,206 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 				itemProperty.nMin = 1;
 				itemProperty.nMax = 1;
 
-
 				//diablo2::d2_common::set_stat(gemBag, diablo2::unit_stats_t::UNIT_STAT_gembag_Amethyst, stat, 0);
 				diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-
-
-
 
 				int32_t stat1 = diablo2::d2_common::get_stat(gemBag, diablo2::unit_stats_t::UNIT_STAT_gembag_Amethyst, NULL);
 				MessageBoxA(0, std::to_string(stat1).c_str(), "stat", 0);
 			}
-
-
-
 
 			// check to see if gembag is actually right
 			//const auto bagrecord = diablo2::d2_common::get_item_record(gemBag->data_record_index);
 			//char* bagcode = bagrecord->string_code;
 			//MessageBoxA(0, bagcode, "bag code", 0);
 
-
 			//if (normCode == "gcv") {
 			//	int stat = diablo2::d2_common::get_stat(gemBag, diablo2::unit_stats_t::UNIT_STAT_gembag_Amethyst, NULL);
 			//	diablo2::d2_common::set_stat(gemBag, diablo2::unit_stats_t::UNIT_STAT_gembag_Amethyst, stat + 1, 0);
 			//	MessageBoxA(0, normCode, "normCode", 0);
 			//}
-
-
-
-
 		}
 	}
 
-
-
 	switch (msg) {
-		case WM_LBUTTONDOWN:
-		{
-			block = instance.process_left_mouse(false);
-			break;
-		}
+	case WM_LBUTTONDOWN:
+	{
+		block = instance.process_left_mouse(false);
+		break;
+	}
 
-		case WM_LBUTTONUP:
-		{
-			block = instance.process_left_mouse(true);
-			break;
-		}
+	case WM_LBUTTONUP:
+	{
+		block = instance.process_left_mouse(true);
+		break;
+	}
 
-		case WM_RBUTTONDOWN:
-		{
-			int32_t gemBagGuid = 0;
-			const auto g_hoverItem = *reinterpret_cast<diablo2::structures::unit**>(diablo2::d2_client::get_base() + 0x1158F4);
-			if (g_hoverItem != nullptr) {
-				const auto record = diablo2::d2_common::get_item_record(g_hoverItem->data_record_index);
-				char* normCode = record->string_code;
+	case WM_RBUTTONDOWN:
+	{
+		int32_t gemBagGuid = 0;
+		const auto g_hoverItem = *reinterpret_cast<diablo2::structures::unit**>(diablo2::d2_client::get_base() + 0x1158F4);
+		if (g_hoverItem != nullptr) {
+			const auto record = diablo2::d2_common::get_item_record(g_hoverItem->data_record_index);
+			char* normCode = record->string_code;
 
-				const auto player = diablo2::d2_client::get_local_player();
-				auto pInventory = player->inventory;
+			const auto player = diablo2::d2_client::get_local_player();
+			auto pInventory = player->inventory;
 
-				std::vector<diablo2::structures::unit*> items;
-                diablo2::structures::unit* gemBag{};
+			std::vector<diablo2::structures::unit*> items;
+			diablo2::structures::unit* gemBag{};
 
-				// get the gembag item
-				for (auto item = player->inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
-					const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
-					if (record->type == 101) {
-						gemBag = item;
-						gemBagGuid = gemBag->guid;
+			// get the gembag item
+			for (auto item = player->inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
+				const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
+				if (record->type == 101) {
+					gemBag = item;
+					gemBagGuid = gemBag->guid;
+				}
+			}
+
+			// Actual ID to use is 378 for Ruby, but actual row number is 381
+			// 378 is ruby
+			// 379 is amathyst
+			// 380 is diamond
+			// 381 is emerald
+			// 382 is saphhire
+			// 383 is topaz
+			// 384 is skull
+			// So remember, it's properties.txt row number - 3
+
+			// Define the structure D2PropertyStrc
+			struct GemType {
+				int chippedCount;
+				int rowID;
+			};
+
+			std::unordered_map<std::string, GemType> gemTypes = {
+				{"gcv", {1, 382}},   // Chipped Amethyst
+				{"gcw", {1, 383}},   // Chipped Diamond
+				{"gcg", {1, 384}},   // Chipped Emerald
+				{"gcr", {1, 381}},   // Chipped Ruby
+				{"gcb", {1, 385}},   // Chipped Sapphire
+				{"skc", {1, 387}},   // Chipped Skull
+				{"gcy", {1, 386}},   // Chipped Topaz
+				{"gfv", {3, 382}},   // Flawed Amethyst
+				{"gfw", {3, 383}},   // Flawed Diamond
+				{"gfg", {3, 384}},   // Flawed Emerald
+				{"gfr", {3, 381}},   // Flawed Ruby
+				{"gfb", {3, 385}},   // Flawed Sapphire
+				{"skf", {3, 387}},   // Flawed Skull
+				{"gfy", {3, 386}},   // Flawed Topaz
+				{"gsv", {9, 382}},   // Amethyst
+				{"gsw", {9, 383}},   // Diamond
+				{"gsg", {9, 384}},   // Emerald
+				{"gsr", {9, 381}},   // Ruby
+				{"gsb", {9, 385}},   // Sapphire
+				{"sku", {9, 387}},   // Skull
+				{"gsy", {9, 386}},   // Topaz
+				{"gzv", {27, 382}},  // Flawless Amethyst
+				{"glw", {27, 383}},  // Flawless Diamond
+				{"glg", {27, 384}},  // Flawless Emerald
+				{"glr", {27, 381}},  // Flawless Ruby
+				{"glb", {27, 385}},  // Flawless Sapphire
+				{"skl", {27, 387}},  // Flawless Skull
+				{"gly", {27, 386}},  // Flawless Topaz
+				{"gpv", {81, 382}},  // Perfect Amethyst
+				{"gpw", {81, 383}},  // Perfect Diamond
+				{"gpg", {81, 384}},  // Perfect Emerald
+				{"gpr", {81, 381}},  // Perfect Ruby
+				{"gpb", {81, 385}},  // Perfect Sapphire
+				{"skz", {81, 387}},  // Perfect Skull
+				{"gpy", {81, 386}},  // Perfect Topaz
+				{"r01", {1, 388}},   // El Rune
+				{"r02", {3, 388}},   // Eld Rune
+				{"r03", {9, 388}},   // Tir Rune
+				{"r04", {27, 388}},  // Nef Rune
+				{"r05", {81, 388}},  // Eth Rune
+				{"r06", {243, 388}}, // Ith Rune
+				{"r07", {1, 389}},   // Tal Rune
+				{"r08", {3, 389}},   // Ral Rune
+				{"r09", {9, 389}},   // Ort Rune
+				{"r10", {27, 389}},  // Thul Rune
+				{"r11", {81, 389}},  // Amn Rune
+				{"r12", {243, 389}}, // Sol Rune
+				{"r13", {1, 390}},   // Shael Rune
+				{"r14", {3, 390}},   // Dol Rune
+				{"r15", {9, 390}},   // Hel Rune
+				{"r16", {27, 390}},  // Io Rune
+				{"r17", {81, 390}},  // Lum Rune
+				{"r18", {243, 390}}, // Ko Rune
+				{"r19", {1, 391}},   // Fal Rune
+				{"r20", {3, 391}},   // Lem Rune
+				{"r21", {9, 391}},   // Pul Rune
+				{"r22", {27, 391}},  // Um Rune
+				{"r23", {81, 3901}}, // Mal Rune
+				{"r24", {243, 391}}, // Ist Rune
+				{"r25", {1, 392}},   // Gul Rune
+				{"r26", {3, 392}},   // Vex Rune
+				{"r27", {9, 392}},   // Ohm Rune
+				{"r28", {27, 392}},  // Lo Rune
+				{"r29", {81, 392}},  // Sur Rune
+				{"r30", {243, 392}}, // Ber Rune
+				{"r31", {1, 393}},   // Jah Rune
+				{"r32", {2, 393}},   // Cham Rune
+				{"r33", {4, 393}}    // Zod Rune
+			};
+
+			auto currentPage = diablo2::d2_common::get_item_page(g_hoverItem);
+
+			if (currentPage == 0 || currentPage == 3 || currentPage == 4) {
+
+				for (const auto& gem : gemTypes) {
+					// Accessing key and value
+					const std::string& key = gem.first;
+					const GemType& value = gem.second;
+					if (strncmp(normCode, key.c_str(), 3) == 0) {
+						D2PropertyStrc itemProperty = {};
+						itemProperty.nProperty = value.rowID - 3;
+						itemProperty.nLayer = 0;
+						itemProperty.nMin = value.chippedCount;
+						itemProperty.nMax = value.chippedCount;
+						diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
+						diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
+
+						static d2_tweaks::common::item_move_cs packet;
+						packet.item_guid = g_hoverItem->guid;
+						packet.bag_guid = gemBagGuid;
+						packet.updateBag = 1;
+						packet.prop = itemProperty.nProperty;
+						packet.val = itemProperty.nMin;
+						packet.target_page = 99;
+						diablo2::d2_client::send_to_server(&packet, sizeof packet);
 					}
 				}
-
-				// 378 is ruby
-				// 379 is amathyst
-				// 380 is diamond
-				// 381 is emerald
-				// 382 is saphhire
-				// 383 is topaz
-				// 384 is skull
-
-				// 385 is El Runes
-				// 386 is Sol Runes
-				// 387 is Mal Runes
-
-				// properties.txt row number - 3
-
-                if (strncmp(normCode, "gcv", 3) == 0) {
-                    D2PropertyStrc itemProperty = {};
-                    itemProperty.nProperty = 382 - 3;
-                    itemProperty.nLayer = 0;
-                    itemProperty.nMin = 1;
-                    itemProperty.nMax = 1;
-                    diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-                    diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-                    diablo2::d2_common::inv_remove_item(pInventory, g_hoverItem);
-                }
-
-                if (strncmp(normCode, "gcw", 3) == 0) {
-                    D2PropertyStrc itemProperty = {};
-                    itemProperty.nProperty = 383 - 3;
-                    itemProperty.nLayer = 0;
-                    itemProperty.nMin = 1;
-                    itemProperty.nMax = 1;
-                    diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-                    diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-                    diablo2::d2_common::inv_remove_item(pInventory, g_hoverItem);
-                }
-
-                if (strncmp(normCode, "gcg", 3) == 0) {
-                    D2PropertyStrc itemProperty = {};
-                    itemProperty.nProperty = 384 - 3;
-                    itemProperty.nLayer = 0;
-                    itemProperty.nMin = 1;
-                    itemProperty.nMax = 1;
-                    diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-                    diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-                    diablo2::d2_common::inv_remove_item(pInventory, g_hoverItem);
-                }
-
-                if (strncmp(normCode, "gcr", 3) == 0) {
-                    D2PropertyStrc itemProperty = {};
-                    itemProperty.nProperty = 381 - 3;
-                    itemProperty.nLayer = 0;
-                    itemProperty.nMin = 1;
-                    itemProperty.nMax = 1;
-                    diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-                    diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-                    diablo2::d2_common::inv_remove_item(pInventory, g_hoverItem);
-                }
-
-                if (strncmp(normCode, "gcb", 3) == 0) {
-                    D2PropertyStrc itemProperty = {};
-                    itemProperty.nProperty = 385 - 3;
-                    itemProperty.nLayer = 0;
-                    itemProperty.nMin = 1;
-                    itemProperty.nMax = 1;
-                    diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-                    diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-                    diablo2::d2_common::inv_remove_item(pInventory, g_hoverItem);
-                }
-
-                if (strncmp(normCode, "skc", 3) == 0) {
-                    D2PropertyStrc itemProperty = {};
-                    itemProperty.nProperty = 387 - 3;
-                    itemProperty.nLayer = 0;
-                    itemProperty.nMin = 1;
-                    itemProperty.nMax = 1;
-                    diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-                    diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-                    diablo2::d2_common::inv_remove_item(pInventory, g_hoverItem);
-                }
-
-                if (strncmp(normCode, "gcy", 3) == 0) {
-                    D2PropertyStrc itemProperty = {};
-                    itemProperty.nProperty = 386 - 3;
-                    itemProperty.nLayer = 0;
-                    itemProperty.nMin = 1;
-                    itemProperty.nMax = 1;
-                    diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-                    diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-                    diablo2::d2_common::inv_remove_item(pInventory, g_hoverItem);
-                }
-
-                if (strncmp(normCode, "gfv", 3) == 0) {
-                    D2PropertyStrc itemProperty = {};
-                    itemProperty.nProperty = 382 - 3;
-                    itemProperty.nLayer = 0;
-                    itemProperty.nMin = 3;
-                    itemProperty.nMax = 3;
-                    diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-                    diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-                    diablo2::d2_common::inv_remove_item(pInventory, g_hoverItem);
-                }
-
-                if (strncmp(normCode, "gfw", 3) == 0) {
-                    D2PropertyStrc itemProperty = {};
-                    itemProperty.nProperty = 383 - 3;
-                    itemProperty.nLayer = 0;
-                    itemProperty.nMin = 3;
-                    itemProperty.nMax = 3;
-                    diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-                    diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-                    diablo2::d2_common::inv_remove_item(pInventory, g_hoverItem);
-                }
-
-                if (strncmp(normCode, "gfg", 3) == 0) {
-                    D2PropertyStrc itemProperty = {};
-                    itemProperty.nProperty = 384 - 3;
-                    itemProperty.nLayer = 0;
-                    itemProperty.nMin = 3;
-                    itemProperty.nMax = 3;
-                    diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-                    diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-                    diablo2::d2_common::inv_remove_item(pInventory, g_hoverItem);
-                }
-
-                if (strncmp(normCode, "gfr", 3) == 0) {
-                    D2PropertyStrc itemProperty = {};
-                    itemProperty.nProperty = 381 - 3;
-                    itemProperty.nLayer = 0;
-                    itemProperty.nMin = 3;
-                    itemProperty.nMax = 3;
-                    diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-                    diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-                    diablo2::d2_common::inv_remove_item(pInventory, g_hoverItem);
-                }
-
-                if (strncmp(normCode, "gfb", 3) == 0) {
-                    D2PropertyStrc itemProperty = {};
-                    itemProperty.nProperty = 385 - 3;
-                    itemProperty.nLayer = 0;
-                    itemProperty.nMin = 3;
-                    itemProperty.nMax = 3;
-                    diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-                    diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-                    diablo2::d2_common::inv_remove_item(pInventory, g_hoverItem);
-                }
-
-                if (strncmp(normCode, "skf", 3) == 0) {
-                    D2PropertyStrc itemProperty = {};
-                    itemProperty.nProperty = 387 - 3;
-                    itemProperty.nLayer = 0;
-                    itemProperty.nMin = 3;
-                    itemProperty.nMax = 3;
-                    diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-                    diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-                    diablo2::d2_common::inv_remove_item(pInventory, g_hoverItem);
-                }
-
-                if (strncmp(normCode, "gfy", 3) == 0) {
-                    D2PropertyStrc itemProperty = {};
-                    itemProperty.nProperty = 386 - 3;
-                    itemProperty.nLayer = 0;
-                    itemProperty.nMin = 3;
-                    itemProperty.nMax = 3;
-                    diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-                    diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-                    diablo2::d2_common::inv_remove_item(pInventory, g_hoverItem);
-                }
-
-                if (strncmp(normCode, "gsv", 3) == 0) {
-                    D2PropertyStrc itemProperty = {};
-                    itemProperty.nProperty = 382 - 3;
-                    itemProperty.nLayer = 0;
-                    itemProperty.nMin = 9;
-                    itemProperty.nMax = 9;
-                    diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-                    diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-                    diablo2::d2_common::inv_remove_item(pInventory, g_hoverItem);
-                }
-
-                if (strncmp(normCode, "gsw", 3) == 0) {
-                    D2PropertyStrc itemProperty = {};
-                    itemProperty.nProperty = 383 - 3;
-                    itemProperty.nLayer = 0;
-                    itemProperty.nMin = 9;
-                    itemProperty.nMax = 9;
-                    diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-                    diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-                    diablo2::d2_common::inv_remove_item(pInventory, g_hoverItem);
-                }
-
-                if (strncmp(normCode, "gsg", 3) == 0) {
-                    D2PropertyStrc itemProperty = {};
-                    itemProperty.nProperty = 384 - 3;
-                    itemProperty.nLayer = 0;
-                    itemProperty.nMin = 9;
-                    itemProperty.nMax = 9;
-                    diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-                    diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-                    diablo2::d2_common::inv_remove_item(pInventory, g_hoverItem);
-                }
-
-                if (strncmp(normCode, "gsr", 3) == 0) {
-                    D2PropertyStrc itemProperty = {};
-                    itemProperty.nProperty = 381 - 3;
-                    itemProperty.nLayer = 0;
-                    itemProperty.nMin = 9;
-                    itemProperty.nMax = 9;
-                    diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-                    diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-                    diablo2::d2_common::inv_remove_item(pInventory, g_hoverItem);
-                }
-
-                if (strncmp(normCode, "gsb", 3) == 0) {
-                    D2PropertyStrc itemProperty = {};
-                    itemProperty.nProperty = 385 - 3;
-                    itemProperty.nLayer = 0;
-                    itemProperty.nMin = 9;
-                    itemProperty.nMax = 9;
-                    diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-                    diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-                    diablo2::d2_common::inv_remove_item(pInventory, g_hoverItem);
-                }
-
-                if (strncmp(normCode, "sku", 3) == 0) {
-                    D2PropertyStrc itemProperty = {};
-                    itemProperty.nProperty = 387 - 3;
-                    itemProperty.nLayer = 0;
-                    itemProperty.nMin = 9;
-                    itemProperty.nMax = 9;
-                    diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-                    diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-                    diablo2::d2_common::inv_remove_item(pInventory, g_hoverItem);
-                }
-
-                if (strncmp(normCode, "gsy", 3) == 0) {
-                    D2PropertyStrc itemProperty = {};
-                    itemProperty.nProperty = 386 - 3;
-                    itemProperty.nLayer = 0;
-                    itemProperty.nMin = 9;
-                    itemProperty.nMax = 9;
-                    diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-                    diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-                    diablo2::d2_common::inv_remove_item(pInventory, g_hoverItem);
-                }
-
-                if (strncmp(normCode, "gzv", 3) == 0) {
-                    D2PropertyStrc itemProperty = {};
-                    itemProperty.nProperty = 382 - 3;
-                    itemProperty.nLayer = 0;
-                    itemProperty.nMin = 27;
-                    itemProperty.nMax = 27;
-                    diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-                    diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-                    diablo2::d2_common::inv_remove_item(pInventory, g_hoverItem);
-                }
-
-                if (strncmp(normCode, "glw", 3) == 0) {
-                    D2PropertyStrc itemProperty = {};
-                    itemProperty.nProperty = 383 - 3;
-                    itemProperty.nLayer = 0;
-                    itemProperty.nMin = 27;
-                    itemProperty.nMax = 27;
-                    diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-                    diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-                    diablo2::d2_common::inv_remove_item(pInventory, g_hoverItem);
-                }
-
-                if (strncmp(normCode, "glg", 3) == 0) {
-                    D2PropertyStrc itemProperty = {};
-                    itemProperty.nProperty = 384 - 3;
-                    itemProperty.nLayer = 0;
-                    itemProperty.nMin = 27;
-                    itemProperty.nMax = 27;
-                    diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-                    diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-                    diablo2::d2_common::inv_remove_item(pInventory, g_hoverItem);
-                }
-
-                if (strncmp(normCode, "glr", 3) == 0) {
-                    D2PropertyStrc itemProperty = {};
-                    itemProperty.nProperty = 381 - 3;
-                    itemProperty.nLayer = 0;
-                    itemProperty.nMin = 27;
-                    itemProperty.nMax = 27;
-                    diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-                    diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-                    diablo2::d2_common::inv_remove_item(pInventory, g_hoverItem);
-                }
-
-                if (strncmp(normCode, "glb", 3) == 0) {
-                    D2PropertyStrc itemProperty = {};
-                    itemProperty.nProperty = 385 - 3;
-                    itemProperty.nLayer = 0;
-                    itemProperty.nMin = 27;
-                    itemProperty.nMax = 27;
-                    diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-                    diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-                    diablo2::d2_common::inv_remove_item(pInventory, g_hoverItem);
-                }
-
-                if (strncmp(normCode, "skl", 3) == 0) {
-                    D2PropertyStrc itemProperty = {};
-                    itemProperty.nProperty = 387 - 3;
-                    itemProperty.nLayer = 0;
-                    itemProperty.nMin = 27;
-                    itemProperty.nMax = 27;
-                    diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-                    diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-                    diablo2::d2_common::inv_remove_item(pInventory, g_hoverItem);
-                }
-
-                if (strncmp(normCode, "gly", 3) == 0) {
-                    D2PropertyStrc itemProperty = {};
-                    itemProperty.nProperty = 386 - 3;
-                    itemProperty.nLayer = 0;
-                    itemProperty.nMin = 27;
-                    itemProperty.nMax = 27;
-                    diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-                    diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-                    diablo2::d2_common::inv_remove_item(pInventory, g_hoverItem);
-                }
-
-                if (strncmp(normCode, "gpv", 3) == 0) {
-                    D2PropertyStrc itemProperty = {};
-                    itemProperty.nProperty = 382 - 3;
-                    itemProperty.nLayer = 0;
-                    itemProperty.nMin = 81;
-                    itemProperty.nMax = 81;
-                    diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-                    diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-                    diablo2::d2_common::inv_remove_item(pInventory, g_hoverItem);
-                }
-
-                if (strncmp(normCode, "gpw", 3) == 0) {
-                    D2PropertyStrc itemProperty = {};
-                    itemProperty.nProperty = 383 - 3;
-                    itemProperty.nLayer = 0;
-                    itemProperty.nMin = 81;
-                    itemProperty.nMax = 81;
-                    diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-                    diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-                    diablo2::d2_common::inv_remove_item(pInventory, g_hoverItem);
-                }
-
-                if (strncmp(normCode, "gpg", 3) == 0) {
-                    D2PropertyStrc itemProperty = {};
-                    itemProperty.nProperty = 384 - 3;
-                    itemProperty.nLayer = 0;
-                    itemProperty.nMin = 81;
-                    itemProperty.nMax = 81;
-                    diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-                    diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-                    diablo2::d2_common::inv_remove_item(pInventory, g_hoverItem);
-                }
-
-                if (strncmp(normCode, "gpr", 3) == 0) {
-                    D2PropertyStrc itemProperty = {};
-                    itemProperty.nProperty = 381 - 3;
-                    itemProperty.nLayer = 0;
-                    itemProperty.nMin = 81;
-                    itemProperty.nMax = 81;
-                    diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-                    diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-                    diablo2::d2_common::inv_remove_item(pInventory, g_hoverItem);
-                }
-
-                if (strncmp(normCode, "gpb", 3) == 0) {
-                    D2PropertyStrc itemProperty = {};
-                    itemProperty.nProperty = 385 - 3;
-                    itemProperty.nLayer = 0;
-                    itemProperty.nMin = 81;
-                    itemProperty.nMax = 81;
-                    diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-                    diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-                    diablo2::d2_common::inv_remove_item(pInventory, g_hoverItem);
-                }
-
-                if (strncmp(normCode, "skz", 3) == 0) {
-                    D2PropertyStrc itemProperty = {};
-                    itemProperty.nProperty = 387 - 3;
-                    itemProperty.nLayer = 0;
-                    itemProperty.nMin = 81;
-                    itemProperty.nMax = 81;
-                    diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-                    diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-                    diablo2::d2_common::inv_remove_item(pInventory, g_hoverItem);
-                }
-
-                if (strncmp(normCode, "gpy", 3) == 0) {
-                    D2PropertyStrc itemProperty = {};
-                    itemProperty.nProperty = 386 - 3;
-                    itemProperty.nLayer = 0;
-                    itemProperty.nMin = 81;
-                    itemProperty.nMax = 81;
-                    diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-                    diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-                    diablo2::d2_common::inv_remove_item(pInventory, g_hoverItem);
-                }
-
-
-                // Runes
-				if (strncmp(normCode, "r01", 3) == 0) {
-					D2PropertyStrc itemProperty = {};
-					itemProperty.nProperty = 385;
-					itemProperty.nLayer = 0;
-					itemProperty.nMin = 1;
-					itemProperty.nMax = 1;
-					diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-					diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-					diablo2::d2_common::inv_remove_item(pInventory, g_hoverItem);
-					diablo2::d2_common::inv_update_item(player->inventory, g_hoverItem, false);
-				}
-
-				if (strncmp(normCode, "r02", 3) == 0) {
-					D2PropertyStrc itemProperty = {};
-					itemProperty.nProperty = 385;
-					itemProperty.nLayer = 0;
-					itemProperty.nMin = 3;
-					itemProperty.nMax = 3;
-					diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-					diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-					diablo2::d2_common::inv_remove_item(pInventory, g_hoverItem);
-					diablo2::d2_common::inv_update_item(player->inventory, g_hoverItem, false);
-				}
-
-				if (strncmp(normCode, "r03", 3) == 0) {
-					D2PropertyStrc itemProperty = {};
-					itemProperty.nProperty = 385;
-					itemProperty.nLayer = 0;
-					itemProperty.nMin = 9;
-					itemProperty.nMax = 9;
-					diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-					diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-					diablo2::d2_common::inv_remove_item(pInventory, g_hoverItem);
-					diablo2::d2_common::inv_update_item(player->inventory, g_hoverItem, false);
-				}
-
-				if (strncmp(normCode, "r04", 3) == 0) {
-					D2PropertyStrc itemProperty = {};
-					itemProperty.nProperty = 385;
-					itemProperty.nLayer = 0;
-					itemProperty.nMin = 27;
-					itemProperty.nMax = 27;
-					diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-					diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-					diablo2::d2_common::inv_remove_item(pInventory, g_hoverItem);
-					diablo2::d2_common::inv_update_item(player->inventory, g_hoverItem, false);
-				}
-
-				if (strncmp(normCode, "r05", 3) == 0) {
-					D2PropertyStrc itemProperty = {};
-					itemProperty.nProperty = 385;
-					itemProperty.nLayer = 0;
-					itemProperty.nMin = 81;
-					itemProperty.nMax = 81;
-					diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-					diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-					diablo2::d2_common::inv_remove_item(pInventory, g_hoverItem);
-					diablo2::d2_common::inv_update_item(player->inventory, g_hoverItem, false);
-				}
-
-				if (strncmp(normCode, "r06", 3) == 0) {
-					D2PropertyStrc itemProperty = {};
-					itemProperty.nProperty = 385;
-					itemProperty.nLayer = 0;
-					itemProperty.nMin = 243;
-					itemProperty.nMax = 243;
-					diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-					diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-					diablo2::d2_common::inv_remove_item(pInventory, g_hoverItem);
-					diablo2::d2_common::inv_update_item(player->inventory, g_hoverItem, false);
-				}
-
-				if (strncmp(normCode, "r07", 3) == 0) {
-					D2PropertyStrc itemProperty = {};
-					itemProperty.nProperty = 385;
-					itemProperty.nLayer = 0;
-					itemProperty.nMin = 729;
-					itemProperty.nMax = 729;
-					diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-					diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-					diablo2::d2_common::inv_remove_item(pInventory, g_hoverItem);
-					diablo2::d2_common::inv_update_item(player->inventory, g_hoverItem, false);
-				}
-
-				if (strncmp(normCode, "r08", 3) == 0) {
-					D2PropertyStrc itemProperty = {};
-					itemProperty.nProperty = 385;
-					itemProperty.nLayer = 0;
-					itemProperty.nMin = 2187;
-					itemProperty.nMax = 2187;
-					diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-					diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-					diablo2::d2_common::inv_remove_item(pInventory, g_hoverItem);
-					diablo2::d2_common::inv_update_item(player->inventory, g_hoverItem, false);
-				}
-
-				if (strncmp(normCode, "r09", 3) == 0) {
-					D2PropertyStrc itemProperty = {};
-					itemProperty.nProperty = 385;
-					itemProperty.nLayer = 0;
-					itemProperty.nMin = 6561;
-					itemProperty.nMax = 6561;
-					diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-					diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-					diablo2::d2_common::inv_remove_item(pInventory, g_hoverItem);
-					diablo2::d2_common::inv_update_item(player->inventory, g_hoverItem, false);
-				}
-
-				if (strncmp(normCode, "r10", 3) == 0) {
-					D2PropertyStrc itemProperty = {};
-					itemProperty.nProperty = 385;
-					itemProperty.nLayer = 0;
-					itemProperty.nMin = 19683;
-					itemProperty.nMax = 19683;
-					diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-					diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-					diablo2::d2_common::inv_remove_item(pInventory, g_hoverItem);
-					diablo2::d2_common::inv_update_item(player->inventory, g_hoverItem, false);
-				}
-
-				if (strncmp(normCode, "r11", 3) == 0) {
-					D2PropertyStrc itemProperty = {};
-					itemProperty.nProperty = 385;
-					itemProperty.nLayer = 0;
-					itemProperty.nMin = 59049;
-					itemProperty.nMax = 59049;
-					diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-					diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-					diablo2::d2_common::inv_remove_item(pInventory, g_hoverItem);
-					diablo2::d2_common::inv_update_item(player->inventory, g_hoverItem, false);
-				}
-
-				if (strncmp(normCode, "r12", 3) == 0) {
-					D2PropertyStrc itemProperty = {};
-					itemProperty.nProperty = 386;
-					itemProperty.nLayer = 0;
-					itemProperty.nMin = 1;
-					itemProperty.nMax = 1;
-					diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-					diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-					diablo2::d2_common::inv_remove_item(pInventory, g_hoverItem);
-					diablo2::d2_common::inv_update_item(player->inventory, g_hoverItem, false);
-				}
-
-				if (strncmp(normCode, "r13", 3) == 0) {
-					D2PropertyStrc itemProperty = {};
-					itemProperty.nProperty = 386;
-					itemProperty.nLayer = 0;
-					itemProperty.nMin = 3;
-					itemProperty.nMax = 3;
-					diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-					diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-					diablo2::d2_common::inv_remove_item(pInventory, g_hoverItem);
-					diablo2::d2_common::inv_update_item(player->inventory, g_hoverItem, false);
-				}
-
-				if (strncmp(normCode, "r14", 3) == 0) {
-					D2PropertyStrc itemProperty = {};
-					itemProperty.nProperty = 386;
-					itemProperty.nLayer = 0;
-					itemProperty.nMin = 9;
-					itemProperty.nMax = 9;
-					diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-					diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-					diablo2::d2_common::inv_remove_item(pInventory, g_hoverItem);
-					diablo2::d2_common::inv_update_item(player->inventory, g_hoverItem, false);
-				}
-
-				if (strncmp(normCode, "r15", 3) == 0) {
-					D2PropertyStrc itemProperty = {};
-					itemProperty.nProperty = 386;
-					itemProperty.nLayer = 0;
-					itemProperty.nMin = 27;
-					itemProperty.nMax = 27;
-					diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-					diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-					diablo2::d2_common::inv_remove_item(pInventory, g_hoverItem);
-					diablo2::d2_common::inv_update_item(player->inventory, g_hoverItem, false);
-				}
-
-				if (strncmp(normCode, "r16", 3) == 0) {
-					D2PropertyStrc itemProperty = {};
-					itemProperty.nProperty = 386;
-					itemProperty.nLayer = 0;
-					itemProperty.nMin = 81;
-					itemProperty.nMax = 81;
-					diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-					diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-					diablo2::d2_common::inv_remove_item(pInventory, g_hoverItem);
-					diablo2::d2_common::inv_update_item(player->inventory, g_hoverItem, false);
-				}
-
-				if (strncmp(normCode, "r17", 3) == 0) {
-					D2PropertyStrc itemProperty = {};
-					itemProperty.nProperty = 386;
-					itemProperty.nLayer = 0;
-					itemProperty.nMin = 243;
-					itemProperty.nMax = 243;
-					diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-					diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-					diablo2::d2_common::inv_remove_item(pInventory, g_hoverItem);
-					diablo2::d2_common::inv_update_item(player->inventory, g_hoverItem, false);
-				}
-
-				if (strncmp(normCode, "r18", 3) == 0) {
-					D2PropertyStrc itemProperty = {};
-					itemProperty.nProperty = 386;
-					itemProperty.nLayer = 0;
-					itemProperty.nMin = 729;
-					itemProperty.nMax = 729;
-					diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-					diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-					diablo2::d2_common::inv_remove_item(pInventory, g_hoverItem);
-					diablo2::d2_common::inv_update_item(player->inventory, g_hoverItem, false);
-				}
-
-				if (strncmp(normCode, "r19", 3) == 0) {
-					D2PropertyStrc itemProperty = {};
-					itemProperty.nProperty = 386;
-					itemProperty.nLayer = 0;
-					itemProperty.nMin = 2187;
-					itemProperty.nMax = 2187;
-					diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-					diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-					diablo2::d2_common::inv_remove_item(pInventory, g_hoverItem);
-					diablo2::d2_common::inv_update_item(player->inventory, g_hoverItem, false);
-				}
-
-				if (strncmp(normCode, "r20", 3) == 0) {
-					D2PropertyStrc itemProperty = {};
-					itemProperty.nProperty = 386;
-					itemProperty.nLayer = 0;
-					itemProperty.nMin = 6561;
-					itemProperty.nMax = 6561;
-					diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-					diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-					diablo2::d2_common::inv_remove_item(pInventory, g_hoverItem);
-					diablo2::d2_common::inv_update_item(player->inventory, g_hoverItem, false);
-				}
-
-				if (strncmp(normCode, "r21", 3) == 0) {
-					D2PropertyStrc itemProperty = {};
-					itemProperty.nProperty = 386;
-					itemProperty.nLayer = 0;
-					itemProperty.nMin = 19683;
-					itemProperty.nMax = 19683;
-					diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-					diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-					diablo2::d2_common::inv_remove_item(pInventory, g_hoverItem);
-					diablo2::d2_common::inv_update_item(player->inventory, g_hoverItem, false);
-				}
-
-				if (strncmp(normCode, "r22", 3) == 0) {
-					D2PropertyStrc itemProperty = {};
-					itemProperty.nProperty = 386;
-					itemProperty.nLayer = 0;
-					itemProperty.nMin = 59049;
-					itemProperty.nMax = 59049;
-					diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-					diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-					diablo2::d2_common::inv_remove_item(pInventory, g_hoverItem);
-					diablo2::d2_common::inv_update_item(player->inventory, g_hoverItem, false);
-				}
-
-				if (strncmp(normCode, "r23", 3) == 0) {
-					D2PropertyStrc itemProperty = {};
-					itemProperty.nProperty = 387;
-					itemProperty.nLayer = 0;
-					itemProperty.nMin = 1;
-					itemProperty.nMax = 1;
-					diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-					diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-					diablo2::d2_common::inv_remove_item(pInventory, g_hoverItem);
-					diablo2::d2_common::inv_update_item(player->inventory, g_hoverItem, false);
-				}
-
-				if (strncmp(normCode, "r24", 3) == 0) {
-					D2PropertyStrc itemProperty = {};
-					itemProperty.nProperty = 387;
-					itemProperty.nLayer = 0;
-					itemProperty.nMin = 4;
-					itemProperty.nMax = 4;
-					diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-					diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-					diablo2::d2_common::inv_remove_item(pInventory, g_hoverItem);
-					diablo2::d2_common::inv_update_item(player->inventory, g_hoverItem, false);
-				}
-
-				if (strncmp(normCode, "r25", 3) == 0) {
-					D2PropertyStrc itemProperty = {};
-					itemProperty.nProperty = 387;
-					itemProperty.nLayer = 0;
-					itemProperty.nMin = 8;
-					itemProperty.nMax = 8;
-					diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-					diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-					diablo2::d2_common::inv_remove_item(pInventory, g_hoverItem);
-					diablo2::d2_common::inv_update_item(player->inventory, g_hoverItem, false);
-				}
-
-				if (strncmp(normCode, "r26", 3) == 0) {
-					D2PropertyStrc itemProperty = {};
-					itemProperty.nProperty = 387;
-					itemProperty.nLayer = 0;
-					itemProperty.nMin = 16;
-					itemProperty.nMax = 16;
-					diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-					diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-					diablo2::d2_common::inv_remove_item(pInventory, g_hoverItem);
-					diablo2::d2_common::inv_update_item(player->inventory, g_hoverItem, false);
-				}
-
-				if (strncmp(normCode, "r27", 3) == 0) {
-					D2PropertyStrc itemProperty = {};
-					itemProperty.nProperty = 387;
-					itemProperty.nLayer = 0;
-					itemProperty.nMin = 32;
-					itemProperty.nMax = 32;
-					diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-					diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-					diablo2::d2_common::inv_remove_item(pInventory, g_hoverItem);
-					diablo2::d2_common::inv_update_item(player->inventory, g_hoverItem, false);
-				}
-
-				if (strncmp(normCode, "r28", 3) == 0) {
-					D2PropertyStrc itemProperty = {};
-					itemProperty.nProperty = 387;
-					itemProperty.nLayer = 0;
-					itemProperty.nMin = 64;
-					itemProperty.nMax = 64;
-					diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-					diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-					diablo2::d2_common::inv_remove_item(pInventory, g_hoverItem);
-					diablo2::d2_common::inv_update_item(player->inventory, g_hoverItem, false);
-				}
-
-				if (strncmp(normCode, "r29", 3) == 0) {
-					D2PropertyStrc itemProperty = {};
-					itemProperty.nProperty = 387;
-					itemProperty.nLayer = 0;
-					itemProperty.nMin = 128;
-					itemProperty.nMax = 128;
-					diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-					diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-					diablo2::d2_common::inv_remove_item(pInventory, g_hoverItem);
-					diablo2::d2_common::inv_update_item(player->inventory, g_hoverItem, false);
-				}
-
-				if (strncmp(normCode, "r30", 3) == 0) {
-					D2PropertyStrc itemProperty = {};
-					itemProperty.nProperty = 387;
-					itemProperty.nLayer = 0;
-					itemProperty.nMin = 256;
-					itemProperty.nMax = 256;
-					diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-					diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-					diablo2::d2_common::inv_remove_item(pInventory, g_hoverItem);
-					diablo2::d2_common::inv_update_item(player->inventory, g_hoverItem, false);
-				}
-
-				if (strncmp(normCode, "r31", 3) == 0) {
-					D2PropertyStrc itemProperty = {};
-					itemProperty.nProperty = 387;
-					itemProperty.nLayer = 0;
-					itemProperty.nMin = 512;
-					itemProperty.nMax = 512;
-					diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-					diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-					diablo2::d2_common::inv_remove_item(pInventory, g_hoverItem);
-					diablo2::d2_common::inv_update_item(player->inventory, g_hoverItem, false);
-				}
-
-				if (strncmp(normCode, "r32", 3) == 0) {
-					D2PropertyStrc itemProperty = {};
-					itemProperty.nProperty = 387;
-					itemProperty.nLayer = 0;
-					itemProperty.nMin = 1024;
-					itemProperty.nMax = 1024;
-					diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-					diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-					diablo2::d2_common::inv_remove_item(pInventory, g_hoverItem);
-					diablo2::d2_common::inv_update_item(player->inventory, g_hoverItem, false);
-				}
-
-				if (strncmp(normCode, "r33", 3) == 0) {
-					D2PropertyStrc itemProperty = {};
-					itemProperty.nProperty = 390;
-					itemProperty.nLayer = 0;
-					itemProperty.nMin = 4;
-					itemProperty.nMax = 4;
-					diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
-					diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
-		
-
-					static d2_tweaks::common::item_move_cs packet;
-					packet.item_guid = g_hoverItem->guid;
-
-					
-
-					packet.bag_guid = gemBagGuid;
-					packet.updateBag = 1;
-					packet.prop = itemProperty.nProperty;
-					packet.val = itemProperty.nMin;
-					packet.target_page = 99;
-					diablo2::d2_client::send_to_server(&packet, sizeof packet);
-				
-
-				}
-
-
-
 			}
 
 
-
-			block = instance.process_right_mouse(false);
-			break;
 		}
 
-		case WM_RBUTTONUP:
-		{
-			block = instance.process_right_mouse(true);
-			break;
-		}
+		block = instance.process_right_mouse(false);
+		break;
+	}
 
-		case WM_SYSKEYDOWN:
-		case WM_KEYDOWN:
-		{
-			block = instance.process_key_event(wParam, false);
-			break;
-		}
+	case WM_RBUTTONUP:
+	{
+		block = instance.process_right_mouse(true);
+		break;
+	}
 
-		case WM_SYSKEYUP:
-		case WM_KEYUP:
-		{
-			block = instance.process_key_event(wParam, true);
-			break;
-		}
+	case WM_SYSKEYDOWN:
+	case WM_KEYDOWN:
+	{
+		block = instance.process_key_event(wParam, false);
+		break;
+	}
 
-		default: return g_wnd_proc_original(hWnd, msg, wParam, lParam);
+	case WM_SYSKEYUP:
+	case WM_KEYUP:
+	{
+		block = instance.process_key_event(wParam, true);
+		break;
+	}
+
+	default: return g_wnd_proc_original(hWnd, msg, wParam, lParam);
 	}
 
 	if (block)
@@ -1249,7 +529,8 @@ void d2_tweaks::ui::ui_manager::process_inputs() {
 
 			process_left_mouse(false);
 		}
-	} else if (m_was_down_before_left) {
+	}
+	else if (m_was_down_before_left) {
 		m_was_down_before_left = false;
 		m_mouse_state_left = false;
 
@@ -1263,7 +544,8 @@ void d2_tweaks::ui::ui_manager::process_inputs() {
 
 			process_right_mouse(false);
 		}
-	} else if (m_was_down_before_right) {
+	}
+	else if (m_was_down_before_right) {
 		m_was_down_before_right = false;
 		m_mouse_state_right = false;
 
