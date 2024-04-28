@@ -470,12 +470,14 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 
 			auto currentPage = diablo2::d2_common::get_item_page(g_hoverItem);
 
+			const char* key;
+
 			if (currentPage == 0 || currentPage == 3 || currentPage == 4) {
 				if (diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_STASH) || diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_CUBE) || diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_INVENTORY)) {
 					for (const auto& gem : gemTypes) {
 						// Accessing key and value
 						const std::string& _key = gem.first;
-						const char* key = gem.first.c_str();
+						key = gem.first.c_str();
 						const GemType& value = gem.second;
 						if (strncmp(normCode, key, 3) == 0) {
 							D2PropertyStrc itemProperty = {};
