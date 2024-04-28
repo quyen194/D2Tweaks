@@ -58,18 +58,17 @@
 #include <random>
 #include <algorithm>
 #include <functional>
-#include <vector>
-#include <string>
 #include <map>
 
 #include <iomanip> // For std::setw
 #include <sstream>
-#include <string>
 #include <stdexcept> // For std::invalid_argument
 
 #include <iostream>
 #include <vector>
 #include <string>
+#include <CommCtrl.h> // Include for edit control
+
 using namespace std;
 
 diablo2::structures::unit* g_item1;
@@ -136,6 +135,12 @@ struct D2InventoryGridInfoStrc
 	BYTE nGridBoxHeight;                    //0x15
 	WORD pad0x16;                            //0x16
 };
+
+// Declare a variable to hold the handle to the edit box control
+HWND g_hEditBox = nullptr;
+// Declare a variable to store the input text
+std::vector<char> g_inputText(256, '\0'); // Adjust the size according to your needs
+
 
 
 
@@ -366,6 +371,19 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 			const auto record = diablo2::d2_common::get_item_record(g_hoverItem->data_record_index);
 			char* normCode = record->string_code;
 
+			if (strncmp(normCode, "ib1", 3) == 0) {
+
+				// display Messagebox with normCode
+				//MessageBoxA(0, normCode, "normCode", 0);
+
+				// we need to accept user input here
+				// we need to get the user input and store it in a variable
+				// we need to use win32 api to get the user input using editbox control, simple inputbox, not using resources.rc 
+
+
+
+			}
+
 			const auto player = diablo2::d2_client::get_local_player();
 			auto pInventory = player->inventory;
 
@@ -397,7 +415,7 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 				int rowID;
 			};
 
-			std::unordered_map<std::string, GemType> gemTypes = {
+			static std::unordered_map<std::string, GemType> gemTypes = {
 				{"gcv", {1, 382}},   // Chipped Amethyst
 				{"gcw", {1, 383}},   // Chipped Diamond
 				{"gcg", {1, 384}},   // Chipped Emerald
@@ -477,7 +495,8 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 					for (const auto& gem : gemTypes) {
 						// Accessing key and value
 						const std::string& _key = gem.first;
-						key = gem.first.c_str();
+						key = gem.first.c_str();						
+
 						const GemType& value = gem.second;
 						if (strncmp(normCode, key, 3) == 0) {
 							D2PropertyStrc itemProperty = {};
@@ -487,6 +506,8 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 							itemProperty.nMax = value.chippedCount;
 							diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
 							diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
+
+							//MessageBoxA(0, key, "key", 0);
 
 							static d2_tweaks::common::item_move_cs packet;
 							packet.item_guid = g_hoverItem->guid;

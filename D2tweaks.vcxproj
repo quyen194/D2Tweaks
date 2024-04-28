@@ -279,6 +279,7 @@
     <ClInclude Include="include\diablo2\utils\screen.h" />
     <ClInclude Include="include\fw\pool.h" />
     <ClInclude Include="include\fw\singleton.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="vendor\D2Template\D2Template.h" />
     <ClInclude Include="vendor\D2Template\D2TemplateConstants.h" />
     <ClInclude Include="vendor\D2Template\D2TemplateDataTables.h" />

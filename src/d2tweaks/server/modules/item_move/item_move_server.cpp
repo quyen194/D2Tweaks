@@ -96,7 +96,7 @@ bool d2_tweaks::server::modules::item_move::handle_packet(diablo2::structures::g
 	const auto key = static_cast<common::item_move_cs*>(packet)->item_code;
 
 	// Display key in a message box
-	MessageBox(NULL, key, "Item code", MB_OK | MB_ICONINFORMATION);
+	//MessageBox(NULL, key, "Item code", MB_OK | MB_ICONINFORMATION);
 
 	const auto item = instance.get_server_unit(game, itemMove->item_guid, diablo2::structures::unit_type_t::UNIT_TYPE_ITEM); //0x4 = item
 	const char* itemcode = itemMove->item_code;
@@ -148,7 +148,8 @@ bool d2_tweaks::server::modules::item_move::handle_packet(diablo2::structures::g
 		// Serialize item data into binary file
 		std::string playerName = player->player_data->name;
 		std::string fileName = "./Save/" + playerName + ".boh";
-		std::ofstream outFile(fileName, std::ios::binary);
+		// Open file in append mode
+		std::ofstream outFile(fileName, std::ios::binary | std::ios::app);
 		if (!outFile) {
 			std::cerr << "Error opening file: " << fileName << std::endl;
 			return false;
@@ -157,6 +158,7 @@ bool d2_tweaks::server::modules::item_move::handle_packet(diablo2::structures::g
 		serialize_item(itemcode, *item, outFile);
 		outFile.close();
 	}
+
 
 	return true;
 }
