@@ -109,6 +109,13 @@ int32_t diablo2::d2_client::send_to_server_7(BYTE type, DWORD num, DWORD unk1, D
 	return send_to_server_7(type, num, unk1, unk2);
 }
 
+//D2FUNC(D2CLIENT, SendToServer9, void, __fastcall, (BYTE type, DWORD num, DWORD unk1), 0xDA40) // Interact
+
+int32_t diablo2::d2_client::send_to_server_9(BYTE type, DWORD num, DWORD unk1) {
+	static wrap_func_fast<int32_t(BYTE type, DWORD num, DWORD unk1)> send_to_server_9(0xDA40, get_base());
+	return send_to_server_9(type, num, unk1);
+}
+
 uint32_t diablo2::d2_client::screen_height() {
 	return *reinterpret_cast<uint32_t*>(get_base() + 0xD40F0);
 }

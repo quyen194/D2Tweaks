@@ -13,6 +13,64 @@
 
 #include <spdlog/spdlog.h>
 
+#include <fstream>
+#include <iostream>
+#include <diablo2/d2client.h>
+
+#include <iomanip> // For std::setw
+#include <sstream>
+#include <string>
+#include <stdexcept> // For std::invalid_argument
+
+#include <windows.h> // Include Windows API header for MessageBox
+
+// Define your deserialization method for the item structure
+diablo2::structures::unit unserialize_item(const std::string& itemcode, std::ifstream& file) {
+	// Read each line from the file
+	std::string line;
+	while (std::getline(file, line)) {
+		// Split the line into item code and serialized data
+		std::istringstream iss(line);
+		std::string code;
+		std::getline(iss, code, ':');
+		if (code == itemcode) {
+			// Found matching item code, extract serialized data
+			std::string serializedData;
+			std::getline(iss, serializedData);
+			// Convert serialized data from hexadecimal string to binary
+			std::istringstream hexStream(serializedData);
+			diablo2::structures::unit item;
+			for (size_t i = 0; i < sizeof(item); ++i) {
+				int byte;
+				if (!(hexStream >> std::hex >> byte)) {
+					throw std::invalid_argument("Error reading serialized data");
+				}
+				reinterpret_cast<char*>(&item)[i] = static_cast<char>(byte);
+			}
+			return item;
+		}
+	}
+	// Item code not found
+	throw std::invalid_argument("Item code not found");
+}
+
+#include <iomanip> // For std::setw
+
+void serialize_item(const std::string& itemcode, const diablo2::structures::unit& item, std::ofstream& file) {
+	// Write item code
+	file << itemcode << ":";
+
+	// Write serialized data
+	for (size_t i = 0; i < sizeof(item); ++i) {
+		file << std::hex << std::setw(2) << std::setfill('0') << static_cast<unsigned>(reinterpret_cast<const char*>(&item)[i]);
+	}
+
+	// Add a newline after each item
+	file << std::endl;
+}
+
+
+
 MODULE_INIT(item_move)
 
 void d2_tweaks::server::modules::item_move::init() {
@@ -35,7 +93,13 @@ bool d2_tweaks::server::modules::item_move::handle_packet(diablo2::structures::g
 	static auto& instance = singleton<server>::instance();
 
 	const auto itemMove = static_cast<common::item_move_cs*>(packet);
+	const auto key = static_cast<common::item_move_cs*>(packet)->item_code;
+
+	// Display key in a message box
+	MessageBox(NULL, key, "Item code", MB_OK | MB_ICONINFORMATION);
+
 	const auto item = instance.get_server_unit(game, itemMove->item_guid, diablo2::structures::unit_type_t::UNIT_TYPE_ITEM); //0x4 = item
+	const char* itemcode = itemMove->item_code;
 	const auto bag = instance.get_server_unit(game, itemMove->bag_guid, diablo2::structures::unit_type_t::UNIT_TYPE_ITEM); //0x4 = item
 
 	D2PropertyStrc itemProperty = {};
@@ -48,6 +112,9 @@ bool d2_tweaks::server::modules::item_move::handle_packet(diablo2::structures::g
 
 	if (item == nullptr)
 		return true; //block further packet processing
+
+
+
 
 	const auto inventoryIndex = diablo2::d2_common::get_inventory_index(player, itemMove->target_page, game->item_format == 101);
 
@@ -74,6 +141,22 @@ bool d2_tweaks::server::modules::item_move::handle_packet(diablo2::structures::g
 	const auto client = player->player_data->net_client;
 
 	diablo2::d2_net::send_to_client(1, client->client_id, &resp, sizeof resp);
+
+
+	if (itemMove->updateBag == 1) {
+
+		// Serialize item data into binary file
+		std::string playerName = player->player_data->name;
+		std::string fileName = "./Save/" + playerName + ".boh";
+		std::ofstream outFile(fileName, std::ios::binary);
+		if (!outFile) {
+			std::cerr << "Error opening file: " << fileName << std::endl;
+			return false;
+		}
+
+		serialize_item(itemcode, *item, outFile);
+		outFile.close();
+	}
 
 	return true;
 }

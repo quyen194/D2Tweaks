@@ -86,5 +86,10 @@ namespace diablo2 {
 		static bool is_gamble_open();
 		static uint8_t current_interact_menu();
 		static void resync_vendor_inventory(structures::unit* ptNPC);
+
+		static int32_t send_to_server_9(BYTE type, DWORD num, DWORD unk1);
+
+
+
 	};
 }

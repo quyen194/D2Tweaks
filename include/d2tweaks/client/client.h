@@ -28,6 +28,9 @@ extern int randStatBool;
 
 extern bool m_stats_enabled;
 
+extern bool m_help_enabled;
+
+
 namespace diablo2 {
 	namespace structures {
 		struct unit;

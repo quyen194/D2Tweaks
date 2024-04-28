@@ -235,6 +235,7 @@ namespace d2_tweaks {
 
 		struct item_move_cs : packet_header {
 			uint32_t item_guid;
+			const char* item_code;
 			uint8_t target_page;
 			uint32_t bag_guid = 0;
 			bool updateBag;

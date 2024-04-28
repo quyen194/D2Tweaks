@@ -62,6 +62,16 @@
 #include <string>
 #include <map>
 
+#include <iomanip> // For std::setw
+#include <sstream>
+#include <string>
+#include <stdexcept> // For std::invalid_argument
+
+#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+
 diablo2::structures::unit* g_item1;
 
 static LRESULT(__stdcall* g_wnd_proc_original)(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
@@ -126,6 +136,8 @@ struct D2InventoryGridInfoStrc
 	BYTE nGridBoxHeight;                    //0x15
 	WORD pad0x16;                            //0x16
 };
+
+
 
 LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 	static auto& instance = singleton<ui_manager>::instance();
@@ -462,9 +474,10 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 				if (diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_STASH) || diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_CUBE) || diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_INVENTORY)) {
 					for (const auto& gem : gemTypes) {
 						// Accessing key and value
-						const std::string& key = gem.first;
+						const std::string& _key = gem.first;
+						const char* key = gem.first.c_str();
 						const GemType& value = gem.second;
-						if (strncmp(normCode, key.c_str(), 3) == 0) {
+						if (strncmp(normCode, key, 3) == 0) {
 							D2PropertyStrc itemProperty = {};
 							itemProperty.nProperty = value.rowID - 3;
 							itemProperty.nLayer = 0;
@@ -475,12 +488,15 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 
 							static d2_tweaks::common::item_move_cs packet;
 							packet.item_guid = g_hoverItem->guid;
+							packet.item_code = key;
 							packet.bag_guid = gemBagGuid;
 							packet.updateBag = 1;
 							packet.prop = itemProperty.nProperty;
 							packet.val = itemProperty.nMin;
 							packet.target_page = 99;
 							diablo2::d2_client::send_to_server(&packet, sizeof packet);
+
+
 						}
 					}
 				}

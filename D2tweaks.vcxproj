@@ -47,12 +47,12 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>..\..\Diablo II\MODS\ironman-dev</OutDir>
+    <OutDir>..\..\Diablo II\MODS\ironman-dev\</OutDir>
     <IntDir>$(SolutionDir)Build\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>..\..\Diablo II\MODS\ironman-dev</OutDir>
+    <OutDir>..\..\Diablo II\MODS\ironman-dev\</OutDir>
     <IntDir>$(SolutionDir)Build\$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
