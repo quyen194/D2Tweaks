@@ -239,6 +239,7 @@ namespace d2_tweaks {
 			uint8_t target_page;
 			uint32_t bag_guid = 0;
 			bool updateBag;
+			bool removeFromBag;
 			int prop;
 			int val;
 

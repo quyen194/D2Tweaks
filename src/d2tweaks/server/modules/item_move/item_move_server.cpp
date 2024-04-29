@@ -24,35 +24,6 @@
 
 #include <windows.h> // Include Windows API header for MessageBox
 
-// Define your deserialization method for the item structure
-diablo2::structures::unit unserialize_item(const std::string& itemcode, std::ifstream& file) {
-	// Read each line from the file
-	std::string line;
-	while (std::getline(file, line)) {
-		// Split the line into item code and serialized data
-		std::istringstream iss(line);
-		std::string code;
-		std::getline(iss, code, ':');
-		if (code == itemcode) {
-			// Found matching item code, extract serialized data
-			std::string serializedData;
-			std::getline(iss, serializedData);
-			// Convert serialized data from hexadecimal string to binary
-			std::istringstream hexStream(serializedData);
-			diablo2::structures::unit item;
-			for (size_t i = 0; i < sizeof(item); ++i) {
-				int byte;
-				if (!(hexStream >> std::hex >> byte)) {
-					throw std::invalid_argument("Error reading serialized data");
-				}
-				reinterpret_cast<char*>(&item)[i] = static_cast<char>(byte);
-			}
-			return item;
-		}
-	}
-	// Item code not found
-	throw std::invalid_argument("Item code not found");
-}
 
 #include <iomanip> // For std::setw
 
@@ -69,8 +40,6 @@ void serialize_item(const std::string& itemcode, const diablo2::structures::unit
 	file << std::endl;
 }
 
-
-
 MODULE_INIT(item_move)
 
 void d2_tweaks::server::modules::item_move::init() {
@@ -86,6 +55,7 @@ void d2_tweaks::server::modules::item_move::init() {
 }
 
 
+
 // handle packet coming from the client
 bool d2_tweaks::server::modules::item_move::handle_packet(diablo2::structures::game* game,
 														  diablo2::structures::unit* player, common::packet_header* packet) {
@@ -99,6 +69,10 @@ bool d2_tweaks::server::modules::item_move::handle_packet(diablo2::structures::g
 	//MessageBox(NULL, key, "Item code", MB_OK | MB_ICONINFORMATION);
 
 	const auto item = instance.get_server_unit(game, itemMove->item_guid, diablo2::structures::unit_type_t::UNIT_TYPE_ITEM); //0x4 = item
+
+	const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
+	
+
 	const char* itemcode = itemMove->item_code;
 	const auto bag = instance.get_server_unit(game, itemMove->bag_guid, diablo2::structures::unit_type_t::UNIT_TYPE_ITEM); //0x4 = item
 
@@ -112,9 +86,6 @@ bool d2_tweaks::server::modules::item_move::handle_packet(diablo2::structures::g
 
 	if (item == nullptr)
 		return true; //block further packet processing
-
-
-
 
 	const auto inventoryIndex = diablo2::d2_common::get_inventory_index(player, itemMove->target_page, game->item_format == 101);
 
@@ -141,6 +112,20 @@ bool d2_tweaks::server::modules::item_move::handle_packet(diablo2::structures::g
 	const auto client = player->player_data->net_client;
 
 	diablo2::d2_net::send_to_client(1, client->client_id, &resp, sizeof resp);
+
+	if (itemMove->removeFromBag == 1) {
+	
+		// here we need to add item to inventory
+
+		diablo2::structures::unit* item;
+
+		// or I can do something like this, 
+		// when extractor is clicked, send the bag and extractor to cube, 
+
+		const auto player = diablo2::d2_client::get_local_player();
+
+
+	}
 
 
 	if (itemMove->updateBag == 1) {
