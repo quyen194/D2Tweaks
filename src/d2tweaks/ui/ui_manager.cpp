@@ -733,7 +733,7 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 
 			const char* key;
 
-			if (currentPage == 0 || currentPage == 3 || currentPage == 4) {
+			if (currentPage == 0 || currentPage == 4) {
 				if (diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_STASH) || diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_CUBE) || diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_INVENTORY)) {
 					for (const auto& gem : gemTypes) {
 						// Accessing key and value
@@ -769,41 +769,41 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 			
 
 			static std::unordered_map<std::string, GemType> exTypes = {
-				{"gcv", {-1, 382}},   // Chipped Amethyst
-				{"gcw", {-1, 383}},   // Chipped Diamond
-				{"gcg", {-1, 384}},   // Chipped Emerald
-				{"gcr", {-1, 381}},   // Chipped Ruby
-				{"gcb", {-1, 385}},   // Chipped Sapphire
-				{"skc", {-1, 387}},   // Chipped Skull
-				{"gcy", {-1, 386}},   // Chipped Topaz
-				{"gfv", {-3, 382}},   // Flawed Amethyst
-				{"gfw", {-3, 383}},   // Flawed Diamond
-				{"gfg", {-3, 384}},   // Flawed Emerald
-				{"gfr", {-3, 381}},   // Flawed Ruby
-				{"gfb", {-3, 385}},   // Flawed Sapphire
-				{"skf", {-3, 387}},   // Flawed Skull
-				{"gfy", {-3, 386}},   // Flawed Topaz
-				{"gsv", {-9, 382}},   // Amethyst
-				{"gsw", {-9, 383}},   // Diamond
-				{"gsg", {-9, 384}},   // Emerald
-				{"gsr", {-9, 381}},   // Ruby
-				{"gsb", {-9, 385}},   // Sapphire
-				{"sku", {-9, 387}},   // Skull
-				{"gsy", {-9, 386}},   // Topaz
-				{"gzv", {-27, 382}},  // Flawless Amethyst
-				{"glw", {-27, 383}},  // Flawless Diamond
-				{"glg", {-27, 384}},  // Flawless Emerald
-				{"glr", {-27, 381}},  // Flawless Ruby
-				{"glb", {-27, 385}},  // Flawless Sapphire
-				{"skl", {-27, 387}},  // Flawless Skull
-				{"gly", {-27, 386}},  // Flawless Topaz
-				{"gpv", {-81, 382}},  // Perfect Amethyst
-				{"gpw", {-81, 383}},  // Perfect Diamond
-				{"gpg", {-81, 384}},  // Perfect Emerald
-				{"gpr", {-81, 381}},  // Perfect Ruby
-				{"gpb", {-81, 385}},  // Perfect Sapphire
-				{"skz", {-81, 387}},  // Perfect Skull
-				{"gpy", {-81, 386}},  // Perfect Topaz
+				{"g25", {-1, 381}},   // Chipped Amethyst
+				{"g24", {-1, 383}},   // Chipped Diamond
+				{"ge8", {-1, 384}},   // Chipped Emerald
+				{"g22", {-1, 381}},   // Chipped Ruby
+				{"g21", {-1, 382}},   // Chipped Sapphire
+				{"g15", {-1, 384}},   // Chipped Skull
+				{"g14", {-1, 383}},   // Chipped Topaz
+				{"gb4", {-3, 378}},   // Flawed Amethyst
+				{"g12", {-3, 383}},   // Flawed Diamond
+				{"g11", {-3, 384}},   // Flawed Emerald
+				{"g30", {-3, 381}},   // Flawed Ruby
+				{"g29", {-3, 382}},   // Flawed Sapphire
+				{"g28", {-3, 384}},   // Flawed Skull
+				{"g27", {-3, 383}},   // Flawed Topaz
+				{"g10", {-9, 378}},   // Amethyst
+				{"ge9", {-9, 383}},   // Diamond
+				{"g23", {-9, 384}},   // Emerald
+				{"ge7", {-9, 381}},   // Ruby
+				{"ge6", {-9, 382}},   // Sapphire
+				{"g35", {-9, 384}},   // Skull
+				{"gb5", {-9, 383}},   // Topaz
+				{"g18", {-27, 378}},  // Flawless Amethyst
+				{"g32", {-27, 383}},  // Flawless Diamond
+				{"g31", {-27, 384}},  // Flawless Emerald
+				{"ge5", {-27, 381}},  // Flawless Ruby
+				{"ge4", {-27, 382}},  // Flawless Sapphire
+				{"g13", {-27, 384}},  // Flawless Skull
+				{"ge2", {-27, 383}},  // Flawless Topaz
+				{"ge1", {-81, 378}},  // Perfect Amethyst
+				{"g20", {-81, 383}},  // Perfect Diamond
+				{"g19", {-81, 384}},  // Perfect Emerald
+				{"ge3", {-81, 381}},  // Perfect Ruby
+				{"g17", {-81, 382}},  // Perfect Sapphire
+				{"g16", {-81, 384}},  // Perfect Skull
+
 				{"x01", {-1, 388}},   // El Rune
 				{"x02", {-3, 388}},   // Eld Rune
 				{"x03", {-9, 388}},   // Tir Rune
@@ -907,33 +907,7 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 							(*reinterpret_cast<diablo2::structures::unit**>(diablo2::d2_client::get_base() + 0x1158F4)) = nullptr;
 
 
-							// Move items from cube to inventory
-							const auto player = diablo2::d2_client::get_local_player();
-							for (auto item = player->inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
-								currentPage = diablo2::d2_common::get_item_page(item);
 
-
-								// display current page in a messagebox
-								// MessageBoxA(0, std::to_string(currentPage).c_str(), "Current Page", 0);
-
-								if (currentPage == 3) { // Item is in the cube
-
-
-									
-									//// display item guid in a messagebox
-									//MessageBoxA(0, std::to_string(item->guid).c_str(), "Item GUID", 0);
-
-									//static d2_tweaks::common::item_move_cs movePacket;
-									//movePacket.item_guid = item->guid;
-									//movePacket.target_page = 0; // Move to inventory
-									//diablo2::d2_client::send_to_server(&movePacket, sizeof movePacket);
-
-
-
-
-
-								}
-							}
 
 
 
@@ -989,52 +963,51 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 			}
 
 
-			if (strncmp(normCode, "g25", 3) == 0 ||
-				strncmp(normCode, "g24", 3) == 0 ||
-				strncmp(normCode, "ge8", 3) == 0 ||
-				strncmp(normCode, "g22", 3) == 0 ||
-				strncmp(normCode, "g21", 3) == 0 ||
-				strncmp(normCode, "g15", 3) == 0 ||
-				strncmp(normCode, "g14", 3) == 0 ||
-				strncmp(normCode, "gb4", 3) == 0 ||
-				strncmp(normCode, "g12", 3) == 0 ||
-				strncmp(normCode, "g11", 3) == 0 ||
-				strncmp(normCode, "g30", 3) == 0 ||
-				strncmp(normCode, "g29", 3) == 0 ||
-				strncmp(normCode, "g28", 3) == 0 ||
-				strncmp(normCode, "g27", 3) == 0 ||
-				strncmp(normCode, "g26", 3) == 0 ||
-				strncmp(normCode, "g10", 3) == 0 ||
-				strncmp(normCode, "ge9", 3) == 0 ||
-				strncmp(normCode, "g23", 3) == 0 ||
-				strncmp(normCode, "ge7", 3) == 0 ||
-				strncmp(normCode, "ge6", 3) == 0 ||
-				strncmp(normCode, "g35", 3) == 0 ||
-				strncmp(normCode, "gb5", 3) == 0 ||
-				strncmp(normCode, "g18", 3) == 0 ||
-				strncmp(normCode, "g32", 3) == 0 ||
-				strncmp(normCode, "g31", 3) == 0 ||
-				strncmp(normCode, "ge5", 3) == 0 ||
-				strncmp(normCode, "ge4", 3) == 0 ||
-				strncmp(normCode, "g13", 3) == 0 ||
-				strncmp(normCode, "ge2", 3) == 0 ||
-				strncmp(normCode, "ge1", 3) == 0 ||
-				strncmp(normCode, "g20", 3) == 0 ||
-				strncmp(normCode, "g19", 3) == 0 ||
-				strncmp(normCode, "ge3", 3) == 0 ||
-				strncmp(normCode, "g17", 3) == 0 ||
-				strncmp(normCode, "g16", 3) == 0 ||
-				strncmp(normCode, "ib1", 3) == 0 ||
+			if (strncmp(normCode, "gcv", 3) == 0 ||
+				strncmp(normCode, "gcw", 3) == 0 ||
+				strncmp(normCode, "gcg", 3) == 0 ||
+				strncmp(normCode, "gcr", 3) == 0 ||
+				strncmp(normCode, "gcb", 3) == 0 ||
+				strncmp(normCode, "skc", 3) == 0 ||
+				strncmp(normCode, "gcy", 3) == 0 ||
+				strncmp(normCode, "gfv", 3) == 0 ||
+				strncmp(normCode, "gfw", 3) == 0 ||
+				strncmp(normCode, "gfg", 3) == 0 ||
+				strncmp(normCode, "gfr", 3) == 0 ||
+				strncmp(normCode, "gfb", 3) == 0 ||
+				strncmp(normCode, "skf", 3) == 0 ||
+				strncmp(normCode, "gfy", 3) == 0 ||
+				strncmp(normCode, "gsv", 3) == 0 ||
+				strncmp(normCode, "gsw", 3) == 0 ||
+				strncmp(normCode, "gsg", 3) == 0 ||
+				strncmp(normCode, "gsr", 3) == 0 ||
+				strncmp(normCode, "gsb", 3) == 0 ||
+				strncmp(normCode, "sku", 3) == 0 ||
+				strncmp(normCode, "gsy", 3) == 0 ||
+				strncmp(normCode, "gzv", 3) == 0 ||
+				strncmp(normCode, "glw", 3) == 0 ||
+				strncmp(normCode, "glg", 3) == 0 ||
+				strncmp(normCode, "glr", 3) == 0 ||
+				strncmp(normCode, "glb", 3) == 0 ||
+				strncmp(normCode, "skl", 3) == 0 ||
+				strncmp(normCode, "gly", 3) == 0 ||
+				strncmp(normCode, "gpv", 3) == 0 ||
+				strncmp(normCode, "gpw", 3) == 0 ||
+				strncmp(normCode, "gpg", 3) == 0 ||
+				strncmp(normCode, "gpr", 3) == 0 ||
+				strncmp(normCode, "gpb", 3) == 0 ||
+				strncmp(normCode, "skz", 3) == 0 ||
+				strncmp(normCode, "gpy", 3) == 0 ||
 				// Runes
-				strncmp(normCode, "x01", 3) == 0 ||
-				strncmp(normCode, "x02", 3) == 0 ||
-				strncmp(normCode, "x03", 3) == 0 ||
-				strncmp(normCode, "x04", 3) == 0 ||
-				strncmp(normCode, "x05", 3) == 0 ||
-				strncmp(normCode, "x06", 3) == 0 ||
-				strncmp(normCode, "x07", 3) == 0 ||
-				strncmp(normCode, "x08", 3) == 0 ||
-				strncmp(normCode, "x09", 3) == 0 ||
+				strncmp(normCode, "r01", 3) == 0 ||
+				strncmp(normCode, "r02", 3) == 0 ||
+				strncmp(normCode, "r03", 3) == 0 ||
+				strncmp(normCode, "r04", 3) == 0 ||
+				strncmp(normCode, "r05", 3) == 0 ||
+				strncmp(normCode, "r06", 3) == 0 ||
+				strncmp(normCode, "r07", 3) == 0 ||
+				strncmp(normCode, "r08", 3) == 0 ||
+				strncmp(normCode, "r09", 3) == 0 ||
 				strncmp(normCode, "r10", 3) == 0 ||
 				strncmp(normCode, "r11", 3) == 0 ||
 				strncmp(normCode, "r12", 3) == 0 ||
@@ -1093,27 +1066,29 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 
 			}
 
-			if (strncmp(normCode, "ib1", 3) == 0) {
-				// Move items from cube to inventory
-				const auto player = diablo2::d2_client::get_local_player();
-				for (auto item = player->inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
-					currentPage = diablo2::d2_common::get_item_page(item);
 
-					// display current page in a messagebox
-					// MessageBoxA(0, std::to_string(currentPage).c_str(), "Current Page", 0);
 
-					if (currentPage == 3) { // Item is in the cube
-						// get item record
-						const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
-						char* normCode = record->string_code;
+			if (strncmp(normCode, "ib1", 3) == 0 || strncmp(normCode, "ib3", 3) == 0) {
+				// Create the packet
+				static d2_tweaks::common::item_move_cs packet;
+				packet.item_guid = g_hoverItem->guid;
 
-						static d2_tweaks::common::item_move_cs movePacket;
-						movePacket.item_guid = item->guid;
-						movePacket.target_page = 0; // Move to inventory
-						diablo2::d2_client::send_to_server(&movePacket, sizeof movePacket);
-						
-					}
+				if (currentPage == 0) { //item is in inventory
+					if (diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_STASH))
+						packet.target_page = 4;
+
+					if (diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_CUBE))
+						packet.target_page = 3;
 				}
+				else {
+					packet.target_page = 0;
+				}
+
+				diablo2::d2_client::send_to_server(&packet, sizeof packet);
+				(*reinterpret_cast<diablo2::structures::unit**>(diablo2::d2_client::get_base() + 0x1158F4)) = nullptr;
+						
+					
+				
 
 
 			}
