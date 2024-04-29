@@ -907,6 +907,39 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 							(*reinterpret_cast<diablo2::structures::unit**>(diablo2::d2_client::get_base() + 0x1158F4)) = nullptr;
 
 
+							// Move items from cube to inventory
+							const auto player = diablo2::d2_client::get_local_player();
+							for (auto item = player->inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
+								currentPage = diablo2::d2_common::get_item_page(item);
+
+
+								// display current page in a messagebox
+								// MessageBoxA(0, std::to_string(currentPage).c_str(), "Current Page", 0);
+
+								if (currentPage == 3) { // Item is in the cube
+
+
+									
+									//// display item guid in a messagebox
+									//MessageBoxA(0, std::to_string(item->guid).c_str(), "Item GUID", 0);
+
+									//static d2_tweaks::common::item_move_cs movePacket;
+									//movePacket.item_guid = item->guid;
+									//movePacket.target_page = 0; // Move to inventory
+									//diablo2::d2_client::send_to_server(&movePacket, sizeof movePacket);
+
+
+
+
+
+								}
+							}
+
+
+
+
+
+
 							// Create the packet to send bag back to inventory
 							//static d2_tweaks::common::item_move_cs packetItemBack;
 							//packetItemBack.item_guid = gemBag->guid;
@@ -955,29 +988,135 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 				}
 			}
 
-			// Move items from cube to inventory
-			const auto player = diablo2::d2_client::get_local_player();
-			for (auto item = player->inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
-				if (item->item_data->page == 1) { // Item is in the cube
+
+			if (strncmp(normCode, "g25", 3) == 0 ||
+				strncmp(normCode, "g24", 3) == 0 ||
+				strncmp(normCode, "ge8", 3) == 0 ||
+				strncmp(normCode, "g22", 3) == 0 ||
+				strncmp(normCode, "g21", 3) == 0 ||
+				strncmp(normCode, "g15", 3) == 0 ||
+				strncmp(normCode, "g14", 3) == 0 ||
+				strncmp(normCode, "gb4", 3) == 0 ||
+				strncmp(normCode, "g12", 3) == 0 ||
+				strncmp(normCode, "g11", 3) == 0 ||
+				strncmp(normCode, "g30", 3) == 0 ||
+				strncmp(normCode, "g29", 3) == 0 ||
+				strncmp(normCode, "g28", 3) == 0 ||
+				strncmp(normCode, "g27", 3) == 0 ||
+				strncmp(normCode, "g26", 3) == 0 ||
+				strncmp(normCode, "g10", 3) == 0 ||
+				strncmp(normCode, "ge9", 3) == 0 ||
+				strncmp(normCode, "g23", 3) == 0 ||
+				strncmp(normCode, "ge7", 3) == 0 ||
+				strncmp(normCode, "ge6", 3) == 0 ||
+				strncmp(normCode, "g35", 3) == 0 ||
+				strncmp(normCode, "gb5", 3) == 0 ||
+				strncmp(normCode, "g18", 3) == 0 ||
+				strncmp(normCode, "g32", 3) == 0 ||
+				strncmp(normCode, "g31", 3) == 0 ||
+				strncmp(normCode, "ge5", 3) == 0 ||
+				strncmp(normCode, "ge4", 3) == 0 ||
+				strncmp(normCode, "g13", 3) == 0 ||
+				strncmp(normCode, "ge2", 3) == 0 ||
+				strncmp(normCode, "ge1", 3) == 0 ||
+				strncmp(normCode, "g20", 3) == 0 ||
+				strncmp(normCode, "g19", 3) == 0 ||
+				strncmp(normCode, "ge3", 3) == 0 ||
+				strncmp(normCode, "g17", 3) == 0 ||
+				strncmp(normCode, "g16", 3) == 0 ||
+				strncmp(normCode, "ib1", 3) == 0 ||
+				// Runes
+				strncmp(normCode, "x01", 3) == 0 ||
+				strncmp(normCode, "x02", 3) == 0 ||
+				strncmp(normCode, "x03", 3) == 0 ||
+				strncmp(normCode, "x04", 3) == 0 ||
+				strncmp(normCode, "x05", 3) == 0 ||
+				strncmp(normCode, "x06", 3) == 0 ||
+				strncmp(normCode, "x07", 3) == 0 ||
+				strncmp(normCode, "x08", 3) == 0 ||
+				strncmp(normCode, "x09", 3) == 0 ||
+				strncmp(normCode, "r10", 3) == 0 ||
+				strncmp(normCode, "r11", 3) == 0 ||
+				strncmp(normCode, "r12", 3) == 0 ||
+				strncmp(normCode, "r13", 3) == 0 ||
+				strncmp(normCode, "r14", 3) == 0 ||
+				strncmp(normCode, "r15", 3) == 0 ||
+				strncmp(normCode, "r16", 3) == 0 ||
+				strncmp(normCode, "r17", 3) == 0 ||
+				strncmp(normCode, "r18", 3) == 0 ||
+				strncmp(normCode, "r19", 3) == 0 ||
+				strncmp(normCode, "r20", 3) == 0 ||
+				strncmp(normCode, "r21", 3) == 0 ||
+				strncmp(normCode, "r22", 3) == 0 ||
+				strncmp(normCode, "r23", 3) == 0 ||
+				strncmp(normCode, "r24", 3) == 0 ||
+				strncmp(normCode, "r25", 3) == 0 ||
+				strncmp(normCode, "r26", 3) == 0 ||
+				strncmp(normCode, "r27", 3) == 0 ||
+				strncmp(normCode, "r28", 3) == 0 ||
+				strncmp(normCode, "r29", 3) == 0 ||
+				strncmp(normCode, "r30", 3) == 0 ||
+				strncmp(normCode, "r31", 3) == 0 ||
+				strncmp(normCode, "r32", 3) == 0 ||
+				strncmp(normCode, "r33", 3) == 0
+				) {
+
+				// Move items from cube to inventory
+				const auto player = diablo2::d2_client::get_local_player();
+				for (auto item = player->inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
+					currentPage = diablo2::d2_common::get_item_page(item);
 
 
-					// display item guid in a messagebox
-					MessageBoxA(0, std::to_string(item->guid).c_str(), "Item GUID", 0);
-
-					static d2_tweaks::common::item_move_cs movePacket;
-					movePacket.item_guid = item->guid;
-					movePacket.target_page = 0; // Move to inventory
-					diablo2::d2_client::send_to_server(&movePacket, sizeof movePacket);
+					// display current page in a messagebox
+					// MessageBoxA(0, std::to_string(currentPage).c_str(), "Current Page", 0);
 
 
+					if (currentPage == 3) { // Item is in the cube
+
+						// get item record
+						const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
+						char* normCode = record->string_code;
+
+						// if normCode strncmp is equal to "ib1", don't send the item back to inventory
+						if (strncmp(normCode, "ib1", 3) == 1) {
+							// display item guid in a messagebox
+							//MessageBoxA(0, std::to_string(item->guid).c_str(), "Item GUID", 0);
+
+							static d2_tweaks::common::item_move_cs movePacket;
+							movePacket.item_guid = item->guid;
+							movePacket.target_page = 0; // Move to inventory
+							diablo2::d2_client::send_to_server(&movePacket, sizeof movePacket);
+						}
+
+					}
 				}
+
 			}
 
+			if (strncmp(normCode, "ib1", 3) == 0) {
+				// Move items from cube to inventory
+				const auto player = diablo2::d2_client::get_local_player();
+				for (auto item = player->inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
+					currentPage = diablo2::d2_common::get_item_page(item);
+
+					// display current page in a messagebox
+					// MessageBoxA(0, std::to_string(currentPage).c_str(), "Current Page", 0);
+
+					if (currentPage == 3) { // Item is in the cube
+						// get item record
+						const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
+						char* normCode = record->string_code;
+
+						static d2_tweaks::common::item_move_cs movePacket;
+						movePacket.item_guid = item->guid;
+						movePacket.target_page = 0; // Move to inventory
+						diablo2::d2_client::send_to_server(&movePacket, sizeof movePacket);
+						
+					}
+				}
 
 
-
-
-
+			}
 
 		}
 

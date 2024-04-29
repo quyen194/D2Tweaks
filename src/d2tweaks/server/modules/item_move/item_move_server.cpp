@@ -128,6 +128,8 @@ bool d2_tweaks::server::modules::item_move::handle_packet(diablo2::structures::g
 	}
 
 
+
+
 	if (itemMove->updateBag == 1) {
 
 		// Serialize item data into binary file
