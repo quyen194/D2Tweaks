@@ -1051,7 +1051,9 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 						char* normCode = record->string_code;
 
 						// if normCode strncmp is equal to "ib1", don't send the item back to inventory
-						if (strncmp(normCode, "ib1", 3) == 1) {
+						if (strncmp(normCode, "ib1", 3) == 0) {
+							continue;
+						} else {
 							// display item guid in a messagebox
 							//MessageBoxA(0, std::to_string(item->guid).c_str(), "Item GUID", 0);
 
