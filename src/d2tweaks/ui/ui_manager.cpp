@@ -585,6 +585,11 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 		if (g_hoverItem != nullptr) {
 			const auto record = diablo2::d2_common::get_item_record(g_hoverItem->data_record_index);
 			char* normCode = record->string_code;
+			// Get item record type
+			const auto itemtype_record = diablo2::d2_common::get_item_type_record(record->type);
+			auto itemtype_record_equiv1 = diablo2::d2_common::get_item_type_record(itemtype_record->equiv1);
+			auto itemtype_record_equiv2 = diablo2::d2_common::get_item_type_record(itemtype_record->equiv2);
+			
 
 			/*
 			if (strncmp(normCode, "ib1", 3) == 0) {
@@ -1069,8 +1074,20 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 			}
 
 
-
-			if (strncmp(normCode, "ib1", 3) == 0 || strncmp(normCode, "ib3", 3) == 0) {
+			if (   strncmp(normCode, "ib1", 3) == 0 
+				|| strncmp(normCode, "ib3", 3) == 0 
+				|| strncmp(normCode, "mez", 3) == 0
+				|| strncmp(normCode, "me0", 3) == 0
+				|| record->type == 109
+				|| record->type == 111
+				|| record->type == 112
+				|| record->type == 113
+				|| record->type == 120
+				|| record->type == 113
+				|| record->type == 122
+				|| record->type == 123
+				|| record->type == 125
+				) {
 				// Create the packet
 				static d2_tweaks::common::item_move_cs packet;
 				packet.item_guid = g_hoverItem->guid;
