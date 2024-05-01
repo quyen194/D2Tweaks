@@ -69,6 +69,10 @@
 #include <string>
 #include <CommCtrl.h> // Include for edit control
 
+
+#pragma pack(push, 1)
+
+
 using namespace std;
 
 diablo2::structures::unit* g_item1;
@@ -121,20 +125,6 @@ void d2_tweaks::ui::ui_manager::draw() {
 		menu->draw();
 	}
 }
-
-struct D2InventoryGridInfoStrc
-{
-	BYTE nGridX;                            //0x00
-	BYTE nGridY;                            //0x01
-	WORD pad0x02;                            //0x02
-	int nGridLeft;                            //0x04
-	int nGridRight;                            //0x08
-	int nGridTop;                            //0x0C
-	int nGridBottom;                        //0x10
-	BYTE nGridBoxWidth;                        //0x14
-	BYTE nGridBoxHeight;                    //0x15
-	WORD pad0x16;                            //0x16
-};
 
 // Declare a variable to hold the handle to the edit box control
 HWND g_hEditBox = nullptr;
@@ -488,9 +478,7 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 				diablo2::d2_client::send_to_server_7(0x4F, 0x18, 0, 0);
 			}
 		}
-
 	}
-
 
 	/*
 	if (wParam == 'G') {
@@ -559,8 +547,7 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 		}
 	}
 	*/
-	
-	
+
 	switch (msg) {
 	case WM_LBUTTONDOWN:
 	{
@@ -580,6 +567,10 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 		auto pInventory = player->inventory;
 
 		int32_t gemBagGuid = 0;
+		int32_t boxGuid;
+		uint32_t boxX;
+		uint32_t boxY;
+
 		const auto g_hoverItem = *reinterpret_cast<diablo2::structures::unit**>(diablo2::d2_client::get_base() + 0x1158F4);
 
 		if (g_hoverItem != nullptr) {
@@ -589,7 +580,6 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 			const auto itemtype_record = diablo2::d2_common::get_item_type_record(record->type);
 			auto itemtype_record_equiv1 = diablo2::d2_common::get_item_type_record(itemtype_record->equiv1);
 			auto itemtype_record_equiv2 = diablo2::d2_common::get_item_type_record(itemtype_record->equiv2);
-			
 
 			/*
 			if (strncmp(normCode, "ib1", 3) == 0) {
@@ -629,11 +619,8 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 				char* normCode = record1->string_code;
 
 				MessageBoxA(0, normCode, "normCode", 0);
-
-			
 			}
 			*/
-
 
 			std::vector<diablo2::structures::unit*> items;
 			diablo2::structures::unit* gemBag{};
@@ -641,10 +628,27 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 			// get the gembag item
 			for (auto item = player->inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
 				const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
+				char* normCode1 = record->string_code;
 				if (record->type == 101) {
 					gemBag = item;
 					gemBagGuid = gemBag->guid;
 				}
+				if (strncmp(normCode1, "box", 3) == 0) {
+					diablo2::structures::unit* box = item;
+					boxGuid = box->guid;
+					
+
+					// Get the x, y coordinates of the box in the inventory
+					boxX = player->path->x;
+					boxY = player->path->y;
+
+
+					MessageBoxA(0, std::to_string(boxX).c_str(), "boxX", 0);
+					MessageBoxA(0, std::to_string(boxY).c_str(), "boxY", 0);
+					//MessageBoxA(0, std::to_string(boxGuid).c_str(), "boxGuid", 0);
+				}
+
+
 			}
 
 			// Actual ID to use is 378 for Ruby, but actual row number is 381
@@ -771,8 +775,6 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 				}
 			}
 
-			
-
 			static std::unordered_map<std::string, GemType> exTypes = {
 				{"g25", {-1, 381}},   // Chipped Amethyst
 				{"g24", {-1, 383}},   // Chipped Diamond
@@ -880,7 +882,6 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 			}
 			*/
 
-
 			// If Cube is open, then if we right click certain item codes, they should be moved to the cube, send transmute packet, and then move the item back to the inventory
 
 			if (currentPage == 0 || currentPage == 3 || currentPage == 4) {
@@ -892,13 +893,12 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 
 						const GemType& value = gem.second;
 						if (strncmp(normCode, key, 3) == 0) {
-
 							char currentPage = diablo2::d2_common::get_item_page(g_hoverItem);
 
 							// Create the packet to send hover item to cube
 							static d2_tweaks::common::item_move_cs packet;
 							packet.item_guid = g_hoverItem->guid;
-							packet.target_page = 3;							
+							packet.target_page = 3;
 							diablo2::d2_client::send_to_server(&packet, sizeof packet);
 
 							static d2_tweaks::common::item_move_cs packetBag;
@@ -911,14 +911,6 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 
 							(*reinterpret_cast<diablo2::structures::unit**>(diablo2::d2_client::get_base() + 0x1158F4)) = nullptr;
 
-
-
-
-
-
-
-
-
 							// Create the packet to send bag back to inventory
 							//static d2_tweaks::common::item_move_cs packetItemBack;
 							//packetItemBack.item_guid = gemBag->guid;
@@ -929,8 +921,6 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 							//packetBagBack.item_guid = gemBag->guid;
 							//packetBagBack.target_page = 0;
 							//diablo2::d2_client::send_to_server(&packetBagBack, sizeof packetBagBack);
-
-							
 
 							/*
 
@@ -950,23 +940,19 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 							// send transmute button packet
 							diablo2::d2_client::send_to_server_7(0x4F, 0x18, 0, 0);
 
-
 							// after transmute, move item and bag back to inventory
 							packet.item_guid = gemBag->guid;
-							packet.target_page = 0;							
+							packet.target_page = 0;
 							diablo2::d2_client::send_to_server(&packet, sizeof packet);
 
-							
 							packet.item_guid = g_hoverItem->guid;
 							packet.target_page = 0;
 							diablo2::d2_client::send_to_server(&packet, sizeof packet);
 							*/
-
 						}
 					}
 				}
 			}
-
 
 			if (strncmp(normCode, "gcv", 3) == 0 ||
 				strncmp(normCode, "gcw", 3) == 0 ||
@@ -1038,19 +1024,15 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 				strncmp(normCode, "r32", 3) == 0 ||
 				strncmp(normCode, "r33", 3) == 0
 				) {
-
 				// Move items from cube to inventory
 				const auto player = diablo2::d2_client::get_local_player();
 				for (auto item = player->inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
 					currentPage = diablo2::d2_common::get_item_page(item);
 
-
 					// display current page in a messagebox
 					// MessageBoxA(0, std::to_string(currentPage).c_str(), "Current Page", 0);
 
-
 					if (currentPage == 3) { // Item is in the cube
-
 						// get item record
 						const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
 						char* normCode = record->string_code;
@@ -1058,7 +1040,8 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 						// if normCode strncmp is equal to "ib1", don't send the item back to inventory
 						if (strncmp(normCode, "ib1", 3) == 0) {
 							continue;
-						} else {
+						}
+						else {
 							// display item guid in a messagebox
 							//MessageBoxA(0, std::to_string(item->guid).c_str(), "Item GUID", 0);
 
@@ -1067,18 +1050,528 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 							movePacket.target_page = 0; // Move to inventory
 							diablo2::d2_client::send_to_server(&movePacket, sizeof movePacket);
 						}
-
 					}
 				}
-
 			}
 
-
-			if (   strncmp(normCode, "ib1", 3) == 0 
-				|| strncmp(normCode, "ib3", 3) == 0 
-				|| strncmp(normCode, "mez", 3) == 0
-				|| strncmp(normCode, "me0", 3) == 0
-				|| record->type == 109
+			if (strncmp(normCode, "ib1", 3) == 0 ||
+				strncmp(normCode, "ib3", 3) == 0 ||
+				strncmp(normCode, "mez", 3) == 0 ||
+				strncmp(normCode, "me0", 3) == 0 ||
+				strncmp(normCode, "cap", 3) == 0 ||
+				strncmp(normCode, "skp", 3) == 0 ||
+				strncmp(normCode, "hlm", 3) == 0 ||
+				strncmp(normCode, "fhl", 3) == 0 ||
+				strncmp(normCode, "ghm", 3) == 0 ||
+				strncmp(normCode, "crn", 3) == 0 ||
+				strncmp(normCode, "msk", 3) == 0 ||
+				strncmp(normCode, "qui", 3) == 0 ||
+				strncmp(normCode, "lea", 3) == 0 ||
+				strncmp(normCode, "hla", 3) == 0 ||
+				strncmp(normCode, "stu", 3) == 0 ||
+				strncmp(normCode, "rng", 3) == 0 ||
+				strncmp(normCode, "scl", 3) == 0 ||
+				strncmp(normCode, "chn", 3) == 0 ||
+				strncmp(normCode, "brs", 3) == 0 ||
+				strncmp(normCode, "spl", 3) == 0 ||
+				strncmp(normCode, "plt", 3) == 0 ||
+				strncmp(normCode, "fld", 3) == 0 ||
+				strncmp(normCode, "gth", 3) == 0 ||
+				strncmp(normCode, "ful", 3) == 0 ||
+				strncmp(normCode, "aar", 3) == 0 ||
+				strncmp(normCode, "ltp", 3) == 0 ||
+				strncmp(normCode, "buc", 3) == 0 ||
+				strncmp(normCode, "sml", 3) == 0 ||
+				strncmp(normCode, "lrg", 3) == 0 ||
+				strncmp(normCode, "kit", 3) == 0 ||
+				strncmp(normCode, "tow", 3) == 0 ||
+				strncmp(normCode, "gts", 3) == 0 ||
+				strncmp(normCode, "lgl", 3) == 0 ||
+				strncmp(normCode, "vgl", 3) == 0 ||
+				strncmp(normCode, "mgl", 3) == 0 ||
+				strncmp(normCode, "tgl", 3) == 0 ||
+				strncmp(normCode, "hgl", 3) == 0 ||
+				strncmp(normCode, "lbt", 3) == 0 ||
+				strncmp(normCode, "vbt", 3) == 0 ||
+				strncmp(normCode, "mbt", 3) == 0 ||
+				strncmp(normCode, "tbt", 3) == 0 ||
+				strncmp(normCode, "hbt", 3) == 0 ||
+				strncmp(normCode, "lbl", 3) == 0 ||
+				strncmp(normCode, "vbl", 3) == 0 ||
+				strncmp(normCode, "mbl", 3) == 0 ||
+				strncmp(normCode, "tbl", 3) == 0 ||
+				strncmp(normCode, "hbl", 3) == 0 ||
+				strncmp(normCode, "bhm", 3) == 0 ||
+				strncmp(normCode, "bsh", 3) == 0 ||
+				strncmp(normCode, "spk", 3) == 0 ||
+				strncmp(normCode, "xap", 3) == 0 ||
+				strncmp(normCode, "xkp", 3) == 0 ||
+				strncmp(normCode, "xlm", 3) == 0 ||
+				strncmp(normCode, "xhl", 3) == 0 ||
+				strncmp(normCode, "xhm", 3) == 0 ||
+				strncmp(normCode, "xrn", 3) == 0 ||
+				strncmp(normCode, "xsk", 3) == 0 ||
+				strncmp(normCode, "xui", 3) == 0 ||
+				strncmp(normCode, "xea", 3) == 0 ||
+				strncmp(normCode, "xla", 3) == 0 ||
+				strncmp(normCode, "xtu", 3) == 0 ||
+				strncmp(normCode, "xng", 3) == 0 ||
+				strncmp(normCode, "xcl", 3) == 0 ||
+				strncmp(normCode, "xhn", 3) == 0 ||
+				strncmp(normCode, "xrs", 3) == 0 ||
+				strncmp(normCode, "xpl", 3) == 0 ||
+				strncmp(normCode, "xlt", 3) == 0 ||
+				strncmp(normCode, "xld", 3) == 0 ||
+				strncmp(normCode, "xth", 3) == 0 ||
+				strncmp(normCode, "xul", 3) == 0 ||
+				strncmp(normCode, "xar", 3) == 0 ||
+				strncmp(normCode, "xtp", 3) == 0 ||
+				strncmp(normCode, "xuc", 3) == 0 ||
+				strncmp(normCode, "xml", 3) == 0 ||
+				strncmp(normCode, "xrg", 3) == 0 ||
+				strncmp(normCode, "xit", 3) == 0 ||
+				strncmp(normCode, "xow", 3) == 0 ||
+				strncmp(normCode, "xts", 3) == 0 ||
+				strncmp(normCode, "xlg", 3) == 0 ||
+				strncmp(normCode, "xvg", 3) == 0 ||
+				strncmp(normCode, "xmg", 3) == 0 ||
+				strncmp(normCode, "xtg", 3) == 0 ||
+				strncmp(normCode, "xhg", 3) == 0 ||
+				strncmp(normCode, "xlb", 3) == 0 ||
+				strncmp(normCode, "xvb", 3) == 0 ||
+				strncmp(normCode, "xmb", 3) == 0 ||
+				strncmp(normCode, "xtb", 3) == 0 ||
+				strncmp(normCode, "xhb", 3) == 0 ||
+				strncmp(normCode, "zlb", 3) == 0 ||
+				strncmp(normCode, "zvb", 3) == 0 ||
+				strncmp(normCode, "zmb", 3) == 0 ||
+				strncmp(normCode, "ztb", 3) == 0 ||
+				strncmp(normCode, "zhb", 3) == 0 ||
+				strncmp(normCode, "xh9", 3) == 0 ||
+				strncmp(normCode, "xsh", 3) == 0 ||
+				strncmp(normCode, "xpk", 3) == 0 ||
+				strncmp(normCode, "dr1", 3) == 0 ||
+				strncmp(normCode, "dr2", 3) == 0 ||
+				strncmp(normCode, "dr3", 3) == 0 ||
+				strncmp(normCode, "dr4", 3) == 0 ||
+				strncmp(normCode, "dr5", 3) == 0 ||
+				strncmp(normCode, "ba1", 3) == 0 ||
+				strncmp(normCode, "ba2", 3) == 0 ||
+				strncmp(normCode, "ba3", 3) == 0 ||
+				strncmp(normCode, "ba4", 3) == 0 ||
+				strncmp(normCode, "ba5", 3) == 0 ||
+				strncmp(normCode, "pa1", 3) == 0 ||
+				strncmp(normCode, "pa2", 3) == 0 ||
+				strncmp(normCode, "pa3", 3) == 0 ||
+				strncmp(normCode, "pa4", 3) == 0 ||
+				strncmp(normCode, "pa5", 3) == 0 ||
+				strncmp(normCode, "ne1", 3) == 0 ||
+				strncmp(normCode, "ne2", 3) == 0 ||
+				strncmp(normCode, "ne3", 3) == 0 ||
+				strncmp(normCode, "ne4", 3) == 0 ||
+				strncmp(normCode, "ne5", 3) == 0 ||
+				strncmp(normCode, "ci0", 3) == 0 ||
+				strncmp(normCode, "ci1", 3) == 0 ||
+				strncmp(normCode, "ci2", 3) == 0 ||
+				strncmp(normCode, "ci3", 3) == 0 ||
+				strncmp(normCode, "uap", 3) == 0 ||
+				strncmp(normCode, "ukp", 3) == 0 ||
+				strncmp(normCode, "ulm", 3) == 0 ||
+				strncmp(normCode, "uhl", 3) == 0 ||
+				strncmp(normCode, "uhm", 3) == 0 ||
+				strncmp(normCode, "urn", 3) == 0 ||
+				strncmp(normCode, "usk", 3) == 0 ||
+				strncmp(normCode, "uui", 3) == 0 ||
+				strncmp(normCode, "uea", 3) == 0 ||
+				strncmp(normCode, "ula", 3) == 0 ||
+				strncmp(normCode, "utu", 3) == 0 ||
+				strncmp(normCode, "ung", 3) == 0 ||
+				strncmp(normCode, "ucl", 3) == 0 ||
+				strncmp(normCode, "uhn", 3) == 0 ||
+				strncmp(normCode, "urs", 3) == 0 ||
+				strncmp(normCode, "upl", 3) == 0 ||
+				strncmp(normCode, "ult", 3) == 0 ||
+				strncmp(normCode, "uld", 3) == 0 ||
+				strncmp(normCode, "uth", 3) == 0 ||
+				strncmp(normCode, "uul", 3) == 0 ||
+				strncmp(normCode, "uar", 3) == 0 ||
+				strncmp(normCode, "utp", 3) == 0 ||
+				strncmp(normCode, "uuc", 3) == 0 ||
+				strncmp(normCode, "uml", 3) == 0 ||
+				strncmp(normCode, "urg", 3) == 0 ||
+				strncmp(normCode, "uit", 3) == 0 ||
+				strncmp(normCode, "uow", 3) == 0 ||
+				strncmp(normCode, "uts", 3) == 0 ||
+				strncmp(normCode, "ulg", 3) == 0 ||
+				strncmp(normCode, "uvg", 3) == 0 ||
+				strncmp(normCode, "umg", 3) == 0 ||
+				strncmp(normCode, "utg", 3) == 0 ||
+				strncmp(normCode, "uhg", 3) == 0 ||
+				strncmp(normCode, "ulb", 3) == 0 ||
+				strncmp(normCode, "uvb", 3) == 0 ||
+				strncmp(normCode, "umb", 3) == 0 ||
+				strncmp(normCode, "utb", 3) == 0 ||
+				strncmp(normCode, "uhb", 3) == 0 ||
+				strncmp(normCode, "ulc", 3) == 0 ||
+				strncmp(normCode, "uvc", 3) == 0 ||
+				strncmp(normCode, "umc", 3) == 0 ||
+				strncmp(normCode, "utc", 3) == 0 ||
+				strncmp(normCode, "uhc", 3) == 0 ||
+				strncmp(normCode, "uh9", 3) == 0 ||
+				strncmp(normCode, "ush", 3) == 0 ||
+				strncmp(normCode, "upk", 3) == 0 ||
+				strncmp(normCode, "dr6", 3) == 0 ||
+				strncmp(normCode, "dr7", 3) == 0 ||
+				strncmp(normCode, "dr8", 3) == 0 ||
+				strncmp(normCode, "dr9", 3) == 0 ||
+				strncmp(normCode, "dra", 3) == 0 ||
+				strncmp(normCode, "ba6", 3) == 0 ||
+				strncmp(normCode, "ba7", 3) == 0 ||
+				strncmp(normCode, "ba8", 3) == 0 ||
+				strncmp(normCode, "ba9", 3) == 0 ||
+				strncmp(normCode, "baa", 3) == 0 ||
+				strncmp(normCode, "pa6", 3) == 0 ||
+				strncmp(normCode, "pa7", 3) == 0 ||
+				strncmp(normCode, "pa8", 3) == 0 ||
+				strncmp(normCode, "pa9", 3) == 0 ||
+				strncmp(normCode, "paa", 3) == 0 ||
+				strncmp(normCode, "ne6", 3) == 0 ||
+				strncmp(normCode, "ne7", 3) == 0 ||
+				strncmp(normCode, "ne8", 3) == 0 ||
+				strncmp(normCode, "ne9", 3) == 0 ||
+				strncmp(normCode, "nea", 3) == 0 ||
+				strncmp(normCode, "drb", 3) == 0 ||
+				strncmp(normCode, "drc", 3) == 0 ||
+				strncmp(normCode, "drd", 3) == 0 ||
+				strncmp(normCode, "dre", 3) == 0 ||
+				strncmp(normCode, "drf", 3) == 0 ||
+				strncmp(normCode, "bab", 3) == 0 ||
+				strncmp(normCode, "bac", 3) == 0 ||
+				strncmp(normCode, "bad", 3) == 0 ||
+				strncmp(normCode, "bae", 3) == 0 ||
+				strncmp(normCode, "baf", 3) == 0 ||
+				strncmp(normCode, "pab", 3) == 0 ||
+				strncmp(normCode, "pac", 3) == 0 ||
+				strncmp(normCode, "pad", 3) == 0 ||
+				strncmp(normCode, "pae", 3) == 0 ||
+				strncmp(normCode, "paf", 3) == 0 ||
+				strncmp(normCode, "neb", 3) == 0 ||
+				strncmp(normCode, "neg", 3) == 0 ||
+				strncmp(normCode, "ned", 3) == 0 ||
+				strncmp(normCode, "nee", 3) == 0 ||
+				strncmp(normCode, "nef", 3) == 0 ||
+				strncmp(normCode, "tor", 3) == 0 ||
+				strncmp(normCode, "hax", 3) == 0 ||
+				strncmp(normCode, "axe", 3) == 0 ||
+				strncmp(normCode, "2ax", 3) == 0 ||
+				strncmp(normCode, "mpi", 3) == 0 ||
+				strncmp(normCode, "wax", 3) == 0 ||
+				strncmp(normCode, "lax", 3) == 0 ||
+				strncmp(normCode, "bax", 3) == 0 ||
+				strncmp(normCode, "btx", 3) == 0 ||
+				strncmp(normCode, "gax", 3) == 0 ||
+				strncmp(normCode, "gix", 3) == 0 ||
+				strncmp(normCode, "wnd", 3) == 0 ||
+				strncmp(normCode, "ywn", 3) == 0 ||
+				strncmp(normCode, "bwn", 3) == 0 ||
+				strncmp(normCode, "gwn", 3) == 0 ||
+				strncmp(normCode, "clb", 3) == 0 ||
+				strncmp(normCode, "scp", 3) == 0 ||
+				strncmp(normCode, "gsc", 3) == 0 ||
+				strncmp(normCode, "wsp", 3) == 0 ||
+				strncmp(normCode, "spc", 3) == 0 ||
+				strncmp(normCode, "mac", 3) == 0 ||
+				strncmp(normCode, "mst", 3) == 0 ||
+				strncmp(normCode, "fla", 3) == 0 ||
+				strncmp(normCode, "whm", 3) == 0 ||
+				strncmp(normCode, "mau", 3) == 0 ||
+				strncmp(normCode, "gma", 3) == 0 ||
+				strncmp(normCode, "ssd", 3) == 0 ||
+				strncmp(normCode, "scm", 3) == 0 ||
+				strncmp(normCode, "sbr", 3) == 0 ||
+				strncmp(normCode, "flc", 3) == 0 ||
+				strncmp(normCode, "crs", 3) == 0 ||
+				strncmp(normCode, "bsd", 3) == 0 ||
+				strncmp(normCode, "lsd", 3) == 0 ||
+				strncmp(normCode, "wsd", 3) == 0 ||
+				strncmp(normCode, "2hs", 3) == 0 ||
+				strncmp(normCode, "clm", 3) == 0 ||
+				strncmp(normCode, "gis", 3) == 0 ||
+				strncmp(normCode, "bsw", 3) == 0 ||
+				strncmp(normCode, "flb", 3) == 0 ||
+				strncmp(normCode, "gsd", 3) == 0 ||
+				strncmp(normCode, "dgr", 3) == 0 ||
+				strncmp(normCode, "dir", 3) == 0 ||
+				strncmp(normCode, "kri", 3) == 0 ||
+				strncmp(normCode, "bld", 3) == 0 ||
+				strncmp(normCode, "tkf", 3) == 0 ||
+				strncmp(normCode, "tax", 3) == 0 ||
+				strncmp(normCode, "bkf", 3) == 0 ||
+				strncmp(normCode, "bal", 3) == 0 ||
+				strncmp(normCode, "jav", 3) == 0 ||
+				strncmp(normCode, "pil", 3) == 0 ||
+				strncmp(normCode, "ssp", 3) == 0 ||
+				strncmp(normCode, "glv", 3) == 0 ||
+				strncmp(normCode, "tsp", 3) == 0 ||
+				strncmp(normCode, "spr", 3) == 0 ||
+				strncmp(normCode, "tri", 3) == 0 ||
+				strncmp(normCode, "brn", 3) == 0 ||
+				strncmp(normCode, "spt", 3) == 0 ||
+				strncmp(normCode, "pik", 3) == 0 ||
+				strncmp(normCode, "bar", 3) == 0 ||
+				strncmp(normCode, "vou", 3) == 0 ||
+				strncmp(normCode, "scy", 3) == 0 ||
+				strncmp(normCode, "pax", 3) == 0 ||
+				strncmp(normCode, "hal", 3) == 0 ||
+				strncmp(normCode, "wsc", 3) == 0 ||
+				strncmp(normCode, "sst", 3) == 0 ||
+				strncmp(normCode, "lst", 3) == 0 ||
+				strncmp(normCode, "cst", 3) == 0 ||
+				strncmp(normCode, "bst", 3) == 0 ||
+				strncmp(normCode, "wst", 3) == 0 ||
+				strncmp(normCode, "sbw", 3) == 0 ||
+				strncmp(normCode, "hbw", 3) == 0 ||
+				strncmp(normCode, "lbw", 3) == 0 ||
+				strncmp(normCode, "cbw", 3) == 0 ||
+				strncmp(normCode, "sbb", 3) == 0 ||
+				strncmp(normCode, "lbb", 3) == 0 ||
+				strncmp(normCode, "swb", 3) == 0 ||
+				strncmp(normCode, "lwb", 3) == 0 ||
+				strncmp(normCode, "lxb", 3) == 0 ||
+				strncmp(normCode, "mxb", 3) == 0 ||
+				strncmp(normCode, "hxb", 3) == 0 ||
+				strncmp(normCode, "rxb", 3) == 0 ||
+				strncmp(normCode, "gps", 3) == 0 ||
+				strncmp(normCode, "ops", 3) == 0 ||
+				strncmp(normCode, "gpm", 3) == 0 ||
+				strncmp(normCode, "opm", 3) == 0 ||
+				strncmp(normCode, "gpl", 3) == 0 ||
+				strncmp(normCode, "opl", 3) == 0 ||
+				strncmp(normCode, "d33", 3) == 0 ||
+				strncmp(normCode, "g33", 3) == 0 ||
+				strncmp(normCode, "leg", 3) == 0 ||
+				strncmp(normCode, "hdm", 3) == 0 ||
+				strncmp(normCode, "hfh", 3) == 0 ||
+				strncmp(normCode, "hst", 3) == 0 ||
+				strncmp(normCode, "msf", 3) == 0 ||
+				strncmp(normCode, "9ha", 3) == 0 ||
+				strncmp(normCode, "9ax", 3) == 0 ||
+				strncmp(normCode, "92a", 3) == 0 ||
+				strncmp(normCode, "9mp", 3) == 0 ||
+				strncmp(normCode, "9wa", 3) == 0 ||
+				strncmp(normCode, "9la", 3) == 0 ||
+				strncmp(normCode, "9ba", 3) == 0 ||
+				strncmp(normCode, "9bt", 3) == 0 ||
+				strncmp(normCode, "9ga", 3) == 0 ||
+				strncmp(normCode, "9gi", 3) == 0 ||
+				strncmp(normCode, "9wn", 3) == 0 ||
+				strncmp(normCode, "9yw", 3) == 0 ||
+				strncmp(normCode, "9bw", 3) == 0 ||
+				strncmp(normCode, "9gw", 3) == 0 ||
+				strncmp(normCode, "9cl", 3) == 0 ||
+				strncmp(normCode, "9sc", 3) == 0 ||
+				strncmp(normCode, "9qs", 3) == 0 ||
+				strncmp(normCode, "9ws", 3) == 0 ||
+				strncmp(normCode, "9sp", 3) == 0 ||
+				strncmp(normCode, "9ma", 3) == 0 ||
+				strncmp(normCode, "9mt", 3) == 0 ||
+				strncmp(normCode, "9fl", 3) == 0 ||
+				strncmp(normCode, "9wh", 3) == 0 ||
+				strncmp(normCode, "9m9", 3) == 0 ||
+				strncmp(normCode, "9gm", 3) == 0 ||
+				strncmp(normCode, "9ss", 3) == 0 ||
+				strncmp(normCode, "9sm", 3) == 0 ||
+				strncmp(normCode, "9sb", 3) == 0 ||
+				strncmp(normCode, "9fc", 3) == 0 ||
+				strncmp(normCode, "9cr", 3) == 0 ||
+				strncmp(normCode, "9bs", 3) == 0 ||
+				strncmp(normCode, "9ls", 3) == 0 ||
+				strncmp(normCode, "9wd", 3) == 0 ||
+				strncmp(normCode, "92h", 3) == 0 ||
+				strncmp(normCode, "9cm", 3) == 0 ||
+				strncmp(normCode, "9gs", 3) == 0 ||
+				strncmp(normCode, "9b9", 3) == 0 ||
+				strncmp(normCode, "9fb", 3) == 0 ||
+				strncmp(normCode, "9gd", 3) == 0 ||
+				strncmp(normCode, "9dg", 3) == 0 ||
+				strncmp(normCode, "9di", 3) == 0 ||
+				strncmp(normCode, "9kr", 3) == 0 ||
+				strncmp(normCode, "9bl", 3) == 0 ||
+				strncmp(normCode, "9tk", 3) == 0 ||
+				strncmp(normCode, "9ta", 3) == 0 ||
+				strncmp(normCode, "9bk", 3) == 0 ||
+				strncmp(normCode, "9b8", 3) == 0 ||
+				strncmp(normCode, "9ja", 3) == 0 ||
+				strncmp(normCode, "9pi", 3) == 0 ||
+				strncmp(normCode, "9s9", 3) == 0 ||
+				strncmp(normCode, "9gl", 3) == 0 ||
+				strncmp(normCode, "9ts", 3) == 0 ||
+				strncmp(normCode, "9sr", 3) == 0 ||
+				strncmp(normCode, "9tr", 3) == 0 ||
+				strncmp(normCode, "9br", 3) == 0 ||
+				strncmp(normCode, "9st", 3) == 0 ||
+				strncmp(normCode, "9p9", 3) == 0 ||
+				strncmp(normCode, "9b7", 3) == 0 ||
+				strncmp(normCode, "9vo", 3) == 0 ||
+				strncmp(normCode, "9s8", 3) == 0 ||
+				strncmp(normCode, "9pa", 3) == 0 ||
+				strncmp(normCode, "9h9", 3) == 0 ||
+				strncmp(normCode, "9wc", 3) == 0 ||
+				strncmp(normCode, "8ss", 3) == 0 ||
+				strncmp(normCode, "8ls", 3) == 0 ||
+				strncmp(normCode, "8cs", 3) == 0 ||
+				strncmp(normCode, "8bs", 3) == 0 ||
+				strncmp(normCode, "8ws", 3) == 0 ||
+				strncmp(normCode, "8sb", 3) == 0 ||
+				strncmp(normCode, "8hb", 3) == 0 ||
+				strncmp(normCode, "8lb", 3) == 0 ||
+				strncmp(normCode, "8cb", 3) == 0 ||
+				strncmp(normCode, "8s8", 3) == 0 ||
+				strncmp(normCode, "8l8", 3) == 0 ||
+				strncmp(normCode, "8sw", 3) == 0 ||
+				strncmp(normCode, "8lw", 3) == 0 ||
+				strncmp(normCode, "8lx", 3) == 0 ||
+				strncmp(normCode, "8mx", 3) == 0 ||
+				strncmp(normCode, "8hx", 3) == 0 ||
+				strncmp(normCode, "8rx", 3) == 0 ||
+				strncmp(normCode, "qf1", 3) == 0 ||
+				strncmp(normCode, "qf2", 3) == 0 ||
+				strncmp(normCode, "ktr", 3) == 0 ||
+				strncmp(normCode, "wrb", 3) == 0 ||
+				strncmp(normCode, "axf", 3) == 0 ||
+				strncmp(normCode, "ces", 3) == 0 ||
+				strncmp(normCode, "clw", 3) == 0 ||
+				strncmp(normCode, "btl", 3) == 0 ||
+				strncmp(normCode, "skr", 3) == 0 ||
+				strncmp(normCode, "9ar", 3) == 0 ||
+				strncmp(normCode, "9wb", 3) == 0 ||
+				strncmp(normCode, "9xf", 3) == 0 ||
+				strncmp(normCode, "9cs", 3) == 0 ||
+				strncmp(normCode, "9lw", 3) == 0 ||
+				strncmp(normCode, "9tw", 3) == 0 ||
+				strncmp(normCode, "9qr", 3) == 0 ||
+				strncmp(normCode, "7ar", 3) == 0 ||
+				strncmp(normCode, "7wb", 3) == 0 ||
+				strncmp(normCode, "7xf", 3) == 0 ||
+				strncmp(normCode, "7cs", 3) == 0 ||
+				strncmp(normCode, "7lw", 3) == 0 ||
+				strncmp(normCode, "7tw", 3) == 0 ||
+				strncmp(normCode, "7qr", 3) == 0 ||
+				strncmp(normCode, "7ha", 3) == 0 ||
+				strncmp(normCode, "7ax", 3) == 0 ||
+				strncmp(normCode, "72a", 3) == 0 ||
+				strncmp(normCode, "7mp", 3) == 0 ||
+				strncmp(normCode, "7wa", 3) == 0 ||
+				strncmp(normCode, "7la", 3) == 0 ||
+				strncmp(normCode, "7ba", 3) == 0 ||
+				strncmp(normCode, "7bt", 3) == 0 ||
+				strncmp(normCode, "7ga", 3) == 0 ||
+				strncmp(normCode, "7gi", 3) == 0 ||
+				strncmp(normCode, "7wn", 3) == 0 ||
+				strncmp(normCode, "7yw", 3) == 0 ||
+				strncmp(normCode, "7bw", 3) == 0 ||
+				strncmp(normCode, "7gw", 3) == 0 ||
+				strncmp(normCode, "7cl", 3) == 0 ||
+				strncmp(normCode, "7sc", 3) == 0 ||
+				strncmp(normCode, "7qs", 3) == 0 ||
+				strncmp(normCode, "7ws", 3) == 0 ||
+				strncmp(normCode, "7sp", 3) == 0 ||
+				strncmp(normCode, "7ma", 3) == 0 ||
+				strncmp(normCode, "7mt", 3) == 0 ||
+				strncmp(normCode, "7fl", 3) == 0 ||
+				strncmp(normCode, "7wh", 3) == 0 ||
+				strncmp(normCode, "7m7", 3) == 0 ||
+				strncmp(normCode, "7gm", 3) == 0 ||
+				strncmp(normCode, "7ss", 3) == 0 ||
+				strncmp(normCode, "7sm", 3) == 0 ||
+				strncmp(normCode, "7sb", 3) == 0 ||
+				strncmp(normCode, "7fc", 3) == 0 ||
+				strncmp(normCode, "7cr", 3) == 0 ||
+				strncmp(normCode, "7bs", 3) == 0 ||
+				strncmp(normCode, "7ls", 3) == 0 ||
+				strncmp(normCode, "7wd", 3) == 0 ||
+				strncmp(normCode, "72h", 3) == 0 ||
+				strncmp(normCode, "7cm", 3) == 0 ||
+				strncmp(normCode, "7gs", 3) == 0 ||
+				strncmp(normCode, "7b7", 3) == 0 ||
+				strncmp(normCode, "7fb", 3) == 0 ||
+				strncmp(normCode, "7gd", 3) == 0 ||
+				strncmp(normCode, "7dg", 3) == 0 ||
+				strncmp(normCode, "7di", 3) == 0 ||
+				strncmp(normCode, "7kr", 3) == 0 ||
+				strncmp(normCode, "7bl", 3) == 0 ||
+				strncmp(normCode, "7tk", 3) == 0 ||
+				strncmp(normCode, "7ta", 3) == 0 ||
+				strncmp(normCode, "7bk", 3) == 0 ||
+				strncmp(normCode, "7b8", 3) == 0 ||
+				strncmp(normCode, "7ja", 3) == 0 ||
+				strncmp(normCode, "7pi", 3) == 0 ||
+				strncmp(normCode, "7s7", 3) == 0 ||
+				strncmp(normCode, "7gl", 3) == 0 ||
+				strncmp(normCode, "7ts", 3) == 0 ||
+				strncmp(normCode, "7sr", 3) == 0 ||
+				strncmp(normCode, "7tr", 3) == 0 ||
+				strncmp(normCode, "7br", 3) == 0 ||
+				strncmp(normCode, "7st", 3) == 0 ||
+				strncmp(normCode, "7p7", 3) == 0 ||
+				strncmp(normCode, "7o7", 3) == 0 ||
+				strncmp(normCode, "7vo", 3) == 0 ||
+				strncmp(normCode, "7s8", 3) == 0 ||
+				strncmp(normCode, "7pa", 3) == 0 ||
+				strncmp(normCode, "7h7", 3) == 0 ||
+				strncmp(normCode, "7wc", 3) == 0 ||
+				strncmp(normCode, "6ss", 3) == 0 ||
+				strncmp(normCode, "6ls", 3) == 0 ||
+				strncmp(normCode, "6cs", 3) == 0 ||
+				strncmp(normCode, "6bs", 3) == 0 ||
+				strncmp(normCode, "6ws", 3) == 0 ||
+				strncmp(normCode, "6sb", 3) == 0 ||
+				strncmp(normCode, "6hb", 3) == 0 ||
+				strncmp(normCode, "6lb", 3) == 0 ||
+				strncmp(normCode, "6cb", 3) == 0 ||
+				strncmp(normCode, "6s7", 3) == 0 ||
+				strncmp(normCode, "6l7", 3) == 0 ||
+				strncmp(normCode, "6sw", 3) == 0 ||
+				strncmp(normCode, "6lw", 3) == 0 ||
+				strncmp(normCode, "6lx", 3) == 0 ||
+				strncmp(normCode, "6mx", 3) == 0 ||
+				strncmp(normCode, "6hx", 3) == 0 ||
+				strncmp(normCode, "6rx", 3) == 0 ||
+				strncmp(normCode, "ob1", 3) == 0 ||
+				strncmp(normCode, "ob2", 3) == 0 ||
+				strncmp(normCode, "ob3", 3) == 0 ||
+				strncmp(normCode, "ob4", 3) == 0 ||
+				strncmp(normCode, "ob5", 3) == 0 ||
+				strncmp(normCode, "am1", 3) == 0 ||
+				strncmp(normCode, "am2", 3) == 0 ||
+				strncmp(normCode, "am3", 3) == 0 ||
+				strncmp(normCode, "am4", 3) == 0 ||
+				strncmp(normCode, "am5", 3) == 0 ||
+				strncmp(normCode, "ob6", 3) == 0 ||
+				strncmp(normCode, "ob7", 3) == 0 ||
+				strncmp(normCode, "ob8", 3) == 0 ||
+				strncmp(normCode, "ob9", 3) == 0 ||
+				strncmp(normCode, "oba", 3) == 0 ||
+				strncmp(normCode, "am6", 3) == 0 ||
+				strncmp(normCode, "am7", 3) == 0 ||
+				strncmp(normCode, "am8", 3) == 0 ||
+				strncmp(normCode, "am9", 3) == 0 ||
+				strncmp(normCode, "ama", 3) == 0 ||
+				strncmp(normCode, "obb", 3) == 0 ||
+				strncmp(normCode, "obc", 3) == 0 ||
+				strncmp(normCode, "obd", 3) == 0 ||
+				strncmp(normCode, "obe", 3) == 0 ||
+				strncmp(normCode, "obf", 3) == 0 ||
+				strncmp(normCode, "amb", 3) == 0 ||
+				strncmp(normCode, "amc", 3) == 0 ||
+				strncmp(normCode, "amd", 3) == 0 ||
+				strncmp(normCode, "ame", 3) == 0 ||
+				strncmp(normCode, "amf", 3) == 0 ||
+				strncmp(normCode, "ooc", 3) == 0 ||
+				strncmp(normCode, "eaq", 3) == 0 ||
+				strncmp(normCode, "ebq", 3) == 0 ||
+					
+				   record->type == 109
 				|| record->type == 111
 				|| record->type == 112
 				|| record->type == 113
@@ -1087,31 +1580,87 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 				|| record->type == 122
 				|| record->type == 123
 				|| record->type == 125
+
+				|| record->type == 4 - 3
+				|| record->type == 5 - 3
+				|| record->type == 17 - 3
+				|| record->type == 18 - 3
+				|| record->type == 21 - 3
+				|| record->type == 26 - 3
+				|| record->type == 27 - 3
+				|| record->type == 28 - 3
+				|| record->type == 29 - 3
+				|| record->type == 30 - 3
+				|| record->type == 31 - 3
+				|| record->type == 32 - 3
+				|| record->type == 33 - 3
+				|| record->type == 34 - 3
+				|| record->type == 35 - 3
+				|| record->type == 36 - 3
+				|| record->type == 37 - 3
+				|| record->type == 38 - 3
+				|| record->type == 39 - 3
+				|| record->type == 40 - 3
+				|| record->type == 41 - 3
+				|| record->type == 47 - 3
+				|| record->type == 48 - 3
+				|| record->type == 49 - 3
+				|| record->type == 50 - 3
+
+				|| record->type == 51 - 3
+				|| record->type == 52 - 3
+				|| record->type == 53 - 3
+
 				) {
-				// Create the packet
-				static d2_tweaks::common::item_move_cs packet;
-				packet.item_guid = g_hoverItem->guid;
-
-				if (currentPage == 0) { //item is in inventory
-					if (diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_STASH))
-						packet.target_page = 4;
-
-					if (diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_CUBE))
-						packet.target_page = 3;
-				}
-				else {
-					packet.target_page = 0;
-				}
-
-				diablo2::d2_client::send_to_server(&packet, sizeof packet);
-				(*reinterpret_cast<diablo2::structures::unit**>(diablo2::d2_client::get_base() + 0x1158F4)) = nullptr;
-						
-					
-				
 
 
+					struct packet1 {
+						uint8_t PacketId; // 0x01
+						//uint8_t MsgID;		// 0x02
+						uint32_t guid;	// 0x06
+						uint32_t tx;	// 0x07
+						uint32_t ty;	// 0x09					
+					};
+
+					packet1 packet1;
+					packet1.PacketId = 0x20;
+					packet1.guid = boxGuid;
+					packet1.tx = player->path->mapx;
+					packet1.ty = player->path->mapy;
+
+
+					diablo2::d2_client::send_to_server(&packet1, sizeof packet1);
+
+					//MessageBoxA(0, std::to_string(boxX).c_str(), "boxX", 0);
+					//MessageBoxA(0, std::to_string(boxY).c_str(), "boxY", 0);
+					//MessageBoxA(0, std::to_string(boxGuid).c_str(), "boxGuid", 0);
+
+
+					// find diablo 2 window and simulate right click at 700x200 coordinates
+
+
+
+
+
+
+					// Create the packet
+					static d2_tweaks::common::item_move_cs packet;
+					packet.item_guid = g_hoverItem->guid;
+
+					if (currentPage == 0) { //item is in inventory
+						if (diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_STASH))
+							packet.target_page = 4;
+
+						if (diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_CUBE))
+							packet.target_page = 3;
+					}
+					else {
+						packet.target_page = 0;
+					}
+
+					diablo2::d2_client::send_to_server(&packet, sizeof packet);
+					(*reinterpret_cast<diablo2::structures::unit**>(diablo2::d2_client::get_base() + 0x1158F4)) = nullptr;
 			}
-
 		}
 
 		block = instance.process_right_mouse(false);
@@ -1120,7 +1669,39 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 
 	case WM_RBUTTONUP:
 	{
+		diablo2::d2_client::send_to_server_7(0x4F, 0x18, 0, 0);
 		block = instance.process_right_mouse(true);
+		break;
+	}
+
+	case WM_MOUSEWHEEL:
+	{
+		short zDelta = GET_WHEEL_DELTA_WPARAM(wParam);
+		if (zDelta > 0) {
+			diablo2::d2_client::send_to_server_7(0x4F, 0x18, 0, 0);
+			block = instance.process_mouse_wheel(true);
+
+		}
+		else if (zDelta < 0) {
+			diablo2::d2_client::send_to_server_7(0x4F, 0x18, 0, 0);
+			block = instance.process_mouse_wheel(false);
+		}
+		break;
+	}
+
+
+
+
+	case WM_MBUTTONUP:
+	{
+		block = instance.process_middle_mouse(true);
+		break;
+	}
+
+	case WM_MBUTTONDOWN:
+	{
+		diablo2::d2_client::send_to_server_7(0x4F, 0x18, 0, 0);
+		block = instance.process_middle_mouse(false);
 		break;
 	}
 
@@ -1192,6 +1773,33 @@ bool d2_tweaks::ui::ui_manager::process_left_mouse(bool up) {
 	return block;
 }
 
+bool d2_tweaks::ui::ui_manager::process_middle_mouse(bool up) {
+	auto block = false;
+
+	for (auto menu : m_menus) {
+		if (!menu->get_enabled())
+			continue;
+
+		block |= menu->middle_mouse(up);
+	}
+
+	return block;
+}
+
+bool d2_tweaks::ui::ui_manager::process_mouse_wheel(bool up) {
+	auto block = false;
+
+	for (auto menu : m_menus) {
+		if (!menu->get_enabled())
+			continue;
+
+		block |= menu->mouse_wheel(up);
+	}
+
+	return block;
+}
+
+
 bool d2_tweaks::ui::ui_manager::process_right_mouse(bool up) {
 	auto block = false;
 
@@ -1217,3 +1825,5 @@ bool d2_tweaks::ui::ui_manager::process_key_event(uint32_t key, bool up) {
 
 	return block;
 }
+
+#pragma pack(pop)

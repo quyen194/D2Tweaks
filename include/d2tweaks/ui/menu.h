@@ -81,6 +81,8 @@ namespace d2_tweaks {
 
 			virtual bool left_mouse(bool up);
 			virtual bool right_mouse(bool up);
+			virtual bool middle_mouse(bool up);
+			virtual bool mouse_wheel(bool up);
 
 			virtual bool key_event(uint32_t key, bool up);
 		};

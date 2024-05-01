@@ -112,6 +112,9 @@ namespace d2_tweaks {
 
 				virtual void left_mouse(int32_t offsetX, int32_t offsetY, bool up, bool& block) = 0;
 				virtual void right_mouse(int32_t offsetX, int32_t offsetY, bool up, bool& block) = 0;
+				virtual void middle_mouse(int32_t offsetX, int32_t offsetY, bool up, bool& block) {}
+				virtual void mouse_wheel(int32_t offsetX, int32_t offsetY, bool up, bool& block) {}
+
 
 				virtual void key_event(int32_t offsetX, int32_t offsetY, uint32_t key, bool up, bool& block) = 0;
 			};

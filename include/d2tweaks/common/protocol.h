@@ -201,6 +201,7 @@ namespace d2_tweaks {
 			MESSAGE_TYPE_ITEM_DROPPED_INFO,
 			MESSAGE_TYPE_TRANSMUTE,
 			MESSAGE_TYPE_TRADER_UPDATE,
+			MESSAGE_TYPE_INTERACT = 1,
 
 			MESSAGE_TYPE_COUNT
 		};
@@ -224,6 +225,7 @@ namespace d2_tweaks {
 
 			packet_header() : d2_packet_type(0xBB), message_type(0) {}
 		};
+
 
 		struct d2_entity_action_cs : packet_header {
 			uint32_t action;

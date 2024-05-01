@@ -25,7 +25,7 @@
 #include <shellapi.h> // For ShellExecute
 
 using namespace d2_tweaks::client::modules;
-bool m_stats_enabled = true;
+bool m_stats_enabled = false;
 bool m_help_enabled = false;
 
 d2_tweaks::client::modules::loot_filter_settings_toggle_menu::loot_filter_settings_toggle_menu(token) {

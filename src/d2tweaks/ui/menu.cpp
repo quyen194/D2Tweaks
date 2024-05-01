@@ -190,6 +190,37 @@ bool d2_tweaks::ui::menu::right_mouse(bool up) {
 	return block;
 }
 
+bool d2_tweaks::ui::menu::middle_mouse(bool up) {
+	auto block = false;
+
+	for (auto control : m_controls) {
+		if (!control->get_enabled() || control->get_parent() != nullptr)
+			continue;
+
+		auto tblock = false;
+		control->middle_mouse(m_x, m_y, up, tblock);
+		block |= tblock;
+	}
+
+	return block;
+}
+
+bool d2_tweaks::ui::menu::mouse_wheel(bool up) {
+	auto block = false;
+
+	for (auto control : m_controls) {
+		if (!control->get_enabled() || control->get_parent() != nullptr)
+			continue;
+
+		auto tblock = false;
+		control->mouse_wheel(m_x, m_y, up, tblock);
+		block |= tblock;
+	}
+
+	return block;
+}
+
+
 bool d2_tweaks::ui::menu::key_event(uint32_t key, bool up) {
 	auto block = false;
 
