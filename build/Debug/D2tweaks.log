@@ -1,2 +1,3 @@
-﻿  ui_manager.cpp
+﻿  loot_filter.cpp
+  loot_filter_settings_toggle_menu.cpp
   D2tweaks.vcxproj -> D:\Diablo II\MODS\ironman-dev\D2tweaks.dll

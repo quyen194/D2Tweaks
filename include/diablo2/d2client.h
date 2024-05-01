@@ -89,7 +89,7 @@ namespace diablo2 {
 
 		static int32_t send_to_server_9(BYTE type, DWORD num, DWORD unk1);
 
-
+		static void set_ui_toggle(int nToggle, int nUIState, BOOL bToggle);
 
 	};
 }

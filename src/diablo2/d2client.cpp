@@ -31,6 +31,11 @@ diablo2::structures::client_unit_list* diablo2::d2_client::get_client_unit_list(
 	return unit_list;
 }
 
+void diablo2::d2_client::set_ui_toggle(int nToggle, int nUIState, BOOL bToggle) {
+	static wrap_func_fast<void(int, int, BOOL)> set_ui_toggle(0x83260, get_base());
+	set_ui_toggle(nToggle, nUIState, bToggle);
+}
+
 int32_t diablo2::d2_client::get_view_offset_x() {
 	static wrap_func_std<int32_t()> get_view_offset_x(0x15890, get_base());
 	return get_view_offset_x();

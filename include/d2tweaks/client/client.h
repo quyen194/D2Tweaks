@@ -30,6 +30,9 @@ extern bool m_stats_enabled;
 
 extern bool m_help_enabled;
 
+extern bool m_cube_enabled;
+
+extern bool m_stash_enabled;
 
 namespace diablo2 {
 	namespace structures {

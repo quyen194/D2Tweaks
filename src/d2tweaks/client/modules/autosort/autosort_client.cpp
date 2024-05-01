@@ -218,6 +218,7 @@ public:
 		int textOffset = 40; // Initial offset for the first line
 
 		const auto player = diablo2::d2_client::get_local_player();
+		auto name = player->player_data->name;
 
 		// Add all items to vector
 		std::vector<diablo2::structures::unit*> items;

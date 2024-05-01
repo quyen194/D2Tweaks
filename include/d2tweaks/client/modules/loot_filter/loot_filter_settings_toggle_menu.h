@@ -18,6 +18,8 @@ namespace d2_tweaks {
 				ui::controls::button* m_toggle_filter_settings_btn;
 				ui::controls::button* m_btn_toggle_stats;
 				ui::controls::button* m_btn_toggle_help;
+				ui::controls::button* m_btn_toggle_cube;
+				ui::controls::button* m_btn_toggle_stash;
 				menu* m_filter_settings_menu;
 				bool m_show;
 			public:
@@ -26,7 +28,8 @@ namespace d2_tweaks {
 				void toggle_filter_settings_click();
 				void toggle_stats_settings_click();
 				void toggle_help_click();
-
+				void toggle_cube_click();
+				void toggle_stash_click();
 				void draw() override;
 
 				bool key_event(uint32_t key, bool up) override;

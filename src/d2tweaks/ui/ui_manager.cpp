@@ -69,9 +69,7 @@
 #include <string>
 #include <CommCtrl.h> // Include for edit control
 
-
 #pragma pack(push, 1)
-
 
 using namespace std;
 
@@ -567,6 +565,7 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 		auto pInventory = player->inventory;
 
 		int32_t gemBagGuid = 0;
+		int32_t harvesterGuid = 0;
 		int32_t boxGuid;
 		uint32_t boxX;
 		uint32_t boxY;
@@ -624,6 +623,8 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 
 			std::vector<diablo2::structures::unit*> items;
 			diablo2::structures::unit* gemBag{};
+			diablo2::structures::unit* box{};
+			diablo2::structures::unit* harvester{};
 
 			// get the gembag item
 			for (auto item = player->inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
@@ -634,21 +635,15 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 					gemBagGuid = gemBag->guid;
 				}
 				if (strncmp(normCode1, "box", 3) == 0) {
-					diablo2::structures::unit* box = item;
+					box = item;
 					boxGuid = box->guid;
-					
-
-					// Get the x, y coordinates of the box in the inventory
-					boxX = player->path->x;
-					boxY = player->path->y;
-
-
-					MessageBoxA(0, std::to_string(boxX).c_str(), "boxX", 0);
-					MessageBoxA(0, std::to_string(boxY).c_str(), "boxY", 0);
-					//MessageBoxA(0, std::to_string(boxGuid).c_str(), "boxGuid", 0);
+					boxX = player->path->mapx;
+					boxY = player->path->mapy;
 				}
-
-
+				if (strncmp(normCode1, "ib3", 3) == 0) {
+					harvester = item;
+					harvesterGuid = harvester->guid;
+				}
 			}
 
 			// Actual ID to use is 378 for Ruby, but actual row number is 381
@@ -1570,8 +1565,8 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 				strncmp(normCode, "ooc", 3) == 0 ||
 				strncmp(normCode, "eaq", 3) == 0 ||
 				strncmp(normCode, "ebq", 3) == 0 ||
-					
-				   record->type == 109
+
+				record->type == 109
 				|| record->type == 111
 				|| record->type == 112
 				|| record->type == 113
@@ -1613,53 +1608,63 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 
 				) {
 
+				// open the cube
+				struct D2GSPacketClt20 {
+					uint8_t PacketId; // 0x01
+					uint32_t guid;	// 0x06
+					uint32_t tx;	// 0x07
+					uint32_t ty;	// 0x09
+				};
+				D2GSPacketClt20 D2GSPacketClt20;
+				D2GSPacketClt20.PacketId = 0x20;
+				D2GSPacketClt20.guid = boxGuid;
+				D2GSPacketClt20.tx = player->path->mapx;
+				D2GSPacketClt20.ty = player->path->mapy;
+				diablo2::d2_client::send_to_server(&D2GSPacketClt20, sizeof D2GSPacketClt20);
 
-					struct packet1 {
-						uint8_t PacketId; // 0x01
-						//uint8_t MsgID;		// 0x02
-						uint32_t guid;	// 0x06
-						uint32_t tx;	// 0x07
-						uint32_t ty;	// 0x09					
-					};
+				Sleep(100);
 
-					packet1 packet1;
-					packet1.PacketId = 0x20;
-					packet1.guid = boxGuid;
-					packet1.tx = player->path->mapx;
-					packet1.ty = player->path->mapy;
+				// now move the harvester guid to the cube
+				// Create the packet
+				static d2_tweaks::common::item_move_cs hpacket;
+				hpacket.item_guid = harvesterGuid;
+				if (currentPage == 0) { //item is in inventory
+					if (diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_STASH))
+						hpacket.target_page = 4;
 
+					if (diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_CUBE))
+						hpacket.target_page = 3;
+				}
+				else {
+					hpacket.target_page = 0;
+				}
+				diablo2::d2_client::send_to_server(&hpacket, sizeof hpacket);
 
-					diablo2::d2_client::send_to_server(&packet1, sizeof packet1);
+				// Create the packet
+				static d2_tweaks::common::item_move_cs packet;
+				packet.item_guid = g_hoverItem->guid;
+				if (currentPage == 0) { //item is in inventory
+					if (diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_STASH))
+						packet.target_page = 4;
 
-					//MessageBoxA(0, std::to_string(boxX).c_str(), "boxX", 0);
-					//MessageBoxA(0, std::to_string(boxY).c_str(), "boxY", 0);
-					//MessageBoxA(0, std::to_string(boxGuid).c_str(), "boxGuid", 0);
+					if (diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_CUBE))
+						packet.target_page = 3;
+				}
+				else {
+					packet.target_page = 0;
+				}
+				diablo2::d2_client::send_to_server(&packet, sizeof packet);
+				diablo2::d2_client::send_to_server_7(0x4F, 0x18, 0, 0);
+				
 
+				// now move the harvester back to the inv
+				//static d2_tweaks::common::item_move_cs h1packet;
+				//h1packet.item_guid = harvesterGuid;
+				//h1packet.target_page = 0;
+				//diablo2::d2_client::send_to_server(&h1packet, sizeof h1packet);
 
-					// find diablo 2 window and simulate right click at 700x200 coordinates
+				(*reinterpret_cast<diablo2::structures::unit**>(diablo2::d2_client::get_base() + 0x1158F4)) = nullptr;
 
-
-
-
-
-
-					// Create the packet
-					static d2_tweaks::common::item_move_cs packet;
-					packet.item_guid = g_hoverItem->guid;
-
-					if (currentPage == 0) { //item is in inventory
-						if (diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_STASH))
-							packet.target_page = 4;
-
-						if (diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_CUBE))
-							packet.target_page = 3;
-					}
-					else {
-						packet.target_page = 0;
-					}
-
-					diablo2::d2_client::send_to_server(&packet, sizeof packet);
-					(*reinterpret_cast<diablo2::structures::unit**>(diablo2::d2_client::get_base() + 0x1158F4)) = nullptr;
 			}
 		}
 
@@ -1680,7 +1685,6 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 		if (zDelta > 0) {
 			diablo2::d2_client::send_to_server_7(0x4F, 0x18, 0, 0);
 			block = instance.process_mouse_wheel(true);
-
 		}
 		else if (zDelta < 0) {
 			diablo2::d2_client::send_to_server_7(0x4F, 0x18, 0, 0);
@@ -1688,9 +1692,6 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 		}
 		break;
 	}
-
-
-
 
 	case WM_MBUTTONUP:
 	{
@@ -1798,7 +1799,6 @@ bool d2_tweaks::ui::ui_manager::process_mouse_wheel(bool up) {
 
 	return block;
 }
-
 
 bool d2_tweaks::ui::ui_manager::process_right_mouse(bool up) {
 	auto block = false;
