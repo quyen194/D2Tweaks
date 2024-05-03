@@ -5,7 +5,7 @@
 namespace diablo2 {
 	namespace structures {
 		struct game;
-		
+
 		struct net_client {
 			uint32_t	client_id;					//+00
 			uint8_t	uk1[0x06];					//+04

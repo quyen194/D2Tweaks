@@ -27,14 +27,13 @@ int32_t diablo2::d2_gfx::get_resolution_mode() {
 }
 
 void diablo2::d2_gfx::draw_image(structures::gfxdata* data, uint32_t x, uint32_t y, int32_t gamma,
-								 int32_t drawType, void* palette) {
+	int32_t drawType, void* palette) {
 	static wrap_func_std_import<void(structures::gfxdata*, uint32_t, uint32_t,
-								   int32_t, int32_t, void*)> draw_image(10072, get_base());
+		int32_t, int32_t, void*)> draw_image(10072, get_base());
 	draw_image(data, x, y, gamma, drawType, palette);
 }
 
-
-void diablo2::d2_gfx::draw_filled_rect(int left , int top, int right, int bottom, DWORD color, int transTbl) {
+void diablo2::d2_gfx::draw_filled_rect(int left, int top, int right, int bottom, DWORD color, int transTbl) {
 	static wrap_func_std_import<void(int, int, int, int, DWORD, int)> draw_boxed_text(10056, get_base());
 	draw_boxed_text(left, top, right, bottom, color, transTbl);
 }

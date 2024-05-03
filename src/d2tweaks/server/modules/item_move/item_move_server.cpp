@@ -24,7 +24,6 @@
 
 #include <windows.h> // Include Windows API header for MessageBox
 
-
 #include <iomanip> // For std::setw
 
 void serialize_item(const std::string& itemcode, const diablo2::structures::unit& item, std::ofstream& file) {
@@ -54,11 +53,9 @@ void d2_tweaks::server::modules::item_move::init() {
 	}
 }
 
-
-
 // handle packet coming from the client
 bool d2_tweaks::server::modules::item_move::handle_packet(diablo2::structures::game* game,
-														  diablo2::structures::unit* player, common::packet_header* packet) {
+	diablo2::structures::unit* player, common::packet_header* packet) {
 	static common::item_move_sc resp;
 	static auto& instance = singleton<server>::instance();
 
@@ -71,7 +68,6 @@ bool d2_tweaks::server::modules::item_move::handle_packet(diablo2::structures::g
 	const auto item = instance.get_server_unit(game, itemMove->item_guid, diablo2::structures::unit_type_t::UNIT_TYPE_ITEM); //0x4 = item
 
 	const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
-	
 
 	const char* itemcode = itemMove->item_code;
 	const auto bag = instance.get_server_unit(game, itemMove->bag_guid, diablo2::structures::unit_type_t::UNIT_TYPE_ITEM); //0x4 = item
@@ -82,7 +78,6 @@ bool d2_tweaks::server::modules::item_move::handle_packet(diablo2::structures::g
 	itemProperty.nMin = itemMove->val;
 	itemProperty.nMax = itemMove->val;
 	diablo2::d2_common::add_property(bag, &itemProperty, 1);
-
 
 	if (item == nullptr)
 		return true; //block further packet processing
@@ -114,24 +109,17 @@ bool d2_tweaks::server::modules::item_move::handle_packet(diablo2::structures::g
 	diablo2::d2_net::send_to_client(1, client->client_id, &resp, sizeof resp);
 
 	if (itemMove->removeFromBag == 1) {
-	
 		// here we need to add item to inventory
 
 		diablo2::structures::unit* item;
 
-		// or I can do something like this, 
-		// when extractor is clicked, send the bag and extractor to cube, 
+		// or I can do something like this,
+		// when extractor is clicked, send the bag and extractor to cube,
 
 		const auto player = diablo2::d2_client::get_local_player();
-
-
 	}
 
-
-
-
 	if (itemMove->updateBag == 1) {
-
 		// Serialize item data into binary file
 		std::string playerName = player->player_data->name;
 		std::string fileName = "./Save/" + playerName + ".boh";
@@ -146,12 +134,11 @@ bool d2_tweaks::server::modules::item_move::handle_packet(diablo2::structures::g
 		outFile.close();
 	}
 
-
 	return true;
 }
 
 bool d2_tweaks::server::modules::item_move::find_free_space(diablo2::structures::inventory* inv,
-															diablo2::structures::unit* item, int32_t inventoryIndex, char page, uint32_t& x, uint32_t& y) {
+	diablo2::structures::unit* item, int32_t inventoryIndex, char page, uint32_t& x, uint32_t& y) {
 	char data[0x18];
 
 	diablo2::d2_common::get_inventory_data(inventoryIndex, 0, data);

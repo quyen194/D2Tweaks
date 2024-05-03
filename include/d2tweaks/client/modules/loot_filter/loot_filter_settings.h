@@ -24,7 +24,7 @@ namespace d2_tweaks {
 				static void save(const char* name);
 				static void load(const char* name);
 				static void remove(const char* name);
-				
+
 			private:
 				loot_filter_settings() : size(sizeof(loot_filter_settings)),
 					alt_only(false), show_gold(true), show_runes(true), show_gems(true), reserved{}

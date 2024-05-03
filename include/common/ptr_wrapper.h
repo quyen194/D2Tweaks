@@ -45,7 +45,7 @@ namespace details {
 		TRet operator()(Args... args) {
 			if (!m_function_ptr) {
 				m_function_ptr = reinterpret_cast<decltype(m_function_ptr)>(GetProcAddress(reinterpret_cast<HMODULE>(m_base),
-																						   reinterpret_cast<LPCSTR>(m_ordinal)));
+					reinterpret_cast<LPCSTR>(m_ordinal)));
 			}
 
 			return reinterpret_cast<TRet(__cdecl*)(Args...)>(m_function_ptr)(args...);
@@ -67,7 +67,7 @@ namespace details {
 		TRet operator()(Args... args) {
 			if (!m_function_ptr) {
 				m_function_ptr = reinterpret_cast<decltype(m_function_ptr)>(GetProcAddress(reinterpret_cast<HMODULE>(m_base),
-																						   reinterpret_cast<LPCSTR>(m_ordinal)));
+					reinterpret_cast<LPCSTR>(m_ordinal)));
 			}
 
 			return reinterpret_cast<TRet(__stdcall*)(Args...)>(m_function_ptr)(args...);
@@ -89,7 +89,7 @@ namespace details {
 		TRet operator()(Args... args) {
 			if (!m_function_ptr) {
 				m_function_ptr = reinterpret_cast<decltype(m_function_ptr)>(GetProcAddress(reinterpret_cast<HMODULE>(m_base),
-																						   reinterpret_cast<LPCSTR>(m_ordinal)));
+					reinterpret_cast<LPCSTR>(m_ordinal)));
 			}
 
 			return reinterpret_cast<TRet(__fastcall*)(Args...)>(m_function_ptr)(args...);

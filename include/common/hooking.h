@@ -62,7 +62,7 @@ namespace hooking {
 	template<size_t TOrdinal, typename TOrig>
 	mh_status_t hook(void* base, void* detour, TOrig** original) {
 		auto fn = GetProcAddress(reinterpret_cast<HMODULE>(base),
-								 reinterpret_cast<LPCSTR>(TOrdinal));
+			reinterpret_cast<LPCSTR>(TOrdinal));
 
 		return hook(fn, detour, original);
 	}

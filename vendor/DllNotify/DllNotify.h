@@ -13,7 +13,7 @@ namespace dllnotify
 	public:
 		DllNotify();
 		virtual ~DllNotify() noexcept {}
-		
+
 		typedef const UNICODE_STRING* PCUNICODE_STRING;
 
 		typedef struct _LDR_DLL_LOADED_NOTIFICATION_DATA {
@@ -52,7 +52,6 @@ namespace dllnotify
 			_Out_     PVOID* Cookie
 			);
 
-
 		typedef NTSTATUS(NTAPI* PLDR_UNREGISTER_DLL_NOTIFICATION)(
 			_In_  PVOID Cookie
 			);
@@ -61,7 +60,6 @@ namespace dllnotify
 		static BOOL Uninit_Dllnotify();
 		static bool is_d2expres();
 		static bool is_sgd2freeres();
-
 
 	private:
 		static VOID CALLBACK LdrDllNotification(

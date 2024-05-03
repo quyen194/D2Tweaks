@@ -121,9 +121,7 @@ int32_t __fastcall item_click(diablo2::structures::unit* owner, diablo2::structu
 }
 
 void d2_tweaks::client::modules::item_move::init_early() {
-
 }
-
 
 void d2_tweaks::client::modules::item_move::init() {
 	char acPathToIni[MAX_PATH] = { 0 };
@@ -137,7 +135,6 @@ void d2_tweaks::client::modules::item_move::init() {
 		singleton<client>::instance().register_packet_handler(common::MESSAGE_TYPE_ITEM_MOVE, this);
 	}
 }
-
 
 // handle packet coming from the server
 void d2_tweaks::client::modules::item_move::handle_packet(common::packet_header* packet) {

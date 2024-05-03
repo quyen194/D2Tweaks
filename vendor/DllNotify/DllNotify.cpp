@@ -3,7 +3,7 @@
 
 using namespace dllnotify;
 
-DllNotify::DllNotify() 
+DllNotify::DllNotify()
 {
 }
 
@@ -64,7 +64,6 @@ BOOL DllNotify::Init_Dllnotify()
 
 	return status == 0;
 }
-
 
 BOOL DllNotify::Uninit_Dllnotify()
 {

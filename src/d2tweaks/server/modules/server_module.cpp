@@ -7,9 +7,9 @@ d2_tweaks::server::modules::server_module::server_module() {
 }
 
 bool d2_tweaks::server::modules::server_module::handle_packet(diablo2::structures::game* game,
-															  diablo2::structures::unit* player, common::packet_header* packet) {
+	diablo2::structures::unit* player, common::packet_header* packet) {
 	return false;
 }
 
 void d2_tweaks::server::modules::server_module::tick(diablo2::structures::game* game,
-													 diablo2::structures::unit* unit) {}
+	diablo2::structures::unit* unit) {}

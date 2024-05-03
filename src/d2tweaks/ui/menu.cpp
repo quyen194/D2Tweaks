@@ -70,7 +70,6 @@ bool d2_tweaks::ui::menu::load_xml(const char* path) {
 		m_respos.push_back(temp);
 	}
 
-
 	m_name = menuNode.node().attribute("name").as_string();
 	m_width = menuNode.node().attribute("width").as_int(-1);
 	m_height = menuNode.node().attribute("height").as_int(-1);
@@ -219,7 +218,6 @@ bool d2_tweaks::ui::menu::mouse_wheel(bool up) {
 
 	return block;
 }
-
 
 bool d2_tweaks::ui::menu::key_event(uint32_t key, bool up) {
 	auto block = false;

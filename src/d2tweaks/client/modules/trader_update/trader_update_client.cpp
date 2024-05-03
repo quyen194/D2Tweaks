@@ -48,7 +48,6 @@ enum trader_command {
 	COMMAND_ABORT
 };
 
-
 class trader_update_menu : public d2_tweaks::ui::menu {
 	d2_tweaks::common::asset* m_buttons_img;
 	d2_tweaks::ui::controls::button* m_trader_update_btn;
@@ -98,7 +97,7 @@ private:
 
 	void trader_update_click() {
 		const auto unit = diablo2::d2_client::get_local_player();
-		
+
 		static d2_tweaks::common::trader_update_cs request_packet_cs;
 		request_packet_cs.client_id = unit->guid;
 		request_packet_cs.npc_id = diablo2::d2_client::current_vendor_guid();
@@ -116,11 +115,8 @@ private:
 	}
 };
 
-
 void d2_tweaks::client::modules::trader_update::init_early() {
-
 }
-
 
 void d2_tweaks::client::modules::trader_update::init() {
 	char szDir[MAX_PATH];
@@ -139,28 +135,25 @@ void d2_tweaks::client::modules::trader_update::init() {
 	}
 }
 
-
 void d2_tweaks::client::modules::trader_update::tick() {
-//	const auto unit = diablo2::d2_client::get_local_player();
+	//	const auto unit = diablo2::d2_client::get_local_player();
 }
-
 
 void d2_tweaks::client::modules::trader_update::handle_cs_packet(common::packet_header* packet) {
 	static auto& instance = singleton<client>::instance();
 	const auto income_packet_cs = static_cast<common::d2_entity_action_cs*>(packet);
-	
+
 #ifndef NDEBUG
-	spdlog::debug("[D2CLIENT C > S] ENTITY ACTION! message {} action {} entity_id {} complement {}", (uint8_t) income_packet_cs->message_type, (void*)(income_packet_cs->action >> 24), (void*)(income_packet_cs->entity_id >> 24), (void*)income_packet_cs->complement);
+	spdlog::debug("[D2CLIENT C > S] ENTITY ACTION! message {} action {} entity_id {} complement {}", (uint8_t)income_packet_cs->message_type, (void*)(income_packet_cs->action >> 24), (void*)(income_packet_cs->entity_id >> 24), (void*)income_packet_cs->complement);
 #endif
 	m_nMenuOpen = (uint8_t)income_packet_cs->message_type; // 1 = trade, 2 = gamble
 	m_nNpcId = (income_packet_cs->action >> 24);
 }
 
-
 void d2_tweaks::client::modules::trader_update::handle_packet(common::packet_header* packet) {
 	static auto& instance = singleton<client>::instance();
 	const auto income_packet_sc = static_cast<common::trader_update_sc*>(packet);
-	
+
 	if (!diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_NPCSHOP))
 		return;
 
@@ -201,4 +194,3 @@ void d2_tweaks::client::modules::trader_update::handle_packet(common::packet_hea
 		}
 	}
 }
-

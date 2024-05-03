@@ -13,7 +13,7 @@ static void* allocate_function_stub(void* origin, void* ptr, size_t size) {
 	if (!current_stub) {
 		current_stub =
 			VirtualAlloc(nullptr, MEMORY_BLOCK_SIZE, MEM_COMMIT | MEM_RESERVE,
-						 PAGE_EXECUTE_READWRITE);
+				PAGE_EXECUTE_READWRITE);
 	}
 
 	if (!current_stub)

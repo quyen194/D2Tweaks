@@ -28,7 +28,7 @@ struct message {
 	char arr_itemtype_codestr_equivstr[20][5];
 
 	message(bool active, uint32_t hires_posx, uint32_t hires_posy, uint32_t lowres_posx, uint32_t lowres_posy, uint32_t quality)
-		: active(active), 
+		: active(active),
 		text_width(0), quality(quality) {
 		start = 0;//GetTickCount();
 		memset(item_text, 0x00, sizeof item_text);
@@ -47,9 +47,9 @@ struct message {
 static uint32_t m_nMsgCount = 0;
 static message m_stMsg[32];
 
-static wchar_t* m_apwcColorStr[17] = {L"ÿc0", L"ÿc1", L"ÿc2", L"ÿc3", L"ÿc4", L"ÿc5", L"ÿc6", L"ÿc7", L"ÿc8", L"ÿc9", L"ÿc:", L"ÿc;", L"ÿc0", L"ÿc0", L"ÿc0", L"ÿc0", L"ÿc0" };
-static wchar_t* m_apwcQualityStr[10] = {L"", L"(Cracked)", L"(Normal)", L"(Superior)", L"(Magic)", L"(Set)", L"(Rare)", L"(Unique)", L"(Crafted)", L"(Tempered)"};
-static char* m_apcQualityStr[10] = {"", "(Cracked)", "(Normal)", "(Superior)", "(Magic)", "(Set)", "(Rare)", "(Unique)", "(Crafted)", "(Tempered)"};
+static wchar_t* m_apwcColorStr[17] = { L"ÿc0", L"ÿc1", L"ÿc2", L"ÿc3", L"ÿc4", L"ÿc5", L"ÿc6", L"ÿc7", L"ÿc8", L"ÿc9", L"ÿc:", L"ÿc;", L"ÿc0", L"ÿc0", L"ÿc0", L"ÿc0", L"ÿc0" };
+static wchar_t* m_apwcQualityStr[10] = { L"", L"(Cracked)", L"(Normal)", L"(Superior)", L"(Magic)", L"(Set)", L"(Rare)", L"(Unique)", L"(Crafted)", L"(Tempered)" };
+static char* m_apcQualityStr[10] = { "", "(Cracked)", "(Normal)", "(Superior)", "(Magic)", "(Set)", "(Rare)", "(Unique)", "(Crafted)", "(Tempered)" };
 
 static uint32_t m_nHookMethod = 1;
 static uint32_t m_anQualityColor[10] = { 0 };
@@ -77,7 +77,6 @@ public:
 	}
 };
 
-
 void d2_tweaks::client::modules::item_drop_message::GamePacketReceivedIntercept(uint8_t* packet, size_t size) {
 	if (packet == 0 || size == 0)
 		return;
@@ -94,9 +93,8 @@ void d2_tweaks::client::modules::item_drop_message::GamePacketReceivedIntercept(
 	return;
 }
 
-
 __declspec (naked) void d2_tweaks::client::modules::item_drop_message::GamePacketReceivedInterceptASM() {
-	__asm 
+	__asm
 	{
 		// call our function (__fastcall)
 		pushad;
@@ -107,15 +105,12 @@ __declspec (naked) void d2_tweaks::client::modules::item_drop_message::GamePacke
 		popfd;
 		popad;
 
-		jmp [fn_GamePacketReceivedIntercept]
+		jmp[fn_GamePacketReceivedIntercept]
 	}
 }
 
-
 void d2_tweaks::client::modules::item_drop_message::init_early() {
-
 }
-
 
 void d2_tweaks::client::modules::item_drop_message::init() {
 	char acPathToIni[MAX_PATH] = { 0 };
@@ -155,7 +150,6 @@ void d2_tweaks::client::modules::item_drop_message::init() {
 		singleton<ui::ui_manager>::instance().add_menu(new draw_item_menu());
 	}
 }
-
 
 void d2_tweaks::client::modules::item_drop_message::handle_packet(common::packet_header* packet) {
 	const auto info = static_cast<common::item_pickup_info_sc*>(packet);
@@ -209,21 +203,21 @@ void d2_tweaks::client::modules::item_drop_message::handle_packet(common::packet
 					mbstowcs(m_aawcItemtypeEquiv[8], m_stMsg[i].arr_itemtype_codestr_equivstr[9], 4);
 					mbstowcs(m_aawcItemtypeEquiv[9], m_stMsg[i].arr_itemtype_codestr_equivstr[10], 4);
 
-					swprintf_s(buffer, L"%s  ÿc0Code: %s   Quality: %i %s   Type: %s   Equiv: %s %s %s %s %s %s %s %s %s %s", 
-						m_stMsg[i].item_text, 
-						m_awcCode, 
-						m_stMsg[i].quality, 
-						m_apwcQualityStr[m_stMsg[i].quality], 
+					swprintf_s(buffer, L"%s  ÿc0Code: %s   Quality: %i %s   Type: %s   Equiv: %s %s %s %s %s %s %s %s %s %s",
+						m_stMsg[i].item_text,
+						m_awcCode,
+						m_stMsg[i].quality,
+						m_apwcQualityStr[m_stMsg[i].quality],
 						m_awcItemtypeCode,
-						m_aawcItemtypeEquiv[0], 
+						m_aawcItemtypeEquiv[0],
 						m_aawcItemtypeEquiv[1],
-						m_aawcItemtypeEquiv[2], 
+						m_aawcItemtypeEquiv[2],
 						m_aawcItemtypeEquiv[3],
-						m_aawcItemtypeEquiv[4], 
+						m_aawcItemtypeEquiv[4],
 						m_aawcItemtypeEquiv[5],
-						m_aawcItemtypeEquiv[6], 
+						m_aawcItemtypeEquiv[6],
 						m_aawcItemtypeEquiv[7],
-						m_aawcItemtypeEquiv[8], 
+						m_aawcItemtypeEquiv[8],
 						m_aawcItemtypeEquiv[9]);
 				}
 

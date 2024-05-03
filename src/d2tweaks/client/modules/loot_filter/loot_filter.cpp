@@ -28,7 +28,6 @@ static HANDLE __fastcall delete_save_file(char* name, char* a2) {
 	return g_delete_save_file_original(name, a2);
 }
 
-
 void d2_tweaks::client::modules::loot_filter::init_early() {
 	char acPathToIni[MAX_PATH] = { 0 };
 	const char* pcIniFile = "\\d2tweaks.ini";
@@ -41,7 +40,6 @@ void d2_tweaks::client::modules::loot_filter::init_early() {
 		hooking::hook(diablo2::d2_launch::get_base() + 0x17C00, delete_save_file, &g_delete_save_file_original);
 	}
 }
-
 
 void d2_tweaks::client::modules::loot_filter::init() {
 	char acPathToIni[MAX_PATH] = { 0 };

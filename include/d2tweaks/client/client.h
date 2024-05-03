@@ -13,25 +13,16 @@
 struct StatEntry {
 	std::wstring stat_display_string;
 	diablo2::ui_color_t colorStat, colorStatValue;
-	int x1, y1, x2, y2, is_item_stat, item_type_id, stat = 0; // x1,y1 stat_display_string | x2,y2 statValue
+	int x1, y1, x2, y2, is_item_stat, item_type_id, stat, op, param = 0; // x1,y1 stat_display_string | x2,y2 statValue
 };
 
 extern std::vector<StatEntry> globalStatsVector; // Declaration of the global variable
 
 extern diablo2::structures::gfxdata g_gfxdata; // global gfxdata
 
-extern int randStat;
-extern int randStatRangeLow;
-extern int randStatRangeHigh;
-extern int randStatBool;
-
-
 extern bool m_stats_enabled;
-
 extern bool m_help_enabled;
-
 extern bool m_cube_enabled;
-
 extern bool m_stash_enabled;
 
 namespace diablo2 {

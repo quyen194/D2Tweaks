@@ -18,6 +18,5 @@ namespace diablo2 {
 		static int32_t get_resolution_mode();
 		static void draw_image(structures::gfxdata* data, uint32_t x, uint32_t y, int32_t gamma, int32_t drawType, void* palette);
 		static void draw_filled_rect(int left, int top, int right, int bottom, DWORD color, int transTbl);
-
 	};
 }

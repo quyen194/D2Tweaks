@@ -3,7 +3,7 @@
 #include <diablo2/d2client.h>
 
 d2_tweaks::ui::controls::label::label(menu* menu, const std::wstring& text, int32_t x, int32_t y, diablo2::ui_color_t color,
-									  diablo2::ui_font_t font) : control(menu, x, y, 0, 0) {
+	diablo2::ui_font_t font) : control(menu, x, y, 0, 0) {
 	control::set_enabled(true);
 	control::set_visible(true);
 

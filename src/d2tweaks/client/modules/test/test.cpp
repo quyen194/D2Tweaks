@@ -61,7 +61,6 @@ private:
 static test_menu* g_test_menu;
 
 void d2_tweaks::client::modules::test::init_early() {
-
 }
 
 void d2_tweaks::client::modules::test::init() {

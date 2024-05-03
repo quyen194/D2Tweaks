@@ -36,17 +36,17 @@ struct packed_area {
 	uint8_t h;
 };
 
-// Define the inventory zone
-int iminValidX = 0;
-int imaxValidX = 15;
-int iminValidY = 0;
-int imaxValidY = 12;
+// Define variables to store the inventory zone values
+int iminValidX = GetPrivateProfileInt("InventoryZone", "iminValidX", 0, "./D2Tweaks.ini");
+int imaxValidX = GetPrivateProfileInt("InventoryZone", "imaxValidX", 0, "./D2Tweaks.ini");
+int iminValidY = GetPrivateProfileInt("InventoryZone", "iminValidY", 0, "./D2Tweaks.ini");
+int imaxValidY = GetPrivateProfileInt("InventoryZone", "imaxValidY", 0, "./D2Tweaks.ini");
 
-// Define the charm zone
-int cminValidX = 0;
-int cmaxValidX = 15;
-int cminValidY = 12;
-int cmaxValidY = 15;
+// Define variables to store the charm zone values
+int cminValidX = GetPrivateProfileInt("CharmZone", "cminValidX", 0, "./D2Tweaks.ini");
+int cmaxValidX = GetPrivateProfileInt("CharmZone", "cmaxValidX", 0, "./D2Tweaks.ini");
+int cminValidY = GetPrivateProfileInt("CharmZone", "cminValidY", 0, "./D2Tweaks.ini");
+int cmaxValidY = GetPrivateProfileInt("CharmZone", "cmaxValidY", 0, "./D2Tweaks.ini");
 
 void d2_tweaks::server::modules::autosort::init() {
 	char acPathToIni[MAX_PATH] = { 0 };
@@ -61,8 +61,7 @@ void d2_tweaks::server::modules::autosort::init() {
 }
 
 bool d2_tweaks::server::modules::autosort::handle_packet(diablo2::structures::game* game,
-														 diablo2::structures::unit* player, common::packet_header* packet) {
-
+	diablo2::structures::unit* player, common::packet_header* packet) {
 	if (static_cast<common::inventory_sort_cs*>(packet)->remItem == 1) {
 		diablo2::d2_common::inv_remove_item(player->inventory, static_cast<common::inventory_sort_cs*>(packet)->item_to_remove);
 		diablo2::d2_game::update_inventory_items(game, player);
@@ -71,12 +70,9 @@ bool d2_tweaks::server::modules::autosort::handle_packet(diablo2::structures::ga
 
 		for (auto item = player->inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
 			if (item == static_cast<common::inventory_sort_cs*>(packet)->item_to_remove) {
-				
 				diablo2::d2_common::inv_remove_item(player->inventory, item);
 				diablo2::d2_game::update_inventory_items(game, player);
 			}
-
-
 		}
 
 		MessageBoxA(NULL, "Item removed", "Item removed", MB_OK);
@@ -148,7 +144,7 @@ bool d2_tweaks::server::modules::autosort::sort(diablo2::structures::game* game,
 		spdlog::info("is_charm: {0}\n\n", is_charm);
 	}
 
-	if (occupied_cells > inventoryHeight* inventoryWidth) {
+	if (occupied_cells > inventoryHeight * inventoryWidth) {
 		//should never be happen in normal cases
 		spdlog::warn("occupied_cells > inventoryHeight* inventoryWidth");
 		return false;
@@ -163,10 +159,8 @@ bool d2_tweaks::server::modules::autosort::sort(diablo2::structures::game* game,
 	const auto itemsCount = items.size();
 	const auto charmsCount = charms.size();
 
-
 	if (itemsCount == 0)
 		return true; //there's nothing to sort
-
 
 	auto success = NULL;
 
@@ -219,7 +213,6 @@ bool d2_tweaks::server::modules::autosort::sort(diablo2::structures::game* game,
 
 			items_typed.erase(sorted_item->data_record_index);
 		}
-
 	}
 
 	if (charmsCount > 0) {
@@ -365,7 +358,8 @@ bool d2_tweaks::server::modules::autosort::find_free_space(diablo2::structures::
 			}
 		}
 		return false;
-	} else {
+	}
+	else {
 		for (x = minValidX; x <= maxValidX - record->inv_width + 1; x++) {
 			for (y = minValidY; y <= inventoryMaxValidY - record->inv_height + 1; y++) {
 				diablo2::structures::unit* blockingUnit = nullptr;

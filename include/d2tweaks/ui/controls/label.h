@@ -9,7 +9,6 @@
 namespace d2_tweaks {
 	namespace ui {
 		namespace controls {
-
 			class label : public control {
 				std::wstring m_text;
 				bool m_text_owned;
@@ -19,8 +18,8 @@ namespace d2_tweaks {
 				std::vector<respos> m_respos;
 			public:
 				explicit label(menu* menu, const std::wstring& text, int32_t x = 0, int32_t y = 0,
-							   diablo2::ui_color_t color = diablo2::UI_COLOR_WHITE,
-							   diablo2::ui_font_t font = diablo2::UI_FONT_16);
+					diablo2::ui_color_t color = diablo2::UI_COLOR_WHITE,
+					diablo2::ui_font_t font = diablo2::UI_FONT_16);
 				explicit label(menu* menu, const pugi::xml_node& node);
 
 				void set_text(const std::wstring& text) {
@@ -30,7 +29,6 @@ namespace d2_tweaks {
 				const std::wstring& get_text() const {
 					return m_text;
 				}
-
 
 				diablo2::ui_color_t get_color() const {
 					return m_color;

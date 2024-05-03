@@ -53,12 +53,11 @@ namespace diablo2 {
 
 		static int32_t get_view_offset_x();
 		static int32_t get_view_offset_y();
-		
+
 		static uint32_t get_mouse_x();
 		static uint32_t get_mouse_y();
 		static bool get_ui_window_state(ui_window_t window);
 		static void* get_buysellbtn();
-
 
 		static void play_sound(uint32_t soundId, structures::unit* u, uint32_t ticks, BOOL prePick, uint32_t cache);
 
@@ -68,14 +67,14 @@ namespace diablo2 {
 		static void print_chat(wchar_t* string, uint32_t color);
 
 		static bool cache_gfx_data(structures::gfxdata* gfxData,
-								   structures::unit* unit,
-								   structures::cellfile* cellfFile,
-								   int32_t direction,
-								   int32_t frame,
-								   int32_t* outIndex,
-								   int8_t flags,
-								   int32_t colorTint);
-		
+			structures::unit* unit,
+			structures::cellfile* cellfFile,
+			int32_t direction,
+			int32_t frame,
+			int32_t* outIndex,
+			int8_t flags,
+			int32_t colorTint);
+
 		static structures::cellfile* load_gfx_resource(char* path);
 		static int32_t unload_gfx_resource(structures::cellfile* handle);
 		static int32_t send_to_server_7(BYTE type, DWORD num, DWORD unk1, DWORD unk2);
@@ -90,6 +89,5 @@ namespace diablo2 {
 		static int32_t send_to_server_9(BYTE type, DWORD num, DWORD unk1);
 
 		static void set_ui_toggle(int nToggle, int nUIState, BOOL bToggle);
-
 	};
 }

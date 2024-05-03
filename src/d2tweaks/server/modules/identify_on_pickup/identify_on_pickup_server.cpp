@@ -19,12 +19,12 @@ static unsigned int g_item_Crafted = 0;
 static unsigned int g_item_Tempered = 0;
 
 static uint32_t(__fastcall* g_pickup_item_original)(diablo2::structures::game*,
-													diablo2::structures::unit*,
-													uint32_t, uint32_t);
+	diablo2::structures::unit*,
+	uint32_t, uint32_t);
 static uint32_t __fastcall pickup_item(diablo2::structures::game* game,
-									   diablo2::structures::unit* player,
-									   uint32_t guid,
-									   uint32_t a4) {
+	diablo2::structures::unit* player,
+	uint32_t guid,
+	uint32_t a4) {
 	static auto& instance = singleton<d2_tweaks::server::server>::instance();
 
 	if (!game || !player || player->type != diablo2::structures::unit_type_t::UNIT_TYPE_PLAYER)
@@ -66,12 +66,12 @@ static uint32_t __fastcall pickup_item(diablo2::structures::game* game,
 }
 
 static uint32_t(__fastcall* g_pickup_item_cursor_original)(diablo2::structures::game*,
-													diablo2::structures::unit*,
-													uint32_t, uint32_t);
+	diablo2::structures::unit*,
+	uint32_t, uint32_t);
 static uint32_t __fastcall pickup_item_cursor(diablo2::structures::game* game,
-									   diablo2::structures::unit* player,
-									   uint32_t guid,
-									   uint32_t a4) {
+	diablo2::structures::unit* player,
+	uint32_t guid,
+	uint32_t a4) {
 	static auto& instance = singleton<d2_tweaks::server::server>::instance();
 
 	if (!game || !player || player->type != diablo2::structures::unit_type_t::UNIT_TYPE_PLAYER)
@@ -133,4 +133,3 @@ void d2_tweaks::server::modules::identify_on_pickup::init() {
 		g_item_Tempered = GetPrivateProfileInt("IdentifyOnPickup", "Tempered", 1, acPathToIni);
 	}
 }
-

@@ -34,7 +34,6 @@ static char m_acBuffer[1024] = { 0 };
 static item_code* m_stItemList;
 static item_type* m_stItemTypes;
 
-
 void d2_tweaks::server::modules::item_drop_message::init() {
 	uint32_t dwLenght = 0;
 	char acPathToIni[MAX_PATH] = { 0 };
@@ -62,7 +61,7 @@ void d2_tweaks::server::modules::item_drop_message::init() {
 			}
 		}
 
-/////// Parse ItemCode
+		/////// Parse ItemCode
 		dwLenght = lstrlen(m_acItemListAll);
 		memcpy(m_acItemListAllTemp, m_acItemListAll, dwLenght + 1);
 		// считаем количество всех предметов
@@ -137,8 +136,7 @@ void d2_tweaks::server::modules::item_drop_message::init() {
 			token_string_itemcode = strtok(NULL, " ,|");
 		}
 
-
-/// Parse ItemType
+		/// Parse ItemType
 		dwLenght = lstrlen(m_acItemTypesAll);
 		memcpy(m_acItemTypesAllTemp, m_acItemTypesAll, dwLenght + 1);
 		char* token_string_itemtype_code = strtok(m_acItemTypesAllTemp, ",|");
@@ -218,7 +216,7 @@ void d2_tweaks::server::modules::item_drop_message::init() {
 }
 
 void d2_tweaks::server::modules::item_drop_message::tick(diablo2::structures::game* game,
-														diablo2::structures::unit* unit) {
+	diablo2::structures::unit* unit) {
 	static common::item_pickup_info_sc packet;
 	static auto& instance = singleton<d2_tweaks::server::server>::instance();
 	if (!game || !unit)
@@ -228,12 +226,11 @@ void d2_tweaks::server::modules::item_drop_message::tick(diablo2::structures::ga
 		return;
 }
 
-
 bool d2_tweaks::server::modules::item_drop_message::handle_packet(diablo2::structures::game* game, diablo2::structures::unit* player, common::packet_header* packet) {
 	const auto income_item_dropped_packet = static_cast<common::item_dropped_info_cs*>(packet);
 	static common::item_dropped_info_sc response_item_dropped_packet;
-	
-	switch (income_item_dropped_packet->message_type) 
+
+	switch (income_item_dropped_packet->message_type)
 	{
 	case common::message_types_t::MESSAGE_TYPE_ITEM_DROPPED_INFO:
 		auto current_unit = diablo2::d2_game::get_server_unit(game, diablo2::structures::unit_type_t::UNIT_TYPE_ITEM, income_item_dropped_packet->item_id);
@@ -248,7 +245,7 @@ bool d2_tweaks::server::modules::item_drop_message::handle_packet(diablo2::struc
 					const auto itemtype_record = diablo2::d2_common::get_item_type_record(record->type);
 					auto itemtype_record_equiv1 = diablo2::d2_common::get_item_type_record(itemtype_record->equiv1);
 					auto itemtype_record_equiv2 = diablo2::d2_common::get_item_type_record(itemtype_record->equiv2);
-					
+
 					wcstombs(string_mb, string_wc, 256);
 
 					memset(response_item_dropped_packet.arr_itemtype_codestr_equivstr, 0, sizeof response_item_dropped_packet.arr_itemtype_codestr_equivstr);
@@ -258,7 +255,7 @@ bool d2_tweaks::server::modules::item_drop_message::handle_packet(diablo2::struc
 					uint32_t index_arr_itemtype = 1;
 
 					if (itemtype_record_equiv1) {
-						// 
+						//
 						if (*(DWORD*)itemtype_record_equiv1->code != 0x20202020) {
 							// сохранить первый ранее полученый equiv1
 							*(DWORD*)response_item_dropped_packet.arr_itemtype_codestr_equivstr[index_arr_itemtype] = *(DWORD*)itemtype_record_equiv1->code;
@@ -269,12 +266,11 @@ bool d2_tweaks::server::modules::item_drop_message::handle_packet(diablo2::struc
 								itemtype_record_equiv1 = diablo2::d2_common::get_item_type_record(itemtype_record_equiv1->equiv1);
 								if (*(DWORD*)itemtype_record_equiv1->code != 0x20202020) {
 									*(DWORD*)response_item_dropped_packet.arr_itemtype_codestr_equivstr[index_arr_itemtype] = *(DWORD*)itemtype_record_equiv1->code;
-								} 
+								}
 								else break;
 							}
 						}
 					}
-
 
 					if (itemtype_record_equiv2) {
 						if (*(DWORD*)itemtype_record_equiv2->code != 0x20202020) {
@@ -292,7 +288,6 @@ bool d2_tweaks::server::modules::item_drop_message::handle_packet(diablo2::struc
 							}
 						}
 					}
-
 
 					if (GetKeyState(VK_SCROLL) != 0) {
 						response_item_dropped_packet.item = income_item_dropped_packet->item_id;
@@ -312,7 +307,6 @@ bool d2_tweaks::server::modules::item_drop_message::handle_packet(diablo2::struc
 						break;
 					}
 
-					
 					for (uint32_t i = 0; i < m_nCountItemTypesAll; i++)
 					{
 						for (uint32_t count = 0; count < index_arr_itemtype; count++)
@@ -341,7 +335,6 @@ bool d2_tweaks::server::modules::item_drop_message::handle_packet(diablo2::struc
 							}
 						}
 					}
-
 
 					for (uint32_t i = 0; i < m_nCountItemListAll; i++)
 					{

@@ -745,8 +745,8 @@
 //	LNG_POR,// Portuguese
 //	LNG_ITA,// Italian
 //	LNG_JPN,// Japanese
-//	LNG_KOR,// Korean 
-//	LNG_SIN,// 
+//	LNG_KOR,// Korean
+//	LNG_SIN,//
 //	LNG_CHI,// Chinese
 //	LNG_POL,// Polish
 //	LNG_RUS,// Russian
@@ -1138,7 +1138,7 @@
 //	DEXTERITY,
 //	VITALITY,
 //	ENERGY,
-//	MAXMANA, 
+//	MAXMANA,
 //	MAXMANA_PERCENT,
 //	MAXHP,
 //	MAXHP_PERCENT,

@@ -10,13 +10,13 @@
 #include <common/string_utils.h>
 
 d2_tweaks::ui::controls::button::button(menu* menu,
-										const rect& rect, const std::function<void()>& onClick,
-										common::asset* image,
-										int32_t frameDown, int32_t frameUp, int32_t clickSound) : control(menu,
-																										  rect.get_x(),
-																										  rect.get_y(),
-																										  rect.get_width(),
-																										  rect.get_height()) {
+	const rect& rect, const std::function<void()>& onClick,
+	common::asset* image,
+	int32_t frameDown, int32_t frameUp, int32_t clickSound) : control(menu,
+		rect.get_x(),
+		rect.get_y(),
+		rect.get_width(),
+		rect.get_height()) {
 	control::set_enabled(true);
 	control::set_visible(true);
 
@@ -42,8 +42,6 @@ d2_tweaks::ui::controls::button::button(menu* menu,
 //	uint32_t pos_y;
 //};
 
-
-
 d2_tweaks::ui::controls::button::button(menu* menu, const pugi::xml_node& node) : control(menu, 0, 0, 0, 0) {
 	char buf[32] = { 0 };
 
@@ -51,7 +49,7 @@ d2_tweaks::ui::controls::button::button(menu* menu, const pugi::xml_node& node) 
 	auto cy = node.attribute("default_pos_y").as_int(0);
 
 	m_res_count = node.attribute("resolution_count").as_int(1);
-	
+
 	respos temp;
 	for (uint32_t i = 1; i <= m_res_count; i++) {
 		sprintf_s(buf, "res%d_x", i);
@@ -143,9 +141,9 @@ void d2_tweaks::ui::controls::button::draw(int32_t offsetX, int32_t offsetY) {
 		!m_popup.empty()) {
 		diablo2::d2_win::set_current_font(diablo2::UI_FONT_16);
 		diablo2::d2_win::set_popup_properties(const_cast<wchar_t*>(m_popup.c_str()),
-											  get_x() + offsetX + m_rect.get_width() / 2,
-											  get_y() + offsetY - m_rect.get_height(),
-											  diablo2::UI_COLOR_WHITE, TRUE);
+			get_x() + offsetX + m_rect.get_width() / 2,
+			get_y() + offsetY - m_rect.get_height(),
+			diablo2::UI_COLOR_WHITE, TRUE);
 		diablo2::d2_win::draw_popup();
 	}
 

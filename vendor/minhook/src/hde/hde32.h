@@ -10,15 +10,15 @@
 #ifndef _HDE32_H_
 #define _HDE32_H_
 
-/* stdint.h - C99 standard header
- * http://en.wikipedia.org/wiki/stdint.h
- *
- * if your compiler doesn't contain "stdint.h" header (for
- * example, Microsoft Visual C++), you can download file:
- *   http://www.azillionmonkeys.com/qed/pstdint.h
- * and change next line to:
- *   #include "pstdint.h"
- */
+ /* stdint.h - C99 standard header
+  * http://en.wikipedia.org/wiki/stdint.h
+  *
+  * if your compiler doesn't contain "stdint.h" header (for
+  * example, Microsoft Visual C++), you can download file:
+  *   http://www.azillionmonkeys.com/qed/pstdint.h
+  * and change next line to:
+  *   #include "pstdint.h"
+  */
 #include "pstdint.h"
 
 #define F_MODRM         0x00000001
@@ -95,8 +95,8 @@ typedef struct {
 extern "C" {
 #endif
 
-/* __cdecl */
-unsigned int hde32_disasm(const void *code, hde32s *hs);
+    /* __cdecl */
+    unsigned int hde32_disasm(const void* code, hde32s* hs);
 
 #ifdef __cplusplus
 }

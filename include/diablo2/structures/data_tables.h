@@ -106,7 +106,7 @@ namespace diablo2 {
 			uint32_t* pHirelings;                     //+000001A0   055D8CD8      hirelings.txt (limit = 256)
 			int nHirelings;                                     //+000001A4   00000078      # of hirelings records
 			int pMercFirst[256];                                //+000001A8   00000000      array of 256 integers (namefirst column from hirelings.txt)
-			int pMercLast[256];		                            //+000005A8   0000000C      array of 256 integers (namelast column from hirelings.txt)   
+			int pMercLast[256];		                            //+000005A8   0000000C      array of 256 integers (namelast column from hirelings.txt)
 			void* pNPCs;                                        //+000009A8   05724F74      npcs.txt
 			int nNPCs;                                          //+000009AC   00000011      # of npcs records
 			void* pColours;                                     //+000009B0   01417568      colors.txt

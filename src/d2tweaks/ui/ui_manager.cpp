@@ -69,6 +69,8 @@
 #include <string>
 #include <CommCtrl.h> // Include for edit control
 
+#include <d2tweaks/client/client.h>
+
 #pragma pack(push, 1)
 
 using namespace std;
@@ -220,7 +222,7 @@ diablo2::structures::unit unserialize_item(const std::string& hexString) {
 	}
 
 	// Create an item object
-	diablo2::structures::unit item;
+	diablo2::structures::unit item{};
 
 	// Convert the hexadecimal string to binary data
 	for (size_t i = 0; i < hexString.size(); i += 2) {
@@ -242,6 +244,38 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 	if (wParam == 'X') {
 		diablo2::d2_client::send_to_server_7(0x4F, 0x18, 0, 0);
 		block = true; // block the game from processing this key
+	}
+
+	if (wParam == 'V') {
+		const auto player = diablo2::d2_client::get_local_player();
+		int32_t st0Guid = 0;
+		uint32_t st0X = 0;
+		uint32_t st0Y = 0;
+		diablo2::structures::unit* box{};
+		for (auto item = player->inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
+			const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
+			char* st0Code = record->string_code;
+			if (strncmp(st0Code, "st0", 3) == 0) {
+				box = item;
+				st0Guid = box->guid;
+				st0X = player->path->mapx;
+				st0Y = player->path->mapy;
+			}
+		}
+		struct D2GSPacketClt20 {
+			uint8_t PacketId; // 0x01
+			uint32_t guid;	// 0x06
+			uint32_t tx;	// 0x07
+			uint32_t ty;	// 0x09
+		};
+		D2GSPacketClt20 packet;
+		packet.PacketId = 0x20;
+		packet.guid = st0Guid;
+		packet.tx = st0X;
+		packet.ty = st0Y;
+		diablo2::d2_client::send_to_server(&packet, sizeof packet);
+		m_stash_enabled = false;
+		block = true;
 	}
 
 	// Send item move packet + transmute packet for certain codes only for runes and gems
@@ -1607,7 +1641,6 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 				|| record->type == 53 - 3
 
 				) {
-
 				// open the cube
 				struct D2GSPacketClt20 {
 					uint8_t PacketId; // 0x01
@@ -1655,7 +1688,6 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 				}
 				diablo2::d2_client::send_to_server(&packet, sizeof packet);
 				diablo2::d2_client::send_to_server_7(0x4F, 0x18, 0, 0);
-				
 
 				// now move the harvester back to the inv
 				//static d2_tweaks::common::item_move_cs h1packet;
@@ -1664,7 +1696,6 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 				//diablo2::d2_client::send_to_server(&h1packet, sizeof h1packet);
 
 				(*reinterpret_cast<diablo2::structures::unit**>(diablo2::d2_client::get_base() + 0x1158F4)) = nullptr;
-
 			}
 		}
 

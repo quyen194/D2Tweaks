@@ -83,4 +83,3 @@ void loot_filter_settings::remove(const char* name) {
 	std::filesystem::remove(buffer);
 	memset(g_buffer, 0x00, sizeof g_buffer);
 }
-

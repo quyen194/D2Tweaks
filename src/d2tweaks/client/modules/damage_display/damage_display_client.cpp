@@ -48,7 +48,6 @@ struct damage_label {
 	}
 };
 
-
 static growing_object_pool<damage_label> g_label_pool([]() {
 	return new damage_label();
 	});
@@ -99,11 +98,9 @@ static unsigned int g_font_player = 1;
 static unsigned int g_player_label_posx = 70;
 static unsigned int g_player_label_posy = 500;
 
-
 HWND findDiabloIIWindow() {
 	return FindWindow(nullptr, TEXT("Diablo II")); // Change "Diablo II" to the exact title of the game window
 }
-
 
 // Function to draw the health bar using Windows GDI
 void drawHealthBar(HWND hWnd, int x, int y, int maxWidth, int height, float healthPercentage, COLORREF fillColor, COLORREF outlineColor) {
@@ -139,14 +136,11 @@ void OnLoad() {
 }
 
 static void onDraw(HWND hWnd, int x, int y, int maxWidth, int height, float healthPercentage, COLORREF fillColor, COLORREF outlineColor) {
-
 	if (GetTickCount64() >= nEndTime) {
 		nEndTime = GetTickCount64() + DURATION;
 	}
 	drawHealthBar(hWnd, x, y, maxWidth, height, healthPercentage, fillColor, outlineColor);
-
 }
-
 
 static void draw_damage_labels() {
 	const auto player = diablo2::d2_client::get_local_player();
@@ -272,18 +266,12 @@ static void draw_damage_labels() {
 				const auto offset = static_cast<int32_t>(lerp(static_cast<float>(label->unit_height) + 5.f, static_cast<float>(label->unit_height) + 30.f, static_cast<float>(delta) / static_cast<float>(DISPLAY_TIME)));
 				my -= offset;
 
-
-
-
 				// Draw damage label
 				std::wstring dmgText = L" " + std::to_wstring(label->damage) + L" ";
 				const wchar_t* dmgTextPtr = dmgText.c_str();
 				diablo2::d2_win::set_current_font(diablo2::UI_FONT_6);
 				diablo2::d2_win::draw_text(const_cast<wchar_t*>(dmgTextPtr), textX + diablo2::d2_win::get_text_pixel_width(const_cast<wchar_t*>(combinedTextPtr)) / 2, my + label->unit_height / 2, textColor, 0);
-
 			}
-
-
 		}
 	}
 
@@ -309,7 +297,6 @@ static diablo2::ui_color_t damage_type_to_color(d2_tweaks::common::damage_type_t
 }
 
 void d2_tweaks::client::modules::damage_display::init_early() {
-
 }
 
 void d2_tweaks::client::modules::damage_display::init() {
@@ -410,5 +397,4 @@ void d2_tweaks::client::modules::damage_display::handle_packet(common::packet_he
 }
 
 void d2_tweaks::client::modules::damage_display::tick() {
-
 }

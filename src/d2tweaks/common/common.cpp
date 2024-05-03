@@ -18,8 +18,8 @@ static int32_t g_ebp_send_to_server;
 static int32_t g_ebp_send_to_client;
 static int32_t __stdcall net_send_to_server(int32_t queue, d2_tweaks::common::packet_header* packet, size_t size) {
 	__asm {
-		push [ebp + 4]
-		pop [g_ebp_send_to_server]
+		push[ebp + 4]
+		pop[g_ebp_send_to_server]
 	}
 
 	spdlog::debug("[d2net SEND C >>> S] Queue {}  Packet {}  Size {} CallFrom {}", queue, (void*)packet->d2_packet_type, size, (void*)g_ebp_send_to_server);
@@ -29,8 +29,8 @@ static int32_t __stdcall net_send_to_server(int32_t queue, d2_tweaks::common::pa
 
 static int32_t __stdcall net_send_to_client(int32_t queue, int32_t clientId, d2_tweaks::common::packet_header* packet, size_t size) {
 	__asm {
-		push [ebp+4]
-		pop [g_ebp_send_to_client]
+		push[ebp + 4]
+		pop[g_ebp_send_to_client]
 	}
 
 	spdlog::error("[d2net SEND S >>> C] Queue {}  Packet {}  Size {} ClientID {} CallFrom {}", queue, (void*)packet->d2_packet_type, size, clientId, (void*)g_ebp_send_to_client);
@@ -88,94 +88,94 @@ void d2_tweaks::common::common::init() {
 
 bool d2_tweaks::common::common::get_packet_size_cs(packet_header* packet, size_t& size) {
 	switch (packet->message_type) {
-		case MESSAGE_TYPE_ITEM_MOVE:
-		{
-			size = sizeof item_move_cs;
-			return true;
-		}
-		case MESSAGE_TYPE_INVENTORY_SORT:
-		{
-			size = sizeof inventory_sort_cs;
-			return true;
-		}
-		case MESSAGE_TYPE_DAMAGE_INFO:
-		{
-			size = sizeof damage_info_cs;
-			return true;
-		}
-		case MESSAGE_TYPE_GOLD_PICKUP_INFO:
-		{
-			size = sizeof gold_pickup_info_cs;
-			return true;
-		}
-		case MESSAGE_TYPE_ITEM_PICKUP_INFO:
-		{
-			size = sizeof item_pickup_info_cs;
-			return true;
-		}
-		case MESSAGE_TYPE_ITEM_DROPPED_INFO:
-		{
-			size = sizeof item_dropped_info_cs;
-			return true;
-		}
-		case MESSAGE_TYPE_TRANSMUTE:
-		{
-			size = sizeof transmute_info_cs;
-			return true;
-		}
-		case MESSAGE_TYPE_TRADER_UPDATE:
-		{
-			size = sizeof trader_update_cs;
-			return true;
-		}
-		default:
-			return false;
+	case MESSAGE_TYPE_ITEM_MOVE:
+	{
+		size = sizeof item_move_cs;
+		return true;
+	}
+	case MESSAGE_TYPE_INVENTORY_SORT:
+	{
+		size = sizeof inventory_sort_cs;
+		return true;
+	}
+	case MESSAGE_TYPE_DAMAGE_INFO:
+	{
+		size = sizeof damage_info_cs;
+		return true;
+	}
+	case MESSAGE_TYPE_GOLD_PICKUP_INFO:
+	{
+		size = sizeof gold_pickup_info_cs;
+		return true;
+	}
+	case MESSAGE_TYPE_ITEM_PICKUP_INFO:
+	{
+		size = sizeof item_pickup_info_cs;
+		return true;
+	}
+	case MESSAGE_TYPE_ITEM_DROPPED_INFO:
+	{
+		size = sizeof item_dropped_info_cs;
+		return true;
+	}
+	case MESSAGE_TYPE_TRANSMUTE:
+	{
+		size = sizeof transmute_info_cs;
+		return true;
+	}
+	case MESSAGE_TYPE_TRADER_UPDATE:
+	{
+		size = sizeof trader_update_cs;
+		return true;
+	}
+	default:
+		return false;
 	}
 }
 
 bool d2_tweaks::common::common::get_packet_size_sc(packet_header* packet, size_t& size) {
 	switch (packet->message_type) {
-		case MESSAGE_TYPE_ITEM_MOVE:
-		{
-			size = sizeof item_move_sc;
-			return true;
-		}
-		case MESSAGE_TYPE_INVENTORY_SORT:
-		{
-			size = sizeof inventory_sort_sc;
-			return true;
-		}
-		case MESSAGE_TYPE_DAMAGE_INFO:
-		{
-			size = sizeof damage_info_sc;
-			return true;
-		}
-		case MESSAGE_TYPE_GOLD_PICKUP_INFO:
-		{
-			size = sizeof gold_pickup_info_sc;
-			return true;
-		}
-		case MESSAGE_TYPE_ITEM_PICKUP_INFO:
-		{
-			size = sizeof item_pickup_info_sc;
-			return true;
-		}
-		case MESSAGE_TYPE_ITEM_DROPPED_INFO:
-		{
-			size = sizeof item_dropped_info_sc;
-			return true;
-		}
-		case MESSAGE_TYPE_TRANSMUTE:
-		{
-			size = sizeof transmute_info_sc;
-			return true;
-		}
-		case MESSAGE_TYPE_TRADER_UPDATE:
-		{
-			size = sizeof trader_update_sc;
-			return true;
-		}
-		default:
-			return false;
+	case MESSAGE_TYPE_ITEM_MOVE:
+	{
+		size = sizeof item_move_sc;
+		return true;
+	}
+	case MESSAGE_TYPE_INVENTORY_SORT:
+	{
+		size = sizeof inventory_sort_sc;
+		return true;
+	}
+	case MESSAGE_TYPE_DAMAGE_INFO:
+	{
+		size = sizeof damage_info_sc;
+		return true;
+	}
+	case MESSAGE_TYPE_GOLD_PICKUP_INFO:
+	{
+		size = sizeof gold_pickup_info_sc;
+		return true;
+	}
+	case MESSAGE_TYPE_ITEM_PICKUP_INFO:
+	{
+		size = sizeof item_pickup_info_sc;
+		return true;
+	}
+	case MESSAGE_TYPE_ITEM_DROPPED_INFO:
+	{
+		size = sizeof item_dropped_info_sc;
+		return true;
+	}
+	case MESSAGE_TYPE_TRANSMUTE:
+	{
+		size = sizeof transmute_info_sc;
+		return true;
+	}
+	case MESSAGE_TYPE_TRADER_UPDATE:
+	{
+		size = sizeof trader_update_sc;
+		return true;
+	}
+	default:
+		return false;
 	}
 }

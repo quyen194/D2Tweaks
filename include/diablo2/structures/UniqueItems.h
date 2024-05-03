@@ -26,7 +26,7 @@ namespace diablo2 {
 			uint32_t dwCostAdd;					//0x80
 			uint16_t wDropSound;					//0x84
 			uint16_t wUseSound;						//0x86
-			uint32_t dwDropSfxFrame;				//0x88	
+			uint32_t dwDropSfxFrame;				//0x88
 			uint32_t dwProp1;						//0x8C
 			uint32_t dwPar1;						//0x90
 			uint32_t dwMin1;						//0x94

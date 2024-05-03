@@ -17,7 +17,6 @@
 //#pragma comment(lib, "vcruntime.lib")
 #pragma comment(lib, "mincore_downlevel.lib")
 
-
 void init_log() {
 	const auto console_err = std::make_shared<spdlog::sinks::stderr_color_sink_mt>();
 	const auto logPath = "d2tweaks.log";
@@ -38,7 +37,6 @@ void init_log() {
 
 	spdlog::info("Log system initialized");
 }
-
 
 void initialize(uint32_t param) {
 #ifndef NDEBUG
@@ -80,34 +78,34 @@ void initialize(uint32_t param) {
 HANDLE g_hThread = 0;
 // ReSharper disable once CppInconsistentNaming
 BOOL APIENTRY DllMain(HMODULE moduleHandle,
-					  DWORD reason,
-					  LPVOID reserved) {
+	DWORD reason,
+	LPVOID reserved) {
 	// ReSharper disable once CppDefaultCaseNotHandledInSwitchStatement
 	switch (reason) {
-		case DLL_PROCESS_ATTACH:
-		{
-			//dllnotify::DllNotify::Init_Dllnotify();
-			DisableThreadLibraryCalls(moduleHandle);
-			initialize(0);
-			break;
-		}
+	case DLL_PROCESS_ATTACH:
+	{
+		//dllnotify::DllNotify::Init_Dllnotify();
+		DisableThreadLibraryCalls(moduleHandle);
+		initialize(0);
+		break;
+	}
 
-		case DLL_PROCESS_DETACH:
-		{
-			if (g_hThread != NULL) {
-			#ifndef NDEBUG
-				FreeConsole();
-			#endif
-				CloseHandle(g_hThread);
-				MH_Uninitialize();
-				//dllnotify::DllNotify::Uninit_Dllnotify();
-			}
-			break;
+	case DLL_PROCESS_DETACH:
+	{
+		if (g_hThread != NULL) {
+#ifndef NDEBUG
+			FreeConsole();
+#endif
+			CloseHandle(g_hThread);
+			MH_Uninitialize();
+			//dllnotify::DllNotify::Uninit_Dllnotify();
 		}
-		case DLL_THREAD_ATTACH:
-		case DLL_THREAD_DETACH:
-		default:
-			break;
+		break;
+	}
+	case DLL_THREAD_ATTACH:
+	case DLL_THREAD_DETACH:
+	default:
+		break;
 	}
 	return true;
 }

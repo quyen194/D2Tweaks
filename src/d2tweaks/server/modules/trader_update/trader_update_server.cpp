@@ -78,7 +78,7 @@ static uint32_t m_nParam4 = 1;
 //__declspec (naked) void click_trade_menu() {
 //	__asm {
 //		pushad; //+0x24 esp
-//		pushfd; // 
+//		pushfd; //
 //		//mov eax, [esp + 0x28];//+0x4
 //		//mov [m_nNpcId], eax;
 //		mov eax, [esp + 0x34];//+0x10
@@ -99,7 +99,7 @@ static uint32_t m_nParam4 = 1;
 //__declspec (naked) void click_gamble_menu() {
 //	__asm {
 //		pushad; //+0x24 esp
-//		pushfd; // 
+//		pushfd; //
 //		//mov eax, [esp + 0x28];//+0x4
 //		//mov [m_nNpcId], eax;
 //		mov eax, [esp + 0x34];//+0x10
@@ -133,7 +133,6 @@ static uint32_t m_nParam4 = 1;
 //	{D2DLL_INVALID}
 //};
 
-
 void d2_tweaks::server::modules::trader_update::init() {
 	char szDir[MAX_PATH];
 	char szPath[MAX_PATH];
@@ -151,30 +150,27 @@ void d2_tweaks::server::modules::trader_update::init() {
 	}
 }
 
-
 void d2_tweaks::server::modules::trader_update::tick(diablo2::structures::game* game, diablo2::structures::unit* unit) {
 	return;
 }
-
 
 struct ClientFromNumber {
 	uint8_t padding[0x174];
 	diablo2::structures::net_client* net_cleint;
 };
 
-
 bool d2_tweaks::server::modules::trader_update::handle_packet(diablo2::structures::game* game, diablo2::structures::unit* player, common::packet_header* packet) {
 	const auto income_packet_cs = static_cast<common::trader_update_cs*>(packet);
 	static common::trader_update_sc response_packet_sc;
-	
+
 	diablo2::structures::unit* temp_ptNPC = diablo2::d2_game::get_server_unit(game, diablo2::structures::unit_type_t::UNIT_TYPE_MONSTER, income_packet_cs->npc_id);
 	diablo2::structures::npc_record* npcrecord = diablo2::d2_game::get_npc_record(game, temp_ptNPC, &temp_ptNPC);
 	diablo2::structures::unit* ptNPC = diablo2::d2_game::get_server_unit(game, diablo2::structures::unit_type_t::UNIT_TYPE_MONSTER, income_packet_cs->npc_id);
-	
+
 	if (!ptNPC)
 		return true;
-	
-	// нажатие кнопки, чистим инвентарь торговца на сервере 
+
+	// нажатие кнопки, чистим инвентарь торговца на сервере
 	if (income_packet_cs->command == COMMAND_FREE_NPC_INVENTORY) {
 		// отправить пакет об обновлении всем подлключенным клиентам
 		// id net client - 1 всегда хост, потом каждый нечетный, 3, 5, 7, 9, 11, 13, 15
@@ -189,7 +185,6 @@ bool d2_tweaks::server::modules::trader_update::handle_packet(diablo2::structure
 		}
 	}
 
-
 	if (income_packet_cs->command == COMMAND_FREE_NPC_GAMBLE) {
 		npcrecord->pGamble->pInventory = 0;
 		npcrecord->pGamble->dwGUID = 0;
@@ -199,7 +194,6 @@ bool d2_tweaks::server::modules::trader_update::handle_packet(diablo2::structure
 		response_packet_sc.is_gamble_menu_open = income_packet_cs->is_gamble_menu_open;
 		singleton<server>::instance().send_packet(player->player_data->net_client, &response_packet_sc, sizeof response_packet_sc);
 	}
-
 
 	if (income_packet_cs->command == COMMAND_FILL_NPC_INVENTORY) {
 		// заполнить инвентарь торговца
@@ -219,7 +213,6 @@ bool d2_tweaks::server::modules::trader_update::handle_packet(diablo2::structure
 			}
 		}
 	}
-
 
 	if (income_packet_cs->command == COMMAND_FILL_NPC_GAMBLE) {
 		diablo2::d2_game::create_vendor_cache1(game, player, ptNPC, 1, true);

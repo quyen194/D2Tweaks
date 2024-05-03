@@ -17,7 +17,7 @@ void diablo2::d2_win::draw_text(wchar_t* str, uint32_t x, uint32_t y, ui_color_t
 }
 
 void diablo2::d2_win::draw_boxed_text(wchar_t* str, uint32_t x, uint32_t y, int32_t paletteIndex, int32_t transTbl,
-									  ui_color_t color) {
+	ui_color_t color) {
 	static wrap_func_fast_import<void(wchar_t*, uint32_t, uint32_t, int32_t, int32_t, int32_t)> draw_boxed_text(10132, get_base());
 	draw_boxed_text(str, x, y, paletteIndex, transTbl, color);
 }

@@ -3,7 +3,6 @@
 #include <diablo2/structures/npc_record.h>
 #include <common/ptr_wrapper.h>
 
-
 char* diablo2::d2_game::get_base() {
 	static auto base = reinterpret_cast<char*>(GetModuleHandle("d2game.dll"));
 	return base;
@@ -14,13 +13,13 @@ void diablo2::d2_game::enqueue_packet(structures::net_client* client, void* pack
 	enqueue_packet(client, packet, size);
 }
 
-diablo2::structures::npc_record* diablo2::d2_game::get_npc_record(structures::game* game, structures::unit* npc, structures::unit **ptnpc) {
+diablo2::structures::npc_record* diablo2::d2_game::get_npc_record(structures::game* game, structures::unit* npc, structures::unit** ptnpc) {
 	static wrap_func_fast<structures::npc_record* (structures::game*, structures::unit*, structures::unit**)>get_npc_record(0x9B910, get_base());
 	return get_npc_record(game, npc, ptnpc);
 }
 
 void diablo2::d2_game::free_gamble(structures::game* game, structures::unit* player, structures::unit* npc, structures::npc_record* npcrecord) {
-	static wrap_func_fast<void (structures::game* game, structures::unit* player, structures::unit* npc, structures::npc_record* npcrecord)>free_gamble(0x9D190, get_base());
+	static wrap_func_fast<void(structures::game* game, structures::unit* player, structures::unit* npc, structures::npc_record* npcrecord)>free_gamble(0x9D190, get_base());
 	free_gamble(game, player, npc, npcrecord);
 }
 
@@ -40,18 +39,18 @@ void diablo2::d2_game::create_vendor_cache2(structures::game* game, structures::
 }
 
 diablo2::structures::unit* diablo2::d2_game::get_server_unit(structures::game* game, structures::unit_type_t type, uint32_t uniqueid) {
-	static wrap_func_fast<structures::unit*(structures::game*, structures::unit_type_t, uint32_t)>get_server_unit(0x8BB00, get_base());
+	static wrap_func_fast<structures::unit* (structures::game*, structures::unit_type_t, uint32_t)>get_server_unit(0x8BB00, get_base());
 	return get_server_unit(game, type, uniqueid);
 }
 
 diablo2::structures::game* diablo2::d2_game::get_game_from_client_id(int32_t id) {
-	static wrap_func_fast<structures::game * (int32_t)> get_game_from_client_id(0x94E0, get_base());
+	static wrap_func_fast<structures::game* (int32_t)> get_game_from_client_id(0x94E0, get_base());
 	return get_game_from_client_id(id);
 }
 
 // __fastcall D2CLIENTS_GetClientByClientNumber(pGame, int nNumber)
 diablo2::structures::net_client* diablo2::d2_game::get_net_client_from_id(structures::game* game, int32_t id) {
-	static wrap_func_fast<structures::net_client * (structures::game*, int32_t)>get_net_client_from_id(0x1DE0, get_base());
+	static wrap_func_fast<structures::net_client* (structures::game*, int32_t)>get_net_client_from_id(0x1DE0, get_base());
 	return get_net_client_from_id(game, id);
 }
 
@@ -61,8 +60,8 @@ diablo2::structures::net_client* diablo2::d2_game::get_net_client_from_id_2(stru
 }
 
 diablo2::structures::unit* diablo2::d2_game::get_player_pet(structures::game* game, structures::unit* unit,
-															uint32_t type, uint32_t index) {
-	static wrap_func_fast<structures::unit * (structures::game*, structures::unit*, uint32_t, uint32_t)>get_player_pet(0x4E8B0, get_base());
+	uint32_t type, uint32_t index) {
+	static wrap_func_fast<structures::unit* (structures::game*, structures::unit*, uint32_t, uint32_t)>get_player_pet(0x4E8B0, get_base());
 	return get_player_pet(game, unit, type, index);
 }
 
@@ -105,37 +104,35 @@ static diablo2::structures::game* (__thiscall* g_get_game)(diablo2::structures::
 = decltype(g_get_game)(0xB6A0 + diablo2::d2_game::get_base());
 
 diablo2::structures::game* diablo2::d2_game::get_game(structures::game_server* gs, uint32_t gameId) {
-	static wrap_func_std<structures::game * (uint32_t, void*)> get_game(0xB6A0, get_base());
+	static wrap_func_std<structures::game* (uint32_t, void*)> get_game(0xB6A0, get_base());
 	return g_get_game(gs, gameId, reinterpret_cast<char*>(gs) + 0x44);
 }
 
 diablo2::structures::unit* diablo2::d2_game::get_unit_owner(structures::game* game, structures::unit* unit) {
-	static wrap_func_fast<structures::unit * (structures::game*, structures::unit*)> get_unit_owner(0x8BB70, get_base());
+	static wrap_func_fast<structures::unit* (structures::game*, structures::unit*)> get_unit_owner(0x8BB70, get_base());
 	return get_unit_owner(game, unit);
 }
 
 static void __fastcall unit_pet_iterator(diablo2::structures::game* game, diablo2::structures::unit* owner,
-										 diablo2::structures::unit* unit, void* arg) {
+	diablo2::structures::unit* unit, void* arg) {
 	const std::function<void(diablo2::structures::game*, diablo2::structures::unit*, diablo2::structures::unit*)>* cb =
 		reinterpret_cast<decltype(cb)>(arg);
 	cb->operator()(game, owner, unit);
 }
 
 void* diablo2::d2_game::iterate_unit_pets(structures::game* game, structures::unit* unit,
-										  const std::function<void(structures::game*, structures::unit*, diablo2::structures::unit*)>& cb) {
+	const std::function<void(structures::game*, structures::unit*, diablo2::structures::unit*)>& cb) {
 	static wrap_func_fast<void* (structures::game*, structures::unit*,
-								 void(__fastcall*)(structures::game*, structures::unit*, diablo2::structures::unit*, void*), void*)> iterate_unit_pets(0x4E7C0, get_base());
+		void(__fastcall*)(structures::game*, structures::unit*, diablo2::structures::unit*, void*), void*)> iterate_unit_pets(0x4E7C0, get_base());
 	const auto cbref = &cb;
 	// ReSharper disable once CppCStyleCast
 	return iterate_unit_pets(game, unit, unit_pet_iterator, (void*)cbref);
 }
 
-
 uint32_t __fastcall diablo2::d2_game::transmogrify(diablo2::structures::game* game, diablo2::structures::unit* player) {
 	static wrap_func_fast<uint32_t(diablo2::structures::game*, diablo2::structures::unit*)>transmogrify(0x62130, get_base());
 	return transmogrify(game, player);
 }
-
 
 // d2game:$0x60010
 // int __fastcall CRAFT_Transmogrify(D2GameStrc* pGame, D2UnitStrc* pPlayer, D2CubemainTXT* pCubeTxt, void* pUnknown)

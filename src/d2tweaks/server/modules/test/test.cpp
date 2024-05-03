@@ -10,14 +10,13 @@
 MODULE_INIT(test)
 
 static int(__stdcall* g_set_stat_original)(diablo2::structures::unit* unit,
-										   diablo2::unit_stats_t stat,
-										   uint32_t value, int16_t param);
+	diablo2::unit_stats_t stat,
+	uint32_t value, int16_t param);
 static int __stdcall set_stat(diablo2::structures::unit* unit,
-							  diablo2::unit_stats_t stat,
-							  uint32_t value, int16_t param) {
+	diablo2::unit_stats_t stat,
+	uint32_t value, int16_t param) {
 	if (unit->type == diablo2::structures::unit_type_t::UNIT_TYPE_PLAYER &&
 		stat == diablo2::UNIT_STAT_GOLD) {
-
 		spdlog::debug("Setting UNIT_STAT_GOLD stat!");
 	}
 
@@ -25,7 +24,7 @@ static int __stdcall set_stat(diablo2::structures::unit* unit,
 }
 
 static int32_t(__stdcall* g_set_stat_in_list_original)(void*, diablo2::unit_stats_t stat,
-													   uint32_t value, uint32_t param);
+	uint32_t value, uint32_t param);
 static int32_t __stdcall set_stat_in_list(void* a1, diablo2::unit_stats_t stat, uint32_t value, uint32_t param) {
 	if (stat == diablo2::UNIT_STAT_GOLD) {
 		spdlog::debug("Setting UNIT_STAT_GOLD stat!");

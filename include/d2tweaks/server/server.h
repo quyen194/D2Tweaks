@@ -47,7 +47,7 @@ namespace d2_tweaks {
 
 			diablo2::structures::unit* get_server_unit(diablo2::structures::game* game, uint32_t guid, diablo2::structures::unit_type_t type);
 			void iterate_server_units(diablo2::structures::game* game, diablo2::structures::unit_type_t type,
-									  const std::function<bool(diablo2::structures::unit*)>& cb);
+				const std::function<bool(diablo2::structures::unit*)>& cb);
 		private:
 			static int32_t __fastcall net_tick(diablo2::structures::game* game, diablo2::structures::unit* unit, int32_t a3, int32_t a4);
 		};

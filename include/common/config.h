@@ -9,7 +9,7 @@ class config : public singleton<config> {
 	bool m_unlock_fps;
 	bool m_prevent_minimize;
 	uint32_t m_gold_pickup_range;
-	
+
 public:
 	explicit config(token);
 };

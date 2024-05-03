@@ -14,7 +14,7 @@ diablo2::utils::mpq_ifstream::mpq_streambuf::~mpq_streambuf() {
 std::basic_streambuf<char>::int_type diablo2::utils::mpq_ifstream::mpq_streambuf::underflow() {
 	if (!m_handle)
 		return EOF;
-	
+
 	if (!fog::mpq_read_file(m_handle, &m_data, 1, nullptr))
 		return EOF;
 
@@ -24,5 +24,4 @@ std::basic_streambuf<char>::int_type diablo2::utils::mpq_ifstream::mpq_streambuf
 }
 
 diablo2::utils::mpq_ifstream::mpq_ifstream(const std::string& path) : std::istream(&m_streambuf), m_streambuf(path) {
-
 }

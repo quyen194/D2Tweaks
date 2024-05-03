@@ -8,7 +8,6 @@
 #include <d2tweaks/client/modules/client_module.h>
 #include <d2tweaks/ui/ui_manager.h>
 
-
 #include <diablo2/structures/unit.h>
 #include <diablo2/structures/client_unit_list.h>
 #include <WinBase.h>
@@ -44,12 +43,6 @@
 
 std::vector<StatEntry> globalStatsVector;
 diablo2::structures::gfxdata g_gfxdata; // global gfxdata
-
-int randStat;
-int randStatRangeLow;
-int randStatRangeHigh;
-int randStatBool;
-
 
 std::wstring ConvertCharToWString(const std::string& charString) {
 	std::wstring_convert<std::codecvt_utf8<wchar_t>> converter;
@@ -98,8 +91,6 @@ diablo2::ui_color_t mapColorToEnum(const std::string& colorName) {
 	// Default color if not found
 	return diablo2::ui_color_t::UI_COLOR_WHITE;
 }
-
-
 
 // Define a struct to hold key-value pairs within a section
 struct Section {
@@ -166,6 +157,14 @@ void ParseIniFile(const std::string& iniFilePath) {
 					else if (key == "item_type_id") {
 						entry.item_type_id = std::stoi(value);
 					}
+					// add op and param
+					else if (key == "op") {
+						entry.op = std::stoi(value);
+					}
+					// add op and param
+					else if (key == "param") {
+						entry.param = std::stoi(value);
+					}
 				}
 			}
 		}
@@ -214,8 +213,8 @@ __declspec (naked) void handle_cs_packet_wrapper() {
 	__asm {
 		pushad;
 		pushfd;
-		call [d2_tweaks::client::client::handle_cs_packet]
-		popfd;
+		call[d2_tweaks::client::client::handle_cs_packet]
+			popfd;
 		popad;
 		// оригинальные инструкции
 		sub esp, 0x200;
@@ -223,13 +222,12 @@ __declspec (naked) void handle_cs_packet_wrapper() {
 	RET_TO_RVA(DLLBASE_D2CLIENT, 0xD856);
 }
 
-
 __declspec (naked) void handle_sc_standart_packet_wrapper() {
 	__asm {
 		pushad;
 		pushfd;
 		call[d2_tweaks::client::client::handle_standart_packet]
-		popfd;
+			popfd;
 		popad;
 		// оригинальные инструкции
 		sub esp, 0x54;
@@ -239,7 +237,6 @@ __declspec (naked) void handle_sc_standart_packet_wrapper() {
 	RET_TO_RVA(DLLBASE_D2CLIENT, 0x150B5);
 }
 
-
 static const DLLPatchStrc gpt_handle_cs_packet[] =
 {
 	{D2DLL_D2CLIENT, 0xD850 + 0, PATCH_JMP, FALSE, 0x1},
@@ -248,14 +245,12 @@ static const DLLPatchStrc gpt_handle_cs_packet[] =
 	{D2DLL_INVALID}
 };
 
-
 static const DLLPatchStrc gpt_handle_sc_standart_packet[] =
 {
 	{D2DLL_D2CLIENT, 0x150B0 + 0, PATCH_JMP, FALSE, 0x1},
 	{D2DLL_D2CLIENT, 0x150B0 + 1, (DWORD)handle_sc_standart_packet_wrapper, TRUE, 0x0},
 	{D2DLL_INVALID}
 };
-
 
 void d2_tweaks::client::client::init() {
 	// handle packet обрабатывает пакет перед GamePacketReceivedIntercept
@@ -272,22 +267,9 @@ void d2_tweaks::client::client::init() {
 		if (m_module == nullptr)
 			break;
 
-		//randStat = GetPrivateProfileIntA("RandStat", "stat", 0, lpIniFilePath);
-		//randStatRangeLow = GetPrivateProfileIntA("RandStat", "statRangeLow", 0, lpIniFilePath);
-		//randStatRangeHigh = GetPrivateProfileIntA("RandStat", "statRangeHigh", 0, lpIniFilePath);
-		//randStatBool = GetPrivateProfileIntA("RandStat", "statBool", 0, lpIniFilePath);
-
-		//spdlog::info("randStat = {0}", randStat);
-		//spdlog::info("randStatRangeLow = {0}", randStatRangeLow);
-		//spdlog::info("randStatRangeHigh = {0}", randStatRangeHigh);
-
-
-
 		// Load and parse the INI file
 		ParseIniFile(iniFilePath);
 	}
-
-
 
 	D2TEMPLATE_ApplyPatch(gpt_handle_cs_packet);
 	//D2TEMPLATE_ApplyPatch(gpt_handle_sc_standart_packet);
@@ -300,13 +282,12 @@ void d2_tweaks::client::client::init() {
 	}
 }
 
-
 static int32_t g_ebp_send_to_client;
 void d2_tweaks::client::client::handle_cs_packet(common::packet_header* packet, size_t size) {
 #ifndef NDEBUG
 	__asm {
-		push [ebp + 0x2C];
-		pop  [g_ebp_send_to_client];
+		push[ebp + 0x2C];
+		pop[g_ebp_send_to_client];
 	}
 	spdlog::warn("[d2client SEND] Packet {} Message {} Size {} CallFrom {}", (void*)packet->d2_packet_type, (void*)packet->message_type, size, (void*)g_ebp_send_to_client);
 #endif
@@ -325,7 +306,6 @@ void d2_tweaks::client::client::handle_cs_packet(common::packet_header* packet, 
 	handler->handle_cs_packet(packet);
 }
 
-
 void d2_tweaks::client::client::handle_standart_packet(common::packet_header* packet, size_t size) {
 	if (size == -1)
 		return;
@@ -336,7 +316,6 @@ void d2_tweaks::client::client::handle_standart_packet(common::packet_header* pa
 
 	return;
 }
-
 
 void d2_tweaks::client::client::handle_packet(common::packet_header* packet, size_t size) {
 	static common::packet_header dummy;
@@ -362,10 +341,8 @@ void d2_tweaks::client::client::handle_packet(common::packet_header* packet, siz
 	handler->handle_packet(packet);
 }
 
-
 static bool g_is_init = false;
 void d2_tweaks::client::client::game_tick() {
-
 	static auto& instance = singleton<client>::instance();  /// конфликт с текстом на d2 gl
 
 	if (g_is_init == false) {
@@ -380,7 +357,7 @@ void d2_tweaks::client::client::game_tick() {
 		g_is_init = true;
 	}
 
-	for (auto & tick_handler : instance.m_tick_handlers) {
+	for (auto& tick_handler : instance.m_tick_handlers) {
 		if (tick_handler == nullptr)
 			break;
 
@@ -389,7 +366,6 @@ void d2_tweaks::client::client::game_tick() {
 
 	return;
 }
-
 
 int32_t d2_tweaks::client::client::draw_game_ui() {
 	static auto& ui = singleton<ui::ui_manager>::instance();
@@ -400,8 +376,6 @@ int32_t d2_tweaks::client::client::draw_game_ui() {
 
 	return result;
 }
-
-
 
 void d2_tweaks::client::client::register_module(modules::client_module* module) {
 	m_modules[m_module_id_counter++] = module;

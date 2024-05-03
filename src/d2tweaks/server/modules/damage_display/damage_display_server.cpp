@@ -14,14 +14,13 @@
 
 #include <diablo2/structures/data/monstats_line.h>
 
-
 MODULE_INIT(damage_display)
 
 static char(__fastcall* g_apply_attack_results_origin)(diablo2::structures::game* game,
-													   diablo2::structures::unit* attacker,
-													   diablo2::structures::unit* defender,
-													   BOOL recalculateDamage,
-													   diablo2::structures::damage* dmg);
+	diablo2::structures::unit* attacker,
+	diablo2::structures::unit* defender,
+	BOOL recalculateDamage,
+	diablo2::structures::damage* dmg);
 
 #define PRINT_DMG_DELIMITER(name, delimiter) if(dmg->name > 0) spdlog::debug(#name ": {0}", dmg->name / delimiter)
 #define PRINT_DMG(name) PRINT_DMG_DELIMITER(name, 256)
@@ -76,7 +75,6 @@ static void send_damage_data(diablo2::structures::unit* defender,
 	spdlog::info("maxHp: {0}", packet.maxHp);
 	spdlog::info("damage: {0}", packet.damage);
 
-
 	if (packet.damage_type == d2_tweaks::common::DAMAGE_TYPE_UNKNOWN)
 		return;
 
@@ -87,23 +85,23 @@ static void send_damage_data(diablo2::structures::unit* defender,
 }
 
 static bool has_players(diablo2::structures::unit* attacker,
-						diablo2::structures::unit* defender) {
+	diablo2::structures::unit* defender) {
 	return attacker->type == diablo2::structures::unit_type_t::UNIT_TYPE_PLAYER ||
 		defender->type == diablo2::structures::unit_type_t::UNIT_TYPE_PLAYER;
 }
 
 static bool has_hirelings(diablo2::structures::unit* attacker,
-						  diablo2::structures::unit* defender) {
+	diablo2::structures::unit* defender) {
 	return attacker && attacker->is_hireling() || defender && defender->is_hireling();
 }
 
 static bool has_pets(diablo2::structures::unit* attacker,
-					 diablo2::structures::unit* defender) {
+	diablo2::structures::unit* defender) {
 	return attacker && attacker->is_pet() || defender && defender->is_pet();
 }
 
 static diablo2::structures::unit* get_hireling_owner(diablo2::structures::game* game,
-													 diablo2::structures::unit* unit) {
+	diablo2::structures::unit* unit) {
 	static auto& instance = singleton<d2_tweaks::server::server>::instance();
 
 	if (!unit)
@@ -123,7 +121,7 @@ static diablo2::structures::unit* get_hireling_owner(diablo2::structures::game* 
 		}
 
 		return true;
-	});
+		});
 
 	if (guid == 0)
 		return nullptr;
@@ -134,7 +132,7 @@ static diablo2::structures::unit* get_hireling_owner(diablo2::structures::game* 
 }
 
 static diablo2::structures::unit* get_pet_owner(diablo2::structures::game* game,
-												diablo2::structures::unit* unit) {
+	diablo2::structures::unit* unit) {
 	static auto& instance = singleton<d2_tweaks::server::server>::instance();
 
 	if (!unit)
@@ -148,14 +146,14 @@ static diablo2::structures::unit* get_pet_owner(diablo2::structures::game* game,
 	instance.iterate_server_units(game, diablo2::structures::unit_type_t::UNIT_TYPE_PLAYER, [&](diablo2::structures::unit* player) {
 		diablo2::d2_game::iterate_unit_pets(
 			game, player, [&](diablo2::structures::game*, diablo2::structures::unit*, diablo2::structures::unit* u) {
-			if (u != unit)
-				return;
+				if (u != unit)
+					return;
 
-			guid = player->guid;
-		});
+				guid = player->guid;
+			});
 
 		return guid == 0;
-	});
+		});
 
 	if (guid == 0)
 		return nullptr;
@@ -166,8 +164,8 @@ static diablo2::structures::unit* get_pet_owner(diablo2::structures::game* game,
 }
 
 static void process_players_damage(diablo2::structures::unit* attacker,
-								   diablo2::structures::unit* defender,
-								   diablo2::structures::damage* dmg) {
+	diablo2::structures::unit* defender,
+	diablo2::structures::damage* dmg) {
 	diablo2::structures::net_client* client = nullptr;
 
 	if (attacker->type == diablo2::structures::unit_type_t::UNIT_TYPE_PLAYER)
@@ -179,14 +177,15 @@ static void process_players_damage(diablo2::structures::unit* attacker,
 }
 
 static void process_hireling_damage(diablo2::structures::game* game,
-									diablo2::structures::unit* attacker,
-									diablo2::structures::unit* defender,
-									diablo2::structures::damage* dmg) {
+	diablo2::structures::unit* attacker,
+	diablo2::structures::unit* defender,
+	diablo2::structures::damage* dmg) {
 	diablo2::structures::unit* owner = nullptr;
 
 	if (attacker->is_hireling()) {
 		owner = get_hireling_owner(game, attacker);
-	} else if (defender->is_hireling()) {
+	}
+	else if (defender->is_hireling()) {
 		owner = get_hireling_owner(game, defender);
 	}
 
@@ -197,14 +196,15 @@ static void process_hireling_damage(diablo2::structures::game* game,
 }
 
 static void process_pet_damage(diablo2::structures::game* game,
-							   diablo2::structures::unit* attacker,
-							   diablo2::structures::unit* defender,
-							   diablo2::structures::damage* dmg) {
+	diablo2::structures::unit* attacker,
+	diablo2::structures::unit* defender,
+	diablo2::structures::damage* dmg) {
 	diablo2::structures::unit* owner = nullptr;
 
 	if (attacker->is_pet()) {
 		owner = get_pet_owner(game, attacker);
-	} else if (defender->is_pet()) {
+	}
+	else if (defender->is_pet()) {
 		owner = get_pet_owner(game, defender);
 	}
 
@@ -215,10 +215,10 @@ static void process_pet_damage(diablo2::structures::game* game,
 }
 
 static char __fastcall apply_attack_results(diablo2::structures::game* game,
-											diablo2::structures::unit* attacker,
-											diablo2::structures::unit* defender,
-											BOOL recalculateDamage,
-											diablo2::structures::damage* dmg) {
+	diablo2::structures::unit* attacker,
+	diablo2::structures::unit* defender,
+	BOOL recalculateDamage,
+	diablo2::structures::damage* dmg) {
 	static auto& instance = singleton<d2_tweaks::server::server>::instance();
 
 	static char result = 0;
@@ -257,7 +257,7 @@ void d2_tweaks::server::modules::damage_display::init() {
 }
 
 bool d2_tweaks::server::modules::damage_display::handle_packet(diablo2::structures::game* game,
-															   diablo2::structures::unit* player, common::packet_header* packet) {
+	diablo2::structures::unit* player, common::packet_header* packet) {
 	return true;
 }
 

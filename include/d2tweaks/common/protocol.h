@@ -226,7 +226,6 @@ namespace d2_tweaks {
 			packet_header() : d2_packet_type(0xBB), message_type(0) {}
 		};
 
-
 		struct d2_entity_action_cs : packet_header {
 			uint32_t action;
 			uint32_t entity_id;
@@ -274,7 +273,6 @@ namespace d2_tweaks {
 			}
 		};
 
-
 		struct inventory_sort_sc : packet_header {
 			uint8_t page;
 			uint8_t tx;
@@ -299,7 +297,6 @@ namespace d2_tweaks {
 			uint32_t guid;
 			damage_type_t damage_type;
 			uint32_t damage;
-
 
 			uint32_t currentHp;  // New field for current hit points
 			uint32_t maxHp;      // New field for maximum hit points
@@ -400,7 +397,7 @@ namespace d2_tweaks {
 				message_type = MESSAGE_TYPE_TRADER_UPDATE;
 			}
 		};
-		
+
 #pragma pack(pop)
 	}
 }

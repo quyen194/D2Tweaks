@@ -140,7 +140,6 @@ public:
 
 	ULONGLONG lastSendTime = GetTickCount64();
 
-
 	// Function to split a string into words
 	std::vector<std::string> split(const std::string& s, char delim) {
 		std::stringstream ss(s);
@@ -210,9 +209,6 @@ public:
 		}
 	}
 
-
-
-
 	void draw() override {
 		auto stats = globalStatsVector;
 		int textOffset = 40; // Initial offset for the first line
@@ -232,119 +228,72 @@ public:
 		// Initialize statValue
 		int32_t statValue = 0;
 
-		if (diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_STASH)) {
-			diablo2::d2_gfx::draw_filled_rect(130, 48, 640, 155, 5, 50);
-		}
+		//if (diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_STASH)) {
+		//	diablo2::d2_gfx::draw_filled_rect(130, 48, 640, 155, 5, 50);
+		//}
 
 		if (m_stats_enabled) {
 			for (const auto& stat : stats) {
-				double param = 6;
+				int param = stat.param;
+				int op = stat.op;
 
 				int32_t spirits = diablo2::d2_common::get_stat(player, static_cast<diablo2::unit_stats_t>(185), NULL);
 				int32_t soulscaptured = statValue = diablo2::d2_common::get_stat(player, static_cast<diablo2::unit_stats_t>(184), NULL);
 
-				switch (stat.stat) {
-					// 2. (statValue <- this is probably op stat1 ? * baseValue <- this is probably op base ) / 2 ^ param
+				auto statline = diablo2::d2_common::get_item_stat_cost_record(stat.stat);
 
-					// (op stat1 value *  base stat value) / (2 ^ param)
-					// let's try this fucking thing
+				auto opBase = statline->wOpBase;
+				auto opStat = statline->wOpStat[0];
 
-				case 190: {
-					// str/spirits
-					statValue = static_cast<int32_t>((1 * spirits) / pow(2, param)); // what is the value of opStat_str
-					break;
-				}
-				case 191: {
-					// dex/spirits
-					statValue = static_cast<int32_t>((1 * spirits) / pow(2, param)); // what is the value of opStat_str
-					break;
-				}
-				case 192: {
-					// vit/spirits
-					statValue = static_cast<int32_t>((1 * spirits) / pow(2, param)); // what is the value of opStat_str
-					break;
-				}
-				case 193: {
-					// enr/spirits
-					statValue = static_cast<int32_t>((1 * spirits) / pow(2, param)); // what is the value of opStat_str
-					break;
-				}
-				case 200: {
-					// skills/souls
-					param = 8;
-					statValue = static_cast<int32_t>((1 * soulscaptured) / pow(2, param)); // what is the value of opStat_str
-					break;
-				}
+				auto opBaseValue = diablo2::d2_common::get_stat(player, static_cast<diablo2::unit_stats_t>(opBase), NULL);
+				auto opStatValue = diablo2::d2_common::get_stat(player, static_cast<diablo2::unit_stats_t>(opStat), NULL);
 
-				case 301: {
-					for (auto item : items) {
-						const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
-						if (record->type == 104) {
-							statValue = diablo2::d2_common::get_stat(item, static_cast<diablo2::unit_stats_t>(stat.stat), NULL);
-						}
-					}
-					break;
-				}
-
-				case 304: {
-					for (auto item : items) {
-						const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
-						if (record->type == 104) {
-							statValue = diablo2::d2_common::get_stat(item, static_cast<diablo2::unit_stats_t>(stat.stat), NULL);
-						}
-					}
-					break;
-				}
-
-				default: {
-					// By default, get player stats
-					statValue = diablo2::d2_common::get_stat(player, static_cast<diablo2::unit_stats_t>(stat.stat), NULL);
-					break;
-				}
-				}
-
-				/*
-				int32_t diablo2::d2_common::set_stat(structures::unit* unit, unit_stats_t stat, uint32_t value, int16_t param) {
-						static wrap_func_std_import<int32_t(structures::unit*, int32_t, int32_t, int32_t)> set_stat(10517, get_base());
-						return set_stat(unit, stat, value, param);
-					}
-
-				std::random_device rd;
-				std::mt19937 gen(rd());
-				std::uniform_int_distribution<> dis(randStatRangeLow, randStatRangeHigh);
-				unsigned int randomNumber = dis(gen);
-
-				std::random_device rdb;
-				std::mt19937 genb(rdb());
-				std::uniform_int_distribution<> randBool(1, 2);
-				unsigned int randomBool = randBool(genb) - 1;
-
-				if (stat.is_item_stat == 1) {
-					for (auto item : items) {
-						const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
-						int RandStatValue = diablo2::d2_common::get_stat(item, static_cast<diablo2::unit_stats_t>(randStat), NULL);
-
-						if (record->type == stat.item_type_id && RandStatValue != 0) {
-							// set randStat value to random number 1 and 2^(32) = 4294967296
-							diablo2::d2_common::set_stat(item, static_cast<diablo2::unit_stats_t>(randStat), randomNumber, 0);
-							diablo2::d2_common::set_stat(item, static_cast<diablo2::unit_stats_t>(randStatBool), randomBool, 0);
-						}
+				if (stat.is_item_stat == 0) {
+					int32_t statvalue = diablo2::d2_common::get_stat(player, static_cast<diablo2::unit_stats_t>(stat.stat), NULL);
+					int basevalue = 1;
+					switch (op) {
+					case 0:
+						statValue = diablo2::d2_common::get_stat(player, static_cast<diablo2::unit_stats_t>(stat.stat), NULL);
+						break;
+					case 1: // Formula: opstatbasevalue * statvalue / 100
+						statValue = static_cast<int32_t>(opBaseValue) / 100;
+						break;
+					case 2: // Formula: (statvalue * basevalue) / (2 ^ param)
+						statValue = static_cast<int32_t>((opBaseValue) / pow(op, param));
+						break;
+					case 3: // Percentage-based version of op #2
+						statValue = static_cast<int32_t>((opBaseValue) / pow(op, param)) / 100;
+						break;
+					case 4: // Item-based stat increase
+						statValue = static_cast<int32_t>((opBaseValue) / pow(op, param));
+						break;
+					case 5: // Percentage-based item increase
+						statValue = static_cast<int32_t>((opBaseValue) / pow(op, param)) / 100;
+						break;
+					case 11: // Similar to op #1 and #13
+						statValue = static_cast<int32_t>((opBaseValue) / pow(op, param)) / 100;
+						break;
+					case 13:
+						statValue = static_cast<int32_t>((opBaseValue) / pow(op, param)) / 100;
+						break;
+					default:
+						statValue = diablo2::d2_common::get_stat(player, static_cast<diablo2::unit_stats_t>(stat.stat), NULL);
+						break;
 					}
 				}
 				else {
-					// set randStat value to random number 1 and 2^(32) = 4294967296
-					//diablo2::d2_common::set_stat(player, static_cast<diablo2::unit_stats_t>(randStat), randomNumber, 0);
-					//diablo2::d2_common::set_stat(player, static_cast<diablo2::unit_stats_t>(randStatBool), randomBool, 0);
-
-					int statValue1 = diablo2::d2_common::get_stat(player, static_cast<diablo2::unit_stats_t>(randStat), NULL);
-					int statValue2 = diablo2::d2_common::get_stat(player, static_cast<diablo2::unit_stats_t>(randStatBool), NULL);
-
-					if (statValue1 > 0 ) {
-						diablo2::d2_common::set_stat(player, static_cast<diablo2::unit_stats_t>(randStat), 0, 0);
-						diablo2::d2_common::set_stat(player, static_cast<diablo2::unit_stats_t>(randStatBool), 0, 0);
+					for (auto item : items) {
+						const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
+						if (record->type == stat.item_type_id) {
+							statValue = diablo2::d2_common::get_stat(item, static_cast<diablo2::unit_stats_t>(stat.stat), NULL);
+						}
 					}
 				}
-				*/
+
+				// write code to get player name and display it using MessageBox
+				const auto player = diablo2::d2_client::get_local_player();
+				auto name = player->player_data->name;
+
 				auto statValueStr = std::to_wstring(statValue);
 				std::wstring statText = std::wstring(stat.stat_display_string);// .append(L" " + statValueStr);
 
@@ -389,13 +338,9 @@ public:
 
 				// instead try to load direct jpg with gdi and insetad ofloading jpg file, specify it bb64 encoded and decode it.
 			}
-
-
-
 		}
 
 		if (m_help_enabled) {
-		
 			const int windowWidth = 1280;
 			const int windowHeight = 768;
 
@@ -410,13 +355,9 @@ public:
 			// Draw filled background box
 			diablo2::d2_gfx::draw_filled_rect(boxX, boxY, boxX + boxWidth, boxY + boxHeight, 0, 255);
 
-
 			// Draw justified text inside the box with padding
 			drawJustifiedTextInBox(helpText, boxX, boxY, boxWidth, boxHeight, 0);
-		
-		
 		}
-
 
 		diablo2::ui_color_t::UI_COLOR_WHITE;
 
@@ -539,15 +480,6 @@ public:
 		int statNextExp = diablo2::d2_common::get_stat(player, static_cast<diablo2::unit_stats_t>(30), NULL);
 
 		diablo2::d2_win::set_current_font(diablo2::UI_FONT_16); // Set font to FONT16
-
-	
-
-	
-		
-
-		
-
-
 
 		if (!should_draw()) {
 			m_sort_inventory_btn->set_enabled(false);

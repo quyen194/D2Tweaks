@@ -20,6 +20,7 @@ namespace d2_tweaks {
 				ui::controls::button* m_btn_toggle_help;
 				ui::controls::button* m_btn_toggle_cube;
 				ui::controls::button* m_btn_toggle_stash;
+
 				menu* m_filter_settings_menu;
 				bool m_show;
 			public:

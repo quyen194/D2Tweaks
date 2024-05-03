@@ -43,10 +43,9 @@ namespace diablo2 {
 		static bool __fastcall pickup_item(structures::game* game, structures::unit* player, uint32_t guid, uint32_t* ptrItemCarried);
 		static structures::unit* get_unit_owner(structures::game* game, structures::unit* unit);
 		static void* iterate_unit_pets(structures::game* game, structures::unit* unit,
-									   const std::function<void(structures::game*, structures::unit*, structures::unit*)>& cb);
+			const std::function<void(structures::game*, structures::unit*, structures::unit*)>& cb);
 
 		static void update_inventory_items(structures::game* game, structures::unit* player);
 		static uint32_t __fastcall diablo2::d2_game::transmogrify(diablo2::structures::game* game, diablo2::structures::unit* player);
-
 	};
 }

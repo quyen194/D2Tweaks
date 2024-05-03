@@ -30,7 +30,7 @@ void d2_tweaks::server::modules::auto_item_pickup::init() {
 }
 
 void d2_tweaks::server::modules::auto_item_pickup::tick(diablo2::structures::game* game,
-														diablo2::structures::unit* unit) {
+	diablo2::structures::unit* unit) {
 	//static common::item_pickup_info_sc packet;
 	//static auto& instance = singleton<d2_tweaks::server::server>::instance();
 	//if (!game || !unit)
@@ -43,7 +43,6 @@ void d2_tweaks::server::modules::auto_item_pickup::tick(diablo2::structures::gam
 
 	//if (!room)
 	//	return;
-
 
 	//for (auto item = room->unit; item; item = item->prev_unit_in_room) {
 	//	if (!item)
@@ -92,7 +91,6 @@ void d2_tweaks::server::modules::auto_item_pickup::tick(diablo2::structures::gam
 	//		}
 	//	}
 
-
 	//	if (itemtype_record_equiv2) {
 	//		if (*(DWORD*)itemtype_record_equiv2->code != 0x20202020) {
 	//			// сохранить первый ранее полученый equiv1
@@ -110,7 +108,6 @@ void d2_tweaks::server::modules::auto_item_pickup::tick(diablo2::structures::gam
 	//		}
 	//	}
 
-
 	//	for (uint32_t i = 0; i < g_pickup_count_itemtype_code; i++)
 	//	{
 	//		for (uint32_t count = 0; count < index_arr_itemtype; count++)
@@ -125,7 +122,6 @@ void d2_tweaks::server::modules::auto_item_pickup::tick(diablo2::structures::gam
 	//			}
 	//		}
 	//	}
-
 
 	//	for (uint32_t i = 0; i < g_pickup_count_all_items; i++)
 	//	{
@@ -148,7 +144,6 @@ void d2_tweaks::server::modules::auto_item_pickup::tick(diablo2::structures::gam
 	////spdlog::info("current {0}", g_tick_between_item_pickup);
 }
 
-
 bool d2_tweaks::server::modules::auto_item_pickup::au_pickup_item(diablo2::structures::game* game, diablo2::structures::unit* unit, uint32_t guid)
 {
 	static common::item_pickup_info_sc packet;
@@ -156,16 +151,15 @@ bool d2_tweaks::server::modules::auto_item_pickup::au_pickup_item(diablo2::struc
 	uint32_t ptrNull = 0;
 	//if (g_tick_between_item_pickup >= 25) {
 		// true - if item picked up, false - if inventory full
-		if (diablo2::d2_game::pickup_item(game, unit, guid, &ptrNull) != true)
-		{
-			//packet.inventory_full = true;
-			//singleton<server>::instance().send_packet(unit->player_data->net_client, &packet, sizeof packet);
-		}
+	if (diablo2::d2_game::pickup_item(game, unit, guid, &ptrNull) != true)
+	{
+		//packet.inventory_full = true;
+		//singleton<server>::instance().send_packet(unit->player_data->net_client, &packet, sizeof packet);
+	}
 	//}
-	
+
 	return true;
 }
-
 
 bool d2_tweaks::server::modules::auto_item_pickup::handle_packet(diablo2::structures::game* game, diablo2::structures::unit* player, common::packet_header* packet) {
 	const auto income_packet_cs = static_cast<common::item_pickup_info_cs*>(packet);

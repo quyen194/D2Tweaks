@@ -21,7 +21,7 @@ struct D2GSPacketSrv03;
 
 struct D2GSPacketClt01
 {
-    //...
+	//...
 };
 
 // end of file --------------------------------------------------------------

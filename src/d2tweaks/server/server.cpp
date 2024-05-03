@@ -17,12 +17,12 @@
 #include <d2tweaks/server/modules/server_module.h>
 #include <common/hooking.h>
 #include <D2Template.h>
+#include <filesystem>
 
 static int32_t(__fastcall* g_get_incoming_packet_info_original)(d2_tweaks::common::packet_header* data, unsigned int dataSize, size_t* packetSizeOut, size_t* someOffset, int* packetGroup, int32_t* a6, int a7, int a8);
 
 static int32_t(__fastcall* g_handle_packet_original)(diablo2::structures::game* game, diablo2::structures::unit* player, d2_tweaks::common::packet_header* data, size_t size);
 static int32_t(__fastcall* g_net_tick_original)(diablo2::structures::game*, diablo2::structures::unit*, int32_t, int32_t);
-
 
 //returns some kind of processing type (i.e. resultGroup == 0x04 means drop packet)
 static int32_t __fastcall get_incoming_packet_info(d2_tweaks::common::packet_header* data, unsigned int dataSize, size_t* packetSizeOut, size_t* someOffset, int* packetGroup, int32_t* a6, int a7, int a8) {
@@ -69,8 +69,8 @@ static int32_t g_ebp_send_to_client;
 void __fastcall hook_sc_packet_before_sent(uint32_t* client_strc, d2_tweaks::common::packet_header* packet, size_t size) {
 #ifndef NDEBUG
 	__asm {
-		push [ebp + 0x30];
-		pop [g_ebp_send_to_client];
+		push[ebp + 0x30];
+		pop[g_ebp_send_to_client];
 	}
 
 	if (size == -1)
@@ -82,20 +82,19 @@ void __fastcall hook_sc_packet_before_sent(uint32_t* client_strc, d2_tweaks::com
 	return;
 }
 
-
 __declspec (naked) void hook_sc_packet_before_sent_wrapper() {
 	__asm {
 		pushad;
 		pushfd;
-		push [esp+0x28]
-		call [hook_sc_packet_before_sent]
-		popfd;
+		push[esp + 0x28]
+			call[hook_sc_packet_before_sent]
+			popfd;
 		popad;
 		// оригинальные инструкции
 		push ecx
-		push ebp
-		push esi
-		mov esi, ecx
+			push ebp
+			push esi
+			mov esi, ecx
 	}
 	RET_TO_RVA(DLLBASE_D2GAME, 0xC715);
 }
@@ -107,7 +106,6 @@ static const DLLPatchStrc gpt_hook_sc_packet_before_sent[] =
 	{D2DLL_D2GAME, 0xC710 + 1, (DWORD)hook_sc_packet_before_sent_wrapper, TRUE, 0x0},
 	{D2DLL_INVALID}
 };
-
 
 void d2_tweaks::server::server::init() {
 	hooking::hook(reinterpret_cast<void*>(diablo2::d2_game::get_base() + 0x59320), ::handle_packet, &g_handle_packet_original);
@@ -137,8 +135,8 @@ void d2_tweaks::server::server::send_packet(diablo2::structures::net_client* cli
 }
 
 bool d2_tweaks::server::server::handle_packet(diablo2::structures::game* game,
-											  diablo2::structures::unit* player,
-											  common::packet_header* packet) {
+	diablo2::structures::unit* player,
+	common::packet_header* packet) {
 	auto handler = m_packet_handlers[packet->message_type];
 
 	if (!handler)
@@ -187,7 +185,7 @@ diablo2::structures::unit* d2_tweaks::server::server::get_server_unit(diablo2::s
 }
 
 void d2_tweaks::server::server::iterate_server_units(diablo2::structures::game* game, diablo2::structures::unit_type_t type,
-													 const std::function<bool(diablo2::structures::unit*)>& cb) {
+	const std::function<bool(diablo2::structures::unit*)>& cb) {
 	if (!cb)
 		return;
 

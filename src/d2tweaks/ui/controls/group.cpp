@@ -88,7 +88,7 @@ void d2_tweaks::ui::controls::group::right_mouse(int32_t offsetX, int32_t offset
 }
 
 void d2_tweaks::ui::controls::group::key_event(int32_t offsetX, int32_t offsetY,
-											   uint32_t key, bool up, bool& block) {
+	uint32_t key, bool up, bool& block) {
 	for (auto control : m_controls) {
 		if (!control->get_enabled())
 			continue;

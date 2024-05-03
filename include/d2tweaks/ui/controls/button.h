@@ -40,7 +40,7 @@ namespace d2_tweaks {
 				std::vector<respos> m_respos;
 			public:
 				button(menu* menu, const rect& rect, const std::function<void()>& onClick,
-					   common::asset* image, int32_t frameDown, int32_t frameUp, int32_t clickSound = -1);
+					common::asset* image, int32_t frameDown, int32_t frameUp, int32_t clickSound = -1);
 				explicit button(menu* menu, const pugi::xml_node& node);
 				virtual ~button();
 

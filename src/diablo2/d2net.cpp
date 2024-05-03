@@ -15,4 +15,3 @@ int32_t diablo2::d2_net::send_to_client(int32_t queue, int32_t clientId, void* p
 	static wrap_func_std_import<int32_t(int32_t, int32_t, void*, size_t)> send_to_client(10006, get_base());
 	return send_to_client(queue, clientId, packet, size);
 }
-

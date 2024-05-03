@@ -35,7 +35,6 @@ namespace d2_tweaks {
 			bool process_middle_mouse(bool up);
 			bool process_mouse_wheel(bool up);
 
-
 			bool process_key_event(uint32_t key, bool up);
 		};
 	}

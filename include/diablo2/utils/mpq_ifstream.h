@@ -15,7 +15,7 @@ namespace diablo2 {
 			public:
 				explicit mpq_streambuf(const std::string& path);
 				~mpq_streambuf();
-				
+
 			protected:
 				int_type underflow() override;
 			};
@@ -23,8 +23,6 @@ namespace diablo2 {
 			mpq_streambuf m_streambuf;
 		public:
 			explicit mpq_ifstream(const std::string& path);
-
-
 		};
 	}
 }

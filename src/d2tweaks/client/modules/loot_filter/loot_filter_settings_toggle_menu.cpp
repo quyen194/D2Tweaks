@@ -9,7 +9,6 @@
 #include <DllNotify.h>
 #include <D2Template.h>
 
-
 #include <diablo2/d2gfx.h>
 
 #include <string>
@@ -98,10 +97,10 @@
 #pragma pack(push, 1)
 
 using namespace d2_tweaks::client::modules;
-bool m_stats_enabled = false;
+bool m_stats_enabled = true;
 bool m_help_enabled = false;
 bool m_cube_enabled = false;
-bool m_stash_enabled = false;
+bool m_stash_enabled = true;
 
 d2_tweaks::client::modules::loot_filter_settings_toggle_menu::loot_filter_settings_toggle_menu(token) {
 	m_show = false;
@@ -124,12 +123,10 @@ d2_tweaks::client::modules::loot_filter_settings_toggle_menu::loot_filter_settin
 
 	m_filter_settings_menu = singleton<ui::ui_manager>::instance().get_menu("loot_filter_settings_menu");
 
-
 	m_btn_toggle_stats = static_cast<ui::controls::button*>(get_control("m_toggle_stats"));
 	m_btn_toggle_stats->set_enabled(true);
 	m_btn_toggle_stats->set_visible(true);
 	m_btn_toggle_stats->set_on_click(std::bind(&loot_filter_settings_toggle_menu::toggle_stats_settings_click, this));
-
 
 	m_btn_toggle_help = static_cast<ui::controls::button*>(get_control("m_toggle_help"));
 	m_btn_toggle_help->set_enabled(true);
@@ -142,21 +139,25 @@ d2_tweaks::client::modules::loot_filter_settings_toggle_menu::loot_filter_settin
 	m_btn_toggle_cube->set_on_click(std::bind(&loot_filter_settings_toggle_menu::toggle_cube_click, this));
 
 	m_btn_toggle_stash = static_cast<ui::controls::button*>(get_control("m_toggle_stash"));
-	m_btn_toggle_stash->set_enabled(false);
-	m_btn_toggle_stash->set_visible(false);
-	auto player = diablo2::d2_client::get_local_player();
-	//iterate over all items in player inventory
-	for (auto item = player->inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
-		const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
-		char* normCode1 = record->string_code;
-		if (strncmp(normCode1, "st0", 3) == 0) {
-			m_btn_toggle_stash->set_enabled(true);
-			m_btn_toggle_stash->set_visible(true);
-			break;
-		}
-	}
-	m_btn_toggle_stash->set_on_click(std::bind(&loot_filter_settings_toggle_menu::toggle_stash_click, this));
 
+	m_btn_toggle_stash->set_enabled(true);
+	m_btn_toggle_stash->set_visible(true);
+	//auto player = diablo2::d2_client::get_local_player();
+	////iterate over all items in player inventory
+	//for (auto item = player->inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
+	//	const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
+	//	char* normCode1 = record->string_code;
+	//	if (strncmp(normCode1, "st0", 3) == 0) {
+	//		m_btn_toggle_stash->set_enabled(true);
+	//		m_btn_toggle_stash->set_visible(true);
+	//		break;
+	//	}
+	//	else {
+	//		m_btn_toggle_stash->set_enabled(false);
+	//		m_btn_toggle_stash->set_visible(false);
+	//	}
+	//}
+	m_btn_toggle_stash->set_on_click(std::bind(&loot_filter_settings_toggle_menu::toggle_stash_click, this));
 }
 
 void d2_tweaks::client::modules::loot_filter_settings_toggle_menu::toggle_filter_settings_click() {
@@ -172,7 +173,6 @@ void d2_tweaks::client::modules::loot_filter_settings_toggle_menu::toggle_filter
 void d2_tweaks::client::modules::loot_filter_settings_toggle_menu::toggle_stats_settings_click() {
 	m_stats_enabled = !m_stats_enabled;
 }
-
 
 void d2_tweaks::client::modules::loot_filter_settings_toggle_menu::toggle_cube_click() {
 	m_cube_enabled = !m_cube_enabled;
@@ -197,7 +197,7 @@ void d2_tweaks::client::modules::loot_filter_settings_toggle_menu::toggle_cube_c
 			//uint8_t MsgID;		// 0x02
 			uint32_t guid;	// 0x06
 			uint32_t tx;	// 0x07
-			uint32_t ty;	// 0x09					
+			uint32_t ty;	// 0x09
 		};
 		D2GSPacketClt20 packet;
 		packet.PacketId = 0x20;
@@ -211,11 +211,8 @@ void d2_tweaks::client::modules::loot_filter_settings_toggle_menu::toggle_cube_c
 		// send to server7 to close cube packet 0x4F
 		diablo2::d2_client::send_to_server_7(0x4F, 0x17, 0, 0);
 	}
-
-
 }
 void d2_tweaks::client::modules::loot_filter_settings_toggle_menu::toggle_stash_click() {
-
 	m_stash_enabled = !m_stash_enabled;
 	if (m_stash_enabled) {
 		const auto player = diablo2::d2_client::get_local_player();
@@ -237,7 +234,7 @@ void d2_tweaks::client::modules::loot_filter_settings_toggle_menu::toggle_stash_
 			uint8_t PacketId; // 0x01
 			uint32_t guid;	// 0x06
 			uint32_t tx;	// 0x07
-			uint32_t ty;	// 0x09					
+			uint32_t ty;	// 0x09
 		};
 		D2GSPacketClt20 packet;
 		packet.PacketId = 0x20;
@@ -247,15 +244,13 @@ void d2_tweaks::client::modules::loot_filter_settings_toggle_menu::toggle_stash_
 		diablo2::d2_client::send_to_server(&packet, sizeof packet);
 	}
 	else {
-
 		//run a for loop and send th set_ui_toggle packet 255 times from 1 to 255
 		diablo2::d2_client::set_ui_toggle(0x19, 1, FALSE);
-		
+
 		// send to server7 to close cube packet 0x4F
 		diablo2::d2_client::send_to_server_7(0x4F, 0x17, 0, 0);
 	}
 }
-
 
 void d2_tweaks::client::modules::loot_filter_settings_toggle_menu::toggle_help_click() {
 	//m_help_enabled = !m_help_enabled;
@@ -271,7 +266,6 @@ void d2_tweaks::client::modules::loot_filter_settings_toggle_menu::toggle_help_c
 	// Unsupported platform
 	// You can add handling for other platforms here
 #endif
-
 }
 
 void d2_tweaks::client::modules::loot_filter_settings_toggle_menu::draw() {

@@ -53,7 +53,6 @@ void d2_tweaks::server::modules::transmute::tick(diablo2::structures::game* game
 	return;
 }
 
-
 inline uint64_t TimeStart() {
 	_asm {
 		cpuid
@@ -61,13 +60,11 @@ inline uint64_t TimeStart() {
 	}
 }
 
-
 inline uint64_t TimeEnd() {
 	_asm {
 		rdtsc
 	}
 }
-
 
 bool d2_tweaks::server::modules::transmute::handle_packet(diablo2::structures::game* game, diablo2::structures::unit* player, common::packet_header* packet) {
 	const auto income_packet_cs = static_cast<common::transmute_info_cs*>(packet);
@@ -75,19 +72,19 @@ bool d2_tweaks::server::modules::transmute::handle_packet(diablo2::structures::g
 
 	// обрабатываем запрос от клиента
 	if (income_packet_cs->command == COMMAND_CALL_TRANSMUTE) {
-		#ifndef NDEBUG
+#ifndef NDEBUG
 		uint64_t time = TimeStart();
-		#endif
+#endif
 		// возвращает сгенерированый item, или getmaxcuberecipes если неудачно
 		if (diablo2::d2_game::transmogrify(game, player) == diablo2::d2_common::get_max_cube_recipes()) {
 			response_packet_sc.command = COMMAND_ABORT;
 			singleton<server>::instance().send_packet(player->player_data->net_client, &response_packet_sc, sizeof response_packet_sc);
 			//diablo2::d2_net::send_to_client(1, client->client_id, &response_packet_sc, sizeof response_packet_sc);
 		}
-		#ifndef NDEBUG
+#ifndef NDEBUG
 		time = (TimeEnd() - time);
 		spdlog::debug("Time {}", time);
-		#endif
+#endif
 	}
 
 	if (income_packet_cs->command == COMMAND_MOVE_ITEM) {
@@ -96,8 +93,6 @@ bool d2_tweaks::server::modules::transmute::handle_packet(diablo2::structures::g
 
 	return true;
 }
-
-
 
 bool d2_tweaks::server::modules::transmute::move_item_to(diablo2::structures::game* game, diablo2::structures::unit* player, common::packet_header* packet) {
 	static common::transmute_info_sc resp;
@@ -134,8 +129,6 @@ bool d2_tweaks::server::modules::transmute::move_item_to(diablo2::structures::ga
 	return true;
 }
 
-
-
 bool d2_tweaks::server::modules::transmute::find_free_space(diablo2::structures::inventory* inv,
 	diablo2::structures::unit* item, int32_t inventoryIndex, char page, uint32_t& x, uint32_t& y) {
 	char data[0x18];
@@ -157,4 +150,3 @@ bool d2_tweaks::server::modules::transmute::find_free_space(diablo2::structures:
 
 	return false;
 }
-

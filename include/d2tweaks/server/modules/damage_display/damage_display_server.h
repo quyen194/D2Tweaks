@@ -24,7 +24,7 @@ namespace d2_tweaks {
 				void init() override;
 
 				bool handle_packet(diablo2::structures::game* game, diablo2::structures::unit* player,
-								   common::packet_header* packet) override;
+					common::packet_header* packet) override;
 				void tick(diablo2::structures::game* game, diablo2::structures::unit* unit) override;
 			};
 		}

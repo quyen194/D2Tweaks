@@ -22,18 +22,16 @@ int32_t diablo2::d2_common::get_item_type_from_unit(structures::unit* item) {
 	return get_item_type_from_unit(item);
 }
 
-
 //__stdcall UNITS_GetPreviousInteractGUID(D2UnitStrc* pUnit)
 int32_t diablo2::d2_common::get_previous_interact_guid(structures::unit* player) {
 	static wrap_func_std_import <int32_t(structures::unit*)>get_previous_interact_guid(10383, get_base());
 	return get_previous_interact_guid(player);
 }
 
-
 //__stdcall INV_EmptyInventory(D2InventoryStrc* pInventory)
 // deletes items one by one
 void diablo2::d2_common::empty_inventory_1(structures::inventory* inv) {
-	static wrap_func_std_import <void (structures::inventory*)>empty_inventory_1(10279, get_base());
+	static wrap_func_std_import <void(structures::inventory*)>empty_inventory_1(10279, get_base());
 	return empty_inventory_1(inv);
 }
 
@@ -63,7 +61,6 @@ diablo2::structures::unit* diablo2::d2_common::get_next_inventory_item(structure
 	return get_next_inventory_item(prev_item);
 }
 
-
 int32_t diablo2::d2_common::get_inventory_index(structures::unit* item, char page, BOOL lod) {
 	static wrap_func_std_import<int32_t(structures::unit*, char, BOOL)> get_inventory_index(10409, get_base());
 	return get_inventory_index(item, page, lod);
@@ -75,32 +72,29 @@ void* diablo2::d2_common::get_inventory_data(int32_t index, int32_t zero, char* 
 }
 
 diablo2::structures::unit* diablo2::d2_common::get_item_at_cell(structures::inventory* inv, uint32_t cellx,
-																uint32_t celly, uint32_t* pcellx, uint32_t* pcelly, int32_t invIndex, uint8_t page) {
-	static wrap_func_std_import<structures::unit * (structures::inventory*, uint32_t, uint32_t, uint32_t*, uint32_t*,
-													int32_t, uint8_t)> get_item_at_cell(10252, get_base());
+	uint32_t celly, uint32_t* pcellx, uint32_t* pcelly, int32_t invIndex, uint8_t page) {
+	static wrap_func_std_import<structures::unit* (structures::inventory*, uint32_t, uint32_t, uint32_t*, uint32_t*,
+		int32_t, uint8_t)> get_item_at_cell(10252, get_base());
 	return get_item_at_cell(inv, cellx, celly, pcellx, pcelly, invIndex, page);
 }
 
 uint32_t diablo2::d2_common::can_put_into_slot(structures::inventory* inv, structures::unit* item, uint32_t x,
-											   uint32_t y, uint32_t invIndex, structures::unit** lastBlockingUnit, uint32_t* lastBlockingUnitIndex, uint8_t page) {
+	uint32_t y, uint32_t invIndex, structures::unit** lastBlockingUnit, uint32_t* lastBlockingUnitIndex, uint8_t page) {
 	static wrap_func_std_import< uint32_t(structures::inventory*, structures::unit*, uint32_t, uint32_t,
-										  uint32_t, structures::unit**, uint32_t*, uint8_t)> can_put_into_slot(
-											  10247, get_base());
+		uint32_t, structures::unit**, uint32_t*, uint8_t)> can_put_into_slot(
+			10247, get_base());
 	return can_put_into_slot(inv, item, x, y, invIndex, lastBlockingUnit, lastBlockingUnitIndex, page);
 }
-
 
 uint32_t diablo2::d2_common::get_item_type(structures::unit* item) {
 	static wrap_func_std_import< uint32_t(structures::unit*)>get_item_type(10751, get_base());
 	return get_item_type(item);
 }
 
-
 uint32_t diablo2::d2_common::get_item_type_class(structures::unit* item) {
 	static wrap_func_std_import< uint32_t(structures::unit*)>get_item_type_class(10739, get_base());
 	return get_item_type_class(item);
 }
-
 
 uint32_t diablo2::d2_common::get_item_primary_weapon_class(structures::unit* item) {
 	static wrap_func_std_import< uint32_t(structures::unit*)>get_item_type_class(10744, get_base());
@@ -112,16 +106,15 @@ uint32_t diablo2::d2_common::set_unit_mode(structures::unit* item, uint32_t mode
 	return set_unit_mode(item, mode);
 }
 
-
 diablo2::structures::unit* diablo2::d2_common::inv_remove_item(structures::inventory* inventory, structures::unit* item) {
-	static wrap_func_std_import<structures::unit * (structures::inventory*, structures::unit*)> inv_remove_item(10243, get_base());
+	static wrap_func_std_import<structures::unit* (structures::inventory*, structures::unit*)> inv_remove_item(10243, get_base());
 	return inv_remove_item(inventory, item);
 }
 
 BOOL diablo2::d2_common::inv_add_item(structures::inventory* inv, structures::unit* item, uint32_t x, uint32_t y,
-									  uint32_t invIndex, BOOL isClient, uint8_t page) {
+	uint32_t invIndex, BOOL isClient, uint8_t page) {
 	static wrap_func_std_import<BOOL(structures::inventory*, structures::unit*, uint32_t, uint32_t,
-									 uint32_t, BOOL, uint8_t)> inv_add_item(10249, get_base());
+		uint32_t, BOOL, uint8_t)> inv_add_item(10249, get_base());
 
 	return inv_add_item(inv, item, x, y, invIndex, isClient, page);
 }
@@ -132,17 +125,17 @@ BOOL diablo2::d2_common::inv_update_item(structures::inventory* inv, structures:
 }
 
 diablo2::structures::items_line* diablo2::d2_common::get_item_record(uint32_t guid) {
-	static wrap_func_std_import<structures::items_line * (uint32_t)> get_item_record(10600, get_base());
+	static wrap_func_std_import<structures::items_line* (uint32_t)> get_item_record(10600, get_base());
 	return get_item_record(guid);
 }
 
 diablo2::structures::item_types_line* diablo2::d2_common::get_item_type_record(uint32_t typeId) {
-	static wrap_func_fast<structures::item_types_line * (uint32_t)>get_item_type_record(0x2B1A0, get_base());
+	static wrap_func_fast<structures::item_types_line* (uint32_t)>get_item_type_record(0x2B1A0, get_base());
 	return get_item_type_record(typeId);
 }
 
 uint32_t  diablo2::d2_common::check_item_type_equiv(uint32_t itemtype, uint32_t itemtype_equiv) {
-	static wrap_func_std_import<uint32_t (uint32_t, uint32_t)>check_item_type_equiv(10730, get_base());
+	static wrap_func_std_import<uint32_t(uint32_t, uint32_t)>check_item_type_equiv(10730, get_base());
 	return check_item_type_equiv(itemtype, itemtype_equiv);
 }
 
@@ -182,7 +175,7 @@ int32_t diablo2::d2_common::_10116(int32_t x1, int32_t y1, int32_t* x, int32_t* 
 }
 
 diablo2::structures::room* diablo2::d2_common::get_room_from_unit(structures::unit* unit) {
-	static wrap_func_std_import<structures::room * (structures::unit*)> get_room_from_unit(10342, get_base());
+	static wrap_func_std_import<structures::room* (structures::unit*)> get_room_from_unit(10342, get_base());
 	return get_room_from_unit(unit);
 }
 
@@ -227,12 +220,12 @@ int32_t diablo2::d2_common::get_item_quality(structures::unit* item) {
 }
 
 diablo2::structures::unit* diablo2::d2_common::get_target_from_path(structures::path* path) {
-	static wrap_func_std_import<structures::unit * (structures::path*)> get_target_from_path(10180, get_base());
+	static wrap_func_std_import<structures::unit* (structures::path*)> get_target_from_path(10180, get_base());
 	return get_target_from_path(path);
 }
 
 void diablo2::d2_common::free_inventory(structures::inventory* inventory) {
-	static wrap_func_std_import<void (structures::inventory*)> free_inventory(10241, get_base());
+	static wrap_func_std_import<void(structures::inventory*)> free_inventory(10241, get_base());
 	free_inventory(inventory);
 }
 
@@ -240,7 +233,6 @@ void diablo2::d2_common::refresh_unit_inventory(structures::unit* unit, bool set
 	static wrap_func_std_import<void(structures::unit* unit, bool set_update_flags)> refresh_unit_inventory(10357, get_base());
 	refresh_unit_inventory(unit, set_update_flags);
 }
-
 
 void diablo2::d2_common::update_trade(structures::inventory* inventory, structures::unit* item) {
 	static wrap_func_std_import<void(structures::inventory* inventory, structures::unit* item)> update_trade(10283, get_base());
@@ -260,4 +252,9 @@ void diablo2::d2_common::add_property(structures::unit* item, D2PropertyStrc* pr
 void diablo2::d2_common::ITEMS_SetItemFlag(structures::unit* item, uint32_t dwFlag, BOOL bSet) {
 	static wrap_func_std_import<void(structures::unit* item, uint32_t dwFlag, BOOL bSet)> ITEMS_SetItemFlag(10708, get_base());
 	ITEMS_SetItemFlag(item, dwFlag, bSet);
+}
+
+diablo2::structures::D2ItemStatCostTxt* diablo2::d2_common::get_item_stat_cost_record(int statId) {
+	static wrap_func_fast<diablo2::structures::D2ItemStatCostTxt* (int)> get_item_stat_cost_record(0x642b0, get_base());
+	return get_item_stat_cost_record(statId);
 }

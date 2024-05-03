@@ -61,7 +61,6 @@ namespace d2_tweaks {
 				//handle hovering over item and actual click
 				static void __fastcall handle_dropped_items(diablo2::structures::unit* unit, void* edx);
 			};
-
 		}
 	}
 }

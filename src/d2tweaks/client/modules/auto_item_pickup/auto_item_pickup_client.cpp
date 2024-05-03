@@ -67,7 +67,6 @@ static char m_acPathToIni[MAX_PATH] = { 0 };
 static const char* m_pcIniFile = "\\d2tweaks.ini";
 
 void d2_tweaks::client::modules::auto_item_pickup::init_early() {
-
 }
 
 void ReloadFilters(char* szPathToIni) {
@@ -119,7 +118,6 @@ void ReloadFilters(char* szPathToIni) {
 			lstrcat(m_pcItemTypesAll, "|");
 		}
 	}
-
 
 	/// Parse ItemCode
 	dwLenght = lstrlen(m_pcItemListAll);
@@ -196,7 +194,6 @@ void ReloadFilters(char* szPathToIni) {
 		token_string_itemcode = strtok(NULL, " ,|");
 	}
 
-
 	/// Parse ItemType Code
 	dwLenght = lstrlen(m_pcItemTypesAll);
 	memcpy(m_pcItemTypesAllTemp, m_pcItemTypesAll, dwLenght + 1);
@@ -272,7 +269,6 @@ void ReloadFilters(char* szPathToIni) {
 	}
 }
 
-
 class auto_item_pickup_menu : public d2_tweaks::ui::menu {
 	d2_tweaks::common::asset* m_buttons_img;
 	d2_tweaks::ui::controls::button* m_auto_pickup_btn;
@@ -304,7 +300,7 @@ public:
 			//diablo2::d2_client::print_chat(L"AUTO TRANSMUTE OFF", 2);
 			m_auto_pickup_btn->set_current_frame(6);
 		}
-		
+
 		if (m_bToggleAutoItemPickup && m_bInventoryFull) {
 			m_auto_pickup_btn->set_current_frame(7);
 		}
@@ -359,7 +355,6 @@ private:
 	}
 };
 
-
 void d2_tweaks::client::modules::auto_item_pickup::init() {
 	GetCurrentDirectory(MAX_PATH, m_acPathToIni);
 	lstrcat(m_acPathToIni, m_pcIniFile);
@@ -374,7 +369,6 @@ void d2_tweaks::client::modules::auto_item_pickup::init() {
 		singleton<client>::instance().register_packet_handler(common::message_types_t::MESSAGE_TYPE_ITEM_PICKUP_INFO, this);
 	}
 }
-
 
 bool find_free_space(diablo2::structures::inventory* inv, diablo2::structures::unit* item, int32_t inventoryIndex, char page, uint32_t& x, uint32_t& y) {
 	char data[0x18];
@@ -395,7 +389,6 @@ bool find_free_space(diablo2::structures::inventory* inv, diablo2::structures::u
 	}
 	return false;
 }
-
 
 void d2_tweaks::client::modules::auto_item_pickup::tick() {
 	static common::item_pickup_info_sc packet;
@@ -476,7 +469,6 @@ void d2_tweaks::client::modules::auto_item_pickup::tick() {
 			}
 		}
 
-
 		if (itemtype_record_equiv2) {
 			if (*(DWORD*)itemtype_record_equiv2->code != 0x20202020) {
 				// сохранить первый ранее полученый equiv1
@@ -527,7 +519,6 @@ void d2_tweaks::client::modules::auto_item_pickup::tick() {
 			}
 		}
 
-
 		for (uint32_t i = 0; i < m_nCountItemListAll; i++)
 		{
 			if (record->string_code[0] == m_stItemList[i].code0 &&
@@ -559,7 +550,6 @@ void d2_tweaks::client::modules::auto_item_pickup::tick() {
 	L1:;
 	}
 }
-
 
 void d2_tweaks::client::modules::auto_item_pickup::handle_packet(common::packet_header* packet) {
 	const auto info = static_cast<common::item_pickup_info_sc*>(packet);

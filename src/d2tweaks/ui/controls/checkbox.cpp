@@ -9,13 +9,13 @@
 const int32_t PADDING = 3;
 
 d2_tweaks::ui::controls::checkbox::checkbox(menu* menu, const std::wstring& text, const rect& rect,
-											const std::function<void()>& onClick,
-											common::asset* image, int32_t frameChecked, int32_t frameUnchecked, int32_t clickSound)
+	const std::function<void()>& onClick,
+	common::asset* image, int32_t frameChecked, int32_t frameUnchecked, int32_t clickSound)
 	: control(menu,
-			  rect.get_x(),
-			  rect.get_y(),
-			  rect.get_width(),
-			  rect.get_height()) {
+		rect.get_x(),
+		rect.get_y(),
+		rect.get_width(),
+		rect.get_height()) {
 	control::set_enabled(true);
 	control::set_visible(true);
 
@@ -72,7 +72,7 @@ d2_tweaks::ui::controls::checkbox::checkbox(menu* menu, const pugi::xml_node& no
 
 	m_image = new image(menu, cimg, cx, cy, m_frame_unchecked);
 	m_label = new label(menu, string_utils::string_to_wstring(ctext), cx + m_image->get_width() + PADDING, cy,
-						static_cast<diablo2::ui_color_t>(ccolor), static_cast<diablo2::ui_font_t>(cfont));
+		static_cast<diablo2::ui_color_t>(ccolor), static_cast<diablo2::ui_font_t>(cfont));
 
 	checkbox::set_x(cx);
 	checkbox::set_y(cy);
@@ -103,9 +103,9 @@ void d2_tweaks::ui::controls::checkbox::draw(int32_t offsetX, int32_t offsetY) {
 		!m_popup.empty()) {
 		diablo2::d2_win::set_current_font(diablo2::UI_FONT_16);
 		diablo2::d2_win::set_popup_properties(const_cast<wchar_t*>(m_popup.c_str()),
-											  get_x() + offsetX + m_rect.get_width() / 2,
-											  get_y() + offsetY - m_rect.get_height(),
-											  diablo2::UI_COLOR_WHITE, TRUE);
+			get_x() + offsetX + m_rect.get_width() / 2,
+			get_y() + offsetY - m_rect.get_height(),
+			diablo2::UI_COLOR_WHITE, TRUE);
 		diablo2::d2_win::draw_popup();
 	}
 

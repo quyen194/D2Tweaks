@@ -1337,7 +1337,7 @@
 //	DWORD dwMainIndex;				//0x18
 //	DWORD dwSubIndex;				//0x1C
 //	DWORD dwFrame;					//0x20
-//	BYTE  _1a;						//0x24 DT1's unknown_a ... 
+//	BYTE  _1a;						//0x24 DT1's unknown_a ...
 //	BYTE  _1c;						//0x25
 //	BYTE  _1b;						//0x26
 //	BYTE  _1d;						//0x27
@@ -1347,7 +1347,7 @@
 //	DWORD _18;						//0x44
 //	DWORD dwDataPtr;				//0x48 pointer to sub-block headers
 //	DWORD dwSize;					//0x4C length of the sub-blocks
-//	DWORD dwSubBlocks;				//0x50 
+//	DWORD dwSubBlocks;				//0x50
 //	DT1SubBlock* pBlocks;			//0x54
 //	char* szTileName;				//0x58
 //	DWORD **ptBlock;				//0x5C <not sure - maybe its a struct>
@@ -3209,7 +3209,7 @@
 //	//	UnitAny *pTargetUnit; //+58
 //	//} *pPos; // +2c
 //	DWORD _2b[11];
-//	StatsList * ptStatsList;         // 0x5C 
+//	StatsList * ptStatsList;         // 0x5C
 //	UnitInventory *pInventory; //+60
 //	DWORD _4b[12];
 //	DWORD nOwnerType; // +94
@@ -3382,17 +3382,17 @@
 //	char szAccountName[0x30];
 //	char szCharName[0x18];
 //	char szRealmName[0x18];
-//	BYTE _2[0x102];//+E8 
-//	//BYTE nGameMode; //+1EA 
+//	BYTE _2[0x102];//+E8
+//	//BYTE nGameMode; //+1EA
 //	struct
 //	{
 //		BYTE nCharStat:2;
 //		BYTE nHardcore:2;
 //		BYTE _unk1:1;
 //		BYTE nExpansion:1;
-//		BYTE nLadder:2;	
-//	};//+1EA 
-//	BYTE nReadyAct; //+1EB  quest info 
+//		BYTE nLadder:2;
+//	};//+1EA
+//	BYTE nReadyAct; //+1EB  quest info
 //	BYTE _3[0x3B];
 //	char szServerVersion[24];//227  battle net gameversion
 //	char szGamePassword[0x18];//+23F
@@ -3453,16 +3453,16 @@
 //
 //
 //
-////struct Stats { 
-////	WORD  Param; 
-////	WORD  StatID; 
-////	DWORD Value; 
-////}; 
+////struct Stats {
+////	WORD  Param;
+////	WORD  StatID;
+////	DWORD Value;
+////};
 //
 //struct StatsInfo {
-//	Stats *pStats; // pointer to an array of Stats structs. 
-//	WORD   nUsed;  // how many Stats in array 
-//	WORD   nSize;  // size allocated in Stats 
+//	Stats *pStats; // pointer to an array of Stats structs.
+//	WORD   nUsed;  // how many Stats in array
+//	WORD   nSize;  // size allocated in Stats
 //};
 //
 //struct StatsList {
@@ -3474,11 +3474,11 @@
 //	DWORD _4;				// 0x38
 //	StatsList *pNext;		// 0x3C
 //
-//	StatsList *pSetList;     // +40 
+//	StatsList *pSetList;     // +40
 //	DWORD _5;
-//	StatsInfo sStats1;       // +48 
-//	StatsInfo sStats2;       // +50 unused ??? 
-//	DWORD *ptStateFlags;  //+58 - get with 10487(ptUnit,id) return ptUnit->ptStatsList->ptStateFlags[id/32]&(1<<(id%31)) 
+//	StatsInfo sStats1;       // +48
+//	StatsInfo sStats2;       // +50 unused ???
+//	DWORD *ptStateFlags;  //+58 - get with 10487(ptUnit,id) return ptUnit->ptStatsList->ptStateFlags[id/32]&(1<<(id%31))
 //};
 //
 //// end of file --------------------------------------------------------------
@@ -3761,7 +3761,7 @@
 ////	uint8_t		uk4[0x08];				//+54
 ////	stats* stats;				//+5C
 ////	uint8_t		pad1[0x24];
-////	inventory* inventory;		 //+84  //+60  
+////	inventory* inventory;		 //+84  //+60
 ////	uint8_t		uk5[0x1C];				//+64
 ////	game* game;					//+80
 ////	uint8_t		uk6[0x24];				//+84
@@ -3892,9 +3892,9 @@
 ////ITEMFLAG_FROMPLAYER               = 0x01000000,
 ////ITEMFLAG_RUNEuint16_t               = 0x04000000
 ////*/
-////	uint32_t	guid1;						//+1C Global Unique ID 1  
-////	uint32_t	guid2;						//+20 Global Unique ID 2  
-////	uint32_t	guid3;						//+24 Global Unique ID 3  
+////	uint32_t	guid1;						//+1C Global Unique ID 1
+////	uint32_t	guid2;						//+20 Global Unique ID 2
+////	uint32_t	guid3;						//+24 Global Unique ID 3
 ////	uint32_t	unique_id;					//+28
 ////	uint8_t	ilvl;						//+2C
 ////	uint8_t	uk1[0x03];					//+2D
@@ -3931,7 +3931,7 @@
 ////	uint8_t	item_data3;					//+47 //D2Common10854 D2Common10853
 ////	uint8_t	p_ear_level;					//+48
 ////	uint8_t	var_gfx;						//+49
-////	char	i_name[0x12];				//+4A //inscribed/ear name  
+////	char	i_name[0x12];				//+4A //inscribed/ear name
 ////	inventory* inventory;			//+5C
 ////	unit* pt_prev_item;					//+60
 ////	unit* pt_next_item;					//+64
@@ -3973,18 +3973,18 @@
 //};
 //
 //struct player_data {
-//	char		name[0x10];				//+00	Player Name  
-//	void* pt_quest[3];				//+10	Quest Pointers for each difficulty  
+//	char		name[0x10];				//+00	Player Name
+//	void* pt_quest[3];				//+10	Quest Pointers for each difficulty
 //	uint8_t		uk1[0x18];				//+1C		//before : 0x14
-//	void* pt_arena_unit;			//+34	ptArena for the Unit  
+//	void* pt_arena_unit;			//+34	ptArena for the Unit
 //	uint8_t		uk2[0x4];				//+38		//before : 0x7
-//	uint16_t		mp_source_portal_unique_id;	//+3C	Source Portal Unique_ID  
+//	uint16_t		mp_source_portal_unique_id;	//+3C	Source Portal Unique_ID
 //	uint8_t		uk3[0x2];				//+3E
-//	uint16_t		mp_dest_portal_unique_id;	//+40	Destination Portal Unique_ID  
-//	uint8_t		uk4[0x06];				//+42  
-//	uint8_t		pt_object_un_id;			//+48	Object UniqueID for TownPortals       
-//	uint8_t		uk5[0x94B];//uk5[0x53];				//+49  
-//	net_client* net_client;			//+9C	ptClient  
+//	uint16_t		mp_dest_portal_unique_id;	//+40	Destination Portal Unique_ID
+//	uint8_t		uk4[0x06];				//+42
+//	uint8_t		pt_object_un_id;			//+48	Object UniqueID for TownPortals
+//	uint8_t		uk5[0x94B];//uk5[0x53];				//+49
+//	net_client* net_client;			//+9C	ptClient
 //};
 //
 //struct position {

@@ -71,9 +71,9 @@ d2_tweaks::common::asset* d2_tweaks::common::asset_manager::get_mpq_file(const s
 
 void* d2_tweaks::common::asset_manager::load_asset_data(const std::string& path, mpq_file_type_t type) {
 	switch (type) {
-		case MPQ_FILE_TYPE_DC6:
-			return diablo2::d2_client::load_gfx_resource(const_cast<char*>(path.c_str()));
-		default:
-			return nullptr;
+	case MPQ_FILE_TYPE_DC6:
+		return diablo2::d2_client::load_gfx_resource(const_cast<char*>(path.c_str()));
+	default:
+		return nullptr;
 	}
 }

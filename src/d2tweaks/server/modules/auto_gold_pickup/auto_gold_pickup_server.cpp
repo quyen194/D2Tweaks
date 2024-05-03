@@ -25,7 +25,6 @@ void d2_tweaks::server::modules::auto_gold_pickup::init() {
 	}
 }
 
-
 bool d2_tweaks::server::modules::auto_gold_pickup::handle_packet(diablo2::structures::game* game, diablo2::structures::unit* player, common::packet_header* packet) {
 	const auto income_packet_cs = static_cast<common::gold_pickup_info_cs*>(packet);
 	static auto& instance = singleton<server>::instance();
@@ -38,7 +37,6 @@ bool d2_tweaks::server::modules::auto_gold_pickup::handle_packet(diablo2::struct
 
 	return true;
 }
-
 
 bool d2_tweaks::server::modules::auto_gold_pickup::au_pickup_gold(diablo2::structures::game* game, diablo2::structures::unit* unit, diablo2::structures::unit* item)
 {
@@ -58,9 +56,8 @@ bool d2_tweaks::server::modules::auto_gold_pickup::au_pickup_gold(diablo2::struc
 	return TRUE;
 }
 
-
 void d2_tweaks::server::modules::auto_gold_pickup::tick(diablo2::structures::game* game,
-														diablo2::structures::unit* unit) {
+	diablo2::structures::unit* unit) {
 	//static common::gold_pickup_info_sc packet;
 	//static auto& instance = singleton<d2_tweaks::server::server>::instance();
 	//if (!game || !unit)
@@ -102,4 +99,3 @@ void d2_tweaks::server::modules::auto_gold_pickup::tick(diablo2::structures::gam
 	//	continue;
 	//}
 }
-

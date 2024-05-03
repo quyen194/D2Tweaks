@@ -67,11 +67,8 @@ public:
 	}
 };
 
-
 void d2_tweaks::client::modules::auto_gold_pickup::init_early() {
-
 }
-
 
 void d2_tweaks::client::modules::auto_gold_pickup::init() {
 	char acPathToIni[MAX_PATH] = { 0 };
@@ -88,7 +85,6 @@ void d2_tweaks::client::modules::auto_gold_pickup::init() {
 		singleton<ui::ui_manager>::instance().add_menu(new draw_gold_menu());
 	}
 }
-
 
 void d2_tweaks::client::modules::auto_gold_pickup::tick() {
 	const auto unit = diablo2::d2_client::get_local_player();
@@ -132,7 +128,6 @@ void d2_tweaks::client::modules::auto_gold_pickup::tick() {
 		continue;
 	}
 }
-
 
 void d2_tweaks::client::modules::auto_gold_pickup::handle_packet(common::packet_header* packet) {
 	const auto info = static_cast<common::gold_pickup_info_sc*>(packet);

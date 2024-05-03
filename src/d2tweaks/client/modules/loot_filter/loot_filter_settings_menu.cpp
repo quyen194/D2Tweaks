@@ -56,25 +56,25 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::register_misc_checkb
 	if (m_altonly) {
 		m_altonly->set_state(loot_filter_settings::get().alt_only);
 		m_altonly->set_on_click(std::bind(&loot_filter_settings_menu::update_alt_only,
-										  this, std::placeholders::_1));
+			this, std::placeholders::_1));
 	}
 
 	if (m_show_gold) {
 		m_show_gold->set_state(loot_filter_settings::get().show_gold);
 		m_show_gold->set_on_click(std::bind(&loot_filter_settings_menu::update_show_gold,
-											this, std::placeholders::_1));
+			this, std::placeholders::_1));
 	}
 
 	if (m_show_runes) {
 		m_show_runes->set_state(loot_filter_settings::get().show_runes);
 		m_show_runes->set_on_click(std::bind(&loot_filter_settings_menu::update_show_runes,
-											 this, std::placeholders::_1));
+			this, std::placeholders::_1));
 	}
 
 	if (m_show_gems) {
 		m_show_gems->set_state(loot_filter_settings::get().show_gems);
 		m_show_gems->set_on_click(std::bind(&loot_filter_settings_menu::update_show_gems,
-											this, std::placeholders::_1));
+			this, std::placeholders::_1));
 	}
 }
 
@@ -113,13 +113,13 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::update_show_gems(boo
 }
 
 void d2_tweaks::client::modules::loot_filter_settings_menu::update_quality_allowance(bool value,
-																					 diablo2::structures::item_quality_t quality) {
+	diablo2::structures::item_quality_t quality) {
 	loot_filter_settings::get().quality_settings[static_cast<uint32_t>(quality)] = value;
 	loot_filter_settings::get().save(diablo2::d2_client::get_local_player_name());
 }
 
 void d2_tweaks::client::modules::loot_filter_settings_menu::register_quality_checkbox(const std::string& name,
-																					  diablo2::structures::item_quality_t quality) {
+	diablo2::structures::item_quality_t quality) {
 	auto control = get_control<ui::controls::checkbox>(name);
 
 	if (!control)
@@ -127,7 +127,7 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::register_quality_che
 
 	control->set_state(loot_filter_settings::get().quality_settings[static_cast<size_t>(quality)]);
 	control->set_on_click(std::bind(&loot_filter_settings_menu::update_quality_allowance,
-									this, std::placeholders::_1, quality));
+		this, std::placeholders::_1, quality));
 }
 
 void d2_tweaks::client::modules::loot_filter_settings_menu::setup_hooks() {
@@ -148,7 +148,7 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::setup_alt_hook() con
 	asm_code asmCode;
 	asmCode.add({ 0x83, 0x7D, 0x00, 0x04 }); //cmp dword ptr [ebp+0], 4
 	asmCode.add({ 0x0F, 0x85 },
-				new asm_address_relative(2, 6, diablo2::d2_client::get_base() + 0x6A399)); //jnz D2Client.dll+6A399
+		new asm_address_relative(2, 6, diablo2::d2_client::get_base() + 0x6A399)); //jnz D2Client.dll+6A399
 
 	asmCode.add({ 0x56 }); //push esi
 	asmCode.add({ 0xB8 }, new asm_address_static(1, check_alt_item)); //mov eax, check_alt_item
@@ -158,9 +158,9 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::setup_alt_hook() con
 
 	asmCode.add({ 0x84, 0xC0 }); //test al, al
 	asmCode.add({ 0x0F, 0x84 },
-				new asm_address_relative(2, 6, diablo2::d2_client::get_base() + 0x6A399)); //je D2Client.dll+6A399
+		new asm_address_relative(2, 6, diablo2::d2_client::get_base() + 0x6A399)); //je D2Client.dll+6A399
 	asmCode.add({ 0xE9 },
-				new asm_address_relative(1, 5, diablo2::d2_client::get_base() + 0x6A027)); //jmp D2Client.dll+6A027
+		new asm_address_relative(1, 5, diablo2::d2_client::get_base() + 0x6A027)); //jmp D2Client.dll+6A027
 
 	auto addr = diablo2::d2_client::get_base() + 0x6A022;
 
@@ -283,7 +283,7 @@ bool d2_tweaks::client::modules::loot_filter_settings_menu::check_alt_item(diabl
 }
 
 void d2_tweaks::client::modules::loot_filter_settings_menu::draw_dropped_items_names(diablo2::structures::unit* unit,
-																					 void* edx) {
+	void* edx) {
 	static auto& instance = singleton<loot_filter_settings_menu>::instance();
 
 	if (!unit || unit->type != diablo2::structures::unit_type_t::UNIT_TYPE_ITEM) {
@@ -315,7 +315,7 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::draw_dropped_items_n
 }
 
 void d2_tweaks::client::modules::loot_filter_settings_menu::handle_dropped_items(diablo2::structures::unit* unit,
-																				 void* edx) {
+	void* edx) {
 	static auto& instance = singleton<loot_filter_settings_menu>::instance();
 
 	if (!unit || unit->type != diablo2::structures::unit_type_t::UNIT_TYPE_ITEM) {

@@ -69,9 +69,9 @@ namespace diablo2 {
 		ITEMFLAG_FROMPLAYER               = 0x01000000,
 		ITEMFLAG_RUNEuint16_t               = 0x04000000
 		*/
-			uint32_t guid1; //+1C Global Unique ID 1  
-			uint32_t guid2; //+20 Global Unique ID 2  
-			uint32_t guid3; //+24 Global Unique ID 3  
+			uint32_t guid1; //+1C Global Unique ID 1
+			uint32_t guid2; //+20 Global Unique ID 2
+			uint32_t guid3; //+24 Global Unique ID 3
 			uint32_t unique_id; //+28
 			uint8_t ilvl; //+2C
 			uint8_t uk1[0x03]; //+2D
@@ -108,7 +108,7 @@ namespace diablo2 {
 			uint8_t item_data3; //+47 //D2Common10854 D2Common10853
 			uint8_t p_ear_level; //+48
 			uint8_t var_gfx; //+49
-			char i_name[0x12]; //+4A //inscribed/ear get_name  
+			char i_name[0x12]; //+4A //inscribed/ear get_name
 			inventory* inventory; //+5C
 			unit* pt_prev_item; //+60
 			unit* pt_next_item; //+64

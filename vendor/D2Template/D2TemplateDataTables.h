@@ -48,7 +48,7 @@ struct D2MonstatsTXT;
 
 struct D2MonstatsTXT
 {
-    //...
+	//...
 };
 
 // end of file --------------------------------------------------------------

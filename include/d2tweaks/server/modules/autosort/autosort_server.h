@@ -24,11 +24,11 @@ namespace d2_tweaks {
 				void init() override;
 
 				bool handle_packet(diablo2::structures::game* game, diablo2::structures::unit* player,
-								   common::packet_header* packet) override;
+					common::packet_header* packet) override;
 			private:
 				bool sort(diablo2::structures::game* game, diablo2::structures::unit* player, uint8_t page);
 				bool find_free_space(diablo2::structures::inventory* inv,
-									 diablo2::structures::unit* item, int32_t inventoryIndex, char page, uint32_t& x, uint32_t& y, bool isCharmZone);
+					diablo2::structures::unit* item, int32_t inventoryIndex, char page, uint32_t& x, uint32_t& y, bool isCharmZone);
 			};
 		}
 	}

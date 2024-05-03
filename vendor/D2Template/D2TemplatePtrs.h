@@ -20,7 +20,7 @@
 
 #define D2FUNC(DLL, NAME, RETURN, CONV, ARGS, OFFSET) typedef RETURN (CONV##* DLL##_##NAME##_t) ARGS; static DLL##_##NAME##_t DLL##_##NAME = (OFFSET < 0) ? ((DLL##_##NAME##_t)GetProcAddress((HMODULE)DLLBASE_##DLL, (LPCSTR)-(OFFSET))) : (DLL##_##NAME##_t)(DLLBASE_##DLL + OFFSET);        ///
 #define D2VAR(DLL, NAME, TYPE, OFFSET) typedef TYPE DLL##_##NAME##_vt; static DLL##_##NAME##_vt * DLL##_##NAME = (DLL##_##NAME##_vt *)(DLLBASE_##DLL + OFFSET);                                 ///
-#define D2PTR(DLL, NAME, OFFSET) static DWORD NAME = (DLLBASE_##DLL + OFFSET); 
+#define D2PTR(DLL, NAME, OFFSET) static DWORD NAME = (DLLBASE_##DLL + OFFSET);
 
 extern DWORD __fastcall GetDllOffset(char* ModuleName, DWORD BaseAddress, int Offset);                                                                                                                                          ///
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -149,9 +149,9 @@ extern DWORD __fastcall GetDllOffset(char* ModuleName, DWORD BaseAddress, int Of
 //extern s_shifting shifting;
 //
 ////#ifdef MSVC
-//#define FASTCALL __fastcall 
+//#define FASTCALL __fastcall
 ////#else
-////#define FASTCALL __msfastcall 
+////#define FASTCALL __msfastcall
 ////#endif
 //#define STDCALL		__stdcall
 //#define FCT_ASM(N) __declspec(naked) void N() {__asm{
@@ -216,7 +216,7 @@ extern DWORD __fastcall GetDllOffset(char* ModuleName, DWORD BaseAddress, int Of
 ////6FAECD28 | 53                   | push ebx                                                                                       | ebx == 0
 ////6FAECD29 | 53                   | push ebx                                                                                       | ebx == 0
 ////6FAECD2A | BA 18000000          | mov edx, 18                                                                                    |
-////6FAECD2F | B1 4F                | mov cl, 4F                                                                                     | 
+////6FAECD2F | B1 4F                | mov cl, 4F                                                                                     |
 ////6FAECD31 | 891D 505BBB6F        | mov dword ptr ds:[6FBB5B50], ebx                                                               | ebx == 0
 ////6FAECD37 | E8 A40CFCFF          | call d2client.6FAAD9E0                                                                         |
 //D2FUNC(D2CLIENT, SendToServer7, void, __fastcall, (BYTE type, DWORD num, DWORD unk1, DWORD unk2), 0xD9E0)
@@ -296,7 +296,7 @@ extern DWORD __fastcall GetDllOffset(char* ModuleName, DWORD BaseAddress, int Of
 //// 6FACBAF0 | A1 E419BB6F | mov eax, dword ptr ds:[D2Client.6FBB19E4] //  1.10
 //
 ////020D90	6F620D90	10010	DRLG_GetLevelDefsRecord	int nLevelNo
-////Unique	fastcall	(int nLevelNo)	__fastcall DRLG_GetLevelDefsRecord(int nLevelNo)		
+////Unique	fastcall	(int nLevelNo)	__fastcall DRLG_GetLevelDefsRecord(int nLevelNo)
 ////6F620D90	DRLG_GetLevelDefsRecord	6F620D90	__fastcall DRLG_GetLevelDefsRecord(int nLevelNo)
 //
 ////6FAC5884 $+0x25884 | E8 C3910900          | call <JMP.&D2Common#10010>  // 1.09	InitAutomapLayer
@@ -326,7 +326,7 @@ extern DWORD __fastcall GetDllOffset(char* ModuleName, DWORD BaseAddress, int Of
 //#define D2FUNCPTR(DLL,NAME,t1,t2,OFFSET) typedef t1 DLL##_##NAME##_t t2; DLL##_##NAME##_t *DLL##_##NAME = (DLL##_##NAME##_t *)GetDllOffset(#DLL, DLLBASE_##DLL, OFFSET);
 //#define D2VARPTR(DLL,NAME,t1,OFFSET)     typedef t1 DLL##_##NAME##_t;    DLL##_##NAME##_t *p_##DLL##_##NAME = (DLL##_##NAME##_t *)GetDllOffset(#DLL, DLLBASE_##DLL, OFFSET);
 ////#define D2ASMPTR(d1,v1,o1)        DWORD d1##_##v1 = DLLOFFSET(d1,o1);
-////#define D2PTR(DLL, NAME, OFFSET) DWORD NAME __attribute__((weak)) = GetDllOffset(#DLL, DLLBASE_##DLL, OFFSET); 
+////#define D2PTR(DLL, NAME, OFFSET) DWORD NAME __attribute__((weak)) = GetDllOffset(#DLL, DLLBASE_##DLL, OFFSET);
 ////D2VAR(D2CLIENT, pDrlgAct, DrlgAct *, 0x6FBB0BE4)
 ////D2VAR(D2CLIENT, pPlayerUnit, UnitAny *, 0x6FBC63F8)
 ////

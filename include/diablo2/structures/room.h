@@ -5,7 +5,7 @@
 namespace diablo2 {
 	namespace structures {
 		struct unit;
-		
+
 		struct room//size=0x80
 		{
 			//ptRoom +48 0 = spawn new units (monster, objects e.tc), 1 = don't spawn any new units

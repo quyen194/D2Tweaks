@@ -149,7 +149,7 @@ private:
 		//request_packet_cs.transmute_start_flag = m_bToggleTransmute;
 		//request_packet_cs.command = COMMAND_TRANSMUTE_START;
 		//diablo2::d2_client::send_to_server(&request_packet_cs, sizeof request_packet_cs);
-		
+
 		if (m_bToggleTransmute) {
 			diablo2::d2_client::print_chat(L"AUTO TRANSMUTE ON", 1);
 		}
@@ -170,7 +170,7 @@ void __fastcall hook_play_sound(uint32_t soundId, uint32_t* unit, const uint32_t
 	return;
 }
 
-void __stdcall hook_game_end () {  
+void __stdcall hook_game_end() {
 	m_game_init_done = false;
 	m_bToggleTransmute = false;
 	return;
@@ -184,12 +184,11 @@ __declspec (naked) void hook_game_end_asm() {
 		popfd;
 		popad;
 
-		jmp [fn_hook_game_end];
+		jmp[fn_hook_game_end];
 	}
 }
 
 void d2_tweaks::client::modules::transmute::init_early() {
-
 }
 
 void d2_tweaks::client::modules::transmute::init() {
@@ -229,8 +228,8 @@ void d2_tweaks::client::modules::transmute::init() {
 			sprintf_s(m_acBuffer, sizeof(m_acBuffer), "ItemList%d", i + 1);
 			dwLenght = config.GetString("AutoTransmute", m_acBuffer, m_aacItemList[i], MAX_STRING_LENGHT - 1);
 			if (dwLenght != 0) {
-				lstrcat(m_acItemListAll, m_aacItemList[i]); 
-				lstrcat(m_acItemListAll, "|"); 
+				lstrcat(m_acItemListAll, m_aacItemList[i]);
+				lstrcat(m_acItemListAll, "|");
 			}
 		}
 
@@ -238,12 +237,12 @@ void d2_tweaks::client::modules::transmute::init() {
 			sprintf_s(m_acBuffer, sizeof(m_acBuffer), "ItemTypeList%d", i + 1);
 			dwLenght = config.GetString("AutoTransmute", m_acBuffer, m_aacItemTypes[i], MAX_STRING_LENGHT - 1);
 			if (dwLenght != 0) {
-				lstrcat(m_acItemTypesAll, m_aacItemTypes[i]); 
+				lstrcat(m_acItemTypesAll, m_aacItemTypes[i]);
 				lstrcat(m_acItemTypesAll, "|");
 			}
 		}
 
-/////// Parse ItemCode
+		/////// Parse ItemCode
 		dwLenght = lstrlen(m_acItemListAll);
 		memcpy(m_acItemListAllTemp, m_acItemListAll, dwLenght + 1);
 		// считаем количество всех предметов
@@ -316,8 +315,7 @@ void d2_tweaks::client::modules::transmute::init() {
 			token_string_itemcode = strtok(NULL, " ,|");
 		}
 
-
-/////// Parse ItemType
+		/////// Parse ItemType
 		dwLenght = lstrlen(m_acItemTypesAll);
 		memcpy(m_acItemTypesAllTemp, m_acItemTypesAll, dwLenght + 1);
 		char* token_string_itemtype_code = strtok(m_acItemTypesAllTemp, ",|");
@@ -394,7 +392,7 @@ void d2_tweaks::client::modules::transmute::init() {
 		if (m_nTransmuteSound == false) {
 			hooking::hook(diablo2::d2_client::get_base() + 0xB5820, hook_play_sound, reinterpret_cast<void**>(&fn_hook_play_sound));
 		}
-		
+
 		hooking::hook(diablo2::d2_client::get_base() + 0xB528, hook_game_end_asm, reinterpret_cast<void**>(&fn_hook_game_end));
 
 		singleton<ui::ui_manager>::instance().add_menu(new auto_transmute_menu());
@@ -402,7 +400,6 @@ void d2_tweaks::client::modules::transmute::init() {
 		singleton<client>::instance().register_packet_handler(common::message_types_t::MESSAGE_TYPE_TRANSMUTE, this);
 	}
 }
-
 
 void d2_tweaks::client::modules::transmute::tick() {
 	const auto unit = diablo2::d2_client::get_local_player();
@@ -412,7 +409,7 @@ void d2_tweaks::client::modules::transmute::tick() {
 		m_bToggleTransmute = false;
 	}
 
-	if (!unit) 
+	if (!unit)
 		return;
 
 	if (unit->type != diablo2::structures::unit_type_t::UNIT_TYPE_PLAYER)
@@ -421,7 +418,7 @@ void d2_tweaks::client::modules::transmute::tick() {
 	if (!m_bToggleTransmute)
 		return;
 
-	if (m_nCountFrames > m_nDelayFrames) 
+	if (m_nCountFrames > m_nDelayFrames)
 	{
 		m_nCountFrames = 0;
 
@@ -449,7 +446,7 @@ void d2_tweaks::client::modules::transmute::tick() {
 				// index second code in array
 				uint32_t index_arr_itemtype = 1;
 
-				// подготовить массив equiv1 
+				// подготовить массив equiv1
 				if (itemtype_record_equiv1) {
 					if (*(DWORD*)itemtype_record_equiv1->code != 0x20202020) {
 						// сохранить первый ранее полученый equiv1
@@ -529,7 +526,6 @@ L1:;
 	m_nCountFrames++;
 }
 
-
 void d2_tweaks::client::modules::transmute::handle_packet(common::packet_header* packet) {
 	static auto& instance = singleton<client>::instance();
 	const auto income_packet_sc = static_cast<common::transmute_info_sc*>(packet);
@@ -554,12 +550,12 @@ void d2_tweaks::client::modules::transmute::handle_packet(common::packet_header*
 		// send 'transmute' command
 		request_packet_cs.command = COMMAND_CALL_TRANSMUTE;
 		diablo2::d2_client::send_to_server(&request_packet_cs, sizeof request_packet_cs);
-		
+
 		//diablo2::d2_client::send_to_server_7(0x4F, 0x18, 0, 0);
 	}
-	
+
 	if (income_packet_sc->command == COMMAND_ABORT) {
 		m_bToggleTransmute = false;
-		diablo2::d2_client::print_chat(L"WRONG RECIPE, AUTO TRANSMUTE OFF", 2); 
+		diablo2::d2_client::print_chat(L"WRONG RECIPE, AUTO TRANSMUTE OFF", 2);
 	}
 }

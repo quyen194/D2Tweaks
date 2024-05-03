@@ -35,7 +35,7 @@ namespace d2_tweaks {
 				std::function<void(bool)> m_on_click;
 			public:
 				explicit checkbox(menu* menu, const std::wstring& text, const rect& rect, const std::function<void()>& onClick,
-						 common::asset* image, int32_t frameChecked, int32_t frameUnchecked, int32_t clickSound = -1);
+					common::asset* image, int32_t frameChecked, int32_t frameUnchecked, int32_t clickSound = -1);
 				explicit checkbox(menu* menu, const pugi::xml_node& node);
 
 				void set_x(int32_t value) override;
