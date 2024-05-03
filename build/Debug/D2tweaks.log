@@ -1,11 +1,2 @@
-﻿  autosort_client.cpp
-D:\VSCode\d2tweaks-rnd2k\src\d2tweaks\client\modules\autosort\autosort_client.cpp(197,15): warning C4018: '<': signed/unsigned mismatch
-D:\VSCode\d2tweaks-rnd2k\src\d2tweaks\client\modules\autosort\autosort_client.cpp(197,66): warning C4018: '<=': signed/unsigned mismatch
-D:\VSCode\d2tweaks-rnd2k\src\d2tweaks\client\modules\autosort\autosort_client.cpp(252,41): warning C4244: '=': conversion from 'double' to 'int32_t', possible loss of data
-D:\VSCode\d2tweaks-rnd2k\src\d2tweaks\client\modules\autosort\autosort_client.cpp(255,43): warning C4244: '=': conversion from 'double' to 'int32_t', possible loss of data
-D:\VSCode\d2tweaks-rnd2k\src\d2tweaks\client\modules\autosort\autosort_client.cpp(258,41): warning C4244: '=': conversion from 'double' to 'int32_t', possible loss of data
-D:\VSCode\d2tweaks-rnd2k\src\d2tweaks\client\modules\autosort\autosort_client.cpp(261,43): warning C4244: '=': conversion from 'double' to 'int32_t', possible loss of data
-D:\VSCode\d2tweaks-rnd2k\src\d2tweaks\client\modules\autosort\autosort_client.cpp(264,41): warning C4244: '=': conversion from 'double' to 'int32_t', possible loss of data
-D:\VSCode\d2tweaks-rnd2k\src\d2tweaks\client\modules\autosort\autosort_client.cpp(282,41): warning C4244: '=': conversion from 'double' to 'int32_t', possible loss of data
-D:\VSCode\d2tweaks-rnd2k\src\d2tweaks\client\modules\autosort\autosort_client.cpp(288,41): warning C4244: '=': conversion from 'double' to 'int32_t', possible loss of data
+﻿  ui_manager.cpp
   D2tweaks.vcxproj -> D:\Diablo II\MODS\ironman-dev\D2tweaks.dll

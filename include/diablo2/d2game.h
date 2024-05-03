@@ -47,5 +47,8 @@ namespace diablo2 {
 
 		static void update_inventory_items(structures::game* game, structures::unit* player);
 		static uint32_t __fastcall diablo2::d2_game::transmogrify(diablo2::structures::game* game, diablo2::structures::unit* player);
+
+		//D2Game.0x6FC4ED80
+		structures::unit* __fastcall D2GAME_CreateItemEx_6FC4ED80(structures::game* pGame, structures::D2ItemDropStrc* pItemDrop, int32_t a3);
 	};
 }

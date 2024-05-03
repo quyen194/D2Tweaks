@@ -71,6 +71,12 @@
 
 #include <d2tweaks/client/client.h>
 
+#include <chrono> // Include chrono for time-based operations
+
+// Define a static variable to keep track of the last time the stash window was toggled
+static std::chrono::steady_clock::time_point lastToggleTime;
+
+
 #pragma pack(push, 1)
 
 using namespace std;
@@ -247,36 +253,100 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 	}
 
 	if (wParam == 'V') {
-		const auto player = diablo2::d2_client::get_local_player();
-		int32_t st0Guid = 0;
-		uint32_t st0X = 0;
-		uint32_t st0Y = 0;
-		diablo2::structures::unit* box{};
-		for (auto item = player->inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
-			const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
-			char* st0Code = record->string_code;
-			if (strncmp(st0Code, "st0", 3) == 0) {
-				box = item;
-				st0Guid = box->guid;
-				st0X = player->path->mapx;
-				st0Y = player->path->mapy;
+		// Define a cooldown duration in milliseconds
+		constexpr int cooldownDuration = 500; // Adjust this value as needed
+
+		// Get the current time
+		auto currentTime = std::chrono::steady_clock::now();
+
+		// Calculate the time elapsed since the last stash toggle
+		auto timeElapsed = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - lastToggleTime).count();
+
+		// Check if enough time has elapsed since the last toggle
+		if (timeElapsed >= cooldownDuration) {
+			// Update the last toggle time
+			lastToggleTime = currentTime;
+
+			if (!diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_STASH)) {
+				// Code to open stash
+				const auto player = diablo2::d2_client::get_local_player();
+				int32_t st0Guid = 0;
+				uint32_t st0X = 0;
+				uint32_t st0Y = 0;
+				diablo2::structures::unit* box{};
+				for (auto item = player->inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
+					const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
+					char* st0Code = record->string_code;
+					if (strncmp(st0Code, "st0", 3) == 0) {
+						box = item;
+						st0Guid = box->guid;
+						st0X = player->path->mapx;
+						st0Y = player->path->mapy;
+					}
+				}
+				struct D2GSPacketClt20 {
+					uint8_t PacketId; // 0x01
+					uint32_t guid;    // 0x06
+					uint32_t tx;    // 0x07
+					uint32_t ty;    // 0x09
+				};
+				D2GSPacketClt20 packet;
+				packet.PacketId = 0x20;
+				packet.guid = st0Guid;
+				packet.tx = st0X;
+				packet.ty = st0Y;
+				diablo2::d2_client::send_to_server(&packet, sizeof packet);
+				block = true;
+
+				// MessageBoxA(NULL, "Stash opened", "Stash", MB_OK);
+				// spdlog::info("Stash opened");
+			}
+			else {
+				// Code to close stash
+				// Close stash
+				diablo2::d2_client::set_ui_toggle(0x19, 1, FALSE);
+				// send to server7 to close cube packet 0x4F
+				diablo2::d2_client::send_to_server_7(0x4F, 0x17, 0, 0);
+				block = true;
 			}
 		}
-		struct D2GSPacketClt20 {
-			uint8_t PacketId; // 0x01
-			uint32_t guid;	// 0x06
-			uint32_t tx;	// 0x07
-			uint32_t ty;	// 0x09
-		};
-		D2GSPacketClt20 packet;
-		packet.PacketId = 0x20;
-		packet.guid = st0Guid;
-		packet.tx = st0X;
-		packet.ty = st0Y;
-		diablo2::d2_client::send_to_server(&packet, sizeof packet);
-		m_stash_enabled = false;
-		block = true;
+
 	}
+
+
+
+
+	//if (wParam == 'V') {
+	//	const auto player = diablo2::d2_client::get_local_player();
+	//	int32_t st0Guid = 0;
+	//	uint32_t st0X = 0;
+	//	uint32_t st0Y = 0;
+	//	diablo2::structures::unit* box{};
+	//	for (auto item = player->inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
+	//		const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
+	//		char* st0Code = record->string_code;
+	//		if (strncmp(st0Code, "st0", 3) == 0) {
+	//			box = item;
+	//			st0Guid = box->guid;
+	//			st0X = player->path->mapx;
+	//			st0Y = player->path->mapy;
+	//		}
+	//	}
+	//	struct D2GSPacketClt20 {
+	//		uint8_t PacketId; // 0x01
+	//		uint32_t guid;	// 0x06
+	//		uint32_t tx;	// 0x07
+	//		uint32_t ty;	// 0x09
+	//	};
+	//	D2GSPacketClt20 packet;
+	//	packet.PacketId = 0x20;
+	//	packet.guid = st0Guid;
+	//	packet.tx = st0X;
+	//	packet.ty = st0Y;
+	//	diablo2::d2_client::send_to_server(&packet, sizeof packet);
+	//	m_stash_enabled = false;
+	//	block = true;
+	//}
 
 	// Send item move packet + transmute packet for certain codes only for runes and gems
 	if (wParam == 'G') {

@@ -236,15 +236,9 @@ public:
 			for (const auto& stat : stats) {
 				int param = stat.param;
 				int op = stat.op;
-
-				int32_t spirits = diablo2::d2_common::get_stat(player, static_cast<diablo2::unit_stats_t>(185), NULL);
-				int32_t soulscaptured = statValue = diablo2::d2_common::get_stat(player, static_cast<diablo2::unit_stats_t>(184), NULL);
-
 				auto statline = diablo2::d2_common::get_item_stat_cost_record(stat.stat);
-
 				auto opBase = statline->wOpBase;
 				auto opStat = statline->wOpStat[0];
-
 				auto opBaseValue = diablo2::d2_common::get_stat(player, static_cast<diablo2::unit_stats_t>(opBase), NULL);
 				auto opStatValue = diablo2::d2_common::get_stat(player, static_cast<diablo2::unit_stats_t>(opStat), NULL);
 
@@ -299,8 +293,6 @@ public:
 
 				if (!diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_STASH)
 					&& !diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_CHARACTER)
-					// && !diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_INVENTORY)
-					// && !diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_SKILL)
 					&& !diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_CHAT)
 					&& !diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_NPCMENU)
 					&& !diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_MAINMENU)
@@ -329,34 +321,25 @@ public:
 
 				//diablo2::d2_win::draw_boxed_text(const_cast<wchar_t*>(statText.c_str()), stat.x1, stat.y1 + textOffset, 1, 0, stat.colorStat);
 				//diablo2::d2_win::draw_boxed_text(const_cast<wchar_t*>(statValueStr.c_str()), stat.x2, stat.y2 + textOffset, 1, 4, stat.colorStatValue);
-
 				// diablo2::d2_win::set_current_font(diablo2::UI_FONT_16); // Set font to FONT16
-
 				//diablo2::structures::d2_cmp::init_gfx_data(&g_gfxdata);
-
 				//diablo2::d2_gfx::draw_image(&g_gfxdata, 200, 200, 1, 5, 0);
-
 				// instead try to load direct jpg with gdi and insetad ofloading jpg file, specify it bb64 encoded and decode it.
 			}
 		}
 
 		if (m_help_enabled) {
-			const int windowWidth = 1280;
-			const int windowHeight = 768;
-
-			const int boxWidth = 1000;
-			const int boxHeight = 680;
-
-			const int boxX = (windowWidth - boxWidth) / 2;
-			const int boxY = (windowHeight - boxHeight) / 2;
-
-			const std::string helpText = "This is a sample help screen! You can put help text in here!?";
-
-			// Draw filled background box
-			diablo2::d2_gfx::draw_filled_rect(boxX, boxY, boxX + boxWidth, boxY + boxHeight, 0, 255);
-
-			// Draw justified text inside the box with padding
-			drawJustifiedTextInBox(helpText, boxX, boxY, boxWidth, boxHeight, 0);
+			//const int windowWidth = 1280;
+			//const int windowHeight = 768;
+			//const int boxWidth = 1000;
+			//const int boxHeight = 680;
+			//const int boxX = (windowWidth - boxWidth) / 2;
+			//const int boxY = (windowHeight - boxHeight) / 2;
+			//const std::string helpText = "This is a sample help screen! You can put help text in here!?";
+			//// Draw filled background box
+			//diablo2::d2_gfx::draw_filled_rect(boxX, boxY, boxX + boxWidth, boxY + boxHeight, 0, 255);
+			//// Draw justified text inside the box with padding
+			//drawJustifiedTextInBox(helpText, boxX, boxY, boxWidth, boxHeight, 0);
 		}
 
 		diablo2::ui_color_t::UI_COLOR_WHITE;
@@ -391,8 +374,6 @@ public:
 		int sHCenter = sHeight / 2;
 		int sWCenter = sWidth / 2;
 
-		//spdlog::info("healthPercentage: {}", healthPercentage);
-
 		// Define default bar color
 		DWORD barColor = 0;
 
@@ -407,42 +388,54 @@ public:
 			barColor = 5;
 		}
 
-		//spdlog::info("barColor: {}", barColor);
-
 		// Define the dimensions for the bars
-		int barWidth = 200; // Width of the bars
-		int barHeight = 16; // Height of the bars
+		int pbarWidth = GetPrivateProfileIntA("Options", "pbarWidth", 200, "./d2tweaks.ini");
+		int pbarHeight = GetPrivateProfileIntA("Options", "pbarHeight", 16, "./d2tweaks.ini");
+
 
 		// Define the coordinates for the bars
 		int barX = 245; // Left coordinate of the bars
 		int barY_HP = 728; // Top coordinate of the HP bar
-		int barY_Mana = barY_HP + barHeight + 4; // Top coordinate of the Mana bar with separator
-		int barY_Stamina = barY_Mana + barHeight + 4; // Top coordinate of the Stamina bar with separator
+		int barY_Mana = barY_HP + pbarHeight + 4; // Top coordinate of the Mana bar with separator
+		int barY_Stamina = barY_Mana + pbarHeight + 4; // Top coordinate of the Stamina bar with separator
 
 		std::wstring life = strHP + L" / " + strMaxHP;
 		std::wstring mana = strMana + L" / " + strMaxMana;
 		std::wstring stamina = strStamina + L" / " + strMaxStamina;
 
 		// Calculate the filled widths of the bars
-		int filledHPWidth = static_cast<int>(healthPercentage * barWidth);
-		int filledManaWidth = static_cast<int>(manaPercentage * barWidth);
-		int filledStaminaWidth = static_cast<int>(staminaPercentage * barWidth);
+		int filledHPWidth = static_cast<int>(healthPercentage * pbarWidth);
+		int filledManaWidth = static_cast<int>(manaPercentage * pbarWidth);
+		int filledStaminaWidth = static_cast<int>(staminaPercentage * pbarWidth);
 
 		// at 345 we need to minus the width of the text
 		sWCenter = barX + 100 - (diablo2::d2_win::get_text_pixel_width(const_cast<wchar_t*>(mana.c_str())) / 2);
 
 		HWND diabloIIWnd = FindDiabloIIWindow();
 
-		// Draw the filled HP bar
-		diablo2::d2_gfx::draw_filled_rect(barX, barY_HP, barX + filledHPWidth, barY_HP + barHeight, barColor, 255);
-		//DrawFilledRect(diabloIIWnd, barX, barY_HP, barX + filledHPWidth, barY_HP + barHeight, RGB(255, 0, 0)); // Red color for HP
-		diablo2::d2_win::draw_text(const_cast<wchar_t*>(life.c_str()), sWCenter, barY_HP + 15, diablo2::UI_COLOR_WHITE, 0);
+		// Get player_bars_enabled from [Options] in d2tweaks.ini
+		int player_bars_enabled_hp = GetPrivateProfileIntA("Options", "player_bars_hp_enabled", 1, "./d2tweaks.ini");
+		int player_bars_X_hp = GetPrivateProfileIntA("Options", "player_bars_hp_X", barX, "./d2tweaks.ini");
+		int player_bars_Y_hp = GetPrivateProfileIntA("Options", "player_bars_hp_Y", barY_HP, "./d2tweaks.ini");
 
-		// Draw the filled Mana bar
-		diablo2::d2_gfx::draw_filled_rect(barX, barY_Mana, barX + filledManaWidth, barY_Mana + barHeight, 140, 255);
-		//DrawFilledRect(diabloIIWnd, barX, barY_Mana, barX + filledManaWidth, barY_Mana + barHeight, RGB(100, 100, 255)); // Blue color for Mana
-		diablo2::d2_win::draw_text(const_cast<wchar_t*>(mana.c_str()), sWCenter, barY_Mana + 15, diablo2::UI_COLOR_WHITE, 0);
+		int player_bars_enabled_mana = GetPrivateProfileIntA("Options", "player_bars_mana_enabled", 1, "./d2tweaks.ini");
+		int player_bars_X_mana = GetPrivateProfileIntA("Options", "player_bars_mana_X", barX, "./d2tweaks.ini");
+		int player_bars_Y_mana = GetPrivateProfileIntA("Options", "player_bars_mana_Y", barY_Mana, "./d2tweaks.ini");
 
+
+
+		if (player_bars_enabled_hp == 1) {
+			// Draw the filled HP bar
+			diablo2::d2_gfx::draw_filled_rect(player_bars_X_hp, player_bars_Y_hp, barX + filledHPWidth, barY_HP + pbarHeight, barColor, 255);
+			//DrawFilledRect(diabloIIWnd, barX, barY_HP, barX + filledHPWidth, barY_HP + barHeight, RGB(255, 0, 0)); // Red color for HP
+			diablo2::d2_win::draw_text(const_cast<wchar_t*>(life.c_str()), sWCenter, barY_HP + 15, diablo2::UI_COLOR_WHITE, 0);
+		}
+		if (player_bars_enabled_mana == 1) {
+			// Draw the filled Mana bar
+			diablo2::d2_gfx::draw_filled_rect(player_bars_X_mana, player_bars_Y_mana, barX + filledManaWidth, barY_Mana + pbarHeight, 140, 255);
+			//DrawFilledRect(diabloIIWnd, barX, barY_Mana, barX + filledManaWidth, barY_Mana + barHeight, RGB(100, 100, 255)); // Blue color for Mana
+			diablo2::d2_win::draw_text(const_cast<wchar_t*>(mana.c_str()), sWCenter, barY_Mana + 15, diablo2::UI_COLOR_WHITE, 0);
+		}
 		/*
 		// Define the number of separators
 		int numColors = 256;

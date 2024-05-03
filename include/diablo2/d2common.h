@@ -1044,5 +1044,11 @@ namespace diablo2 {
 		// Write a function signature for this function
 		static structures::D2ItemStatCostTxt* get_item_stat_cost_record(int nStatId);
 
+		//D2Common.0x6FD57720 (#10602)
+		//int __stdcall DATATBLS_GetItemIdFromItemCode(uint32_t dwCode)
+		static int get_item_id_from_item_code(uint32_t dwCode);
+
+
+
 	};
 }

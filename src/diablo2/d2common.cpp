@@ -258,3 +258,12 @@ diablo2::structures::D2ItemStatCostTxt* diablo2::d2_common::get_item_stat_cost_r
 	static wrap_func_fast<diablo2::structures::D2ItemStatCostTxt* (int)> get_item_stat_cost_record(0x642b0, get_base());
 	return get_item_stat_cost_record(statId);
 }
+
+//D2Common.0x6FD57720 (#10602)
+//int __stdcall DATATBLS_GetItemIdFromItemCode(uint32_t dwCode)
+//static int get_item_id_from_item_code(uint32_t dwCode);
+
+int32_t diablo2::d2_common::get_item_id_from_item_code(uint32_t dwCode) {
+	static wrap_func_std_import<int32_t(uint32_t)> get_item_id_from_item_code(10602, get_base());
+	return get_item_id_from_item_code(dwCode);
+}

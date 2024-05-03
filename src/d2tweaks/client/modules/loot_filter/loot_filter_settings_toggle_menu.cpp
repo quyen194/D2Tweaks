@@ -5,91 +5,45 @@
 #include <d2tweaks/ui/controls/button.h>
 #include <d2tweaks/client/client.h>
 #include <diablo2/d2client.h>
-#include <d2tweaks/ui/ui_manager.h>
+#include <diablo2/d2gfx.h>
 #include <DllNotify.h>
 #include <D2Template.h>
-
-#include <diablo2/d2gfx.h>
-
-#include <string>
-#include <vector>
-#include <sstream>
-
-#include <string>
-#include <locale>
-#include <codecvt>
-
-#include <cstdlib> // For system function
-
-#include <shellapi.h> // For ShellExecute
 #include <diablo2/d2common.h>
 #include <d2tweaks/ui/ui_manager.h>
-
+#include <cstdlib> // For system function
+#include <shellapi.h> // For ShellExecute
 #include <Windows.h>
 #include <algorithm>
-
 #include <common/hooking.h>
-
 #include <d2tweaks/common/protocol.h>
-
 #include <d2tweaks/ui/menu.h>
-
-#include <diablo2/d2win.h>
-#include <diablo2/d2client.h>
-#include <diablo2/d2common.h>
-#include <diablo2/d2game.h>
 #include <spdlog/spdlog.h>
-
-#include <Windows.h>
-
 #include <d2tweaks/client/modules/autosort/autosort_client.h>
-
-#include <d2tweaks/client/client.h>
-
-#include <spdlog/spdlog.h>
-
 #include <d2tweaks/common/common.h>
-#include <d2tweaks/common/protocol.h>
 #include <d2tweaks/common/asset_manager.h>
-
-#include <d2tweaks/ui/menu.h>
-#include <d2tweaks/ui/ui_manager.h>
 #include <d2tweaks/ui/controls/control.h>
-#include <d2tweaks/ui/controls/button.h>
-
-#include <diablo2/d2common.h>
-#include <diablo2/d2client.h>
 #include <diablo2/d2win.h>
-#include <diablo2/d2gfx.h>
 #include <diablo2/d2cmp.h>
-
 #include <diablo2/structures/unit.h>
 #include <diablo2/structures/inventory.h>
 #include <diablo2/structures/item_data.h>
 #include <diablo2/structures/player_data.h>
-
 #include <diablo2/structures/path.h>
 #include <diablo2/structures/game.h>
 #include <diablo2/structures/data/items_line.h>
 #include <diablo2/structures/data/item_types_line.h>
-
 #include <iostream>
 #include <fstream>
-#include <string>
 #include <filesystem>
 #include <unordered_map>
 #include <time.h>
 #include <cmath>
 #include <random>
-#include <algorithm>
 #include <functional>
 #include <map>
-
 #include <iomanip> // For std::setw
 #include <sstream>
 #include <stdexcept> // For std::invalid_argument
-
-#include <iostream>
 #include <vector>
 #include <string>
 #include <CommCtrl.h> // Include for edit control
@@ -123,40 +77,57 @@ d2_tweaks::client::modules::loot_filter_settings_toggle_menu::loot_filter_settin
 
 	m_filter_settings_menu = singleton<ui::ui_manager>::instance().get_menu("loot_filter_settings_menu");
 
+	// toggle stats button
 	m_btn_toggle_stats = static_cast<ui::controls::button*>(get_control("m_toggle_stats"));
 	m_btn_toggle_stats->set_enabled(true);
 	m_btn_toggle_stats->set_visible(true);
 	m_btn_toggle_stats->set_on_click(std::bind(&loot_filter_settings_toggle_menu::toggle_stats_settings_click, this));
 
+	// help button
 	m_btn_toggle_help = static_cast<ui::controls::button*>(get_control("m_toggle_help"));
 	m_btn_toggle_help->set_enabled(true);
 	m_btn_toggle_help->set_visible(true);
 	m_btn_toggle_help->set_on_click(std::bind(&loot_filter_settings_toggle_menu::toggle_help_click, this));
 
+	// toggle open/close cube button
 	m_btn_toggle_cube = static_cast<ui::controls::button*>(get_control("m_toggle_cube"));
 	m_btn_toggle_cube->set_enabled(true);
 	m_btn_toggle_cube->set_visible(true);
+	auto player = diablo2::d2_client::get_local_player();
+	//iterate over all items in player inventory
+	for (auto item = player->inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
+		const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
+		char* normCode1 = record->string_code;
+		if (strncmp(normCode1, "box", 3) == 0) {
+			m_btn_toggle_cube->set_enabled(true);
+			m_btn_toggle_cube->set_visible(true);
+			break;
+		}
+		else {
+			m_btn_toggle_cube->set_enabled(false);
+			m_btn_toggle_cube->set_visible(false);
+		}
+	}
 	m_btn_toggle_cube->set_on_click(std::bind(&loot_filter_settings_toggle_menu::toggle_cube_click, this));
 
+	// toggle open/close stash button
 	m_btn_toggle_stash = static_cast<ui::controls::button*>(get_control("m_toggle_stash"));
-
 	m_btn_toggle_stash->set_enabled(true);
 	m_btn_toggle_stash->set_visible(true);
-	//auto player = diablo2::d2_client::get_local_player();
-	////iterate over all items in player inventory
-	//for (auto item = player->inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
-	//	const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
-	//	char* normCode1 = record->string_code;
-	//	if (strncmp(normCode1, "st0", 3) == 0) {
-	//		m_btn_toggle_stash->set_enabled(true);
-	//		m_btn_toggle_stash->set_visible(true);
-	//		break;
-	//	}
-	//	else {
-	//		m_btn_toggle_stash->set_enabled(false);
-	//		m_btn_toggle_stash->set_visible(false);
-	//	}
-	//}
+	//iterate over all items in player inventory
+	for (auto item = player->inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
+		const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
+		char* normCode1 = record->string_code;
+		if (strncmp(normCode1, "st0", 3) == 0) {
+			m_btn_toggle_stash->set_enabled(true);
+			m_btn_toggle_stash->set_visible(true);
+			break;
+		}
+		else {
+			m_btn_toggle_stash->set_enabled(false);
+			m_btn_toggle_stash->set_visible(false);
+		}
+	}
 	m_btn_toggle_stash->set_on_click(std::bind(&loot_filter_settings_toggle_menu::toggle_stash_click, this));
 }
 
@@ -244,9 +215,7 @@ void d2_tweaks::client::modules::loot_filter_settings_toggle_menu::toggle_stash_
 		diablo2::d2_client::send_to_server(&packet, sizeof packet);
 	}
 	else {
-		//run a for loop and send th set_ui_toggle packet 255 times from 1 to 255
 		diablo2::d2_client::set_ui_toggle(0x19, 1, FALSE);
-
 		// send to server7 to close cube packet 0x4F
 		diablo2::d2_client::send_to_server_7(0x4F, 0x17, 0, 0);
 	}
@@ -255,7 +224,11 @@ void d2_tweaks::client::modules::loot_filter_settings_toggle_menu::toggle_stash_
 void d2_tweaks::client::modules::loot_filter_settings_toggle_menu::toggle_help_click() {
 	//m_help_enabled = !m_help_enabled;
 	// Open the default OS browser to the URL
-	const std::string url = "https://im.stoned.io";
+	// read the url from the ./d2tweaks.ini file
+	char urlBuffer[256];
+	GetPrivateProfileStringA("Options", "help_url", "", urlBuffer, sizeof(urlBuffer), "./d2tweaks.ini");
+	const std::string url(urlBuffer);
+
 #ifdef _WIN32
 	// For Windows
 	ShellExecute(nullptr, "open", url.c_str(), nullptr, nullptr, SW_SHOWNORMAL);
