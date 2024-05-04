@@ -152,7 +152,6 @@ namespace diablo2 {
 			uint16_t pad0x13E;						//0x13E
 			uint32_t dwStuff;						//0x140
 		};
-
 	}
 
 	enum unit_stats_t {
@@ -1038,7 +1037,7 @@ namespace diablo2 {
 
 		static void diablo2::d2_common::add_property(structures::unit* item, D2PropertyStrc* pProperty, int nUnused);
 		static void diablo2::d2_common::ITEMS_SetItemFlag(structures::unit* item, uint32_t dwFlag, BOOL bSet);
-		
+
 		//D2Common.0x6FDA42B0
 		// D2ItemStatCostTxt* __fastcall ITEMS_GetItemStatCostTxtRecord(int nStatId)
 		// Write a function signature for this function
@@ -1047,8 +1046,5 @@ namespace diablo2 {
 		//D2Common.0x6FD57720 (#10602)
 		//int __stdcall DATATBLS_GetItemIdFromItemCode(uint32_t dwCode)
 		static int get_item_id_from_item_code(uint32_t dwCode);
-
-
-
 	};
 }

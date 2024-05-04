@@ -392,7 +392,6 @@ public:
 		int pbarWidth = GetPrivateProfileIntA("Options", "pbarWidth", 200, "./d2tweaks.ini");
 		int pbarHeight = GetPrivateProfileIntA("Options", "pbarHeight", 16, "./d2tweaks.ini");
 
-
 		// Define the coordinates for the bars
 		int barX = 245; // Left coordinate of the bars
 		int barY_HP = 728; // Top coordinate of the HP bar
@@ -421,8 +420,6 @@ public:
 		int player_bars_enabled_mana = GetPrivateProfileIntA("Options", "player_bars_mana_enabled", 1, "./d2tweaks.ini");
 		int player_bars_X_mana = GetPrivateProfileIntA("Options", "player_bars_mana_X", barX, "./d2tweaks.ini");
 		int player_bars_Y_mana = GetPrivateProfileIntA("Options", "player_bars_mana_Y", barY_Mana, "./d2tweaks.ini");
-
-
 
 		if (player_bars_enabled_hp == 1) {
 			// Draw the filled HP bar

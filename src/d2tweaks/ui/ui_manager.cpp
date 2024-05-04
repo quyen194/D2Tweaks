@@ -767,9 +767,28 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 				}
 			}
 
-			if (isArmorOrWeaponCode(normCode) ||
-				(record->type >= 109 && record->type <= 125) ||
-				(record->type >= 1 && record->type <= 50)) {
+			if (isArmorOrWeaponCode(normCode) 
+				|| record->type == 109
+				|| record->type == 111
+				|| record->type == 112
+				|| record->type == 113
+				|| record->type == 120
+				|| record->type == 113
+				|| record->type == 122
+				|| record->type == 123
+				|| record->type == 125
+				|| record->type == 4 - 3
+				|| record->type == 5 - 3
+				|| record->type == 17 - 3
+				|| record->type == 18 - 3
+				|| record->type == 21 - 3
+				|| record->type == 26 - 3
+				|| record->type == 27 - 3
+				|| record->type == 28 - 3
+				|| record->type == 29 - 3
+				|| record->type == 30 - 3
+				|| record->type == 31 - 3
+				|| record->type == 32 - 3) {
 				// Create a packet to move an item
 				static d2_tweaks::common::item_move_cs packet;
 
@@ -911,16 +930,28 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 				}
 			}
 
-			if (isArmorOrWeaponCode(normCode) ||
-				record->type == 109 ||
-				record->type == 111 ||
-				record->type == 112 ||
-				record->type == 113 ||
-				record->type == 120 ||
-				record->type == 122 ||
-				record->type == 123 ||
-				record->type == 125 ||
-				(record->type >= (1) && record->type <= (50))) {
+			if (isArmorOrWeaponCode(normCode)
+				|| record->type == 109
+				|| record->type == 111
+				|| record->type == 112
+				|| record->type == 113
+				|| record->type == 120
+				|| record->type == 113
+				|| record->type == 122
+				|| record->type == 123
+				|| record->type == 125
+				|| record->type == 4 - 3
+				|| record->type == 5 - 3
+				|| record->type == 17 - 3
+				|| record->type == 18 - 3
+				|| record->type == 21 - 3
+				|| record->type == 26 - 3
+				|| record->type == 27 - 3
+				|| record->type == 28 - 3
+				|| record->type == 29 - 3
+				|| record->type == 30 - 3
+				|| record->type == 31 - 3
+				|| record->type == 32 - 3) {
 				char currentPage;
 
 				// open the cube
