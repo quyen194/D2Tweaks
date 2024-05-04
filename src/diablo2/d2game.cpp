@@ -143,3 +143,11 @@ diablo2::structures::unit* __fastcall diablo2::d2_game::D2GAME_CreateItemEx_6FC4
 	static wrap_func_fast< diablo2::structures::unit* (diablo2::structures::game*, diablo2::structures::D2ItemDropStrc*, int32_t)> D2GAME_CreateItemEx_6FC4ED80(0x1ed80, get_base());
 	return D2GAME_CreateItemEx_6FC4ED80(pGame, pItemDrop, a3);
 }
+
+// Add a wrapper for the following function:
+//D2Game.0x6FC4A660
+//int32_t __fastcall D2GAME_Transmogrify_6FC4A660(D2GameStrc* pGame, D2UnitStrc* pUnit, D2UnitStrc* pItem)
+int32_t __fastcall diablo2::d2_game::D2GAME_Transmogrify_6FC4A660(diablo2::structures::game* pGame, diablo2::structures::unit* pUnit, diablo2::structures::unit* pItem) {
+	static wrap_func_fast<int32_t(diablo2::structures::game*, diablo2::structures::unit*, diablo2::structures::unit* item)> D2GAME_Transmogrify_6FC4A660(0x1a660, get_base());
+	return D2GAME_Transmogrify_6FC4A660(pGame, pUnit, pItem);
+}

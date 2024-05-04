@@ -50,5 +50,7 @@ namespace diablo2 {
 
 		//D2Game.0x6FC4ED80
 		structures::unit* __fastcall D2GAME_CreateItemEx_6FC4ED80(structures::game* pGame, structures::D2ItemDropStrc* pItemDrop, int32_t a3);
+
+		static int32_t __fastcall D2GAME_Transmogrify_6FC4A660(structures::game* pGame, structures::unit* pUnit, structures::unit* pItem);
 	};
 }
