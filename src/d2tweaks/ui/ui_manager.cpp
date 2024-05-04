@@ -490,6 +490,7 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 
 	case WM_RBUTTONDOWN:
 	{
+
 		// Get the local player object from the Diablo 2 client
 		const auto player = diablo2::d2_client::get_local_player();
 
@@ -825,6 +826,8 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 		break;
 	}
 
+
+
 	case WM_RBUTTONUP:
 	{
 		block = instance.process_right_mouse(true);
@@ -835,21 +838,15 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 	case WM_MOUSEWHEEL:
 	{
 		// Extract the distance the wheel is rotated from the message
-		short zDelta = GET_WHEEL_DELTA_WPARAM(wParam);
+		short zDelta = GET_WHEEL_DELTA_WPARAM(wParam);	
 
 		// Check if the wheel is scrolled upwards
 		if (zDelta > 0) {
-			// Send a packet to activate the transmute button in the cube
-			diablo2::d2_client::send_to_server_7(0x4F, 0x18, 0, 0);
-
 			// Process the mouse wheel input by scrolling upwards
 			block = instance.process_mouse_wheel(true);
 		}
 		// Check if the wheel is scrolled downwards
 		else if (zDelta < 0) {
-			// Send a packet to activate the transmute button in the cube
-			diablo2::d2_client::send_to_server_7(0x4F, 0x18, 0, 0);
-
 			// Process the mouse wheel input by scrolling downwards
 			block = instance.process_mouse_wheel(false);
 		}
