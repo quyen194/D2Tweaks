@@ -243,6 +243,10 @@ namespace d2_tweaks {
 			bool removeFromBag;
 			int prop;
 			int val;
+			int tmog;
+			int x;
+			int y;
+
 
 			item_move_cs() : item_guid(0), target_page(0) {
 				message_type = MESSAGE_TYPE_ITEM_MOVE;

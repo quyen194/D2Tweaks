@@ -267,3 +267,10 @@ int32_t diablo2::d2_common::get_item_id_from_item_code(uint32_t dwCode) {
 	static wrap_func_std_import<int32_t(uint32_t)> get_item_id_from_item_code(10602, get_base());
 	return get_item_id_from_item_code(dwCode);
 }
+
+//D2Common.0x6FD576D0 (#10601)
+//D2ItemsTxt* __stdcall DATATBLS_GetItemRecordFromItemCode(uint32_t dwCode, int* pItemId)
+diablo2::structures::items_line* diablo2::d2_common::get_item_record_from_item_code(uint32_t dwCode, int* pItemId) {
+	static wrap_func_std_import<diablo2::structures::items_line* (uint32_t, int*)> get_item_record_from_item_code(10601, get_base());
+	return get_item_record_from_item_code(dwCode, pItemId);
+}

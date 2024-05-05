@@ -49,8 +49,10 @@ namespace diablo2 {
 		static uint32_t __fastcall diablo2::d2_game::transmogrify(diablo2::structures::game* game, diablo2::structures::unit* player);
 
 		//D2Game.0x6FC4ED80
-		structures::unit* __fastcall D2GAME_CreateItemEx_6FC4ED80(structures::game* pGame, structures::D2ItemDropStrc* pItemDrop, int32_t a3);
+		static structures::unit* __fastcall D2GAME_CreateItemEx_6FC4ED80(structures::game* pGame, structures::D2ItemDropStrc* pItemDrop, int32_t a3);
 
-		static int32_t __fastcall D2GAME_Transmogrify_6FC4A660(structures::game* pGame, structures::unit* pUnit, structures::unit* pItem);
+		//D2Game.0x6FC4A660
+		static int32_t __fastcall D2GAME_Transmogrify_6FC4A660(structures::game* pGame, structures::unit* pPlayer, structures::unit* pItem);
+
 	};
 }

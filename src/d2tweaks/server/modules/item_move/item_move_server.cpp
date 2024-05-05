@@ -26,6 +26,20 @@
 
 #include <iomanip> // For std::setw
 
+enum D2C_ItemQualities
+{
+	ITEMQUAL_INFERIOR = 0x01, 	//0x01 Inferior
+	ITEMQUAL_NORMAL = 0x02, 	//0x02 Normal
+	ITEMQUAL_SUPERIOR = 0x03, 	//0x03 Superior
+	ITEMQUAL_MAGIC = 0x04, 		//0x04 Magic
+	ITEMQUAL_SET = 0x05, 		//0x05 Set
+	ITEMQUAL_RARE = 0x06, 		//0x06 Rare
+	ITEMQUAL_UNIQUE = 0x07, 	//0x07 Unique
+	ITEMQUAL_CRAFT = 0x08, 		//0x08 Crafted
+	ITEMQUAL_TEMPERED = 0x09	//0x09 Tempered
+};
+
+
 void serialize_item(const std::string& itemcode, const diablo2::structures::unit& item, std::ofstream& file) {
 	// Write item code
 	file << itemcode << ":";
@@ -72,69 +86,98 @@ bool d2_tweaks::server::modules::item_move::handle_packet(diablo2::structures::g
 	const char* itemcode = itemMove->item_code;
 	const auto bag = instance.get_server_unit(game, itemMove->bag_guid, diablo2::structures::unit_type_t::UNIT_TYPE_ITEM); //0x4 = item
 
-	D2PropertyStrc itemProperty = {};
-	itemProperty.nProperty = itemMove->prop;
-	itemProperty.nLayer = 0;
-	itemProperty.nMin = itemMove->val;
-	itemProperty.nMax = itemMove->val;
-	diablo2::d2_common::add_property(bag, &itemProperty, 1);
-
-	if (item == nullptr)
-		return true; //block further packet processing
-
-	const auto inventoryIndex = diablo2::d2_common::get_inventory_index(player, itemMove->target_page, game->item_format == 101);
-
-	uint32_t tx, ty;
-
-	if (!find_free_space(player->inventory, item, inventoryIndex, itemMove->target_page, tx, ty))
-		return true; //block further packet processing
-
-	//diablo2::d2_common::set_unit_mode(item, 0); // mode 4 - предмет нельзя взять мышкой из инвентаря, mode 0 - обычный режим
-
-	item->item_data->page = itemMove->target_page;
-
-	diablo2::d2_common::inv_add_item(player->inventory, item, tx, ty, inventoryIndex, false, item->item_data->page);
-	diablo2::d2_common::inv_update_item(player->inventory, item, false);
-
-	diablo2::d2_game::update_inventory_items(game, player);
-
-	//send update packet
-	resp.item_guid = itemMove->item_guid;
-	resp.target_page = itemMove->target_page;
-	resp.tx = tx;
-	resp.ty = ty;
-
-	const auto client = player->player_data->net_client;
-
-	diablo2::d2_net::send_to_client(1, client->client_id, &resp, sizeof resp);
-
-	if (itemMove->removeFromBag == 1) {
+	if (itemMove->tmog == 1) {
 		// here we need to add item to inventory
 
-		diablo2::structures::unit* item;
+		const auto item = instance.get_server_unit(game, itemMove->item_guid, diablo2::structures::unit_type_t::UNIT_TYPE_ITEM); //0x4 = item
 
-		// or I can do something like this,
-		// when extractor is clicked, send the bag and extractor to cube,
+		diablo2::d2_game::D2GAME_Transmogrify_6FC4A660(game, player, item);
 
-		const auto player = diablo2::d2_client::get_local_player();
+		//auto gemCode = diablo2::d2_common::get_item_id_from_item_code(' vfg');
+		//diablo2::structures::D2ItemDropStrc itemDrop = {};
+		//diablo2::structures::D2CoordStrc pReturnCoords = {};
+		//auto player = diablo2::d2_client::get_local_player();
+		//itemDrop.pSeed = nullptr;
+		//itemDrop.nX = pReturnCoords.nX;
+		//itemDrop.nY = pReturnCoords.nY;
+		//itemDrop.wItemFormat = game->item_format;
+		//itemDrop.pRoom = 0;
+		//itemDrop.nQuality = ITEMQUAL_NORMAL;
+		//itemDrop.pUnit = player;
+		//itemDrop.pGame = game;
+		//itemDrop.nId = gemCode;
+		//itemDrop.nSpawnType = 4;
+		//itemDrop.wUnitInitFlags = 1;
+		//itemDrop.nItemLvl = 1;
+		//diablo2::structures::unit* nItem = diablo2::d2_game::D2GAME_CreateItemEx_6FC4ED80(game, &itemDrop, 0);
+
+		//Display nITem->guid in a messagebox
+		//std::string guid = std::to_string(nItem->guid);
+		//MessageBox(NULL, guid.c_str(), "Item GUID", MB_OK | MB_ICONINFORMATION);
+
+		//const auto inventoryIndex = diablo2::d2_common::get_inventory_index(player, 0, game->item_format == 101);
+		//uint32_t tx, ty;
+
+		//if (!find_free_space(player->inventory, nItem, inventoryIndex, 0, tx, ty))
+		//	return true; //block further packet processing
+		//
+		//nItem->item_data->page = 0;
+
+		//diablo2::d2_common::inv_add_item(player->inventory, nItem, tx, ty, inventoryIndex, false, nItem->item_data->page);
+		//diablo2::d2_common::inv_update_item(player->inventory, nItem, false);
+
+		//diablo2::d2_game::update_inventory_items(game, player);
+
+		////send update packet
+		//resp.item_guid = nItem->guid;
+		//resp.target_page = 0;
+		//resp.tx = tx;
+		//resp.ty = ty;
+
+		//const auto client = player->player_data->net_client;
+
+		//diablo2::d2_net::send_to_client(1, client->client_id, &resp, sizeof resp);
+
 	}
+	else {
+		D2PropertyStrc itemProperty = {};
+		itemProperty.nProperty = itemMove->prop;
+		itemProperty.nLayer = 0;
+		itemProperty.nMin = itemMove->val;
+		itemProperty.nMax = itemMove->val;
+		diablo2::d2_common::add_property(bag, &itemProperty, 1);
 
-	if (itemMove->updateBag == 1) {
-		// Serialize item data into binary file
-		std::string playerName = player->player_data->name;
-		std::string fileName = "./Save/" + playerName + ".boh";
-		// Open file in append mode
-		std::ofstream outFile(fileName, std::ios::binary | std::ios::app);
-		if (!outFile) {
-			std::cerr << "Error opening file: " << fileName << std::endl;
-			return false;
-		}
+		if (item == nullptr)
+			return true; //block further packet processing
 
-		serialize_item(itemcode, *item, outFile);
-		outFile.close();
+		const auto inventoryIndex = diablo2::d2_common::get_inventory_index(player, itemMove->target_page, game->item_format == 101);
+
+		uint32_t tx, ty;
+
+		if (!find_free_space(player->inventory, item, inventoryIndex, itemMove->target_page, tx, ty))
+			return true; //block further packet processing
+
+		//diablo2::d2_common::set_unit_mode(item, 0); // mode 4 - предмет нельзя взять мышкой из инвентаря, mode 0 - обычный режим
+
+		item->item_data->page = itemMove->target_page;
+
+		diablo2::d2_common::inv_add_item(player->inventory, item, tx, ty, inventoryIndex, false, item->item_data->page);
+		diablo2::d2_common::inv_update_item(player->inventory, item, false);
+
+		diablo2::d2_game::update_inventory_items(game, player);
+
+		//send update packet
+		resp.item_guid = itemMove->item_guid;
+		resp.target_page = itemMove->target_page;
+		resp.tx = tx;
+		resp.ty = ty;
+
+		const auto client = player->player_data->net_client;
+
+		diablo2::d2_net::send_to_client(1, client->client_id, &resp, sizeof resp);
+
+		return true;
 	}
-
-	return true;
 }
 
 bool d2_tweaks::server::modules::item_move::find_free_space(diablo2::structures::inventory* inv,

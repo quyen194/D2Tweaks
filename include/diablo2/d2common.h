@@ -1046,5 +1046,10 @@ namespace diablo2 {
 		//D2Common.0x6FD57720 (#10602)
 		//int __stdcall DATATBLS_GetItemIdFromItemCode(uint32_t dwCode)
 		static int get_item_id_from_item_code(uint32_t dwCode);
+
+		//D2Common.0x6FD576D0 (#10601)
+		// D2ItemsTxt* __stdcall DATATBLS_GetItemRecordFromItemCode(uint32_t dwCode, int* pItemId)
+		static structures::items_line* get_item_record_from_item_code(uint32_t dwCode, int* pItemId);
+
 	};
 }

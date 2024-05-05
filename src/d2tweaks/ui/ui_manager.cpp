@@ -150,7 +150,29 @@ const char* ITEMS_armor_and_weapons[] = {
 	"pa8", "pa9", "paa", "ne6", "ne7", "ne8", "ne9", "nea", "drb", "drc",
 	"drd", "dre", "drf", "bab", "bac", "bad", "bae", "baf", "pab", "pac",
 	"pad", "pae", "paf", "neb", "neg", "ned", "nee", "nef", "tor", "ooc",
-	"eaq", "ebq", "ib1", "ib3"
+	"eaq", "ebq", "ib1", "ib3",
+	// stones
+	"abc", "abd", "abe", "abf", "abg", "abh", "abi", "abj", "abk", "abl",
+	"abm", "abn", "abo", "abp", "abq", "abr", "abs", "abt", "abu", "abv",
+	"abw", "abx", "aby", "abz", "ab0", "ab1", "ab2", "ab3", "ab4", "ab5",
+	"ab6", "ab7", "ab8", "ab9", "acb", "acd", "ace", "acf", "acg", "ach",
+	"aci", "acj", "ack", "acl", "acm", "acn", "aco", "acp", "acq", "acr",
+	"acs", "act", "acu", "acv", "acw", "acx", "acy", "acz", "ac0", "ac1",
+	"ac2", "ac3", "ac4", "ac5", "ac6", "ac7", "ac8", "ac9", "adb", "adc",
+	"ade", "adf", "adg", "adh", "adi", "adj", "adk", "adl", "adm", "adn",
+	"ado", "adp", "adq", "adr", "ads", "adt", "adu", "adv", "adw", "adx",
+	"ady", "adz", "ad0", "ad1", "ad2", "ad3", "ad4", "ad5", "ad6", "ad7",
+	"ad8", "ad9", "aeb", "aec", "aed", "aef", "aeg", "aeh", "aei", "aej",
+	"aek", "ael", "aem", "aen", "aeo", "aep", "aeq", "aer", "aes", "aet",
+	"aeu", "aev", "aew", "aex", "aey", "aez", "ae0", "ae1", "ae2", "ae3",
+	"ae4", "ae5", "ae6",
+	// demon keys/chests
+	"dkr1", "dkr2", "dkr3", "dkr4", "dkr5", "da1", "db1", "dc1"
+	// crafting items
+	"afr", "afy", "afp", "af0", "afx", "afh", "afq", "afj", "aft", "afi",
+	"afe", "afg", "afk", "ae7", "afn", "ae8", "afl", "ae9", "afv", "afz",
+	"af3", "af1", "afm", "af5", "afc", "afo", "afw", "afs", "af2", "afd",
+	"afb", "af4", "afu"
 };
 
 const char* ITEMS_gems_and_runes[] = {
@@ -160,7 +182,8 @@ const char* ITEMS_gems_and_runes[] = {
 	"gpg", "gpr", "gpb", "skz", "gpy", "ib1", "r01", "r02", "r03", "r04",
 	"r05", "r06", "r07", "r08", "r09", "r10", "r11", "r12", "r13", "r14",
 	"r15", "r16", "r17", "r18", "r19", "r20", "r21", "r22", "r23", "r24",
-	"r25", "r26", "r27", "r28", "r29", "r30", "r31", "r32", "r33", "ib2"
+	"r25", "r26", "r27", "r28", "r29", "r30", "r31", "r32", "r33", "ib2",
+	
 };
 
 // Define a structure named GemType
@@ -490,7 +513,6 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 
 	case WM_RBUTTONDOWN:
 	{
-
 		// Get the local player object from the Diablo 2 client
 		const auto player = diablo2::d2_client::get_local_player();
 
@@ -566,7 +588,9 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 			// Declare a pointer to store the string key
 			const char* key;
 
-			// Check if the current page is the stash or inventory
+			// Check if the current page is the stash or inventory, right click on gem/rune will
+			// add it to the cube and send it to page 99 which is non existent 
+			// (hope it doesn't bloat save file size and actualy disappears from memory)
 			if (currentPage == 0 || currentPage == 4) {
 				// Check if the stash or inventory window is open
 				if (diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_STASH) ||
@@ -610,7 +634,8 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 						}
 					}
 				}
-				// Check if the cube window is open and the current page is 3
+				// Check if the cube window is open and the current page is 3 (gen/rune is in cube)
+				// move the item back to inventory
 				else if (diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_CUBE) && currentPage == 3) {
 					// Iterate through each gem type in the gemTypes map
 					for (const auto& gem : gemTypes) {
@@ -636,7 +661,8 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 						}
 					}
 				}
-				// Check if the cube window is open and the current page is 0
+				// Check if the cube window is open and the current page is 0 (gem/rune is in inventory)
+				// on right click add it to the gembag and send the original gem/rune to page 99
 				else if (diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_CUBE) && currentPage == 0) {
 					// Iterate through each gem type in the gemTypes map
 					for (const auto& gem : gemTypes) {
@@ -679,6 +705,7 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 				}
 			}
 
+			// For gem/rune extractors, on right click, move the bag and extractor to the cube, send transmute packet
 			// Check if the current page is the inventory, cube, or stash
 			if (currentPage == 0 || currentPage == 3 || currentPage == 4) {
 				// Check if the stash, cube, or inventory window is open
@@ -737,7 +764,7 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 				}
 			}
 
-			// Move items from the cube to the inventory
+			// Move gems/runes from the cube to the inventory
 			if (isGemOrRuneCode(normCode)) {
 				// Get the local player object
 				const auto player = diablo2::d2_client::get_local_player();
@@ -768,7 +795,10 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 				}
 			}
 
-			if (isArmorOrWeaponCode(normCode) 
+			// For armor and weapon codes, right click will move the item to the stash or cube and transmute
+			if (isArmorOrWeaponCode(normCode)
+				|| record->type == 61 - 3 // jewel
+				|| record->type == 43 - 3 // key
 				|| record->type == 109
 				|| record->type == 111
 				|| record->type == 112
@@ -777,7 +807,10 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 				|| record->type == 113
 				|| record->type == 122
 				|| record->type == 123
+				|| record->type == 123 - 3 // sum0
 				|| record->type == 125
+				|| record->type == 126 - 3
+				|| record->type == 128 - 3
 				|| record->type == 4 - 3
 				|| record->type == 5 - 3
 				|| record->type == 17 - 3
@@ -815,7 +848,7 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 				diablo2::d2_client::send_to_server(&packet, sizeof packet);
 
 				// Send a packet to activate the transmute button in the cube
-				diablo2::d2_client::send_to_server_7(0x4F, 0x18, 0, 0);
+				// diablo2::d2_client::send_to_server_7(0x4F, 0x18, 0, 0);
 
 				// Clear the hovered item after processing
 				(*reinterpret_cast<diablo2::structures::unit**>(diablo2::d2_client::get_base() + 0x1158F4)) = nullptr;
@@ -825,8 +858,6 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 		block = instance.process_right_mouse(false);
 		break;
 	}
-
-
 
 	case WM_RBUTTONUP:
 	{
@@ -838,17 +869,69 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 	case WM_MOUSEWHEEL:
 	{
 		// Extract the distance the wheel is rotated from the message
-		short zDelta = GET_WHEEL_DELTA_WPARAM(wParam);	
+		short zDelta = GET_WHEEL_DELTA_WPARAM(wParam);
 
 		// Check if the wheel is scrolled upwards
 		if (zDelta > 0) {
 			// Process the mouse wheel input by scrolling upwards
+
+			// Calculate the memory address of the hover item in the game
+			// by adding an offset to the base address of the client
+			const auto g_hoverItem = *reinterpret_cast<diablo2::structures::unit**>(diablo2::d2_client::get_base() + 0x1158F4);
+
+			// Get the local player object from the Diablo 2 client
+			const auto player = diablo2::d2_client::get_local_player();
+
+			// Obtain a pointer to the player's inventory
+			auto pInventory = player->inventory;
+
+			if (g_hoverItem != nullptr) {
+				// Obtain the item record associated with the hovered item
+				const auto record = diablo2::d2_common::get_item_record(g_hoverItem->data_record_index);
+
+				// Extract the string code of the item record
+				char* normCode = record->string_code;
+
+				// Create the packet
+				static d2_tweaks::common::item_move_cs packet;
+				packet.item_guid = g_hoverItem->guid;
+				packet.target_page = 0;
+				packet.tmog = 1;
+				packet.item_code = normCode;
+				diablo2::d2_client::send_to_server(&packet, sizeof packet);
+			}
 			block = instance.process_mouse_wheel(true);
 		}
 		// Check if the wheel is scrolled downwards
 		else if (zDelta < 0) {
 			// Process the mouse wheel input by scrolling downwards
-			block = instance.process_mouse_wheel(false);
+						
+			// Calculate the memory address of the hover item in the game
+			// by adding an offset to the base address of the client
+			const auto g_hoverItem = *reinterpret_cast<diablo2::structures::unit**>(diablo2::d2_client::get_base() + 0x1158F4);
+
+			// Get the local player object from the Diablo 2 client
+			const auto player = diablo2::d2_client::get_local_player();
+
+			// Obtain a pointer to the player's inventory
+			auto pInventory = player->inventory;
+
+			if (g_hoverItem != nullptr) {
+				// Obtain the item record associated with the hovered item
+				const auto record = diablo2::d2_common::get_item_record(g_hoverItem->data_record_index);
+
+				// Extract the string code of the item record
+				char* normCode = record->string_code;
+
+				// Create the packet
+				static d2_tweaks::common::item_move_cs packet;
+				packet.item_guid = g_hoverItem->guid;
+				packet.target_page = 0;
+				packet.tmog = 1;
+				packet.item_code = normCode;
+				diablo2::d2_client::send_to_server(&packet, sizeof packet);
+			}
+			block = instance.process_mouse_wheel(true);
 		}
 		break;
 	}
@@ -928,6 +1011,8 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 			}
 
 			if (isArmorOrWeaponCode(normCode)
+				|| record->type == 61 - 3 // jewel
+				|| record->type == 43 - 3 // key
 				|| record->type == 109
 				|| record->type == 111
 				|| record->type == 112
@@ -936,7 +1021,10 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 				|| record->type == 113
 				|| record->type == 122
 				|| record->type == 123
+				|| record->type == 123 - 3 // sum0
 				|| record->type == 125
+				|| record->type == 126 - 3
+				|| record->type == 128 - 3
 				|| record->type == 4 - 3
 				|| record->type == 5 - 3
 				|| record->type == 17 - 3
