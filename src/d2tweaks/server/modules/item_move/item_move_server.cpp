@@ -80,7 +80,7 @@ bool d2_tweaks::server::modules::item_move::handle_packet(diablo2::structures::g
 		//MessageBox(NULL, bag_guid.c_str(), "Bag GUID", MB_OK | MB_ICONINFORMATION);
 
 		D2PropertyStrc itemProperty = {};
-		itemProperty.nProperty = itemMove->prop - 3; // Adjust the property ID
+		itemProperty.nProperty = itemMove->prop; // Adjust the property ID
 		itemProperty.nLayer = 0;
 		itemProperty.nMin = itemMove->val;
 		itemProperty.nMax = itemMove->val;
