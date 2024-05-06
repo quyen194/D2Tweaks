@@ -49,6 +49,20 @@ namespace d2_tweaks {
 				bool m_show_r32;
 				bool m_show_r33;
 
+				bool m_show_amethyst;
+				bool m_show_diamond;
+				bool m_show_emerald;
+				bool m_show_ruby;
+				bool m_show_sapphire;
+				bool m_show_skull;
+				bool m_show_topaz;
+
+				bool m_show_chipped;
+				bool m_show_flawed;
+				bool m_show_normal;
+				bool m_show_flawless;
+				bool m_show_perfect;
+
 
 				bool quality_settings[static_cast<size_t>(diablo2::structures::item_quality_t::ITEM_QUALITY_COUNT)];
 

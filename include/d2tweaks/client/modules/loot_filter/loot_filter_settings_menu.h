@@ -85,6 +85,9 @@ namespace d2_tweaks {
 
 				void draw() override;
 			private:
+				std::string m_selected_gem;
+				void gem_checkbox_clicked(const std::string& gem);
+
 				void register_misc_checkboxes();
 				void register_quality_checkboxes();
 
@@ -123,7 +126,21 @@ namespace d2_tweaks {
 				void extract_r32(bool value);
 				void extract_r33(bool value);
 
-				
+				void extract_amethyst(bool value);
+				void extract_diamond(bool value);
+				void extract_emerald(bool value);
+				void extract_ruby(bool value);
+				void extract_sapphire(bool value);
+				void extract_skull(bool value);
+				void extract_topaz(bool value);
+
+				void extract_chipped(bool value);
+				void extract_flawed(bool value);
+				void extract_normal(bool value);
+				void extract_flawless(bool value);
+				void extract_perfect(bool value);
+
+
 
 				void update_show_gold(bool value);
 				void update_show_runes(bool value);
