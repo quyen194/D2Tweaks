@@ -246,6 +246,8 @@ namespace d2_tweaks {
 			int tmog;
 			int x;
 			int y;
+			bool extract;
+			uint32_t iCode;
 
 
 			item_move_cs() : item_guid(0), target_page(0) {

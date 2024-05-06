@@ -168,6 +168,217 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::register_misc_checkb
 			this, std::placeholders::_1));
 	}
 
+	if (m_show_r02) {
+		m_show_r02->set_state(loot_filter_settings::get().m_show_r02);
+		m_show_r02->set_on_click(std::bind(&loot_filter_settings_menu::extract_r02,
+			this, std::placeholders::_1));
+	}
+
+	if (m_show_r03) {
+		m_show_r03->set_state(loot_filter_settings::get().m_show_r03);
+		m_show_r03->set_on_click(std::bind(&loot_filter_settings_menu::extract_r03,
+			this, std::placeholders::_1));
+	}
+
+	if (m_show_r04) {
+		m_show_r04->set_state(loot_filter_settings::get().m_show_r04);
+		m_show_r04->set_on_click(std::bind(&loot_filter_settings_menu::extract_r04,
+			this, std::placeholders::_1));
+	}
+
+	if (m_show_r05) {
+		m_show_r05->set_state(loot_filter_settings::get().m_show_r05);
+		m_show_r05->set_on_click(std::bind(&loot_filter_settings_menu::extract_r05,
+			this, std::placeholders::_1));
+	}
+
+	if (m_show_r06) {
+		m_show_r06->set_state(loot_filter_settings::get().m_show_r06);
+		m_show_r06->set_on_click(std::bind(&loot_filter_settings_menu::extract_r06,
+			this, std::placeholders::_1));
+	}
+
+	if (m_show_r07) {
+		m_show_r07->set_state(loot_filter_settings::get().m_show_r07);
+		m_show_r07->set_on_click(std::bind(&loot_filter_settings_menu::extract_r07,
+			this, std::placeholders::_1));
+	}
+
+	if (m_show_r08) {
+		m_show_r08->set_state(loot_filter_settings::get().m_show_r08);
+		m_show_r08->set_on_click(std::bind(&loot_filter_settings_menu::extract_r08,
+			this, std::placeholders::_1));
+	}
+
+	if (m_show_r09) {
+		m_show_r09->set_state(loot_filter_settings::get().m_show_r09);
+		m_show_r09->set_on_click(std::bind(&loot_filter_settings_menu::extract_r09,
+			this, std::placeholders::_1));
+	}
+
+	if (m_show_r10) {
+		m_show_r10->set_state(loot_filter_settings::get().m_show_r10);
+		m_show_r10->set_on_click(std::bind(&loot_filter_settings_menu::extract_r10,
+			this, std::placeholders::_1));
+	}
+
+	if (m_show_r11) {
+		m_show_r11->set_state(loot_filter_settings::get().m_show_r11);
+		m_show_r11->set_on_click(std::bind(&loot_filter_settings_menu::extract_r11,
+			this, std::placeholders::_1));
+	}
+
+	if (m_show_r12) {
+		m_show_r12->set_state(loot_filter_settings::get().m_show_r12);
+		m_show_r12->set_on_click(std::bind(&loot_filter_settings_menu::extract_r12,
+			this, std::placeholders::_1));
+	}
+
+	if (m_show_r13) {
+		m_show_r13->set_state(loot_filter_settings::get().m_show_r13);
+		m_show_r13->set_on_click(std::bind(&loot_filter_settings_menu::extract_r13,
+			this, std::placeholders::_1));
+	}
+
+	if (m_show_r14) {
+		m_show_r14->set_state(loot_filter_settings::get().m_show_r14);
+		m_show_r14->set_on_click(std::bind(&loot_filter_settings_menu::extract_r14,
+			this, std::placeholders::_1));
+	}
+
+	if (m_show_r15) {
+		m_show_r15->set_state(loot_filter_settings::get().m_show_r15);
+		m_show_r15->set_on_click(std::bind(&loot_filter_settings_menu::extract_r15,
+			this, std::placeholders::_1));
+	}
+
+	if (m_show_r16) {
+		m_show_r16->set_state(loot_filter_settings::get().m_show_r16);
+		m_show_r16->set_on_click(std::bind(&loot_filter_settings_menu::extract_r16,
+			this, std::placeholders::_1));
+	}
+
+	if (m_show_r17) {
+		m_show_r17->set_state(loot_filter_settings::get().m_show_r17);
+		m_show_r17->set_on_click(std::bind(&loot_filter_settings_menu::extract_r17,
+			this, std::placeholders::_1));
+	}
+
+	if (m_show_r18) {
+		m_show_r18->set_state(loot_filter_settings::get().m_show_r18);
+		m_show_r18->set_on_click(std::bind(&loot_filter_settings_menu::extract_r18,
+			this, std::placeholders::_1));
+	}
+
+	if (m_show_r19) {
+		m_show_r19->set_state(loot_filter_settings::get().m_show_r19);
+		m_show_r19->set_on_click(std::bind(&loot_filter_settings_menu::extract_r19,
+			this, std::placeholders::_1));
+	}
+
+	if (m_show_r20) {
+		m_show_r20->set_state(loot_filter_settings::get().m_show_r20);
+		m_show_r20->set_on_click(std::bind(&loot_filter_settings_menu::extract_r20,
+			this, std::placeholders::_1));
+	}
+
+	if (m_show_r21) {
+		m_show_r21->set_state(loot_filter_settings::get().m_show_r21);
+		m_show_r21->set_on_click(std::bind(&loot_filter_settings_menu::extract_r21,
+			this, std::placeholders::_1));
+	}
+
+	if (m_show_r22) {
+		m_show_r22->set_state(loot_filter_settings::get().m_show_r22);
+		m_show_r22->set_on_click(std::bind(&loot_filter_settings_menu::extract_r22,
+			this, std::placeholders::_1));
+	}
+
+	if (m_show_r23) {
+		m_show_r23->set_state(loot_filter_settings::get().m_show_r23);
+		m_show_r23->set_on_click(std::bind(&loot_filter_settings_menu::extract_r23,
+			this, std::placeholders::_1));
+	}
+
+	if (m_show_r24) {
+		m_show_r24->set_state(loot_filter_settings::get().m_show_r24);
+		m_show_r24->set_on_click(std::bind(&loot_filter_settings_menu::extract_r24,
+			this, std::placeholders::_1));
+	}
+
+	if (m_show_r25) {
+		m_show_r25->set_state(loot_filter_settings::get().m_show_r25);
+		m_show_r25->set_on_click(std::bind(&loot_filter_settings_menu::extract_r25,
+			this, std::placeholders::_1));
+	}
+
+	if (m_show_r26) {
+		m_show_r26->set_state(loot_filter_settings::get().m_show_r26);
+		m_show_r26->set_on_click(std::bind(&loot_filter_settings_menu::extract_r26,
+			this, std::placeholders::_1));
+	}
+
+	if (m_show_r27) {
+		m_show_r27->set_state(loot_filter_settings::get().m_show_r27);
+		m_show_r27->set_on_click(std::bind(&loot_filter_settings_menu::extract_r27,
+			this, std::placeholders::_1));
+	}
+
+	if (m_show_r28) {
+		m_show_r28->set_state(loot_filter_settings::get().m_show_r28);
+		m_show_r28->set_on_click(std::bind(&loot_filter_settings_menu::extract_r28,
+			this, std::placeholders::_1));
+	}
+
+	if (m_show_r29) {
+		m_show_r29->set_state(loot_filter_settings::get().m_show_r29);
+		m_show_r29->set_on_click(std::bind(&loot_filter_settings_menu::extract_r29,
+			this, std::placeholders::_1));
+	}
+
+	if (m_show_r30) {
+		m_show_r30->set_state(loot_filter_settings::get().m_show_r30);
+		m_show_r30->set_on_click(std::bind(&loot_filter_settings_menu::extract_r30,
+			this, std::placeholders::_1));
+	}
+
+	if (m_show_r31) {
+		m_show_r31->set_state(loot_filter_settings::get().m_show_r31);
+		m_show_r31->set_on_click(std::bind(&loot_filter_settings_menu::extract_r31,
+			this, std::placeholders::_1));
+	}
+
+	if (m_show_r32) {
+		m_show_r32->set_state(loot_filter_settings::get().m_show_r32);
+		m_show_r32->set_on_click(std::bind(&loot_filter_settings_menu::extract_r32,
+			this, std::placeholders::_1));
+	}
+
+	if (m_show_r33) {
+		m_show_r33->set_state(loot_filter_settings::get().m_show_r33);
+		m_show_r33->set_on_click(std::bind(&loot_filter_settings_menu::extract_r33,
+			this, std::placeholders::_1));
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	if (m_altonly) {
 		m_altonly->set_state(loot_filter_settings::get().alt_only);
@@ -215,7 +426,7 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::update_alt_only(bool
 
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r01(bool value) {
 	loot_filter_settings::get().m_show_r01 = value;
-	
+
 	// display m_show_r01 value in a messagebox
 	//MessageBoxA(NULL, value ? "true" : "false", "m_show_r01", MB_OK);
 
@@ -236,26 +447,138 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r01(bool val
 			bagGuid = item->guid;
 			// get item stat
 			statValue = diablo2::d2_common::get_stat(item, diablo2::UNIT_STAT_runebag_RunesA, NULL);
-			
+
 		}
 	}
 
+	// show bag guid in a messagebox
+	std::string bagGuidStr = std::to_string(bagGuid);
+	//MessageBoxA(NULL, bagGuidStr.c_str(), "bagGuid", MB_OK);
 
 	// show statValue in a messagebox
 	std::string statValueStr = std::to_string(statValue);
-	MessageBoxA(NULL, statValueStr.c_str(), "statValue", MB_OK);
+	//MessageBoxA(NULL, statValueStr.c_str(), "statValue", MB_OK);
 
-	// Create the packet
-	//static d2_tweaks::common::item_move_cs packet;
-	//packet.item_guid = bagGuid;
-	//packet.target_page = 0;
-	//packet.extract = 1;
-	//packet.iCode = 'r01 ';
-	//diablo2::d2_client::send_to_server(&packet, sizeof packet);
+	if (statValue > 1) {
+		// Create the packet
+		static d2_tweaks::common::item_move_cs packet;
+		packet.item_guid = bagGuid;
+		packet.bag_guid = bagGuid;
+		packet.target_page = 0;
+		packet.extract = 1;
+		packet.iCode = 'r01 ';
+		diablo2::d2_client::send_to_server(&packet, sizeof packet);
 
+		D2PropertyStrc itemProperty = {};
+		itemProperty.nProperty = 388 - 3; // Adjust the property ID
+		itemProperty.nLayer = 0;
+		itemProperty.nMin = - 1;
+		itemProperty.nMax = - 1;
 
+		// Add the gem property to the gem bag
+		diablo2::d2_common::add_property(bag, &itemProperty, 0);
+
+	}
 
 }
+
+
+void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r02(bool value) {
+}
+
+void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r03(bool value) {
+}
+
+void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r04(bool value) {
+}
+
+void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r05(bool value) {
+}
+
+void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r06(bool value) {
+}
+
+void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r07(bool value) {
+}
+
+void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r08(bool value) {
+}
+
+void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r09(bool value) {
+}
+
+void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r10(bool value) {
+}
+
+void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r11(bool value) {
+}
+
+void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r12(bool value) {
+}
+
+void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r13(bool value) {
+}
+
+void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r14(bool value) {
+}
+
+void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r15(bool value) {
+}
+
+void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r16(bool value) {
+}
+
+void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r17(bool value) {
+}
+
+void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r18(bool value) {
+}
+
+void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r19(bool value) {
+}
+
+void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r20(bool value) {
+}
+
+void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r21(bool value) {
+}
+
+void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r22(bool value) {
+}
+
+void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r23(bool value) {
+}
+
+void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r24(bool value) {
+}
+
+void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r25(bool value) {
+}
+
+void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r26(bool value) {
+}
+
+void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r27(bool value) {
+}
+
+void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r28(bool value) {
+}
+
+void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r29(bool value) {
+}
+
+void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r30(bool value) {
+}
+
+void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r31(bool value) {
+}
+
+void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r32(bool value) {
+}
+
+void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r33(bool value) {
+}
+
 
 void d2_tweaks::client::modules::loot_filter_settings_menu::update_show_gold(bool value) {
 	loot_filter_settings::get().show_gold = value;

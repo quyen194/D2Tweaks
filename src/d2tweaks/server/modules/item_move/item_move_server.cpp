@@ -61,20 +61,37 @@ bool d2_tweaks::server::modules::item_move::handle_packet(diablo2::structures::g
 	const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
 
 	const char* itemcode = itemMove->item_code;
+
+	// display itemMove->bag_guid in a messagebox
+	std::string bag_guid = std::to_string(itemMove->bag_guid);
+	//MessageBox(NULL, bag_guid.c_str(), "Bag GUID", MB_OK | MB_ICONINFORMATION);
+
 	const auto bag = instance.get_server_unit(game, itemMove->bag_guid, diablo2::structures::unit_type_t::UNIT_TYPE_ITEM); //0x4 = item
 
-
-	//if (itemMove->extract == 1) {
-
-	//	// display bag guid in a messagebox 
-	//	std::string bag_guid = std::to_string(itemMove->bag_guid);
-	//	MessageBox(NULL, bag_guid.c_str(), "Bag GUID", MB_OK | MB_ICONINFORMATION);
+	// display bag guid in a messagebox
+	bag_guid = std::to_string(itemMove->bag_guid);
+	//MessageBox(NULL, bag_guid.c_str(), "Bag GUID", MB_OK | MB_ICONINFORMATION);
 
 
-	//	diablo2::d2_game::QUESTS_CreateItem(game, player, reverseDWORD(itemMove->iCode), 1, diablo2::structures::ITEMQUAL_NORMAL, true);
-	//	return true;
-	//}
-	// else 
+	if (itemMove->extract == 1) {
+
+		// display bag guid in a messagebox 
+		std::string bag_guid = std::to_string(itemMove->bag_guid);
+		//MessageBox(NULL, bag_guid.c_str(), "Bag GUID", MB_OK | MB_ICONINFORMATION);
+
+		D2PropertyStrc itemProperty = {};
+		itemProperty.nProperty = 388 - 3; // Adjust the property ID
+		itemProperty.nLayer = 0;
+		itemProperty.nMin = -1;
+		itemProperty.nMax = -1;
+
+		// Add the gem property to the gem bag
+		diablo2::d2_common::add_property(bag, &itemProperty, 0);
+
+		diablo2::d2_game::QUESTS_CreateItem(game, player, reverseDWORD(itemMove->iCode), 1, diablo2::structures::ITEMQUAL_NORMAL, true);
+		return true;
+	}
+	 else 
 		if (itemMove->tmog == 1) {
 		// here we need to add item to inventory
 
