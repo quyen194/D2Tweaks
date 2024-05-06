@@ -954,8 +954,8 @@ namespace diablo2 {
 		UNIT_STAT_UNUSED_76 = 492,
 		UNIT_STAT_UNUSED_77 = 493,
 		UNIT_STAT_UNUSED_78 = 494,
-		UNIT_STAT_UNUSED_79 = 495,
-		UNIT_STAT_UNUSED_80 = 496,
+		UNIT_STAT_runebag_RunesE = 495,
+		UNIT_STAT_runebag_RunesF = 496,
 		UNIT_STAT_passive_sum_mastery = 497,
 		UNIT_STAT_item_socketmultiplier = 498,
 		UNIT_STAT_gembag_Ruby = 499,
@@ -968,7 +968,7 @@ namespace diablo2 {
 		UNIT_STAT_runebag_RunesA = 506,
 		UNIT_STAT_runebag_RunesB = 507,
 		UNIT_STAT_runebag_RunesC = 508,
-		UNIT_STAT_UNUSED_83 = 509,
+		UNIT_STAT_runebag_RunesD = 509,
 		UNIT_STAT_item_aura_display = 510,
 	};
 

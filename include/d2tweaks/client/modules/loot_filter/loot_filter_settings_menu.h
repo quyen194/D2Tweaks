@@ -123,6 +123,8 @@ namespace d2_tweaks {
 				void extract_r32(bool value);
 				void extract_r33(bool value);
 
+				
+
 				void update_show_gold(bool value);
 				void update_show_runes(bool value);
 				void update_show_gems(bool value);
