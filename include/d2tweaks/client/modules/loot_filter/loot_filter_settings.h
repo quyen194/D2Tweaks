@@ -15,6 +15,8 @@ namespace d2_tweaks {
 				bool show_runes;
 				bool show_gems;
 
+				bool m_show_r01;
+
 				bool quality_settings[static_cast<size_t>(diablo2::structures::item_quality_t::ITEM_QUALITY_COUNT)];
 
 				char reserved[1004];

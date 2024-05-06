@@ -152,6 +152,11 @@ int32_t __fastcall diablo2::d2_game::D2GAME_Transmogrify_6FC4A660(diablo2::struc
 	return D2GAME_Transmogrify_6FC4A660(pGame, pPlayer, pItem);
 }
 
-
+//D2Game.0x6FC95DF0
+//D2UnitStrc* __fastcall QUESTS_CreateItem(D2GameStrc* pGame, D2UnitStrc* pPlayer, uint32_t dwCode, int32_t nLevel, uint8_t nQuality, int32_t bDroppable)
+diablo2::structures::unit* __fastcall diablo2::d2_game::QUESTS_CreateItem(diablo2::structures::game* pGame, diablo2::structures::unit* pPlayer, uint32_t dwCode, int32_t nLevel, uint8_t nQuality, int32_t bDroppable) {
+	static wrap_func_fast< diablo2::structures::unit* (diablo2::structures::game*, diablo2::structures::unit*, uint32_t, int32_t, uint8_t, int32_t)>QUESTS_CreateItem(0x65DF0, get_base());
+	return QUESTS_CreateItem(pGame, pPlayer, dwCode, nLevel, nQuality, bDroppable);
+}
 
 

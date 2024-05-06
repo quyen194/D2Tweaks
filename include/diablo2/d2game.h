@@ -54,5 +54,7 @@ namespace diablo2 {
 		//D2Game.0x6FC4A660
 		static int32_t __fastcall D2GAME_Transmogrify_6FC4A660(structures::game* pGame, structures::unit* pPlayer, structures::unit* pItem);
 
+		static diablo2::structures::unit* __fastcall diablo2::d2_game::QUESTS_CreateItem(diablo2::structures::game* pGame, diablo2::structures::unit* pPlayer, uint32_t dwCode, int32_t nLevel, uint8_t nQuality, int32_t bDroppable);
+
 	};
 }

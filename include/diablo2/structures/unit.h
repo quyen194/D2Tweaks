@@ -25,6 +25,19 @@ namespace diablo2 {
 		struct quest_record;
 		struct npc_record;
 
+		enum D2C_ItemQualities
+		{
+			ITEMQUAL_INFERIOR = 0x01, 	//0x01 Inferior
+			ITEMQUAL_NORMAL = 0x02, 	//0x02 Normal
+			ITEMQUAL_SUPERIOR = 0x03, 	//0x03 Superior
+			ITEMQUAL_MAGIC = 0x04, 		//0x04 Magic
+			ITEMQUAL_SET = 0x05, 		//0x05 Set
+			ITEMQUAL_RARE = 0x06, 		//0x06 Rare
+			ITEMQUAL_UNIQUE = 0x07, 	//0x07 Unique
+			ITEMQUAL_CRAFT = 0x08, 		//0x08 Crafted
+			ITEMQUAL_TEMPERED = 0x09	//0x09 Tempered
+		};
+
 		enum class unit_type_t : int32_t {
 			UNIT_TYPE_PLAYER = 0,
 			UNIT_TYPE_MONSTER = 1,

@@ -20,9 +20,12 @@ namespace d2_tweaks {
 				ui::controls::button* m_btn_toggle_help;
 				ui::controls::button* m_btn_toggle_cube;
 				ui::controls::button* m_btn_toggle_stash;
+				ui::controls::button* m_btn_toggle_bag;
 
 				menu* m_filter_settings_menu;
+				menu* m_menu;
 				bool m_show;
+				bool m_show_bag;
 			public:
 				explicit loot_filter_settings_toggle_menu(token);
 
@@ -31,6 +34,7 @@ namespace d2_tweaks {
 				void toggle_help_click();
 				void toggle_cube_click();
 				void toggle_stash_click();
+				void toggle_bag_click();
 				void draw() override;
 
 				bool key_event(uint32_t key, bool up) override;

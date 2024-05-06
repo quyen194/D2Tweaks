@@ -16,6 +16,65 @@
 #include <d2tweaks/ui/controls/checkbox.h>
 #include <DllNotify.h>
 #include <D2Template.h>
+#include <d2tweaks/common/protocol.h>
+
+#include <d2tweaks/client/modules/autosort/autosort_client.h>
+
+#include <d2tweaks/client/client.h>
+
+#include <spdlog/spdlog.h>
+
+#include <d2tweaks/common/common.h>
+#include <d2tweaks/common/protocol.h>
+#include <d2tweaks/common/asset_manager.h>
+
+#include <d2tweaks/ui/menu.h>
+#include <d2tweaks/ui/ui_manager.h>
+#include <d2tweaks/ui/controls/control.h>
+#include <d2tweaks/ui/controls/button.h>
+
+#include <diablo2/d2common.h>
+#include <diablo2/d2client.h>
+#include <diablo2/d2win.h>
+#include <diablo2/d2gfx.h>
+#include <diablo2/d2cmp.h>
+
+#include <diablo2/structures/unit.h>
+#include <diablo2/structures/inventory.h>
+#include <diablo2/structures/item_data.h>
+#include <diablo2/structures/player_data.h>
+
+#include <diablo2/structures/path.h>
+#include <diablo2/structures/game.h>
+#include <diablo2/structures/data/items_line.h>
+#include <diablo2/structures/data/item_types_line.h>
+
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <filesystem>
+#include <unordered_map>
+#include <time.h>
+#include <cmath>
+#include <random>
+#include <algorithm>
+#include <functional>
+#include <vector>
+#include <string>
+#include <map>
+
+#include <DllNotify.h>
+#include <D2Template.h>
+
+#include <diablo2/d2gfx.h>
+
+#include <string>
+#include <vector>
+#include <sstream>
+
+#include <string>
+#include <locale>
+#include <codecvt>
 
 d2_tweaks::client::modules::loot_filter_settings_menu::loot_filter_settings_menu(token) {
 	menu::set_enabled(false);
@@ -52,6 +111,63 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::register_misc_checkb
 	m_show_gold = get_control<ui::controls::checkbox>("m_show_gold");
 	m_show_runes = get_control<ui::controls::checkbox>("m_show_runes");
 	m_show_gems = get_control<ui::controls::checkbox>("m_show_gems");
+
+	m_show_amethyst = get_control<ui::controls::checkbox>("m_show_amethyst");
+	m_show_diamond = get_control<ui::controls::checkbox>("m_show_diamond");
+	m_show_emerald = get_control<ui::controls::checkbox>("m_show_emerald");
+	m_show_ruby = get_control<ui::controls::checkbox>("m_show_ruby");
+	m_show_sapphire = get_control<ui::controls::checkbox>("m_show_sapphire");
+	m_show_skull = get_control<ui::controls::checkbox>("m_show_skull");
+	m_show_topaz = get_control<ui::controls::checkbox>("m_show_topaz");
+
+	m_show_r01 = get_control<ui::controls::checkbox>("m_show_r01");
+	m_show_r02 = get_control<ui::controls::checkbox>("m_show_r02");
+	m_show_r03 = get_control<ui::controls::checkbox>("m_show_r03");
+	m_show_r04 = get_control<ui::controls::checkbox>("m_show_r04");
+	m_show_r05 = get_control<ui::controls::checkbox>("m_show_r05");
+	m_show_r06 = get_control<ui::controls::checkbox>("m_show_r06");
+	m_show_r07 = get_control<ui::controls::checkbox>("m_show_r07");
+	m_show_r08 = get_control<ui::controls::checkbox>("m_show_r08");
+	m_show_r09 = get_control<ui::controls::checkbox>("m_show_r09");
+	m_show_r10 = get_control<ui::controls::checkbox>("m_show_r10");
+	m_show_r11 = get_control<ui::controls::checkbox>("m_show_r11");
+	m_show_r12 = get_control<ui::controls::checkbox>("m_show_r12");
+	m_show_r13 = get_control<ui::controls::checkbox>("m_show_r13");
+	m_show_r14 = get_control<ui::controls::checkbox>("m_show_r14");
+	m_show_r15 = get_control<ui::controls::checkbox>("m_show_r15");
+	m_show_r16 = get_control<ui::controls::checkbox>("m_show_r16");
+	m_show_r17 = get_control<ui::controls::checkbox>("m_show_r17");
+	m_show_r18 = get_control<ui::controls::checkbox>("m_show_r18");
+	m_show_r19 = get_control<ui::controls::checkbox>("m_show_r19");
+	m_show_r20 = get_control<ui::controls::checkbox>("m_show_r20");
+	m_show_r21 = get_control<ui::controls::checkbox>("m_show_r21");
+	m_show_r22 = get_control<ui::controls::checkbox>("m_show_r22");
+	m_show_r23 = get_control<ui::controls::checkbox>("m_show_r23");
+	m_show_r24 = get_control<ui::controls::checkbox>("m_show_r24");
+	m_show_r25 = get_control<ui::controls::checkbox>("m_show_r25");
+	m_show_r26 = get_control<ui::controls::checkbox>("m_show_r26");
+	m_show_r27 = get_control<ui::controls::checkbox>("m_show_r27");
+	m_show_r28 = get_control<ui::controls::checkbox>("m_show_r28");
+	m_show_r29 = get_control<ui::controls::checkbox>("m_show_r29");
+	m_show_r30 = get_control<ui::controls::checkbox>("m_show_r30");
+	m_show_r31 = get_control<ui::controls::checkbox>("m_show_r31");
+	m_show_r32 = get_control<ui::controls::checkbox>("m_show_r32");
+	m_show_r33 = get_control<ui::controls::checkbox>("m_show_r33");
+
+
+	m_show_chipped = get_control<ui::controls::checkbox>("m_show_chipped");
+	m_show_flawed = get_control<ui::controls::checkbox>("m_show_flawed");
+	m_show_normal = get_control<ui::controls::checkbox>("m_show_normal");
+	m_show_flawless = get_control<ui::controls::checkbox>("m_show_flawless");
+	m_show_perfect = get_control<ui::controls::checkbox>("m_show_perfect");
+
+
+	if (m_show_r01) {
+		m_show_r01->set_state(loot_filter_settings::get().m_show_r01);
+		m_show_r01->set_on_click(std::bind(&loot_filter_settings_menu::extract_r01,
+			this, std::placeholders::_1));
+	}
+
 
 	if (m_altonly) {
 		m_altonly->set_state(loot_filter_settings::get().alt_only);
@@ -95,6 +211,50 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::register_quality_che
 void d2_tweaks::client::modules::loot_filter_settings_menu::update_alt_only(bool value) {
 	loot_filter_settings::get().alt_only = value;
 	loot_filter_settings::get().save(diablo2::d2_client::get_local_player_name());
+}
+
+void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r01(bool value) {
+	loot_filter_settings::get().m_show_r01 = value;
+	
+	// display m_show_r01 value in a messagebox
+	//MessageBoxA(NULL, value ? "true" : "false", "m_show_r01", MB_OK);
+
+	auto player = diablo2::d2_client::get_local_player();
+	auto inventory = player->inventory;
+
+	diablo2::structures::unit* bag;
+	uint32_t bagGuid;
+	uint32_t statValue;
+
+	// iterate over all items in player inventory
+	for (auto item = inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
+		const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
+		auto recordType = diablo2::d2_common::get_item_type_record(record->type);
+		char* normCode1 = record->string_code;
+		if (strncmp(normCode1, "ib1", 3) == 0) {
+			bag = item;
+			bagGuid = item->guid;
+			// get item stat
+			statValue = diablo2::d2_common::get_stat(item, diablo2::UNIT_STAT_runebag_RunesA, NULL);
+			
+		}
+	}
+
+
+	// show statValue in a messagebox
+	std::string statValueStr = std::to_string(statValue);
+	MessageBoxA(NULL, statValueStr.c_str(), "statValue", MB_OK);
+
+	// Create the packet
+	//static d2_tweaks::common::item_move_cs packet;
+	//packet.item_guid = bagGuid;
+	//packet.target_page = 0;
+	//packet.extract = 1;
+	//packet.iCode = 'r01 ';
+	//diablo2::d2_client::send_to_server(&packet, sizeof packet);
+
+
+
 }
 
 void d2_tweaks::client::modules::loot_filter_settings_menu::update_show_gold(bool value) {

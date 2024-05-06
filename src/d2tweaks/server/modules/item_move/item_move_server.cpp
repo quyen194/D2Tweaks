@@ -26,31 +26,8 @@
 
 #include <iomanip> // For std::setw
 
-enum D2C_ItemQualities
-{
-	ITEMQUAL_INFERIOR = 0x01, 	//0x01 Inferior
-	ITEMQUAL_NORMAL = 0x02, 	//0x02 Normal
-	ITEMQUAL_SUPERIOR = 0x03, 	//0x03 Superior
-	ITEMQUAL_MAGIC = 0x04, 		//0x04 Magic
-	ITEMQUAL_SET = 0x05, 		//0x05 Set
-	ITEMQUAL_RARE = 0x06, 		//0x06 Rare
-	ITEMQUAL_UNIQUE = 0x07, 	//0x07 Unique
-	ITEMQUAL_CRAFT = 0x08, 		//0x08 Crafted
-	ITEMQUAL_TEMPERED = 0x09	//0x09 Tempered
-};
-
-
-void serialize_item(const std::string& itemcode, const diablo2::structures::unit& item, std::ofstream& file) {
-	// Write item code
-	file << itemcode << ":";
-
-	// Write serialized data
-	for (size_t i = 0; i < sizeof(item); ++i) {
-		file << std::hex << std::setw(2) << std::setfill('0') << static_cast<unsigned>(reinterpret_cast<const char*>(&item)[i]);
-	}
-
-	// Add a newline after each item
-	file << std::endl;
+static uint32_t reverseDWORD(uint32_t dw) {
+	return ((dw << 24) & 0xFF000000) | ((dw << 8) & 0x00FF0000) | ((dw >> 8) & 0x0000FF00) | ((dw >> 24) & 0x000000FF);
 }
 
 MODULE_INIT(item_move)
@@ -86,57 +63,26 @@ bool d2_tweaks::server::modules::item_move::handle_packet(diablo2::structures::g
 	const char* itemcode = itemMove->item_code;
 	const auto bag = instance.get_server_unit(game, itemMove->bag_guid, diablo2::structures::unit_type_t::UNIT_TYPE_ITEM); //0x4 = item
 
-	if (itemMove->tmog == 1) {
+
+	//if (itemMove->extract == 1) {
+
+	//	// display bag guid in a messagebox 
+	//	std::string bag_guid = std::to_string(itemMove->bag_guid);
+	//	MessageBox(NULL, bag_guid.c_str(), "Bag GUID", MB_OK | MB_ICONINFORMATION);
+
+
+	//	diablo2::d2_game::QUESTS_CreateItem(game, player, reverseDWORD(itemMove->iCode), 1, diablo2::structures::ITEMQUAL_NORMAL, true);
+	//	return true;
+	//}
+	// else 
+		if (itemMove->tmog == 1) {
 		// here we need to add item to inventory
 
 		const auto item = instance.get_server_unit(game, itemMove->item_guid, diablo2::structures::unit_type_t::UNIT_TYPE_ITEM); //0x4 = item
 
 		diablo2::d2_game::D2GAME_Transmogrify_6FC4A660(game, player, item);
 
-		//auto gemCode = diablo2::d2_common::get_item_id_from_item_code(' vfg');
-		//diablo2::structures::D2ItemDropStrc itemDrop = {};
-		//diablo2::structures::D2CoordStrc pReturnCoords = {};
-		//auto player = diablo2::d2_client::get_local_player();
-		//itemDrop.pSeed = nullptr;
-		//itemDrop.nX = pReturnCoords.nX;
-		//itemDrop.nY = pReturnCoords.nY;
-		//itemDrop.wItemFormat = game->item_format;
-		//itemDrop.pRoom = 0;
-		//itemDrop.nQuality = ITEMQUAL_NORMAL;
-		//itemDrop.pUnit = player;
-		//itemDrop.pGame = game;
-		//itemDrop.nId = gemCode;
-		//itemDrop.nSpawnType = 4;
-		//itemDrop.wUnitInitFlags = 1;
-		//itemDrop.nItemLvl = 1;
-		//diablo2::structures::unit* nItem = diablo2::d2_game::D2GAME_CreateItemEx_6FC4ED80(game, &itemDrop, 0);
-
-		//Display nITem->guid in a messagebox
-		//std::string guid = std::to_string(nItem->guid);
-		//MessageBox(NULL, guid.c_str(), "Item GUID", MB_OK | MB_ICONINFORMATION);
-
-		//const auto inventoryIndex = diablo2::d2_common::get_inventory_index(player, 0, game->item_format == 101);
-		//uint32_t tx, ty;
-
-		//if (!find_free_space(player->inventory, nItem, inventoryIndex, 0, tx, ty))
-		//	return true; //block further packet processing
-		//
-		//nItem->item_data->page = 0;
-
-		//diablo2::d2_common::inv_add_item(player->inventory, nItem, tx, ty, inventoryIndex, false, nItem->item_data->page);
-		//diablo2::d2_common::inv_update_item(player->inventory, nItem, false);
-
-		//diablo2::d2_game::update_inventory_items(game, player);
-
-		////send update packet
-		//resp.item_guid = nItem->guid;
-		//resp.target_page = 0;
-		//resp.tx = tx;
-		//resp.ty = ty;
-
-		//const auto client = player->player_data->net_client;
-
-		//diablo2::d2_net::send_to_client(1, client->client_id, &resp, sizeof resp);
+		diablo2::d2_game::QUESTS_CreateItem(game, player, reverseDWORD('gfv '), 1, diablo2::structures::ITEMQUAL_NORMAL, true);
 
 	}
 	else {
