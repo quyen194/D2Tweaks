@@ -379,6 +379,24 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::register_misc_checkb
 	m_show_legendary = get_control<ui::controls::checkbox>("m_show_legendary");
 	m_show_legendary_cut = get_control<ui::controls::checkbox>("m_show_legendary_cut");
 
+	m_show_rejuv_potion = get_control<ui::controls::checkbox>("m_show_rejuv_potion");
+	m_show_full_rejuv_potion = get_control<ui::controls::checkbox>("m_show_full_rejuv_potion");
+
+	// potions
+	{
+		if (m_show_rejuv_potion) {
+			m_show_rejuv_potion->set_state(loot_filter_settings::get().m_show_rejuv_potion);
+			m_show_rejuv_potion->set_on_click(std::bind(&loot_filter_settings_menu::extract_rejuv_potion,
+								this, std::placeholders::_1));
+		}
+
+		if (m_show_full_rejuv_potion) {
+			m_show_full_rejuv_potion->set_state(loot_filter_settings::get().m_show_full_rejuv_potion);
+			m_show_full_rejuv_potion->set_on_click(std::bind(&loot_filter_settings_menu::extract_full_rejuv_potion,
+								this, std::placeholders::_1));
+		}
+	}
+
 	// gems
 	{
 		if (m_show_amethyst) {
@@ -823,6 +841,87 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::update_alt_only(bool
 	loot_filter_settings::get().alt_only = value;
 	loot_filter_settings::get().save(diablo2::d2_client::get_local_player_name());
 }
+
+// potions
+
+void d2_tweaks::client::modules::loot_filter_settings_menu::extract_rejuv_potion(bool value) {
+	MessageBoxA(NULL, "extract_rejuv_potion", "extract_rejuv_potion", MB_OK);
+
+	loot_filter_settings::get().m_show_rejuv_potion = value;
+	auto player = diablo2::d2_client::get_local_player();
+	auto inventory = player->inventory;
+	diablo2::structures::unit* bag;
+	uint32_t bagGuid = -1;
+	uint32_t statValue = 0;
+
+	for (auto item = inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
+		const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
+		auto recordType = diablo2::d2_common::get_item_type_record(record->type);
+		char* normCode1 = record->string_code;
+		if (strncmp(normCode1, "ib1", 3) == 0) {
+			bag = item;
+			bagGuid = item->guid;
+			statValue = diablo2::d2_common::get_stat(item, diablo2::UNIT_STAT_gembag_Potions, NULL);
+		}
+	}
+	if (statValue >= 1) {
+		static d2_tweaks::common::item_move_cs packet;
+		packet.item_guid = bagGuid;
+		packet.bag_guid = bagGuid;
+		packet.target_page = 0;
+		packet.extract = 1;
+		packet.iCode = 'rvs ';
+		packet.prop = 396 - 3;
+		packet.val = -1;
+		diablo2::d2_client::send_to_server(&packet, sizeof packet);
+
+		D2PropertyStrc itemProperty = {};
+		itemProperty.nProperty = 396 - 3; // Adjust the property ID
+		itemProperty.nLayer = 0;
+		itemProperty.nMin = -1;
+		itemProperty.nMax = -1;
+		diablo2::d2_common::add_property(bag, &itemProperty, 0);
+	}
+}
+
+void d2_tweaks::client::modules::loot_filter_settings_menu::extract_full_rejuv_potion(bool value) {
+	loot_filter_settings::get().m_show_full_rejuv_potion = value;
+	auto player = diablo2::d2_client::get_local_player();
+	auto inventory = player->inventory;
+	diablo2::structures::unit* bag;
+	uint32_t bagGuid = -1;
+	uint32_t statValue = 0;
+
+	for (auto item = inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
+		const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
+		auto recordType = diablo2::d2_common::get_item_type_record(record->type);
+		char* normCode1 = record->string_code;
+		if (strncmp(normCode1, "ib1", 3) == 0) {
+			bag = item;
+			bagGuid = item->guid;
+			statValue = diablo2::d2_common::get_stat(item, diablo2::UNIT_STAT_gembag_Potions, NULL);
+		}
+	}
+	if (statValue >= 3) {
+		static d2_tweaks::common::item_move_cs packet;
+		packet.item_guid = bagGuid;
+		packet.bag_guid = bagGuid;
+		packet.target_page = 0;
+		packet.extract = 1;
+		packet.iCode = 'rvl ';
+		packet.prop = 396 - 3;
+		packet.val = -3;
+		diablo2::d2_client::send_to_server(&packet, sizeof packet);
+
+		D2PropertyStrc itemProperty = {};
+		itemProperty.nProperty = 396 - 3; // Adjust the property ID
+		itemProperty.nLayer = 0;
+		itemProperty.nMin = -3;
+		itemProperty.nMax = -3;
+		diablo2::d2_common::add_property(bag, &itemProperty, 0);
+	}
+}
+
 
 // gems extraction functions
 
@@ -4211,7 +4310,12 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r33(bool val
 	}
 }
 
-// Rune Extraction Functions
+// End Rune Extraction Functions
+
+
+// Rejuv Potions
+
+
 
 void d2_tweaks::client::modules::loot_filter_settings_menu::update_show_gold(bool value) {
 	loot_filter_settings::get().show_gold = value;

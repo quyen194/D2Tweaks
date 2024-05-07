@@ -169,7 +169,6 @@ const char* ITEMS_gems_and_runes[] = {
 	"r05", "r06", "r07", "r08", "r09", "r10", "r11", "r12", "r13", "r14",
 	"r15", "r16", "r17", "r18", "r19", "r20", "r21", "r22", "r23", "r24",
 	"r25", "r26", "r27", "r28", "r29", "r30", "r31", "r32", "r33", "ib2",
-	
 };
 
 const char* ITEMS_Stones[] = {
@@ -201,7 +200,6 @@ struct GemType {
 
 // Gem/Rune Extractors
 static std::unordered_map<std::string, GemType> stoneTypes = {
-
 };
 
 // Gems/runes and their corresponding codes and properties.txt line numbers
@@ -222,7 +220,7 @@ static std::unordered_map<std::string, GemType> gemTypes = {
 	{"gfy", {3, 386}},   // Flawed Topaz
 	{"gsv", {9, 382}},   // Amethyst
 	{"gsw", {9, 383}},   // Diamond
-	{"gsg", {9, 384}},   // Emerald
+	{"gsg", {9, 384}},   // Emerald`
 	{"gsr", {9, 381}},   // Ruby
 	{"gsb", {9, 385}},   // Sapphire
 	{"sku", {9, 387}},   // Skull
@@ -742,7 +740,7 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 			const char* key;
 
 			// Check if the current page is the stash or inventory, right click on gem/rune will
-			// add it to the cube and send it to page 99 which is non existent 
+			// add it to the cube and send it to page 99 which is non existent
 			// (hope it doesn't bloat save file size and actualy disappears from memory)
 			if (currentPage == 0 || currentPage == 4) {
 				// Check if the stash or inventory window is open
@@ -1058,7 +1056,7 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 		// Check if the wheel is scrolled downwards
 		else if (zDelta < 0) {
 			// Process the mouse wheel input by scrolling downwards
-						
+
 			// Calculate the memory address of the hover item in the game
 			// by adding an offset to the base address of the client
 			const auto g_hoverItem = *reinterpret_cast<diablo2::structures::unit**>(diablo2::d2_client::get_base() + 0x1158F4);
@@ -1143,6 +1141,7 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 			diablo2::structures::unit* box{};
 			diablo2::structures::unit* harvester{};
 
+
 			// get the gembag item
 			for (auto item = player->inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
 				const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
@@ -1161,6 +1160,45 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 					harvester = item;
 					harvesterGuid = harvester->guid;
 				}
+			}
+
+			if (strncmp(normCode, "rvs", 3) == 0) {
+				// Create the packet
+				static d2_tweaks::common::item_move_cs packet;
+				packet.bag_guid = gemBagGuid;
+				packet.updateBag = 1;
+				packet.iCode = 'rvs ';
+				packet.prop = 396 - 3;
+				packet.val = 1;
+				packet.item_guid = g_hoverItem->guid;
+				packet.target_page = 99;
+				diablo2::d2_client::send_to_server(&packet, sizeof packet);
+
+				D2PropertyStrc itemProperty = {};
+				itemProperty.nProperty = 396 - 3; // Adjust the property ID
+				itemProperty.nLayer = 0;
+				itemProperty.nMin = 1;
+				itemProperty.nMax = 1;
+				diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
+			}
+			if (strncmp(normCode, "rvl", 3) == 0) {
+				// Create the packet
+				static d2_tweaks::common::item_move_cs packet;
+				packet.bag_guid = gemBagGuid;
+				packet.updateBag = 1;
+				packet.iCode = 'rvl ';
+				packet.prop = 396 - 3;
+				packet.val = 3;
+				packet.item_guid = g_hoverItem->guid;
+				packet.target_page = 99;
+				diablo2::d2_client::send_to_server(&packet, sizeof packet);
+
+				D2PropertyStrc itemProperty = {};
+				itemProperty.nProperty = 396 - 3; // Adjust the property ID
+				itemProperty.nLayer = 0;
+				itemProperty.nMin = 3;
+				itemProperty.nMax = 3;
+				diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
 			}
 
 			if (isArmorOrWeaponCode(normCode)

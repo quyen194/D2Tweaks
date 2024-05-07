@@ -104,8 +104,8 @@ namespace d2_tweaks {
 				ui::controls::checkbox* m_show_spectacular;
 				ui::controls::checkbox* m_show_legendary;
 				ui::controls::checkbox* m_show_legendary_cut;
-
-
+				ui::controls::checkbox* m_show_rejuv_potion;
+				ui::controls::checkbox* m_show_full_rejuv_potion;
 
 				void(__fastcall* m_draw_dropped_items_names_original)(void*, void*);
 				void(__fastcall* m_handle_dropped_items_original)(void*, void*);
@@ -125,8 +125,6 @@ namespace d2_tweaks {
 
 				void register_misc_checkboxes();
 				void register_quality_checkboxes();
-
-				void extract_rune(bool value, uint32_t runeCode, uint32_t minValue, int propertyRowID);
 
 				void update_alt_only(bool value);
 				void extract_r01(bool value);
@@ -197,13 +195,17 @@ namespace d2_tweaks {
 				void extract_legendary(bool value);
 				void extract_legendary_cut(bool value);
 
-				void extract_flourite(bool value);
-				void extract_jade(bool value);
-				void extract_argonite(bool value);
-				void extract_azurite(bool value);
-				void extract_sulpher(bool value);
-				void extract_quartz(bool value);
-				void extract_tiger_eye(bool value);
+				void extract_rejuv_potion(bool value);
+				void extract_full_rejuv_potion(bool value);
+
+
+				//void extract_flourite(bool value);
+				//void extract_jade(bool value);
+				//void extract_argonite(bool value);
+				//void extract_azurite(bool value);
+				//void extract_sulpher(bool value);
+				//void extract_quartz(bool value);
+				//void extract_tiger_eye(bool value);
 
 				void update_show_gold(bool value);
 				void update_show_runes(bool value);

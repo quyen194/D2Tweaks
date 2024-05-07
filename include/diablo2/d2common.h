@@ -945,7 +945,7 @@ namespace diablo2 {
 		UNIT_STAT_UNUSED_67 = 483,
 		UNIT_STAT_UNUSED_68 = 484,
 		UNIT_STAT_UNUSED_69 = 485,
-		UNIT_STAT_UNUSED_70 = 486,
+		UNIT_STAT_gembag_Potions = 486,
 		UNIT_STAT_gembag_Stones_Flourite = 487,
 		UNIT_STAT_gembag_Stones_Jade = 488,
 		UNIT_STAT_gembag_Stones_Argonite = 489,
