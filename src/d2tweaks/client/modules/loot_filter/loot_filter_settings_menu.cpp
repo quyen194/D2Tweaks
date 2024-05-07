@@ -76,6 +76,7 @@
 #include <locale>
 #include <codecvt>
 #include <chrono>
+#include <windows.h> // Include for GetTickCount()
 
 d2_tweaks::client::modules::loot_filter_settings_menu::loot_filter_settings_menu(token)
 	: m_last_packet_sent(std::chrono::steady_clock::now()) {
@@ -94,7 +95,211 @@ d2_tweaks::client::modules::loot_filter_settings_menu::loot_filter_settings_menu
 	register_quality_checkboxes();
 
 	setup_hooks();
+
 }
+
+
+// Define the initial X position and Y position for the stats display
+int initialX = 400;
+int initialY = 15;
+
+void displayStat(const std::wstring& label, uint32_t value, int x, int y, int offsetY, diablo2::ui_color_t color) {
+	// Draw the label
+	diablo2::d2_win::draw_text((wchar_t*)((label).c_str()), x, y + offsetY, color, 0);
+
+	// Draw the value
+	diablo2::d2_win::draw_text((wchar_t*)((std::to_wstring(value)).c_str()), x + 100, y + offsetY, color, 0);
+}
+
+void displayStat() {
+
+	auto player = diablo2::d2_client::get_local_player();
+	auto inventory = player->inventory;
+	diablo2::structures::unit* bag;
+	uint32_t bagGuid = -1;
+	uint32_t statValue = 0;
+
+	uint32_t statRuby;
+	uint32_t statAmethyst;
+	uint32_t statDiamond;
+	uint32_t statEmerald;
+	uint32_t statSapphire;
+	uint32_t statTopaz;
+	uint32_t statSkull;
+
+	uint32_t runebag_RunesA;
+	uint32_t runebag_RunesB;
+	uint32_t runebag_RunesC;
+	uint32_t runebag_RunesD;
+	uint32_t runebag_RunesE;
+	uint32_t runebag_RunesF;
+	uint32_t runebag_Stones;
+	uint32_t gembag_Potions;
+	uint32_t gembag_PotionsHP;
+	uint32_t gembag_PotionsMana;
+
+	uint32_t gembag_Stones_Flourite;
+	uint32_t gembag_Stones_Jade;
+	uint32_t gembag_Stones_Argonite;
+	uint32_t gembag_Stones_Azurite;
+	uint32_t gembag_Stones_Sulpher;
+	uint32_t gembag_Stones_Quartz;
+	uint32_t gembag_Stones_TigerEye;
+
+	
+	int textOffset = 0;
+
+
+	int x = 400;
+	int y = 122;
+	int z = 120;
+
+	for (auto item = inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
+		const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
+		auto recordType = diablo2::d2_common::get_item_type_record(record->type);
+		char* normCode1 = record->string_code;
+		if (strncmp(normCode1, "ib1", 3) == 0) {
+			bag = item;
+			bagGuid = item->guid;
+
+			// gems
+			statRuby = diablo2::d2_common::get_stat(item, diablo2::UNIT_STAT_gembag_Ruby, NULL);
+			statAmethyst = diablo2::d2_common::get_stat(item, diablo2::UNIT_STAT_gembag_Amethyst, NULL);
+			statDiamond = diablo2::d2_common::get_stat(item, diablo2::UNIT_STAT_gembag_Diamond, NULL);
+			statEmerald = diablo2::d2_common::get_stat(item, diablo2::UNIT_STAT_gembag_Emerald, NULL);
+			statSapphire = diablo2::d2_common::get_stat(item, diablo2::UNIT_STAT_gembag_Sapphire, NULL);
+			statTopaz = diablo2::d2_common::get_stat(item, diablo2::UNIT_STAT_gembag_Topaz, NULL);
+			statSkull = diablo2::d2_common::get_stat(item, diablo2::UNIT_STAT_gembag_Skull, NULL);
+
+			// runes
+			runebag_RunesA = diablo2::d2_common::get_stat(item, diablo2::UNIT_STAT_runebag_RunesA, NULL);
+			runebag_RunesB = diablo2::d2_common::get_stat(item, diablo2::UNIT_STAT_runebag_RunesB, NULL);
+			runebag_RunesC = diablo2::d2_common::get_stat(item, diablo2::UNIT_STAT_runebag_RunesC, NULL);
+			runebag_RunesD = diablo2::d2_common::get_stat(item, diablo2::UNIT_STAT_runebag_RunesD, NULL);
+			runebag_RunesE = diablo2::d2_common::get_stat(item, diablo2::UNIT_STAT_runebag_RunesE, NULL);
+			runebag_RunesF = diablo2::d2_common::get_stat(item, diablo2::UNIT_STAT_runebag_RunesF, NULL);
+
+			// rejuv
+			gembag_Potions = diablo2::d2_common::get_stat(item, diablo2::UNIT_STAT_gembag_Potions, NULL);
+
+			// potions
+			gembag_PotionsHP = diablo2::d2_common::get_stat(item, diablo2::UNIT_STAT_gembag_PotionsHP, NULL);
+			gembag_PotionsMana = diablo2::d2_common::get_stat(item, diablo2::UNIT_STAT_gembag_PotionsMana, NULL);
+
+			// stones
+			gembag_Stones_Flourite = diablo2::d2_common::get_stat(item, diablo2::UNIT_STAT_gembag_Stones_Flourite, NULL);
+			gembag_Stones_Jade = diablo2::d2_common::get_stat(item, diablo2::UNIT_STAT_gembag_Stones_Jade, NULL);
+			gembag_Stones_Argonite = diablo2::d2_common::get_stat(item, diablo2::UNIT_STAT_gembag_Stones_Argonite, NULL);
+			gembag_Stones_Azurite = diablo2::d2_common::get_stat(item, diablo2::UNIT_STAT_gembag_Stones_Azurite, NULL);
+			gembag_Stones_Sulpher = diablo2::d2_common::get_stat(item, diablo2::UNIT_STAT_gembag_Stones_Sulpher, NULL);
+			gembag_Stones_Quartz = diablo2::d2_common::get_stat(item, diablo2::UNIT_STAT_gembag_Stones_Quartz, NULL);
+			gembag_Stones_TigerEye = diablo2::d2_common::get_stat(item, diablo2::UNIT_STAT_gembag_Stones_TigerEye, NULL);
+
+			// Display each stat on screen
+			//diablo2::d2_win::draw_text((wchar_t*)((L"Ruby: " + std::to_wstring(statRuby)).c_str()), 400, 15 + textOffset, diablo2::UI_COLOR_RED, 0);
+			//diablo2::d2_win::draw_text((wchar_t*)((L"Amethyst: " + std::to_wstring(statAmethyst)).c_str()), 400, 27 + textOffset, diablo2::UI_COLOR_PURPLE, 0);
+			//diablo2::d2_win::draw_text((wchar_t*)((L"Diamond: " + std::to_wstring(statDiamond)).c_str()), 400, 39 + textOffset, diablo2::UI_COLOR_WHITE, 0);
+			//diablo2::d2_win::draw_text((wchar_t*)((L"Emerald: " + std::to_wstring(statEmerald)).c_str()), 400, 51 + textOffset, diablo2::UI_COLOR_LIGHT_GREEN, 0);
+			//diablo2::d2_win::draw_text((wchar_t*)((L"Sapphire: " + std::to_wstring(statSapphire)).c_str()), 400, 63 + textOffset, diablo2::UI_COLOR_BLUE, 0);
+			//diablo2::d2_win::draw_text((wchar_t*)((L"Topaz: " + std::to_wstring(statTopaz)).c_str()), 400, 75 + textOffset, diablo2::UI_COLOR_YELLOW, 0);
+			//diablo2::d2_win::draw_text((wchar_t*)((L"Skull: " + std::to_wstring(statSkull)).c_str()), 400, 87 + textOffset, diablo2::UI_COLOR_GREY, 0);
+
+			//diablo2::d2_win::draw_text((wchar_t*)((L"Runes A: " + std::to_wstring(runebag_RunesA)).c_str()), 400, 109 + textOffset, diablo2::UI_COLOR_GREY, 0);
+			//diablo2::d2_win::draw_text((wchar_t*)((L"Runes B: " + std::to_wstring(runebag_RunesB)).c_str()), 400, 121 + textOffset, diablo2::UI_COLOR_GREY, 0);
+			//diablo2::d2_win::draw_text((wchar_t*)((L"Runes C: " + std::to_wstring(runebag_RunesC)).c_str()), 400, 133 + textOffset, diablo2::UI_COLOR_GREY, 0);
+			//diablo2::d2_win::draw_text((wchar_t*)((L"Runes D: " + std::to_wstring(runebag_RunesD)).c_str()), 400, 145 + textOffset, diablo2::UI_COLOR_GREY, 0);
+			//diablo2::d2_win::draw_text((wchar_t*)((L"Runes E: " + std::to_wstring(runebag_RunesE)).c_str()), 400, 157 + textOffset, diablo2::UI_COLOR_GREY, 0);
+			//diablo2::d2_win::draw_text((wchar_t*)((L"Runes F: " + std::to_wstring(runebag_RunesF)).c_str()), 400, 169 + textOffset, diablo2::UI_COLOR_GREY, 0);
+
+			//diablo2::d2_win::draw_text((wchar_t*)((L"Rejuv: " + std::to_wstring(gembag_Potions)).c_str()), 400, 191 + textOffset, diablo2::UI_COLOR_PURPLE, 0);
+
+			//diablo2::d2_win::draw_text((wchar_t*)((L"Potions HP: " + std::to_wstring(gembag_PotionsHP)).c_str()), 400, 213 + textOffset, diablo2::UI_COLOR_RED, 0);
+			//diablo2::d2_win::draw_text((wchar_t*)((L"Potions Mana: " + std::to_wstring(gembag_PotionsMana)).c_str()), 400, 225 + textOffset, diablo2::UI_COLOR_BLUE, 0);
+
+			//diablo2::d2_win::draw_text((wchar_t*)((L"Flourite: " + std::to_wstring(gembag_Stones_Flourite)).c_str()), 400, 247 + textOffset, diablo2::UI_COLOR_RED, 0);
+			//diablo2::d2_win::draw_text((wchar_t*)((L"Jade: " + std::to_wstring(gembag_Stones_Jade)).c_str()), 400, 259 + textOffset, diablo2::UI_COLOR_LIGHT_GREEN, 0);
+			//diablo2::d2_win::draw_text((wchar_t*)((L"Argonite: " + std::to_wstring(gembag_Stones_Argonite)).c_str()), 400, 271 + textOffset, diablo2::UI_COLOR_RED, 0);
+			//diablo2::d2_win::draw_text((wchar_t*)((L"Azurite: " + std::to_wstring(gembag_Stones_Azurite)).c_str()), 400, 283 + textOffset, diablo2::UI_COLOR_BLUE, 0);
+			//diablo2::d2_win::draw_text((wchar_t*)((L"Sulpher: " + std::to_wstring(gembag_Stones_Sulpher)).c_str()), 400, 295 + textOffset, diablo2::UI_COLOR_ORANGE, 0);
+			//diablo2::d2_win::draw_text((wchar_t*)((L"Quartz: " + std::to_wstring(gembag_Stones_Quartz)).c_str()), 400, 307 + textOffset, diablo2::UI_COLOR_WHITE, 0);
+			//diablo2::d2_win::draw_text((wchar_t*)((L"Tiger Eye: " + std::to_wstring(gembag_Stones_TigerEye)).c_str()), 400, 319 + textOffset, diablo2::UI_COLOR_YELLOW, 0);
+
+			diablo2::d2_win::draw_text(const_cast<wchar_t*>((L"C.Ruby: ")), x, y + 15 + textOffset, diablo2::UI_COLOR_RED, 0);
+			diablo2::d2_win::draw_text(const_cast<wchar_t*>((std::to_wstring(statRuby)).c_str()), x + z, y + 15 + textOffset, diablo2::UI_COLOR_RED, 0);
+
+			diablo2::d2_win::draw_text(const_cast<wchar_t*>((L"C.Amethyst: ")), x, y + 27 + textOffset, diablo2::UI_COLOR_PURPLE, 0);
+			diablo2::d2_win::draw_text(const_cast<wchar_t*>((std::to_wstring(statAmethyst)).c_str()), x + z, y + 27 + textOffset, diablo2::UI_COLOR_PURPLE, 0);
+
+			diablo2::d2_win::draw_text(const_cast<wchar_t*>((L"C.Diamond: ")), x, y + 39 + textOffset, diablo2::UI_COLOR_WHITE, 0);
+			diablo2::d2_win::draw_text(const_cast<wchar_t*>((std::to_wstring(statDiamond)).c_str()), x + z, y + 39 + textOffset, diablo2::UI_COLOR_WHITE, 0);
+
+			diablo2::d2_win::draw_text(const_cast<wchar_t*>((L"C.Emerald: ")), x, y + 51 + textOffset, diablo2::UI_COLOR_LIGHT_GREEN, 0);
+			diablo2::d2_win::draw_text(const_cast<wchar_t*>((std::to_wstring(statEmerald)).c_str()), x + z, y + 51 + textOffset, diablo2::UI_COLOR_LIGHT_GREEN, 0);
+
+			diablo2::d2_win::draw_text(const_cast<wchar_t*>((L"C.Sapphire: ")), x, y + 63 + textOffset, diablo2::UI_COLOR_BLUE, 0);
+			diablo2::d2_win::draw_text(const_cast<wchar_t*>((std::to_wstring(statSapphire)).c_str()), x + z, y + 63 + textOffset, diablo2::UI_COLOR_BLUE, 0);
+
+			diablo2::d2_win::draw_text(const_cast<wchar_t*>((L"C.Topaz: ")), x, y + 75 + textOffset, diablo2::UI_COLOR_YELLOW, 0);
+			diablo2::d2_win::draw_text(const_cast<wchar_t*>((std::to_wstring(statTopaz)).c_str()), x + z, y + 75 + textOffset, diablo2::UI_COLOR_YELLOW, 0);
+
+			diablo2::d2_win::draw_text(const_cast<wchar_t*>((L"C.Skull: ")), x, y + 87 + textOffset, diablo2::UI_COLOR_GREY, 0);
+			diablo2::d2_win::draw_text(const_cast<wchar_t*>((std::to_wstring(statSkull)).c_str()), x + z, y + 87 + textOffset, diablo2::UI_COLOR_GREY, 0);
+
+			diablo2::d2_win::draw_text(const_cast<wchar_t*>((L"Runes Tier 1: ")), x, y + 109 + textOffset, diablo2::UI_COLOR_GREY, 0);
+			diablo2::d2_win::draw_text(const_cast<wchar_t*>((std::to_wstring(runebag_RunesA)).c_str()), x + z, y + 109 + textOffset, diablo2::UI_COLOR_GREY, 0);
+
+			diablo2::d2_win::draw_text(const_cast<wchar_t*>((L"Runes Tier 2: ")), x, y + 121 + textOffset, diablo2::UI_COLOR_GREY, 0);
+			diablo2::d2_win::draw_text(const_cast<wchar_t*>((std::to_wstring(runebag_RunesB)).c_str()), x + z, y + 121 + textOffset, diablo2::UI_COLOR_GREY, 0);
+
+			diablo2::d2_win::draw_text(const_cast<wchar_t*>((L"Runes Tier 3: ")), x, y + 133 + textOffset, diablo2::UI_COLOR_GREY, 0);
+			diablo2::d2_win::draw_text(const_cast<wchar_t*>((std::to_wstring(runebag_RunesC)).c_str()), x + z, y + 133 + textOffset, diablo2::UI_COLOR_GREY, 0);
+
+			diablo2::d2_win::draw_text(const_cast<wchar_t*>((L"Runes Tier 4: ")), x, y + 145 + textOffset, diablo2::UI_COLOR_GREY, 0);
+			diablo2::d2_win::draw_text(const_cast<wchar_t*>((std::to_wstring(runebag_RunesD)).c_str()), x + z, y + 145 + textOffset, diablo2::UI_COLOR_GREY, 0);
+
+			diablo2::d2_win::draw_text(const_cast<wchar_t*>((L"Runes Tier 5: ")), x, y + 157 + textOffset, diablo2::UI_COLOR_GREY, 0);
+			diablo2::d2_win::draw_text(const_cast<wchar_t*>((std::to_wstring(runebag_RunesE)).c_str()), x + z, y + 157 + textOffset, diablo2::UI_COLOR_GREY, 0);
+
+			diablo2::d2_win::draw_text(const_cast<wchar_t*>((L"Runes Tier 6: ")), x, y + 169 + textOffset, diablo2::UI_COLOR_GREY, 0);
+			diablo2::d2_win::draw_text(const_cast<wchar_t*>((std::to_wstring(runebag_RunesF)).c_str()), x + z, y + 169 + textOffset, diablo2::UI_COLOR_GREY, 0);
+
+			diablo2::d2_win::draw_text(const_cast<wchar_t*>((L"Rejuv: ")), x, y + 191 + textOffset, diablo2::UI_COLOR_PURPLE, 0);
+			diablo2::d2_win::draw_text(const_cast<wchar_t*>((std::to_wstring(gembag_Potions)).c_str()), x + z, y + 191 + textOffset, diablo2::UI_COLOR_PURPLE, 0);
+
+			diablo2::d2_win::draw_text(const_cast<wchar_t*>((L"Potions HP: ")), x, y + 213 + textOffset, diablo2::UI_COLOR_RED, 0);
+			diablo2::d2_win::draw_text(const_cast<wchar_t*>((std::to_wstring(gembag_PotionsHP)).c_str()), x + z, y + 213 + textOffset, diablo2::UI_COLOR_RED, 0);
+
+			diablo2::d2_win::draw_text(const_cast<wchar_t*>((L"Potions Mana: ")), x, y + 225 + textOffset, diablo2::UI_COLOR_BLUE, 0);
+			diablo2::d2_win::draw_text(const_cast<wchar_t*>((std::to_wstring(gembag_PotionsMana)).c_str()), x + z, y + 225 + textOffset, diablo2::UI_COLOR_BLUE, 0);
+
+			diablo2::d2_win::draw_text(const_cast<wchar_t*>((L"Flourite: ")), x, y + 247 + textOffset, diablo2::UI_COLOR_RED, 0);
+			diablo2::d2_win::draw_text(const_cast<wchar_t*>((std::to_wstring(gembag_Stones_Flourite)).c_str()), x + z, y + 247 + textOffset, diablo2::UI_COLOR_RED, 0);
+
+			diablo2::d2_win::draw_text(const_cast<wchar_t*>((L"Jade: ")), x, y + 259 + textOffset, diablo2::UI_COLOR_LIGHT_GREEN, 0);
+			diablo2::d2_win::draw_text(const_cast<wchar_t*>((std::to_wstring(gembag_Stones_Jade)).c_str()), x + z, y + 259 + textOffset, diablo2::UI_COLOR_LIGHT_GREEN, 0);
+
+			diablo2::d2_win::draw_text(const_cast<wchar_t*>((L"Argonite: ")), x, y + 271 + textOffset, diablo2::UI_COLOR_RED, 0);
+			diablo2::d2_win::draw_text(const_cast<wchar_t*>((std::to_wstring(gembag_Stones_Argonite)).c_str()), x + z, y + 271 + textOffset, diablo2::UI_COLOR_RED, 0);
+
+			diablo2::d2_win::draw_text(const_cast<wchar_t*>((L"Azurite: ")), x, y + 283 + textOffset, diablo2::UI_COLOR_BLUE, 0);
+			diablo2::d2_win::draw_text(const_cast<wchar_t*>((std::to_wstring(gembag_Stones_Azurite)).c_str()), x + z, y + 283 + textOffset, diablo2::UI_COLOR_BLUE, 0);
+
+			diablo2::d2_win::draw_text(const_cast<wchar_t*>((L"Sulpher: ")), x, y + 295 + textOffset, diablo2::UI_COLOR_ORANGE, 0);
+			diablo2::d2_win::draw_text(const_cast<wchar_t*>((std::to_wstring(gembag_Stones_Sulpher)).c_str()), x + z, y + 295 + textOffset, diablo2::UI_COLOR_ORANGE, 0);
+
+			diablo2::d2_win::draw_text(const_cast<wchar_t*>((L"Quartz: ")), x, y + 307 + textOffset, diablo2::UI_COLOR_WHITE, 0);
+			diablo2::d2_win::draw_text(const_cast<wchar_t*>((std::to_wstring(gembag_Stones_Quartz)).c_str()), x + z, y + 307 + textOffset, diablo2::UI_COLOR_WHITE, 0);
+
+			diablo2::d2_win::draw_text(const_cast<wchar_t*>((L"Tiger Eye: ")), x, y + 319 + textOffset, diablo2::UI_COLOR_YELLOW, 0);
+			diablo2::d2_win::draw_text(const_cast<wchar_t*>((std::to_wstring(gembag_Stones_TigerEye)).c_str()), x + z, y + 319 + textOffset, diablo2::UI_COLOR_YELLOW, 0);
+
+		}
+	}
+
+
+}
+
+
 
 void d2_tweaks::client::modules::loot_filter_settings_menu::reload_settings() {
 	register_misc_checkboxes();
@@ -106,6 +311,7 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::draw() {
 		return;
 
 	menu::draw();
+	displayStat();
 }
 
 // Define a structure named GemType
