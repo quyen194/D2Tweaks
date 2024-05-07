@@ -382,6 +382,19 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::register_misc_checkb
 	m_show_rejuv_potion = get_control<ui::controls::checkbox>("m_show_rejuv_potion");
 	m_show_full_rejuv_potion = get_control<ui::controls::checkbox>("m_show_full_rejuv_potion");
 
+	m_show_hp1 = get_control<ui::controls::checkbox>("m_show_hp1");
+	m_show_hp2 = get_control<ui::controls::checkbox>("m_show_hp2");
+	m_show_hp3 = get_control<ui::controls::checkbox>("m_show_hp3");
+	m_show_hp4 = get_control<ui::controls::checkbox>("m_show_hp4");
+	m_show_hp5 = get_control<ui::controls::checkbox>("m_show_hp5");
+
+	m_show_mp1 = get_control<ui::controls::checkbox>("m_show_mp1");
+	m_show_mp2 = get_control<ui::controls::checkbox>("m_show_mp2");
+	m_show_mp3 = get_control<ui::controls::checkbox>("m_show_mp3");
+	m_show_mp4 = get_control<ui::controls::checkbox>("m_show_mp4");
+	m_show_mp5 = get_control<ui::controls::checkbox>("m_show_mp5");
+
+
 	// potions
 	{
 		if (m_show_rejuv_potion) {
@@ -395,6 +408,70 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::register_misc_checkb
 			m_show_full_rejuv_potion->set_on_click(std::bind(&loot_filter_settings_menu::extract_full_rejuv_potion,
 				this, std::placeholders::_1));
 		}
+
+		if (m_show_hp1) {
+			m_show_hp1->set_state(loot_filter_settings::get().m_show_hp1);
+			m_show_hp1->set_on_click(std::bind(&loot_filter_settings_menu::extract_hp1,
+				this, std::placeholders::_1));
+		}
+
+		if (m_show_hp2) {
+			m_show_hp2->set_state(loot_filter_settings::get().m_show_hp2);
+			m_show_hp2->set_on_click(std::bind(&loot_filter_settings_menu::extract_hp2,
+				this, std::placeholders::_1));
+		}
+
+		if (m_show_hp3) {
+			m_show_hp3->set_state(loot_filter_settings::get().m_show_hp3);
+			m_show_hp3->set_on_click(std::bind(&loot_filter_settings_menu::extract_hp3,
+				this, std::placeholders::_1));
+		}
+
+		if (m_show_hp4) {
+			m_show_hp4->set_state(loot_filter_settings::get().m_show_hp4);
+			m_show_hp4->set_on_click(std::bind(&loot_filter_settings_menu::extract_hp4,
+				this, std::placeholders::_1));
+		}
+
+		if (m_show_hp5) {
+			m_show_hp5->set_state(loot_filter_settings::get().m_show_hp5);
+			m_show_hp5->set_on_click(std::bind(&loot_filter_settings_menu::extract_hp5,
+				this, std::placeholders::_1));
+		}
+
+		if (m_show_mp1) {
+			m_show_mp1->set_state(loot_filter_settings::get().m_show_mp1);
+			m_show_mp1->set_on_click(std::bind(&loot_filter_settings_menu::extract_mp1,
+				this, std::placeholders::_1));
+		}
+
+		if (m_show_mp2) {
+			m_show_mp2->set_state(loot_filter_settings::get().m_show_mp2);
+			m_show_mp2->set_on_click(std::bind(&loot_filter_settings_menu::extract_mp2,
+				this, std::placeholders::_1));
+		}
+
+		if (m_show_mp3) {
+			m_show_mp3->set_state(loot_filter_settings::get().m_show_mp3);
+			m_show_mp3->set_on_click(std::bind(&loot_filter_settings_menu::extract_mp3,
+				this, std::placeholders::_1));
+		}
+
+		if (m_show_mp4) {
+			m_show_mp4->set_state(loot_filter_settings::get().m_show_mp4);
+			m_show_mp4->set_on_click(std::bind(&loot_filter_settings_menu::extract_mp4,
+				this, std::placeholders::_1));
+		}
+
+		if (m_show_mp5) {
+			m_show_mp5->set_state(loot_filter_settings::get().m_show_mp5);
+			m_show_mp5->set_on_click(std::bind(&loot_filter_settings_menu::extract_mp5,
+				this, std::placeholders::_1));
+		}
+
+
+
+
 	}
 
 	// gems
@@ -890,7 +967,6 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_full_rejuv_p
 	loot_filter_settings::get().m_show_full_rejuv_potion = value;
 	extract_item(value, 396, 3, 'rvl ', diablo2::UNIT_STAT_gembag_Potions);
 }
-
 
 // stones
 
@@ -2058,8 +2134,6 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_perfect(bool
 
 // runes
 
-
-
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r01(bool value) {
 	loot_filter_settings::get().m_show_r01 = value;
 	extract_item(value, 388, 1, 'r01 ', diablo2::UNIT_STAT_runebag_RunesA);
@@ -2192,6 +2266,60 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r33(bool val
 	loot_filter_settings::get().m_show_r33 = value;
 	extract_item(value, 393, 4, 'r33 ', diablo2::UNIT_STAT_runebag_RunesF);
 }
+
+
+// potions
+void d2_tweaks::client::modules::loot_filter_settings_menu::extract_hp1(bool value) {
+	loot_filter_settings::get().m_show_hp1 = value;
+	extract_item(value, 397, 1, 'hp1 ', diablo2::UNIT_STAT_gembag_PotionsHP);
+}
+
+void d2_tweaks::client::modules::loot_filter_settings_menu::extract_hp2(bool value) {
+	loot_filter_settings::get().m_show_hp2 = value;
+	extract_item(value, 397, 3, 'hp2 ', diablo2::UNIT_STAT_gembag_PotionsHP);
+}
+
+void d2_tweaks::client::modules::loot_filter_settings_menu::extract_hp3(bool value) {
+	loot_filter_settings::get().m_show_hp3 = value;
+	extract_item(value, 397, 9, 'hp3 ', diablo2::UNIT_STAT_gembag_PotionsHP);
+}
+
+void d2_tweaks::client::modules::loot_filter_settings_menu::extract_hp4(bool value) {
+	loot_filter_settings::get().m_show_hp4 = value;
+	extract_item(value, 397, 27, 'hp4 ', diablo2::UNIT_STAT_gembag_PotionsHP);
+}
+
+void d2_tweaks::client::modules::loot_filter_settings_menu::extract_hp5(bool value) {
+	loot_filter_settings::get().m_show_hp5 = value;
+	extract_item(value, 397, 81, 'hp5 ', diablo2::UNIT_STAT_gembag_PotionsHP);
+}
+
+void d2_tweaks::client::modules::loot_filter_settings_menu::extract_mp1(bool value) {
+	loot_filter_settings::get().m_show_mp1 = value;
+	extract_item(value, 398, 1, 'mp1 ', diablo2::UNIT_STAT_gembag_PotionsMana);
+}
+
+void d2_tweaks::client::modules::loot_filter_settings_menu::extract_mp2(bool value) {
+	loot_filter_settings::get().m_show_mp2 = value;
+	extract_item(value, 398, 3, 'mp2 ', diablo2::UNIT_STAT_gembag_PotionsMana);
+}
+
+void d2_tweaks::client::modules::loot_filter_settings_menu::extract_mp3(bool value) {
+	loot_filter_settings::get().m_show_mp3 = value;
+	extract_item(value, 398, 9, 'mp3 ', diablo2::UNIT_STAT_gembag_PotionsMana);
+}
+
+void d2_tweaks::client::modules::loot_filter_settings_menu::extract_mp4(bool value) {
+	loot_filter_settings::get().m_show_mp4 = value;
+	extract_item(value, 398, 27, 'mp4 ', diablo2::UNIT_STAT_gembag_PotionsMana);
+}
+
+void d2_tweaks::client::modules::loot_filter_settings_menu::extract_mp5(bool value) {
+	loot_filter_settings::get().m_show_mp5 = value;
+	extract_item(value, 398, 81, 'mp5 ', diablo2::UNIT_STAT_gembag_PotionsMana);
+}
+
+
 
 // End Rune Extraction Functions
 

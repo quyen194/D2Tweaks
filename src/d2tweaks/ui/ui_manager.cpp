@@ -510,6 +510,28 @@ bool isStoneCode(const char* normCode) {
 	return false;
 }
 
+void sendPacketAndUpdateProperty(int gemBagGuid, uint32_t iCode, int prop, int val, int item_guid, diablo2::structures::unit* gemBag) {
+	// Create the packet
+	static d2_tweaks::common::item_move_cs packet;
+	packet.bag_guid = gemBagGuid;
+	packet.updateBag = 1;
+	packet.iCode = iCode;
+	packet.prop = prop - 3;
+	packet.val = val;
+	packet.item_guid = item_guid;
+	packet.target_page = 99;
+	diablo2::d2_client::send_to_server(&packet, sizeof packet);
+
+	D2PropertyStrc itemProperty = {};
+	itemProperty.nProperty = prop - 3; // Adjust the property ID
+	itemProperty.nLayer = 0;
+	itemProperty.nMin = val;
+	itemProperty.nMax = val;
+	diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
+}
+
+
+
 LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 	static auto& instance = singleton<ui_manager>::instance();
 
@@ -1163,42 +1185,64 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 
 			if (strncmp(normCode, "rvs", 3) == 0) {
 				// Create the packet
-				static d2_tweaks::common::item_move_cs packet;
-				packet.bag_guid = gemBagGuid;
-				packet.updateBag = 1;
-				packet.iCode = 'rvs ';
-				packet.prop = 396 - 3;
-				packet.val = 1;
-				packet.item_guid = g_hoverItem->guid;
-				packet.target_page = 99;
-				diablo2::d2_client::send_to_server(&packet, sizeof packet);
-
-				D2PropertyStrc itemProperty = {};
-				itemProperty.nProperty = 396 - 3; // Adjust the property ID
-				itemProperty.nLayer = 0;
-				itemProperty.nMin = 1;
-				itemProperty.nMax = 1;
-				diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
+				sendPacketAndUpdateProperty(gemBagGuid, 'rvs ', 396, 1, g_hoverItem->guid, gemBag);
 			}
 			if (strncmp(normCode, "rvl", 3) == 0) {
 				// Create the packet
-				static d2_tweaks::common::item_move_cs packet;
-				packet.bag_guid = gemBagGuid;
-				packet.updateBag = 1;
-				packet.iCode = 'rvl ';
-				packet.prop = 396 - 3;
-				packet.val = 3;
-				packet.item_guid = g_hoverItem->guid;
-				packet.target_page = 99;
-				diablo2::d2_client::send_to_server(&packet, sizeof packet);
-
-				D2PropertyStrc itemProperty = {};
-				itemProperty.nProperty = 396 - 3; // Adjust the property ID
-				itemProperty.nLayer = 0;
-				itemProperty.nMin = 3;
-				itemProperty.nMax = 3;
-				diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
+				sendPacketAndUpdateProperty(gemBagGuid, 'rvl ', 396, 3, g_hoverItem->guid, gemBag);
 			}
+
+
+			if (strncmp(normCode, "hp1", 3) == 0) {
+				sendPacketAndUpdateProperty(gemBagGuid, 'hp1 ', 397, 1, g_hoverItem->guid, gemBag);
+			}
+
+			if (strncmp(normCode, "mp1", 3) == 0) {
+				sendPacketAndUpdateProperty(gemBagGuid, 'mp1 ', 398, 1, g_hoverItem->guid, gemBag);
+			}
+
+			if (strncmp(normCode, "hp2", 3) == 0) {
+				sendPacketAndUpdateProperty(gemBagGuid, 'hp2 ', 397, 3, g_hoverItem->guid, gemBag);
+			}
+
+			if (strncmp(normCode, "mp2", 3) == 0) {
+				sendPacketAndUpdateProperty(gemBagGuid, 'mp2 ', 398, 3, g_hoverItem->guid, gemBag);
+			}
+
+			if (strncmp(normCode, "hp3", 3) == 0) {
+				sendPacketAndUpdateProperty(gemBagGuid, 'hp3 ', 397, 9, g_hoverItem->guid, gemBag);
+			}
+
+			if (strncmp(normCode, "mp3", 3) == 0) {
+				sendPacketAndUpdateProperty(gemBagGuid, 'mp3 ', 398, 9, g_hoverItem->guid, gemBag);
+			}
+
+			if (strncmp(normCode, "hp4", 3) == 0) {
+				sendPacketAndUpdateProperty(gemBagGuid, 'hp4 ', 397, 27, g_hoverItem->guid, gemBag);
+			}
+
+			if (strncmp(normCode, "mp4", 3) == 0) {
+				sendPacketAndUpdateProperty(gemBagGuid, 'mp4 ', 398, 27, g_hoverItem->guid, gemBag);
+			}
+
+			if (strncmp(normCode, "hp5", 3) == 0) {
+				sendPacketAndUpdateProperty(gemBagGuid, 'hp5 ', 397, 81, g_hoverItem->guid, gemBag);
+			}
+
+			if (strncmp(normCode, "mp5", 3) == 0) {
+				sendPacketAndUpdateProperty(gemBagGuid, 'mp5 ', 398, 81, g_hoverItem->guid, gemBag);
+			}
+
+
+
+
+
+
+
+
+
+
+
 
 			if (isArmorOrWeaponCode(normCode)
 				|| record->type == 61 - 3 // jewel

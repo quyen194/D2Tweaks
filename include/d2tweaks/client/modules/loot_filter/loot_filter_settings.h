@@ -94,6 +94,18 @@ namespace d2_tweaks {
 				bool m_show_rejuv_potion;
 				bool m_show_full_rejuv_potion;
 
+				bool m_show_hp1;
+				bool m_show_hp2;
+				bool m_show_hp3;
+				bool m_show_hp4;
+				bool m_show_hp5;
+
+				bool m_show_mp1;
+				bool m_show_mp2;
+				bool m_show_mp3;
+				bool m_show_mp4;
+				bool m_show_mp5;
+
 				bool quality_settings[static_cast<size_t>(diablo2::structures::item_quality_t::ITEM_QUALITY_COUNT)];
 
 				char reserved[1004];

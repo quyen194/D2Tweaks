@@ -107,6 +107,19 @@ namespace d2_tweaks {
 				ui::controls::checkbox* m_show_rejuv_potion;
 				ui::controls::checkbox* m_show_full_rejuv_potion;
 
+				ui::controls::checkbox* m_show_hp1;
+				ui::controls::checkbox* m_show_hp2;
+				ui::controls::checkbox* m_show_hp3;
+				ui::controls::checkbox* m_show_hp4;
+				ui::controls::checkbox* m_show_hp5;
+
+				ui::controls::checkbox* m_show_mp1;
+				ui::controls::checkbox* m_show_mp2;
+				ui::controls::checkbox* m_show_mp3;
+				ui::controls::checkbox* m_show_mp4;
+				ui::controls::checkbox* m_show_mp5;
+
+
 				void(__fastcall* m_draw_dropped_items_names_original)(void*, void*);
 				void(__fastcall* m_handle_dropped_items_original)(void*, void*);
 			public:
@@ -193,6 +206,20 @@ namespace d2_tweaks {
 
 				void extract_rejuv_potion(bool value);
 				void extract_full_rejuv_potion(bool value);
+
+				void extract_hp1(bool value);
+				void extract_hp2(bool value);
+				void extract_hp3(bool value);
+				void extract_hp4(bool value);
+				void extract_hp5(bool value);
+
+				void extract_mp1(bool value);
+				void extract_mp2(bool value);
+				void extract_mp3(bool value);
+				void extract_mp4(bool value);
+				void extract_mp5(bool value);
+
+
 
 				//void extract_flourite(bool value);
 				//void extract_jade(bool value);
