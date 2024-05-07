@@ -84,7 +84,6 @@ namespace d2_tweaks {
 				ui::controls::checkbox* m_show_quartz;
 				ui::controls::checkbox* m_show_tiger_eye;
 
-
 				ui::controls::checkbox* m_show_rough;
 				ui::controls::checkbox* m_show_faded;
 				ui::controls::checkbox* m_show_blemished;
@@ -117,7 +116,7 @@ namespace d2_tweaks {
 				void draw() override;
 			private:
 				std::string m_selected_gem;
-				
+
 				std::chrono::steady_clock::time_point m_last_packet_sent;
 
 				void gem_checkbox_clicked(const std::string& gem);
@@ -197,7 +196,6 @@ namespace d2_tweaks {
 
 				void extract_rejuv_potion(bool value);
 				void extract_full_rejuv_potion(bool value);
-
 
 				//void extract_flourite(bool value);
 				//void extract_jade(bool value);

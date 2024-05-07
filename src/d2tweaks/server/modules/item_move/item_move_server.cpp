@@ -72,14 +72,12 @@ bool d2_tweaks::server::modules::item_move::handle_packet(diablo2::structures::g
 	bag_guid = std::to_string(itemMove->bag_guid);
 	//MessageBox(NULL, bag_guid.c_str(), "Bag GUID", MB_OK | MB_ICONINFORMATION);
 
-
 	// display itemMove->iCode in a messagebox
 	std::string iCode = std::to_string(itemMove->iCode);
 	//MessageBox(NULL, iCode.c_str(), "iCode", MB_OK | MB_ICONINFORMATION);
 
 	if (itemMove->extract == 1) {
-
-		// display bag guid in a messagebox 
+		// display bag guid in a messagebox
 		std::string bag_guid = std::to_string(itemMove->bag_guid);
 		//MessageBox(NULL, bag_guid.c_str(), "Bag GUID", MB_OK | MB_ICONINFORMATION);
 
@@ -104,7 +102,6 @@ bool d2_tweaks::server::modules::item_move::handle_packet(diablo2::structures::g
 			diablo2::d2_game::D2GAME_Transmogrify_6FC4A660(game, player, item);
 
 			diablo2::d2_game::QUESTS_CreateItem(game, player, reverseDWORD('gfv '), 1, diablo2::structures::ITEMQUAL_NORMAL, true);
-
 		}
 		else {
 			D2PropertyStrc itemProperty = {};

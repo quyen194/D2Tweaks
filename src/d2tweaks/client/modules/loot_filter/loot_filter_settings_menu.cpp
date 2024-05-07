@@ -387,13 +387,13 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::register_misc_checkb
 		if (m_show_rejuv_potion) {
 			m_show_rejuv_potion->set_state(loot_filter_settings::get().m_show_rejuv_potion);
 			m_show_rejuv_potion->set_on_click(std::bind(&loot_filter_settings_menu::extract_rejuv_potion,
-								this, std::placeholders::_1));
+				this, std::placeholders::_1));
 		}
 
 		if (m_show_full_rejuv_potion) {
 			m_show_full_rejuv_potion->set_state(loot_filter_settings::get().m_show_full_rejuv_potion);
 			m_show_full_rejuv_potion->set_on_click(std::bind(&loot_filter_settings_menu::extract_full_rejuv_potion,
-								this, std::placeholders::_1));
+				this, std::placeholders::_1));
 		}
 	}
 
@@ -922,7 +922,6 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_full_rejuv_p
 	}
 }
 
-
 // gems extraction functions
 
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_amethyst(bool value) {}
@@ -945,12 +944,9 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_topaz(bool v
 	// Implementation goes here
 }
 
-
 // stones
 
-
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_rough(bool value) {
-
 	uint32_t gemCode = 0;
 	int gemPropRowID = 0;
 	diablo2::unit_stats_t stat;
@@ -990,7 +986,6 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_rough(bool v
 		gemPropRowID = 357;
 		stat = diablo2::UNIT_STAT_gembag_Stones_TigerEye;
 	}
-
 
 	loot_filter_settings::get().m_show_rough = value;
 	auto player = diablo2::d2_client::get_local_player();
@@ -1036,10 +1031,7 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_rough(bool v
 	}
 }
 
-
-
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_faded(bool value) {
-
 	uint32_t gemCode = 0;
 	int gemPropRowID = 0;
 	diablo2::unit_stats_t stat;
@@ -1079,8 +1071,6 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_faded(bool v
 		gemPropRowID = 357;
 		stat = diablo2::UNIT_STAT_gembag_Stones_TigerEye;
 	}
-
-
 
 	loot_filter_settings::get().m_show_rough = value;
 	auto player = diablo2::d2_client::get_local_player();
@@ -1126,10 +1116,7 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_faded(bool v
 	}
 }
 
-
-
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_blemished(bool value) {
-
 	uint32_t gemCode = 0;
 	int gemPropRowID = 0;
 	diablo2::unit_stats_t stat;
@@ -1169,9 +1156,6 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_blemished(bo
 		gemPropRowID = 357;
 		stat = diablo2::UNIT_STAT_gembag_Stones_TigerEye;
 	}
-
-
-
 
 	loot_filter_settings::get().m_show_rough = value;
 	auto player = diablo2::d2_client::get_local_player();
@@ -1217,10 +1201,7 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_blemished(bo
 	}
 }
 
-
-
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_cleaned(bool value) {
-
 	uint32_t gemCode = 0;
 	int gemPropRowID = 0;
 	diablo2::unit_stats_t stat;
@@ -1260,8 +1241,6 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_cleaned(bool
 		gemPropRowID = 357;
 		stat = diablo2::UNIT_STAT_gembag_Stones_TigerEye;
 	}
-
-
 
 	loot_filter_settings::get().m_show_rough = value;
 	auto player = diablo2::d2_client::get_local_player();
@@ -1307,10 +1286,7 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_cleaned(bool
 	}
 }
 
-
-
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_triangle(bool value) {
-
 	uint32_t gemCode = 0;
 	int gemPropRowID = 0;
 	diablo2::unit_stats_t stat;
@@ -1350,8 +1326,6 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_triangle(boo
 		gemPropRowID = 357;
 		stat = diablo2::UNIT_STAT_gembag_Stones_TigerEye;
 	}
-
-
 
 	loot_filter_settings::get().m_show_rough = value;
 	auto player = diablo2::d2_client::get_local_player();
@@ -1397,10 +1371,7 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_triangle(boo
 	}
 }
 
-
-
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_trangle_cut(bool value) {
-
 	uint32_t gemCode = 0;
 	int gemPropRowID = 0;
 	diablo2::unit_stats_t stat;
@@ -1440,8 +1411,6 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_trangle_cut(
 		gemPropRowID = 357;
 		stat = diablo2::UNIT_STAT_gembag_Stones_TigerEye;
 	}
-
-
 
 	loot_filter_settings::get().m_show_rough = value;
 	auto player = diablo2::d2_client::get_local_player();
@@ -1487,10 +1456,7 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_trangle_cut(
 	}
 }
 
-
-
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_square(bool value) {
-
 	uint32_t gemCode = 0;
 	int gemPropRowID = 0;
 	diablo2::unit_stats_t stat;
@@ -1530,7 +1496,6 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_square(bool 
 		gemPropRowID = 357;
 		stat = diablo2::UNIT_STAT_gembag_Stones_TigerEye;
 	}
-
 
 	loot_filter_settings::get().m_show_rough = value;
 	auto player = diablo2::d2_client::get_local_player();
@@ -1576,10 +1541,7 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_square(bool 
 	}
 }
 
-
-
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_square_cut(bool value) {
-
 	uint32_t gemCode = 0;
 	int gemPropRowID = 0;
 	diablo2::unit_stats_t stat;
@@ -1619,8 +1581,6 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_square_cut(b
 		gemPropRowID = 357;
 		stat = diablo2::UNIT_STAT_gembag_Stones_TigerEye;
 	}
-
-
 
 	loot_filter_settings::get().m_show_rough = value;
 	auto player = diablo2::d2_client::get_local_player();
@@ -1666,10 +1626,7 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_square_cut(b
 	}
 }
 
-
-
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_regular(bool value) {
-
 	uint32_t gemCode = 0;
 	int gemPropRowID = 0;
 	diablo2::unit_stats_t stat;
@@ -1709,8 +1666,6 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_regular(bool
 		gemPropRowID = 357;
 		stat = diablo2::UNIT_STAT_gembag_Stones_TigerEye;
 	}
-
-
 
 	loot_filter_settings::get().m_show_rough = value;
 	auto player = diablo2::d2_client::get_local_player();
@@ -1756,10 +1711,7 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_regular(bool
 	}
 }
 
-
-
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_regular_cut(bool value) {
-
 	uint32_t gemCode = 0;
 	int gemPropRowID = 0;
 	diablo2::unit_stats_t stat;
@@ -1799,7 +1751,6 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_regular_cut(
 		gemPropRowID = 357;
 		stat = diablo2::UNIT_STAT_gembag_Stones_TigerEye;
 	}
-
 
 	loot_filter_settings::get().m_show_rough = value;
 	auto player = diablo2::d2_client::get_local_player();
@@ -1845,10 +1796,7 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_regular_cut(
 	}
 }
 
-
-
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_star(bool value) {
-
 	uint32_t gemCode = 0;
 	int gemPropRowID = 0;
 	diablo2::unit_stats_t stat;
@@ -1888,8 +1836,6 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_star(bool va
 		gemPropRowID = 357;
 		stat = diablo2::UNIT_STAT_gembag_Stones_TigerEye;
 	}
-
-
 
 	loot_filter_settings::get().m_show_rough = value;
 	auto player = diablo2::d2_client::get_local_player();
@@ -1935,10 +1881,7 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_star(bool va
 	}
 }
 
-
-
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_star_cut(bool value) {
-
 	uint32_t gemCode = 0;
 	int gemPropRowID = 0;
 	diablo2::unit_stats_t stat;
@@ -1978,8 +1921,6 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_star_cut(boo
 		gemPropRowID = 357;
 		stat = diablo2::UNIT_STAT_gembag_Stones_TigerEye;
 	}
-
-
 
 	loot_filter_settings::get().m_show_rough = value;
 	auto player = diablo2::d2_client::get_local_player();
@@ -2025,10 +1966,7 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_star_cut(boo
 	}
 }
 
-
-
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_imperial(bool value) {
-
 	uint32_t gemCode = 0;
 	int gemPropRowID = 0;
 	diablo2::unit_stats_t stat;
@@ -2068,8 +2006,6 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_imperial(boo
 		gemPropRowID = 357;
 		stat = diablo2::UNIT_STAT_gembag_Stones_TigerEye;
 	}
-
-
 
 	loot_filter_settings::get().m_show_rough = value;
 	auto player = diablo2::d2_client::get_local_player();
@@ -2115,10 +2051,7 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_imperial(boo
 	}
 }
 
-
-
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_imperial_cut(bool value) {
-
 	uint32_t gemCode = 0;
 	int gemPropRowID = 0;
 	diablo2::unit_stats_t stat;
@@ -2158,8 +2091,6 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_imperial_cut
 		gemPropRowID = 357;
 		stat = diablo2::UNIT_STAT_gembag_Stones_TigerEye;
 	}
-
-
 
 	loot_filter_settings::get().m_show_rough = value;
 	auto player = diablo2::d2_client::get_local_player();
@@ -2205,10 +2136,7 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_imperial_cut
 	}
 }
 
-
-
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_royal(bool value) {
-
 	uint32_t gemCode = 0;
 	int gemPropRowID = 0;
 	diablo2::unit_stats_t stat;
@@ -2248,8 +2176,6 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_royal(bool v
 		gemPropRowID = 357;
 		stat = diablo2::UNIT_STAT_gembag_Stones_TigerEye;
 	}
-
-
 
 	loot_filter_settings::get().m_show_rough = value;
 	auto player = diablo2::d2_client::get_local_player();
@@ -2295,10 +2221,7 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_royal(bool v
 	}
 }
 
-
-
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_royal_cut(bool value) {
-
 	uint32_t gemCode = 0;
 	int gemPropRowID = 0;
 	diablo2::unit_stats_t stat;
@@ -2338,8 +2261,6 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_royal_cut(bo
 		gemPropRowID = 357;
 		stat = diablo2::UNIT_STAT_gembag_Stones_TigerEye;
 	}
-
-
 
 	loot_filter_settings::get().m_show_rough = value;
 	auto player = diablo2::d2_client::get_local_player();
@@ -2385,10 +2306,7 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_royal_cut(bo
 	}
 }
 
-
-
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_spectacular(bool value) {
-
 	uint32_t gemCode = 0;
 	int gemPropRowID = 0;
 	diablo2::unit_stats_t stat;
@@ -2428,8 +2346,6 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_spectacular(
 		gemPropRowID = 357;
 		stat = diablo2::UNIT_STAT_gembag_Stones_TigerEye;
 	}
-
-
 
 	loot_filter_settings::get().m_show_rough = value;
 	auto player = diablo2::d2_client::get_local_player();
@@ -2475,10 +2391,7 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_spectacular(
 	}
 }
 
-
-
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_legendary(bool value) {
-
 	uint32_t gemCode = 0;
 	int gemPropRowID = 0;
 	diablo2::unit_stats_t stat;
@@ -2518,8 +2431,6 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_legendary(bo
 		gemPropRowID = 357;
 		stat = diablo2::UNIT_STAT_gembag_Stones_TigerEye;
 	}
-
-
 
 	loot_filter_settings::get().m_show_rough = value;
 	auto player = diablo2::d2_client::get_local_player();
@@ -2565,10 +2476,7 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_legendary(bo
 	}
 }
 
-
-
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_legendary_cut(bool value) {
-
 	uint32_t gemCode = 0;
 	int gemPropRowID = 0;
 	diablo2::unit_stats_t stat;
@@ -2608,8 +2516,6 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_legendary_cu
 		gemPropRowID = 357;
 		stat = diablo2::UNIT_STAT_gembag_Stones_TigerEye;
 	}
-
-
 
 	loot_filter_settings::get().m_show_rough = value;
 	auto player = diablo2::d2_client::get_local_player();
@@ -2654,8 +2560,6 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_legendary_cu
 		diablo2::d2_common::add_property(bag, &itemProperty, 0);
 	}
 }
-
-
 
 // qualities extraction functions
 
@@ -4312,10 +4216,7 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r33(bool val
 
 // End Rune Extraction Functions
 
-
 // Rejuv Potions
-
-
 
 void d2_tweaks::client::modules::loot_filter_settings_menu::update_show_gold(bool value) {
 	loot_filter_settings::get().show_gold = value;

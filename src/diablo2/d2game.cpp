@@ -158,5 +158,3 @@ diablo2::structures::unit* __fastcall diablo2::d2_game::QUESTS_CreateItem(diablo
 	static wrap_func_fast< diablo2::structures::unit* (diablo2::structures::game*, diablo2::structures::unit*, uint32_t, int32_t, uint8_t, int32_t)>QUESTS_CreateItem(0x65DF0, get_base());
 	return QUESTS_CreateItem(pGame, pPlayer, dwCode, nLevel, nQuality, bDroppable);
 }
-
-

@@ -249,7 +249,6 @@ namespace d2_tweaks {
 			bool extract;
 			uint32_t iCode;
 
-
 			item_move_cs() : item_guid(0), target_page(0) {
 				message_type = MESSAGE_TYPE_ITEM_MOVE;
 			}

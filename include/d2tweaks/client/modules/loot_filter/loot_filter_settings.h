@@ -94,7 +94,6 @@ namespace d2_tweaks {
 				bool m_show_rejuv_potion;
 				bool m_show_full_rejuv_potion;
 
-
 				bool quality_settings[static_cast<size_t>(diablo2::structures::item_quality_t::ITEM_QUALITY_COUNT)];
 
 				char reserved[1004];

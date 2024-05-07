@@ -1141,7 +1141,6 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 			diablo2::structures::unit* box{};
 			diablo2::structures::unit* harvester{};
 
-
 			// get the gembag item
 			for (auto item = player->inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
 				const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
