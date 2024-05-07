@@ -933,10 +933,13 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_item(bool va
 		if (strncmp(normCode1, "ib1", 3) == 0) {
 			bag = item;
 			bagGuid = item->guid;
-			statValue = diablo2::d2_common::get_stat(item, diablo2::UNIT_STAT_runebag_RunesA, NULL);
+			statValue = diablo2::d2_common::get_stat(item, stat, NULL);
 		}
 	}
-	if (statValue >= 1) {
+
+	//MessageBoxA(0, std::to_string(statValue).c_str(), "statValue", 0);
+
+	if (statValue >= val) {
 		static d2_tweaks::common::item_move_cs packet;
 		packet.item_guid = bagGuid;
 		packet.bag_guid = bagGuid;
