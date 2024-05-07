@@ -5,6 +5,7 @@
 #include <d2tweaks/ui/menu.h>
 
 #include <chrono>  // Add this line
+#include <diablo2/d2common.h>
 
 namespace diablo2 {
 	namespace structures {
@@ -126,6 +127,10 @@ namespace d2_tweaks {
 				void register_quality_checkboxes();
 
 				void update_alt_only(bool value);
+
+
+				void extract_item(bool value, int prop, uint32_t val, uint32_t rune, diablo2::unit_stats_t stat);
+					
 				void extract_r01(bool value);
 				void extract_r02(bool value);
 				void extract_r03(bool value);
@@ -159,14 +164,6 @@ namespace d2_tweaks {
 				void extract_r31(bool value);
 				void extract_r32(bool value);
 				void extract_r33(bool value);
-
-				void extract_amethyst(bool value);
-				void extract_diamond(bool value);
-				void extract_emerald(bool value);
-				void extract_ruby(bool value);
-				void extract_sapphire(bool value);
-				void extract_skull(bool value);
-				void extract_topaz(bool value);
 
 				void extract_chipped(bool value);
 				void extract_flawed(bool value);

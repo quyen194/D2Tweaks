@@ -842,12 +842,7 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::update_alt_only(bool
 	loot_filter_settings::get().save(diablo2::d2_client::get_local_player_name());
 }
 
-// potions
-
-void d2_tweaks::client::modules::loot_filter_settings_menu::extract_rejuv_potion(bool value) {
-	MessageBoxA(NULL, "extract_rejuv_potion", "extract_rejuv_potion", MB_OK);
-
-	loot_filter_settings::get().m_show_rejuv_potion = value;
+void d2_tweaks::client::modules::loot_filter_settings_menu::extract_item(bool value, int prop, uint32_t val, uint32_t itemCode, diablo2::unit_stats_t stat) {
 	auto player = diablo2::d2_client::get_local_player();
 	auto inventory = player->inventory;
 	diablo2::structures::unit* bag;
@@ -861,7 +856,7 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_rejuv_potion
 		if (strncmp(normCode1, "ib1", 3) == 0) {
 			bag = item;
 			bagGuid = item->guid;
-			statValue = diablo2::d2_common::get_stat(item, diablo2::UNIT_STAT_gembag_Potions, NULL);
+			statValue = diablo2::d2_common::get_stat(item, diablo2::UNIT_STAT_runebag_RunesA, NULL);
 		}
 	}
 	if (statValue >= 1) {
@@ -870,79 +865,32 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_rejuv_potion
 		packet.bag_guid = bagGuid;
 		packet.target_page = 0;
 		packet.extract = 1;
-		packet.iCode = 'rvs ';
-		packet.prop = 396 - 3;
-		packet.val = -1;
+		packet.iCode = itemCode;
+		packet.prop = prop - 3;
+		packet.val = -val;
 		diablo2::d2_client::send_to_server(&packet, sizeof packet);
 
 		D2PropertyStrc itemProperty = {};
-		itemProperty.nProperty = 396 - 3; // Adjust the property ID
+		itemProperty.nProperty = prop - 3; // Adjust the property ID
 		itemProperty.nLayer = 0;
-		itemProperty.nMin = -1;
-		itemProperty.nMax = -1;
+		itemProperty.nMin = -val;
+		itemProperty.nMax = -val;
 		diablo2::d2_common::add_property(bag, &itemProperty, 0);
 	}
+}
+
+// potions
+
+void d2_tweaks::client::modules::loot_filter_settings_menu::extract_rejuv_potion(bool value) {
+	loot_filter_settings::get().m_show_rejuv_potion = value;
+	extract_item(value, 396, 1, 'rvs ', diablo2::UNIT_STAT_gembag_Potions);
 }
 
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_full_rejuv_potion(bool value) {
 	loot_filter_settings::get().m_show_full_rejuv_potion = value;
-	auto player = diablo2::d2_client::get_local_player();
-	auto inventory = player->inventory;
-	diablo2::structures::unit* bag;
-	uint32_t bagGuid = -1;
-	uint32_t statValue = 0;
-
-	for (auto item = inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
-		const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
-		auto recordType = diablo2::d2_common::get_item_type_record(record->type);
-		char* normCode1 = record->string_code;
-		if (strncmp(normCode1, "ib1", 3) == 0) {
-			bag = item;
-			bagGuid = item->guid;
-			statValue = diablo2::d2_common::get_stat(item, diablo2::UNIT_STAT_gembag_Potions, NULL);
-		}
-	}
-	if (statValue >= 3) {
-		static d2_tweaks::common::item_move_cs packet;
-		packet.item_guid = bagGuid;
-		packet.bag_guid = bagGuid;
-		packet.target_page = 0;
-		packet.extract = 1;
-		packet.iCode = 'rvl ';
-		packet.prop = 396 - 3;
-		packet.val = -3;
-		diablo2::d2_client::send_to_server(&packet, sizeof packet);
-
-		D2PropertyStrc itemProperty = {};
-		itemProperty.nProperty = 396 - 3; // Adjust the property ID
-		itemProperty.nLayer = 0;
-		itemProperty.nMin = -3;
-		itemProperty.nMax = -3;
-		diablo2::d2_common::add_property(bag, &itemProperty, 0);
-	}
+	extract_item(value, 396, 3, 'rvl ', diablo2::UNIT_STAT_gembag_Potions);
 }
 
-// gems extraction functions
-
-void d2_tweaks::client::modules::loot_filter_settings_menu::extract_amethyst(bool value) {}
-void d2_tweaks::client::modules::loot_filter_settings_menu::extract_diamond(bool value) {
-	// Implementation goes here
-}
-void d2_tweaks::client::modules::loot_filter_settings_menu::extract_emerald(bool value) {
-	// Implementation goes here
-}
-void d2_tweaks::client::modules::loot_filter_settings_menu::extract_ruby(bool value) {
-	// Implementation goes here
-}
-void d2_tweaks::client::modules::loot_filter_settings_menu::extract_sapphire(bool value) {
-	// Implementation goes here
-}
-void d2_tweaks::client::modules::loot_filter_settings_menu::extract_skull(bool value) {
-	// Implementation goes here
-}
-void d2_tweaks::client::modules::loot_filter_settings_menu::extract_topaz(bool value) {
-	// Implementation goes here
-}
 
 // stones
 
@@ -988,47 +936,7 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_rough(bool v
 	}
 
 	loot_filter_settings::get().m_show_rough = value;
-	auto player = diablo2::d2_client::get_local_player();
-	auto inventory = player->inventory;
-	diablo2::structures::unit* bag;
-	uint32_t bagGuid = -1;
-	uint32_t statValue = 0;
-
-	for (auto item = inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
-		const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
-		auto recordType = diablo2::d2_common::get_item_type_record(record->type);
-		char* normCode1 = record->string_code;
-		if (strncmp(normCode1, "ib1", 3) == 0) {
-			bag = item;
-			bagGuid = item->guid;
-			statValue = diablo2::d2_common::get_stat(item, stat, NULL);
-		}
-	}
-	if (statValue >= 1) {
-		auto current_time = std::chrono::steady_clock::now();
-		auto elapsed_time = std::chrono::duration_cast<std::chrono::milliseconds>(current_time - m_last_packet_sent);
-
-		if (elapsed_time.count() >= 500) {
-			static d2_tweaks::common::item_move_cs packet;
-			packet.item_guid = bagGuid;
-			packet.bag_guid = bagGuid;
-			packet.target_page = 0;
-			packet.extract = 1;
-			packet.iCode = gemCode;
-			packet.prop = gemPropRowID - 3;
-			packet.val = -1;
-
-			diablo2::d2_client::send_to_server(&packet, sizeof packet);
-			m_last_packet_sent = current_time;
-		}
-
-		D2PropertyStrc itemProperty = {};
-		itemProperty.nProperty = gemPropRowID - 3; // Adjust the property ID
-		itemProperty.nLayer = 0;
-		itemProperty.nMin = -1;
-		itemProperty.nMax = -1;
-		diablo2::d2_common::add_property(bag, &itemProperty, 0);
-	}
+	extract_item(value, gemPropRowID, 1, gemCode, stat);
 }
 
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_faded(bool value) {
@@ -1073,47 +981,7 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_faded(bool v
 	}
 
 	loot_filter_settings::get().m_show_rough = value;
-	auto player = diablo2::d2_client::get_local_player();
-	auto inventory = player->inventory;
-	diablo2::structures::unit* bag;
-	uint32_t bagGuid = -1;
-	uint32_t statValue = 0;
-
-	for (auto item = inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
-		const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
-		auto recordType = diablo2::d2_common::get_item_type_record(record->type);
-		char* normCode1 = record->string_code;
-		if (strncmp(normCode1, "ib1", 3) == 0) {
-			bag = item;
-			bagGuid = item->guid;
-			statValue = diablo2::d2_common::get_stat(item, stat, NULL);
-		}
-	}
-	if (statValue >= 2) {
-		auto current_time = std::chrono::steady_clock::now();
-		auto elapsed_time = std::chrono::duration_cast<std::chrono::milliseconds>(current_time - m_last_packet_sent);
-
-		if (elapsed_time.count() >= 500) {
-			static d2_tweaks::common::item_move_cs packet;
-			packet.item_guid = bagGuid;
-			packet.bag_guid = bagGuid;
-			packet.target_page = 0;
-			packet.extract = 1;
-			packet.iCode = gemCode;
-			packet.prop = gemPropRowID - 3;
-			packet.val = -2;
-
-			diablo2::d2_client::send_to_server(&packet, sizeof packet);
-			m_last_packet_sent = current_time;
-		}
-
-		D2PropertyStrc itemProperty = {};
-		itemProperty.nProperty = gemPropRowID - 3; // Adjust the property ID
-		itemProperty.nLayer = 0;
-		itemProperty.nMin = -2;
-		itemProperty.nMax = -2;
-		diablo2::d2_common::add_property(bag, &itemProperty, 0);
-	}
+	extract_item(value, gemPropRowID, 2, gemCode, stat);
 }
 
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_blemished(bool value) {
@@ -1158,47 +1026,7 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_blemished(bo
 	}
 
 	loot_filter_settings::get().m_show_rough = value;
-	auto player = diablo2::d2_client::get_local_player();
-	auto inventory = player->inventory;
-	diablo2::structures::unit* bag;
-	uint32_t bagGuid = -1;
-	uint32_t statValue = 0;
-
-	for (auto item = inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
-		const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
-		auto recordType = diablo2::d2_common::get_item_type_record(record->type);
-		char* normCode1 = record->string_code;
-		if (strncmp(normCode1, "ib1", 3) == 0) {
-			bag = item;
-			bagGuid = item->guid;
-			statValue = diablo2::d2_common::get_stat(item, stat, NULL);
-		}
-	}
-	if (statValue >= 4) {
-		auto current_time = std::chrono::steady_clock::now();
-		auto elapsed_time = std::chrono::duration_cast<std::chrono::milliseconds>(current_time - m_last_packet_sent);
-
-		if (elapsed_time.count() >= 500) {
-			static d2_tweaks::common::item_move_cs packet;
-			packet.item_guid = bagGuid;
-			packet.bag_guid = bagGuid;
-			packet.target_page = 0;
-			packet.extract = 1;
-			packet.iCode = gemCode;
-			packet.prop = gemPropRowID - 3;
-			packet.val = -4;
-
-			diablo2::d2_client::send_to_server(&packet, sizeof packet);
-			m_last_packet_sent = current_time;
-		}
-
-		D2PropertyStrc itemProperty = {};
-		itemProperty.nProperty = gemPropRowID - 3; // Adjust the property ID
-		itemProperty.nLayer = 0;
-		itemProperty.nMin = -4;
-		itemProperty.nMax = -4;
-		diablo2::d2_common::add_property(bag, &itemProperty, 0);
-	}
+	extract_item(value, gemPropRowID, 8, gemCode, stat);
 }
 
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_cleaned(bool value) {
@@ -1243,47 +1071,7 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_cleaned(bool
 	}
 
 	loot_filter_settings::get().m_show_rough = value;
-	auto player = diablo2::d2_client::get_local_player();
-	auto inventory = player->inventory;
-	diablo2::structures::unit* bag;
-	uint32_t bagGuid = -1;
-	uint32_t statValue = 0;
-
-	for (auto item = inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
-		const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
-		auto recordType = diablo2::d2_common::get_item_type_record(record->type);
-		char* normCode1 = record->string_code;
-		if (strncmp(normCode1, "ib1", 3) == 0) {
-			bag = item;
-			bagGuid = item->guid;
-			statValue = diablo2::d2_common::get_stat(item, stat, NULL);
-		}
-	}
-	if (statValue >= 8) {
-		auto current_time = std::chrono::steady_clock::now();
-		auto elapsed_time = std::chrono::duration_cast<std::chrono::milliseconds>(current_time - m_last_packet_sent);
-
-		if (elapsed_time.count() >= 500) {
-			static d2_tweaks::common::item_move_cs packet;
-			packet.item_guid = bagGuid;
-			packet.bag_guid = bagGuid;
-			packet.target_page = 0;
-			packet.extract = 1;
-			packet.iCode = gemCode;
-			packet.prop = gemPropRowID - 3;
-			packet.val = -8;
-
-			diablo2::d2_client::send_to_server(&packet, sizeof packet);
-			m_last_packet_sent = current_time;
-		}
-
-		D2PropertyStrc itemProperty = {};
-		itemProperty.nProperty = gemPropRowID - 3; // Adjust the property ID
-		itemProperty.nLayer = 0;
-		itemProperty.nMin = -8;
-		itemProperty.nMax = -8;
-		diablo2::d2_common::add_property(bag, &itemProperty, 0);
-	}
+	extract_item(value, gemPropRowID, 16, gemCode, stat);
 }
 
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_triangle(bool value) {
@@ -1328,47 +1116,7 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_triangle(boo
 	}
 
 	loot_filter_settings::get().m_show_rough = value;
-	auto player = diablo2::d2_client::get_local_player();
-	auto inventory = player->inventory;
-	diablo2::structures::unit* bag;
-	uint32_t bagGuid = -1;
-	uint32_t statValue = 0;
-
-	for (auto item = inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
-		const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
-		auto recordType = diablo2::d2_common::get_item_type_record(record->type);
-		char* normCode1 = record->string_code;
-		if (strncmp(normCode1, "ib1", 3) == 0) {
-			bag = item;
-			bagGuid = item->guid;
-			statValue = diablo2::d2_common::get_stat(item, stat, NULL);
-		}
-	}
-	if (statValue >= 16) {
-		auto current_time = std::chrono::steady_clock::now();
-		auto elapsed_time = std::chrono::duration_cast<std::chrono::milliseconds>(current_time - m_last_packet_sent);
-
-		if (elapsed_time.count() >= 500) {
-			static d2_tweaks::common::item_move_cs packet;
-			packet.item_guid = bagGuid;
-			packet.bag_guid = bagGuid;
-			packet.target_page = 0;
-			packet.extract = 1;
-			packet.iCode = gemCode;
-			packet.prop = gemPropRowID - 3;
-			packet.val = -16;
-
-			diablo2::d2_client::send_to_server(&packet, sizeof packet);
-			m_last_packet_sent = current_time;
-		}
-
-		D2PropertyStrc itemProperty = {};
-		itemProperty.nProperty = gemPropRowID - 3; // Adjust the property ID
-		itemProperty.nLayer = 0;
-		itemProperty.nMin = -16;
-		itemProperty.nMax = -16;
-		diablo2::d2_common::add_property(bag, &itemProperty, 0);
-	}
+	extract_item(value, gemPropRowID, 32, gemCode, stat);
 }
 
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_trangle_cut(bool value) {
@@ -1413,47 +1161,7 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_trangle_cut(
 	}
 
 	loot_filter_settings::get().m_show_rough = value;
-	auto player = diablo2::d2_client::get_local_player();
-	auto inventory = player->inventory;
-	diablo2::structures::unit* bag;
-	uint32_t bagGuid = -1;
-	uint32_t statValue = 0;
-
-	for (auto item = inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
-		const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
-		auto recordType = diablo2::d2_common::get_item_type_record(record->type);
-		char* normCode1 = record->string_code;
-		if (strncmp(normCode1, "ib1", 3) == 0) {
-			bag = item;
-			bagGuid = item->guid;
-			statValue = diablo2::d2_common::get_stat(item, stat, NULL);
-		}
-	}
-	if (statValue >= 32) {
-		auto current_time = std::chrono::steady_clock::now();
-		auto elapsed_time = std::chrono::duration_cast<std::chrono::milliseconds>(current_time - m_last_packet_sent);
-
-		if (elapsed_time.count() >= 500) {
-			static d2_tweaks::common::item_move_cs packet;
-			packet.item_guid = bagGuid;
-			packet.bag_guid = bagGuid;
-			packet.target_page = 0;
-			packet.extract = 1;
-			packet.iCode = gemCode;
-			packet.prop = gemPropRowID - 3;
-			packet.val = -32;
-
-			diablo2::d2_client::send_to_server(&packet, sizeof packet);
-			m_last_packet_sent = current_time;
-		}
-
-		D2PropertyStrc itemProperty = {};
-		itemProperty.nProperty = gemPropRowID - 3; // Adjust the property ID
-		itemProperty.nLayer = 0;
-		itemProperty.nMin = -32;
-		itemProperty.nMax = -32;
-		diablo2::d2_common::add_property(bag, &itemProperty, 0);
-	}
+	extract_item(value, gemPropRowID, 64, gemCode, stat);
 }
 
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_square(bool value) {
@@ -1498,47 +1206,7 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_square(bool 
 	}
 
 	loot_filter_settings::get().m_show_rough = value;
-	auto player = diablo2::d2_client::get_local_player();
-	auto inventory = player->inventory;
-	diablo2::structures::unit* bag;
-	uint32_t bagGuid = -1;
-	uint32_t statValue = 0;
-
-	for (auto item = inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
-		const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
-		auto recordType = diablo2::d2_common::get_item_type_record(record->type);
-		char* normCode1 = record->string_code;
-		if (strncmp(normCode1, "ib1", 3) == 0) {
-			bag = item;
-			bagGuid = item->guid;
-			statValue = diablo2::d2_common::get_stat(item, stat, NULL);
-		}
-	}
-	if (statValue >= 64) {
-		auto current_time = std::chrono::steady_clock::now();
-		auto elapsed_time = std::chrono::duration_cast<std::chrono::milliseconds>(current_time - m_last_packet_sent);
-
-		if (elapsed_time.count() >= 500) {
-			static d2_tweaks::common::item_move_cs packet;
-			packet.item_guid = bagGuid;
-			packet.bag_guid = bagGuid;
-			packet.target_page = 0;
-			packet.extract = 1;
-			packet.iCode = gemCode;
-			packet.prop = gemPropRowID - 3;
-			packet.val = -64;
-
-			diablo2::d2_client::send_to_server(&packet, sizeof packet);
-			m_last_packet_sent = current_time;
-		}
-
-		D2PropertyStrc itemProperty = {};
-		itemProperty.nProperty = gemPropRowID - 3; // Adjust the property ID
-		itemProperty.nLayer = 0;
-		itemProperty.nMin = -64;
-		itemProperty.nMax = -64;
-		diablo2::d2_common::add_property(bag, &itemProperty, 0);
-	}
+	extract_item(value, gemPropRowID, 128, gemCode, stat);
 }
 
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_square_cut(bool value) {
@@ -1583,47 +1251,7 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_square_cut(b
 	}
 
 	loot_filter_settings::get().m_show_rough = value;
-	auto player = diablo2::d2_client::get_local_player();
-	auto inventory = player->inventory;
-	diablo2::structures::unit* bag;
-	uint32_t bagGuid = -1;
-	uint32_t statValue = 0;
-
-	for (auto item = inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
-		const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
-		auto recordType = diablo2::d2_common::get_item_type_record(record->type);
-		char* normCode1 = record->string_code;
-		if (strncmp(normCode1, "ib1", 3) == 0) {
-			bag = item;
-			bagGuid = item->guid;
-			statValue = diablo2::d2_common::get_stat(item, stat, NULL);
-		}
-	}
-	if (statValue >= 128) {
-		auto current_time = std::chrono::steady_clock::now();
-		auto elapsed_time = std::chrono::duration_cast<std::chrono::milliseconds>(current_time - m_last_packet_sent);
-
-		if (elapsed_time.count() >= 500) {
-			static d2_tweaks::common::item_move_cs packet;
-			packet.item_guid = bagGuid;
-			packet.bag_guid = bagGuid;
-			packet.target_page = 0;
-			packet.extract = 1;
-			packet.iCode = gemCode;
-			packet.prop = gemPropRowID - 3;
-			packet.val = -128;
-
-			diablo2::d2_client::send_to_server(&packet, sizeof packet);
-			m_last_packet_sent = current_time;
-		}
-
-		D2PropertyStrc itemProperty = {};
-		itemProperty.nProperty = gemPropRowID - 3; // Adjust the property ID
-		itemProperty.nLayer = 0;
-		itemProperty.nMin = -128;
-		itemProperty.nMax = -128;
-		diablo2::d2_common::add_property(bag, &itemProperty, 0);
-	}
+	extract_item(value, gemPropRowID, 256, gemCode, stat);
 }
 
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_regular(bool value) {
@@ -1668,47 +1296,7 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_regular(bool
 	}
 
 	loot_filter_settings::get().m_show_rough = value;
-	auto player = diablo2::d2_client::get_local_player();
-	auto inventory = player->inventory;
-	diablo2::structures::unit* bag;
-	uint32_t bagGuid = -1;
-	uint32_t statValue = 0;
-
-	for (auto item = inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
-		const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
-		auto recordType = diablo2::d2_common::get_item_type_record(record->type);
-		char* normCode1 = record->string_code;
-		if (strncmp(normCode1, "ib1", 3) == 0) {
-			bag = item;
-			bagGuid = item->guid;
-			statValue = diablo2::d2_common::get_stat(item, stat, NULL);
-		}
-	}
-	if (statValue >= 256) {
-		auto current_time = std::chrono::steady_clock::now();
-		auto elapsed_time = std::chrono::duration_cast<std::chrono::milliseconds>(current_time - m_last_packet_sent);
-
-		if (elapsed_time.count() >= 500) {
-			static d2_tweaks::common::item_move_cs packet;
-			packet.item_guid = bagGuid;
-			packet.bag_guid = bagGuid;
-			packet.target_page = 0;
-			packet.extract = 1;
-			packet.iCode = gemCode;
-			packet.prop = gemPropRowID - 3;
-			packet.val = -256;
-
-			diablo2::d2_client::send_to_server(&packet, sizeof packet);
-			m_last_packet_sent = current_time;
-		}
-
-		D2PropertyStrc itemProperty = {};
-		itemProperty.nProperty = gemPropRowID - 3; // Adjust the property ID
-		itemProperty.nLayer = 0;
-		itemProperty.nMin = -256;
-		itemProperty.nMax = -256;
-		diablo2::d2_common::add_property(bag, &itemProperty, 0);
-	}
+	extract_item(value, gemPropRowID, 512, gemCode, stat);
 }
 
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_regular_cut(bool value) {
@@ -1753,47 +1341,7 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_regular_cut(
 	}
 
 	loot_filter_settings::get().m_show_rough = value;
-	auto player = diablo2::d2_client::get_local_player();
-	auto inventory = player->inventory;
-	diablo2::structures::unit* bag;
-	uint32_t bagGuid = -1;
-	uint32_t statValue = 0;
-
-	for (auto item = inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
-		const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
-		auto recordType = diablo2::d2_common::get_item_type_record(record->type);
-		char* normCode1 = record->string_code;
-		if (strncmp(normCode1, "ib1", 3) == 0) {
-			bag = item;
-			bagGuid = item->guid;
-			statValue = diablo2::d2_common::get_stat(item, stat, NULL);
-		}
-	}
-	if (statValue >= 512) {
-		auto current_time = std::chrono::steady_clock::now();
-		auto elapsed_time = std::chrono::duration_cast<std::chrono::milliseconds>(current_time - m_last_packet_sent);
-
-		if (elapsed_time.count() >= 500) {
-			static d2_tweaks::common::item_move_cs packet;
-			packet.item_guid = bagGuid;
-			packet.bag_guid = bagGuid;
-			packet.target_page = 0;
-			packet.extract = 1;
-			packet.iCode = gemCode;
-			packet.prop = gemPropRowID - 3;
-			packet.val = -512;
-
-			diablo2::d2_client::send_to_server(&packet, sizeof packet);
-			m_last_packet_sent = current_time;
-		}
-
-		D2PropertyStrc itemProperty = {};
-		itemProperty.nProperty = gemPropRowID - 3; // Adjust the property ID
-		itemProperty.nLayer = 0;
-		itemProperty.nMin = -512;
-		itemProperty.nMax = -512;
-		diablo2::d2_common::add_property(bag, &itemProperty, 0);
-	}
+	extract_item(value, gemPropRowID, 1024, gemCode, stat);
 }
 
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_star(bool value) {
@@ -1838,47 +1386,7 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_star(bool va
 	}
 
 	loot_filter_settings::get().m_show_rough = value;
-	auto player = diablo2::d2_client::get_local_player();
-	auto inventory = player->inventory;
-	diablo2::structures::unit* bag;
-	uint32_t bagGuid = -1;
-	uint32_t statValue = 0;
-
-	for (auto item = inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
-		const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
-		auto recordType = diablo2::d2_common::get_item_type_record(record->type);
-		char* normCode1 = record->string_code;
-		if (strncmp(normCode1, "ib1", 3) == 0) {
-			bag = item;
-			bagGuid = item->guid;
-			statValue = diablo2::d2_common::get_stat(item, stat, NULL);
-		}
-	}
-	if (statValue >= 1024) {
-		auto current_time = std::chrono::steady_clock::now();
-		auto elapsed_time = std::chrono::duration_cast<std::chrono::milliseconds>(current_time - m_last_packet_sent);
-
-		if (elapsed_time.count() >= 500) {
-			static d2_tweaks::common::item_move_cs packet;
-			packet.item_guid = bagGuid;
-			packet.bag_guid = bagGuid;
-			packet.target_page = 0;
-			packet.extract = 1;
-			packet.iCode = gemCode;
-			packet.prop = gemPropRowID - 3;
-			packet.val = -1024;
-
-			diablo2::d2_client::send_to_server(&packet, sizeof packet);
-			m_last_packet_sent = current_time;
-		}
-
-		D2PropertyStrc itemProperty = {};
-		itemProperty.nProperty = gemPropRowID - 3; // Adjust the property ID
-		itemProperty.nLayer = 0;
-		itemProperty.nMin = -1024;
-		itemProperty.nMax = -1024;
-		diablo2::d2_common::add_property(bag, &itemProperty, 0);
-	}
+	extract_item(value, gemPropRowID, 2048, gemCode, stat);
 }
 
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_star_cut(bool value) {
@@ -1923,47 +1431,7 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_star_cut(boo
 	}
 
 	loot_filter_settings::get().m_show_rough = value;
-	auto player = diablo2::d2_client::get_local_player();
-	auto inventory = player->inventory;
-	diablo2::structures::unit* bag;
-	uint32_t bagGuid = -1;
-	uint32_t statValue = 0;
-
-	for (auto item = inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
-		const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
-		auto recordType = diablo2::d2_common::get_item_type_record(record->type);
-		char* normCode1 = record->string_code;
-		if (strncmp(normCode1, "ib1", 3) == 0) {
-			bag = item;
-			bagGuid = item->guid;
-			statValue = diablo2::d2_common::get_stat(item, stat, NULL);
-		}
-	}
-	if (statValue >= 2048) {
-		auto current_time = std::chrono::steady_clock::now();
-		auto elapsed_time = std::chrono::duration_cast<std::chrono::milliseconds>(current_time - m_last_packet_sent);
-
-		if (elapsed_time.count() >= 500) {
-			static d2_tweaks::common::item_move_cs packet;
-			packet.item_guid = bagGuid;
-			packet.bag_guid = bagGuid;
-			packet.target_page = 0;
-			packet.extract = 1;
-			packet.iCode = gemCode;
-			packet.prop = gemPropRowID - 3;
-			packet.val = -2048;
-
-			diablo2::d2_client::send_to_server(&packet, sizeof packet);
-			m_last_packet_sent = current_time;
-		}
-
-		D2PropertyStrc itemProperty = {};
-		itemProperty.nProperty = gemPropRowID - 3; // Adjust the property ID
-		itemProperty.nLayer = 0;
-		itemProperty.nMin = -2048;
-		itemProperty.nMax = -2048;
-		diablo2::d2_common::add_property(bag, &itemProperty, 0);
-	}
+	extract_item(value, gemPropRowID, 4096, gemCode, stat);
 }
 
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_imperial(bool value) {
@@ -2008,47 +1476,7 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_imperial(boo
 	}
 
 	loot_filter_settings::get().m_show_rough = value;
-	auto player = diablo2::d2_client::get_local_player();
-	auto inventory = player->inventory;
-	diablo2::structures::unit* bag;
-	uint32_t bagGuid = -1;
-	uint32_t statValue = 0;
-
-	for (auto item = inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
-		const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
-		auto recordType = diablo2::d2_common::get_item_type_record(record->type);
-		char* normCode1 = record->string_code;
-		if (strncmp(normCode1, "ib1", 3) == 0) {
-			bag = item;
-			bagGuid = item->guid;
-			statValue = diablo2::d2_common::get_stat(item, stat, NULL);
-		}
-	}
-	if (statValue >= 4096) {
-		auto current_time = std::chrono::steady_clock::now();
-		auto elapsed_time = std::chrono::duration_cast<std::chrono::milliseconds>(current_time - m_last_packet_sent);
-
-		if (elapsed_time.count() >= 500) {
-			static d2_tweaks::common::item_move_cs packet;
-			packet.item_guid = bagGuid;
-			packet.bag_guid = bagGuid;
-			packet.target_page = 0;
-			packet.extract = 1;
-			packet.iCode = gemCode;
-			packet.prop = gemPropRowID - 3;
-			packet.val = -4096;
-
-			diablo2::d2_client::send_to_server(&packet, sizeof packet);
-			m_last_packet_sent = current_time;
-		}
-
-		D2PropertyStrc itemProperty = {};
-		itemProperty.nProperty = gemPropRowID - 3; // Adjust the property ID
-		itemProperty.nLayer = 0;
-		itemProperty.nMin = -4096;
-		itemProperty.nMax = -4096;
-		diablo2::d2_common::add_property(bag, &itemProperty, 0);
-	}
+	extract_item(value, gemPropRowID, 8192, gemCode, stat);
 }
 
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_imperial_cut(bool value) {
@@ -2093,47 +1521,7 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_imperial_cut
 	}
 
 	loot_filter_settings::get().m_show_rough = value;
-	auto player = diablo2::d2_client::get_local_player();
-	auto inventory = player->inventory;
-	diablo2::structures::unit* bag;
-	uint32_t bagGuid = -1;
-	uint32_t statValue = 0;
-
-	for (auto item = inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
-		const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
-		auto recordType = diablo2::d2_common::get_item_type_record(record->type);
-		char* normCode1 = record->string_code;
-		if (strncmp(normCode1, "ib1", 3) == 0) {
-			bag = item;
-			bagGuid = item->guid;
-			statValue = diablo2::d2_common::get_stat(item, stat, NULL);
-		}
-	}
-	if (statValue >= 8192) {
-		auto current_time = std::chrono::steady_clock::now();
-		auto elapsed_time = std::chrono::duration_cast<std::chrono::milliseconds>(current_time - m_last_packet_sent);
-
-		if (elapsed_time.count() >= 500) {
-			static d2_tweaks::common::item_move_cs packet;
-			packet.item_guid = bagGuid;
-			packet.bag_guid = bagGuid;
-			packet.target_page = 0;
-			packet.extract = 1;
-			packet.iCode = gemCode;
-			packet.prop = gemPropRowID - 3;
-			packet.val = -8192;
-
-			diablo2::d2_client::send_to_server(&packet, sizeof packet);
-			m_last_packet_sent = current_time;
-		}
-
-		D2PropertyStrc itemProperty = {};
-		itemProperty.nProperty = gemPropRowID - 3; // Adjust the property ID
-		itemProperty.nLayer = 0;
-		itemProperty.nMin = -8192;
-		itemProperty.nMax = -8192;
-		diablo2::d2_common::add_property(bag, &itemProperty, 0);
-	}
+	extract_item(value, gemPropRowID, 16384, gemCode, stat);
 }
 
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_royal(bool value) {
@@ -2348,47 +1736,7 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_spectacular(
 	}
 
 	loot_filter_settings::get().m_show_rough = value;
-	auto player = diablo2::d2_client::get_local_player();
-	auto inventory = player->inventory;
-	diablo2::structures::unit* bag;
-	uint32_t bagGuid = -1;
-	uint32_t statValue = 0;
-
-	for (auto item = inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
-		const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
-		auto recordType = diablo2::d2_common::get_item_type_record(record->type);
-		char* normCode1 = record->string_code;
-		if (strncmp(normCode1, "ib1", 3) == 0) {
-			bag = item;
-			bagGuid = item->guid;
-			statValue = diablo2::d2_common::get_stat(item, stat, NULL);
-		}
-	}
-	if (statValue >= 65536) {
-		auto current_time = std::chrono::steady_clock::now();
-		auto elapsed_time = std::chrono::duration_cast<std::chrono::milliseconds>(current_time - m_last_packet_sent);
-
-		if (elapsed_time.count() >= 500) {
-			static d2_tweaks::common::item_move_cs packet;
-			packet.item_guid = bagGuid;
-			packet.bag_guid = bagGuid;
-			packet.target_page = 0;
-			packet.extract = 1;
-			packet.iCode = gemCode;
-			packet.prop = gemPropRowID - 3;
-			packet.val = -65536;
-
-			diablo2::d2_client::send_to_server(&packet, sizeof packet);
-			m_last_packet_sent = current_time;
-		}
-
-		D2PropertyStrc itemProperty = {};
-		itemProperty.nProperty = gemPropRowID - 3; // Adjust the property ID
-		itemProperty.nLayer = 0;
-		itemProperty.nMin = -65536;
-		itemProperty.nMax = -65536;
-		diablo2::d2_common::add_property(bag, &itemProperty, 0);
-	}
+	extract_item(value, gemPropRowID, 65536, gemCode, stat);
 }
 
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_legendary(bool value) {
@@ -2433,47 +1781,7 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_legendary(bo
 	}
 
 	loot_filter_settings::get().m_show_rough = value;
-	auto player = diablo2::d2_client::get_local_player();
-	auto inventory = player->inventory;
-	diablo2::structures::unit* bag;
-	uint32_t bagGuid = -1;
-	uint32_t statValue = 0;
-
-	for (auto item = inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
-		const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
-		auto recordType = diablo2::d2_common::get_item_type_record(record->type);
-		char* normCode1 = record->string_code;
-		if (strncmp(normCode1, "ib1", 3) == 0) {
-			bag = item;
-			bagGuid = item->guid;
-			statValue = diablo2::d2_common::get_stat(item, stat, NULL);
-		}
-	}
-	if (statValue >= 131072) {
-		auto current_time = std::chrono::steady_clock::now();
-		auto elapsed_time = std::chrono::duration_cast<std::chrono::milliseconds>(current_time - m_last_packet_sent);
-
-		if (elapsed_time.count() >= 500) {
-			static d2_tweaks::common::item_move_cs packet;
-			packet.item_guid = bagGuid;
-			packet.bag_guid = bagGuid;
-			packet.target_page = 0;
-			packet.extract = 1;
-			packet.iCode = gemCode;
-			packet.prop = gemPropRowID - 3;
-			packet.val = -131072;
-
-			diablo2::d2_client::send_to_server(&packet, sizeof packet);
-			m_last_packet_sent = current_time;
-		}
-
-		D2PropertyStrc itemProperty = {};
-		itemProperty.nProperty = gemPropRowID - 3; // Adjust the property ID
-		itemProperty.nLayer = 0;
-		itemProperty.nMin = -131072;
-		itemProperty.nMax = -131072;
-		diablo2::d2_common::add_property(bag, &itemProperty, 0);
-	}
+	extract_item(value, gemPropRowID, 131072, gemCode, stat);
 }
 
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_legendary_cut(bool value) {
@@ -2518,47 +1826,7 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_legendary_cu
 	}
 
 	loot_filter_settings::get().m_show_rough = value;
-	auto player = diablo2::d2_client::get_local_player();
-	auto inventory = player->inventory;
-	diablo2::structures::unit* bag;
-	uint32_t bagGuid = -1;
-	uint32_t statValue = 0;
-
-	for (auto item = inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
-		const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
-		auto recordType = diablo2::d2_common::get_item_type_record(record->type);
-		char* normCode1 = record->string_code;
-		if (strncmp(normCode1, "ib1", 3) == 0) {
-			bag = item;
-			bagGuid = item->guid;
-			statValue = diablo2::d2_common::get_stat(item, stat, NULL);
-		}
-	}
-	if (statValue >= 262144) {
-		auto current_time = std::chrono::steady_clock::now();
-		auto elapsed_time = std::chrono::duration_cast<std::chrono::milliseconds>(current_time - m_last_packet_sent);
-
-		if (elapsed_time.count() >= 500) {
-			static d2_tweaks::common::item_move_cs packet;
-			packet.item_guid = bagGuid;
-			packet.bag_guid = bagGuid;
-			packet.target_page = 0;
-			packet.extract = 1;
-			packet.iCode = gemCode;
-			packet.prop = gemPropRowID - 3;
-			packet.val = -262144;
-
-			diablo2::d2_client::send_to_server(&packet, sizeof packet);
-			m_last_packet_sent = current_time;
-		}
-
-		D2PropertyStrc itemProperty = {};
-		itemProperty.nProperty = gemPropRowID - 3; // Adjust the property ID
-		itemProperty.nLayer = 0;
-		itemProperty.nMin = -262144;
-		itemProperty.nMax = -262144;
-		diablo2::d2_common::add_property(bag, &itemProperty, 0);
-	}
+	extract_item(value, gemPropRowID, 262144, gemCode, stat);
 }
 
 // qualities extraction functions
@@ -2605,47 +1873,7 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_chipped(bool
 	}
 
 	loot_filter_settings::get().m_show_chipped = value;
-	auto player = diablo2::d2_client::get_local_player();
-	auto inventory = player->inventory;
-	diablo2::structures::unit* bag;
-	uint32_t bagGuid = -1;
-	uint32_t statValue = 0;
-
-	for (auto item = inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
-		const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
-		auto recordType = diablo2::d2_common::get_item_type_record(record->type);
-		char* normCode1 = record->string_code;
-		if (strncmp(normCode1, "ib1", 3) == 0) {
-			bag = item;
-			bagGuid = item->guid;
-			statValue = diablo2::d2_common::get_stat(item, stat, NULL);
-		}
-	}
-	if (statValue >= 1) {
-		auto current_time = std::chrono::steady_clock::now();
-		auto elapsed_time = std::chrono::duration_cast<std::chrono::milliseconds>(current_time - m_last_packet_sent);
-
-		if (elapsed_time.count() >= 500) {
-			static d2_tweaks::common::item_move_cs packet;
-			packet.item_guid = bagGuid;
-			packet.bag_guid = bagGuid;
-			packet.target_page = 0;
-			packet.extract = 1;
-			packet.iCode = gemCode;
-			packet.prop = gemPropRowID - 3;
-			packet.val = -1;
-
-			diablo2::d2_client::send_to_server(&packet, sizeof packet);
-			m_last_packet_sent = current_time;
-		}
-
-		D2PropertyStrc itemProperty = {};
-		itemProperty.nProperty = gemPropRowID - 3; // Adjust the property ID
-		itemProperty.nLayer = 0;
-		itemProperty.nMin = -1;
-		itemProperty.nMax = -1;
-		diablo2::d2_common::add_property(bag, &itemProperty, 0);
-	}
+	extract_item(value, gemPropRowID, 1, gemCode, stat);
 }
 
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_flawed(bool value) {
@@ -2690,40 +1918,7 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_flawed(bool 
 	}
 
 	loot_filter_settings::get().m_show_flawed = value;
-	auto player = diablo2::d2_client::get_local_player();
-	auto inventory = player->inventory;
-	diablo2::structures::unit* bag;
-	uint32_t bagGuid = -1;
-	uint32_t statValue = 0;
-
-	for (auto item = inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
-		const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
-		auto recordType = diablo2::d2_common::get_item_type_record(record->type);
-		char* normCode1 = record->string_code;
-		if (strncmp(normCode1, "ib1", 3) == 0) {
-			bag = item;
-			bagGuid = item->guid;
-			statValue = diablo2::d2_common::get_stat(item, stat, NULL);
-		}
-	}
-	if (statValue >= 3) {
-		static d2_tweaks::common::item_move_cs packet;
-		packet.item_guid = bagGuid;
-		packet.bag_guid = bagGuid;
-		packet.target_page = 0;
-		packet.extract = 1;
-		packet.iCode = gemCode;
-		packet.prop = gemPropRowID - 3;
-		packet.val = -3;
-		diablo2::d2_client::send_to_server(&packet, sizeof packet);
-
-		D2PropertyStrc itemProperty = {};
-		itemProperty.nProperty = gemPropRowID - 3; // Adjust the property ID
-		itemProperty.nLayer = 0;
-		itemProperty.nMin = -3;
-		itemProperty.nMax = -3;
-		diablo2::d2_common::add_property(bag, &itemProperty, 0);
-	}
+	extract_item(value, gemPropRowID, 3, gemCode, stat);
 }
 
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_normal(bool value) {
@@ -2768,40 +1963,7 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_normal(bool 
 	}
 
 	loot_filter_settings::get().m_show_normal = value;
-	auto player = diablo2::d2_client::get_local_player();
-	auto inventory = player->inventory;
-	diablo2::structures::unit* bag;
-	uint32_t bagGuid = -1;
-	uint32_t statValue = 0;
-
-	for (auto item = inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
-		const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
-		auto recordType = diablo2::d2_common::get_item_type_record(record->type);
-		char* normCode1 = record->string_code;
-		if (strncmp(normCode1, "ib1", 3) == 0) {
-			bag = item;
-			bagGuid = item->guid;
-			statValue = diablo2::d2_common::get_stat(item, stat, NULL);
-		}
-	}
-	if (statValue >= 9) {
-		static d2_tweaks::common::item_move_cs packet;
-		packet.item_guid = bagGuid;
-		packet.bag_guid = bagGuid;
-		packet.target_page = 0;
-		packet.extract = 1;
-		packet.iCode = gemCode;
-		packet.prop = gemPropRowID - 3;
-		packet.val = -9;
-		diablo2::d2_client::send_to_server(&packet, sizeof packet);
-
-		D2PropertyStrc itemProperty = {};
-		itemProperty.nProperty = gemPropRowID - 3; // Adjust the property ID
-		itemProperty.nLayer = 0;
-		itemProperty.nMin = -9;
-		itemProperty.nMax = -9;
-		diablo2::d2_common::add_property(bag, &itemProperty, 0);
-	}
+	extract_item(value, gemPropRowID, 9, gemCode, stat);
 }
 
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_flawless(bool value) {
@@ -2846,40 +2008,7 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_flawless(boo
 	}
 
 	loot_filter_settings::get().m_show_flawless = value;
-	auto player = diablo2::d2_client::get_local_player();
-	auto inventory = player->inventory;
-	diablo2::structures::unit* bag;
-	uint32_t bagGuid = -1;
-	uint32_t statValue = 0;
-
-	for (auto item = inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
-		const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
-		auto recordType = diablo2::d2_common::get_item_type_record(record->type);
-		char* normCode1 = record->string_code;
-		if (strncmp(normCode1, "ib1", 3) == 0) {
-			bag = item;
-			bagGuid = item->guid;
-			statValue = diablo2::d2_common::get_stat(item, stat, NULL);
-		}
-	}
-	if (statValue >= 27) {
-		static d2_tweaks::common::item_move_cs packet;
-		packet.item_guid = bagGuid;
-		packet.bag_guid = bagGuid;
-		packet.target_page = 0;
-		packet.extract = 1;
-		packet.iCode = gemCode;
-		packet.prop = gemPropRowID - 3;
-		packet.val = -1;
-		diablo2::d2_client::send_to_server(&packet, sizeof packet);
-
-		D2PropertyStrc itemProperty = {};
-		itemProperty.nProperty = gemPropRowID - 3; // Adjust the property ID
-		itemProperty.nLayer = 0;
-		itemProperty.nMin = -27;
-		itemProperty.nMax = -27;
-		diablo2::d2_common::add_property(bag, &itemProperty, 0);
-	}
+	extract_item(value, gemPropRowID, 27, gemCode, stat);
 }
 
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_perfect(bool value) {
@@ -2924,1294 +2053,144 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_perfect(bool
 	}
 
 	loot_filter_settings::get().m_show_perfect = value;
-	auto player = diablo2::d2_client::get_local_player();
-	auto inventory = player->inventory;
-	diablo2::structures::unit* bag;
-	uint32_t bagGuid = -1;
-	uint32_t statValue = 0;
-
-	for (auto item = inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
-		const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
-		auto recordType = diablo2::d2_common::get_item_type_record(record->type);
-		char* normCode1 = record->string_code;
-		if (strncmp(normCode1, "ib1", 3) == 0) {
-			bag = item;
-			bagGuid = item->guid;
-			statValue = diablo2::d2_common::get_stat(item, stat, NULL);
-		}
-	}
-	if (statValue >= 81) {
-		static d2_tweaks::common::item_move_cs packet;
-		packet.item_guid = bagGuid;
-		packet.bag_guid = bagGuid;
-		packet.target_page = 0;
-		packet.extract = 1;
-		packet.iCode = gemCode;
-		packet.prop = gemPropRowID - 3;
-		packet.val = -81;
-		diablo2::d2_client::send_to_server(&packet, sizeof packet);
-
-		D2PropertyStrc itemProperty = {};
-		itemProperty.nProperty = gemPropRowID - 3; // Adjust the property ID
-		itemProperty.nLayer = 0;
-		itemProperty.nMin = -81;
-		itemProperty.nMax = -81;
-		diablo2::d2_common::add_property(bag, &itemProperty, 0);
-	}
+	extract_item(value, gemPropRowID, 81, gemCode, stat);
 }
+
+// runes
+
+
 
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r01(bool value) {
 	loot_filter_settings::get().m_show_r01 = value;
-	auto player = diablo2::d2_client::get_local_player();
-	auto inventory = player->inventory;
-	diablo2::structures::unit* bag;
-	uint32_t bagGuid = -1;
-	uint32_t statValue = 0;
-
-	for (auto item = inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
-		const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
-		auto recordType = diablo2::d2_common::get_item_type_record(record->type);
-		char* normCode1 = record->string_code;
-		if (strncmp(normCode1, "ib1", 3) == 0) {
-			bag = item;
-			bagGuid = item->guid;
-			statValue = diablo2::d2_common::get_stat(item, diablo2::UNIT_STAT_runebag_RunesA, NULL);
-		}
-	}
-	if (statValue >= 1) {
-		static d2_tweaks::common::item_move_cs packet;
-		packet.item_guid = bagGuid;
-		packet.bag_guid = bagGuid;
-		packet.target_page = 0;
-		packet.extract = 1;
-		packet.iCode = 'r01 ';
-		packet.prop = 388 - 3;
-		packet.val = -1;
-		diablo2::d2_client::send_to_server(&packet, sizeof packet);
-
-		D2PropertyStrc itemProperty = {};
-		itemProperty.nProperty = 388 - 3; // Adjust the property ID
-		itemProperty.nLayer = 0;
-		itemProperty.nMin = -1;
-		itemProperty.nMax = -1;
-		diablo2::d2_common::add_property(bag, &itemProperty, 0);
-	}
+	extract_item(value, 388, 1, 'r01 ', diablo2::UNIT_STAT_runebag_RunesA);
 }
-
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r02(bool value) {
 	loot_filter_settings::get().m_show_r02 = value;
-	auto player = diablo2::d2_client::get_local_player();
-	auto inventory = player->inventory;
-	diablo2::structures::unit* bag;
-	uint32_t bagGuid = -1;
-	uint32_t statValue = 0;
-
-	for (auto item = inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
-		const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
-		auto recordType = diablo2::d2_common::get_item_type_record(record->type);
-		char* normCode1 = record->string_code;
-		if (strncmp(normCode1, "ib1", 3) == 0) {
-			bag = item;
-			bagGuid = item->guid;
-			statValue = diablo2::d2_common::get_stat(item, diablo2::UNIT_STAT_runebag_RunesA, NULL);
-		}
-	}
-	if (statValue >= 3) {
-		static d2_tweaks::common::item_move_cs packet;
-		packet.item_guid = bagGuid;
-		packet.bag_guid = bagGuid;
-		packet.target_page = 0;
-		packet.extract = 1;
-		packet.iCode = 'r02 ';
-		packet.prop = 388 - 3;
-		packet.val = -3;
-		diablo2::d2_client::send_to_server(&packet, sizeof packet);
-
-		D2PropertyStrc itemProperty = {};
-		itemProperty.nProperty = 388 - 3; // Adjust the property ID
-		itemProperty.nLayer = 0;
-		itemProperty.nMin = -3;
-		itemProperty.nMax = -3;
-		diablo2::d2_common::add_property(bag, &itemProperty, 0);
-	}
+	extract_item(value, 388, 3, 'r02 ', diablo2::UNIT_STAT_runebag_RunesA);
 }
-
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r03(bool value) {
 	loot_filter_settings::get().m_show_r03 = value;
-	auto player = diablo2::d2_client::get_local_player();
-	auto inventory = player->inventory;
-	diablo2::structures::unit* bag;
-	uint32_t bagGuid = -1;
-	uint32_t statValue = 0;
-
-	for (auto item = inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
-		const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
-		auto recordType = diablo2::d2_common::get_item_type_record(record->type);
-		char* normCode1 = record->string_code;
-		if (strncmp(normCode1, "ib1", 3) == 0) {
-			bag = item;
-			bagGuid = item->guid;
-			statValue = diablo2::d2_common::get_stat(item, diablo2::UNIT_STAT_runebag_RunesA, NULL);
-		}
-	}
-	if (statValue >= 9) {
-		static d2_tweaks::common::item_move_cs packet;
-		packet.item_guid = bagGuid;
-		packet.bag_guid = bagGuid;
-		packet.target_page = 0;
-		packet.extract = 1;
-		packet.iCode = 'r03 ';
-		packet.prop = 388 - 3;
-		packet.val = -9;
-		diablo2::d2_client::send_to_server(&packet, sizeof packet);
-
-		D2PropertyStrc itemProperty = {};
-		itemProperty.nProperty = 388 - 3; // Adjust the property ID
-		itemProperty.nLayer = 0;
-		itemProperty.nMin = -9;
-		itemProperty.nMax = -9;
-		diablo2::d2_common::add_property(bag, &itemProperty, 0);
-	}
+	extract_item(value, 388, 9, 'r03 ', diablo2::UNIT_STAT_runebag_RunesA);
 }
-
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r04(bool value) {
 	loot_filter_settings::get().m_show_r04 = value;
-	auto player = diablo2::d2_client::get_local_player();
-	auto inventory = player->inventory;
-	diablo2::structures::unit* bag;
-	uint32_t bagGuid = -1;
-	uint32_t statValue = 0;
-
-	for (auto item = inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
-		const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
-		auto recordType = diablo2::d2_common::get_item_type_record(record->type);
-		char* normCode1 = record->string_code;
-		if (strncmp(normCode1, "ib1", 3) == 0) {
-			bag = item;
-			bagGuid = item->guid;
-			statValue = diablo2::d2_common::get_stat(item, diablo2::UNIT_STAT_runebag_RunesA, NULL);
-		}
-	}
-	if (statValue >= 27) {
-		static d2_tweaks::common::item_move_cs packet;
-		packet.item_guid = bagGuid;
-		packet.bag_guid = bagGuid;
-		packet.target_page = 0;
-		packet.extract = 1;
-		packet.iCode = 'r04 ';
-		packet.prop = 388 - 3;
-		packet.val = -27;
-		diablo2::d2_client::send_to_server(&packet, sizeof packet);
-
-		D2PropertyStrc itemProperty = {};
-		itemProperty.nProperty = 388 - 3; // Adjust the property ID
-		itemProperty.nLayer = 0;
-		itemProperty.nMin = -27;
-		itemProperty.nMax = -27;
-		diablo2::d2_common::add_property(bag, &itemProperty, 0);
-	}
+	extract_item(value, 388, 27, 'r04 ', diablo2::UNIT_STAT_runebag_RunesA);
 }
-
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r05(bool value) {
 	loot_filter_settings::get().m_show_r05 = value;
-	auto player = diablo2::d2_client::get_local_player();
-	auto inventory = player->inventory;
-	diablo2::structures::unit* bag;
-	uint32_t bagGuid = -1;
-	uint32_t statValue = 0;
-
-	for (auto item = inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
-		const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
-		auto recordType = diablo2::d2_common::get_item_type_record(record->type);
-		char* normCode1 = record->string_code;
-		if (strncmp(normCode1, "ib1", 3) == 0) {
-			bag = item;
-			bagGuid = item->guid;
-			statValue = diablo2::d2_common::get_stat(item, diablo2::UNIT_STAT_runebag_RunesA, NULL);
-		}
-	}
-	if (statValue >= 81) {
-		static d2_tweaks::common::item_move_cs packet;
-		packet.item_guid = bagGuid;
-		packet.bag_guid = bagGuid;
-		packet.target_page = 0;
-		packet.extract = 1;
-		packet.iCode = 'r05 ';
-		packet.prop = 388 - 3;
-		packet.val = -81;
-		diablo2::d2_client::send_to_server(&packet, sizeof packet);
-
-		D2PropertyStrc itemProperty = {};
-		itemProperty.nProperty = 388 - 3; // Adjust the property ID
-		itemProperty.nLayer = 0;
-		itemProperty.nMin = -81;
-		itemProperty.nMax = -81;
-		diablo2::d2_common::add_property(bag, &itemProperty, 0);
-	}
+	extract_item(value, 388, 81, 'r05 ', diablo2::UNIT_STAT_runebag_RunesA);
 }
-
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r06(bool value) {
 	loot_filter_settings::get().m_show_r06 = value;
-	auto player = diablo2::d2_client::get_local_player();
-	auto inventory = player->inventory;
-	diablo2::structures::unit* bag;
-	uint32_t bagGuid = -1;
-	uint32_t statValue = 0;
-
-	for (auto item = inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
-		const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
-		auto recordType = diablo2::d2_common::get_item_type_record(record->type);
-		char* normCode1 = record->string_code;
-		if (strncmp(normCode1, "ib1", 3) == 0) {
-			bag = item;
-			bagGuid = item->guid;
-			statValue = diablo2::d2_common::get_stat(item, diablo2::UNIT_STAT_runebag_RunesA, NULL);
-		}
-	}
-	if (statValue >= 243) {
-		static d2_tweaks::common::item_move_cs packet;
-		packet.item_guid = bagGuid;
-		packet.bag_guid = bagGuid;
-		packet.target_page = 0;
-		packet.extract = 1;
-		packet.iCode = 'r06 ';
-		packet.prop = 388 - 3;
-		packet.val = -243;
-		diablo2::d2_client::send_to_server(&packet, sizeof packet);
-
-		D2PropertyStrc itemProperty = {};
-		itemProperty.nProperty = 388 - 3; // Adjust the property ID
-		itemProperty.nLayer = 0;
-		itemProperty.nMin = -243;
-		itemProperty.nMax = -243;
-		diablo2::d2_common::add_property(bag, &itemProperty, 0);
-	}
+	extract_item(value, 388, 243, 'r06 ', diablo2::UNIT_STAT_runebag_RunesA);
 }
-
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r07(bool value) {
 	loot_filter_settings::get().m_show_r07 = value;
-	auto player = diablo2::d2_client::get_local_player();
-	auto inventory = player->inventory;
-	diablo2::structures::unit* bag;
-	uint32_t bagGuid = -1;
-	uint32_t statValue = 0;
-
-	for (auto item = inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
-		const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
-		auto recordType = diablo2::d2_common::get_item_type_record(record->type);
-		char* normCode1 = record->string_code;
-		if (strncmp(normCode1, "ib1", 3) == 0) {
-			bag = item;
-			bagGuid = item->guid;
-			statValue = diablo2::d2_common::get_stat(item, diablo2::UNIT_STAT_runebag_RunesB, NULL);
-		}
-	}
-	if (statValue >= 1) {
-		static d2_tweaks::common::item_move_cs packet;
-		packet.item_guid = bagGuid;
-		packet.bag_guid = bagGuid;
-		packet.target_page = 0;
-		packet.extract = 1;
-		packet.iCode = 'r07 ';
-		packet.prop = 389 - 3;
-		packet.val = -1;
-		diablo2::d2_client::send_to_server(&packet, sizeof packet);
-
-		D2PropertyStrc itemProperty = {};
-		itemProperty.nProperty = 389 - 3; // Adjust the property ID
-		itemProperty.nLayer = 0;
-		itemProperty.nMin = -1;
-		itemProperty.nMax = -1;
-		diablo2::d2_common::add_property(bag, &itemProperty, 0);
-	}
+	extract_item(value, 389, 1, 'r07 ', diablo2::UNIT_STAT_runebag_RunesB);
 }
-
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r08(bool value) {
 	loot_filter_settings::get().m_show_r08 = value;
-	auto player = diablo2::d2_client::get_local_player();
-	auto inventory = player->inventory;
-	diablo2::structures::unit* bag;
-	uint32_t bagGuid = -1;
-	uint32_t statValue = 0;
-
-	for (auto item = inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
-		const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
-		auto recordType = diablo2::d2_common::get_item_type_record(record->type);
-		char* normCode1 = record->string_code;
-		if (strncmp(normCode1, "ib1", 3) == 0) {
-			bag = item;
-			bagGuid = item->guid;
-			statValue = diablo2::d2_common::get_stat(item, diablo2::UNIT_STAT_runebag_RunesB, NULL);
-		}
-	}
-	if (statValue >= 3) {
-		static d2_tweaks::common::item_move_cs packet;
-		packet.item_guid = bagGuid;
-		packet.bag_guid = bagGuid;
-		packet.target_page = 0;
-		packet.extract = 1;
-		packet.iCode = 'r08 ';
-		packet.prop = 389 - 3;
-		packet.val = -3;
-		diablo2::d2_client::send_to_server(&packet, sizeof packet);
-
-		D2PropertyStrc itemProperty = {};
-		itemProperty.nProperty = 389 - 3; // Adjust the property ID
-		itemProperty.nLayer = 0;
-		itemProperty.nMin = -3;
-		itemProperty.nMax = -3;
-		diablo2::d2_common::add_property(bag, &itemProperty, 0);
-	}
+	extract_item(value, 389, 3, 'r08 ', diablo2::UNIT_STAT_runebag_RunesB);
 }
-
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r09(bool value) {
 	loot_filter_settings::get().m_show_r09 = value;
-	auto player = diablo2::d2_client::get_local_player();
-	auto inventory = player->inventory;
-	diablo2::structures::unit* bag;
-	uint32_t bagGuid = -1;
-	uint32_t statValue = 0;
-
-	for (auto item = inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
-		const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
-		auto recordType = diablo2::d2_common::get_item_type_record(record->type);
-		char* normCode1 = record->string_code;
-		if (strncmp(normCode1, "ib1", 3) == 0) {
-			bag = item;
-			bagGuid = item->guid;
-			statValue = diablo2::d2_common::get_stat(item, diablo2::UNIT_STAT_runebag_RunesB, NULL);
-		}
-	}
-	if (statValue >= 9) {
-		static d2_tweaks::common::item_move_cs packet;
-		packet.item_guid = bagGuid;
-		packet.bag_guid = bagGuid;
-		packet.target_page = 0;
-		packet.extract = 1;
-		packet.iCode = 'r09 ';
-		packet.prop = 389 - 3;
-		packet.val = -9;
-		diablo2::d2_client::send_to_server(&packet, sizeof packet);
-
-		D2PropertyStrc itemProperty = {};
-		itemProperty.nProperty = 389 - 3; // Adjust the property ID
-		itemProperty.nLayer = 0;
-		itemProperty.nMin = -9;
-		itemProperty.nMax = -9;
-		diablo2::d2_common::add_property(bag, &itemProperty, 0);
-	}
+	extract_item(value, 389, 9, 'r09 ', diablo2::UNIT_STAT_runebag_RunesB);
 }
-
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r10(bool value) {
 	loot_filter_settings::get().m_show_r10 = value;
-	auto player = diablo2::d2_client::get_local_player();
-	auto inventory = player->inventory;
-	diablo2::structures::unit* bag;
-	uint32_t bagGuid = -1;
-	uint32_t statValue = 0;
-
-	for (auto item = inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
-		const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
-		auto recordType = diablo2::d2_common::get_item_type_record(record->type);
-		char* normCode1 = record->string_code;
-		if (strncmp(normCode1, "ib1", 3) == 0) {
-			bag = item;
-			bagGuid = item->guid;
-			statValue = diablo2::d2_common::get_stat(item, diablo2::UNIT_STAT_runebag_RunesB, NULL);
-		}
-	}
-	if (statValue >= 27) {
-		static d2_tweaks::common::item_move_cs packet;
-		packet.item_guid = bagGuid;
-		packet.bag_guid = bagGuid;
-		packet.target_page = 0;
-		packet.extract = 1;
-		packet.iCode = 'r10 ';
-		packet.prop = 389 - 3;
-		packet.val = -27;
-		diablo2::d2_client::send_to_server(&packet, sizeof packet);
-
-		D2PropertyStrc itemProperty = {};
-		itemProperty.nProperty = 389 - 3; // Adjust the property ID
-		itemProperty.nLayer = 0;
-		itemProperty.nMin = -27;
-		itemProperty.nMax = -27;
-		diablo2::d2_common::add_property(bag, &itemProperty, 0);
-	}
+	extract_item(value, 389, 27, 'r10 ', diablo2::UNIT_STAT_runebag_RunesB);
 }
-
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r11(bool value) {
 	loot_filter_settings::get().m_show_r11 = value;
-	auto player = diablo2::d2_client::get_local_player();
-	auto inventory = player->inventory;
-	diablo2::structures::unit* bag;
-	uint32_t bagGuid = -1;
-	uint32_t statValue = 0;
-
-	for (auto item = inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
-		const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
-		auto recordType = diablo2::d2_common::get_item_type_record(record->type);
-		char* normCode1 = record->string_code;
-		if (strncmp(normCode1, "ib1", 3) == 0) {
-			bag = item;
-			bagGuid = item->guid;
-			statValue = diablo2::d2_common::get_stat(item, diablo2::UNIT_STAT_runebag_RunesB, NULL);
-		}
-	}
-	if (statValue >= 81) {
-		static d2_tweaks::common::item_move_cs packet;
-		packet.item_guid = bagGuid;
-		packet.bag_guid = bagGuid;
-		packet.target_page = 0;
-		packet.extract = 1;
-		packet.iCode = 'r11 ';
-		packet.prop = 389 - 3;
-		packet.val = -81;
-		diablo2::d2_client::send_to_server(&packet, sizeof packet);
-
-		D2PropertyStrc itemProperty = {};
-		itemProperty.nProperty = 389 - 3; // Adjust the property ID
-		itemProperty.nLayer = 0;
-		itemProperty.nMin = -81;
-		itemProperty.nMax = -81;
-		diablo2::d2_common::add_property(bag, &itemProperty, 0);
-	}
+	extract_item(value, 389, 81, 'r11 ', diablo2::UNIT_STAT_runebag_RunesB);
 }
-
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r12(bool value) {
 	loot_filter_settings::get().m_show_r12 = value;
-	auto player = diablo2::d2_client::get_local_player();
-	auto inventory = player->inventory;
-	diablo2::structures::unit* bag;
-	uint32_t bagGuid = -1;
-	uint32_t statValue = 0;
-
-	for (auto item = inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
-		const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
-		auto recordType = diablo2::d2_common::get_item_type_record(record->type);
-		char* normCode1 = record->string_code;
-		if (strncmp(normCode1, "ib1", 3) == 0) {
-			bag = item;
-			bagGuid = item->guid;
-			statValue = diablo2::d2_common::get_stat(item, diablo2::UNIT_STAT_runebag_RunesB, NULL);
-		}
-	}
-	if (statValue >= 243) {
-		static d2_tweaks::common::item_move_cs packet;
-		packet.item_guid = bagGuid;
-		packet.bag_guid = bagGuid;
-		packet.target_page = 0;
-		packet.extract = 1;
-		packet.iCode = 'r12 ';
-		packet.prop = 389 - 3;
-		packet.val = -243;
-		diablo2::d2_client::send_to_server(&packet, sizeof packet);
-
-		D2PropertyStrc itemProperty = {};
-		itemProperty.nProperty = 389 - 3; // Adjust the property ID
-		itemProperty.nLayer = 0;
-		itemProperty.nMin = -243;
-		itemProperty.nMax = -243;
-		diablo2::d2_common::add_property(bag, &itemProperty, 0);
-	}
+	extract_item(value, 389, 243, 'r12 ', diablo2::UNIT_STAT_runebag_RunesB);
 }
-
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r13(bool value) {
 	loot_filter_settings::get().m_show_r13 = value;
-	auto player = diablo2::d2_client::get_local_player();
-	auto inventory = player->inventory;
-	diablo2::structures::unit* bag;
-	uint32_t bagGuid = -1;
-	uint32_t statValue = 0;
-
-	for (auto item = inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
-		const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
-		auto recordType = diablo2::d2_common::get_item_type_record(record->type);
-		char* normCode1 = record->string_code;
-		if (strncmp(normCode1, "ib1", 3) == 0) {
-			bag = item;
-			bagGuid = item->guid;
-			statValue = diablo2::d2_common::get_stat(item, diablo2::UNIT_STAT_runebag_RunesC, NULL);
-		}
-	}
-	if (statValue >= 1) {
-		static d2_tweaks::common::item_move_cs packet;
-		packet.item_guid = bagGuid;
-		packet.bag_guid = bagGuid;
-		packet.target_page = 0;
-		packet.extract = 1;
-		packet.iCode = 'r13 ';
-		packet.prop = 390 - 3;
-		packet.val = -1;
-		diablo2::d2_client::send_to_server(&packet, sizeof packet);
-
-		D2PropertyStrc itemProperty = {};
-		itemProperty.nProperty = 390 - 3; // Adjust the property ID
-		itemProperty.nLayer = 0;
-		itemProperty.nMin = -1;
-		itemProperty.nMax = -1;
-		diablo2::d2_common::add_property(bag, &itemProperty, 0);
-	}
+	extract_item(value, 390, 1, 'r13 ', diablo2::UNIT_STAT_runebag_RunesC);
 }
-
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r14(bool value) {
 	loot_filter_settings::get().m_show_r14 = value;
-	auto player = diablo2::d2_client::get_local_player();
-	auto inventory = player->inventory;
-	diablo2::structures::unit* bag;
-	uint32_t bagGuid = -1;
-	uint32_t statValue = 0;
-
-	for (auto item = inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
-		const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
-		auto recordType = diablo2::d2_common::get_item_type_record(record->type);
-		char* normCode1 = record->string_code;
-		if (strncmp(normCode1, "ib1", 3) == 0) {
-			bag = item;
-			bagGuid = item->guid;
-			statValue = diablo2::d2_common::get_stat(item, diablo2::UNIT_STAT_runebag_RunesC, NULL);
-		}
-	}
-	if (statValue >= 3) {
-		static d2_tweaks::common::item_move_cs packet;
-		packet.item_guid = bagGuid;
-		packet.bag_guid = bagGuid;
-		packet.target_page = 0;
-		packet.extract = 1;
-		packet.iCode = 'r14 ';
-		packet.prop = 390 - 3;
-		packet.val = -3;
-		diablo2::d2_client::send_to_server(&packet, sizeof packet);
-
-		D2PropertyStrc itemProperty = {};
-		itemProperty.nProperty = 390 - 3; // Adjust the property ID
-		itemProperty.nLayer = 0;
-		itemProperty.nMin = -3;
-		itemProperty.nMax = -3;
-		diablo2::d2_common::add_property(bag, &itemProperty, 0);
-	}
+	extract_item(value, 390, 3, 'r14 ', diablo2::UNIT_STAT_runebag_RunesC);
 }
-
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r15(bool value) {
 	loot_filter_settings::get().m_show_r15 = value;
-	auto player = diablo2::d2_client::get_local_player();
-	auto inventory = player->inventory;
-	diablo2::structures::unit* bag;
-	uint32_t bagGuid = -1;
-	uint32_t statValue = 0;
-
-	for (auto item = inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
-		const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
-		auto recordType = diablo2::d2_common::get_item_type_record(record->type);
-		char* normCode1 = record->string_code;
-		if (strncmp(normCode1, "ib1", 3) == 0) {
-			bag = item;
-			bagGuid = item->guid;
-			statValue = diablo2::d2_common::get_stat(item, diablo2::UNIT_STAT_runebag_RunesC, NULL);
-		}
-	}
-	if (statValue >= 9) {
-		static d2_tweaks::common::item_move_cs packet;
-		packet.item_guid = bagGuid;
-		packet.bag_guid = bagGuid;
-		packet.target_page = 0;
-		packet.extract = 1;
-		packet.iCode = 'r15 ';
-		packet.prop = 390 - 3;
-		packet.val = -9;
-		diablo2::d2_client::send_to_server(&packet, sizeof packet);
-
-		D2PropertyStrc itemProperty = {};
-		itemProperty.nProperty = 390 - 3; // Adjust the property ID
-		itemProperty.nLayer = 0;
-		itemProperty.nMin = -9;
-		itemProperty.nMax = -9;
-		diablo2::d2_common::add_property(bag, &itemProperty, 0);
-	}
+	extract_item(value, 390, 9, 'r15 ', diablo2::UNIT_STAT_runebag_RunesC);
 }
-
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r16(bool value) {
 	loot_filter_settings::get().m_show_r16 = value;
-	auto player = diablo2::d2_client::get_local_player();
-	auto inventory = player->inventory;
-	diablo2::structures::unit* bag;
-	uint32_t bagGuid = -1;
-	uint32_t statValue = 0;
-
-	for (auto item = inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
-		const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
-		auto recordType = diablo2::d2_common::get_item_type_record(record->type);
-		char* normCode1 = record->string_code;
-		if (strncmp(normCode1, "ib1", 3) == 0) {
-			bag = item;
-			bagGuid = item->guid;
-			statValue = diablo2::d2_common::get_stat(item, diablo2::UNIT_STAT_runebag_RunesC, NULL);
-		}
-	}
-	if (statValue >= 27) {
-		static d2_tweaks::common::item_move_cs packet;
-		packet.item_guid = bagGuid;
-		packet.bag_guid = bagGuid;
-		packet.target_page = 0;
-		packet.extract = 1;
-		packet.iCode = 'r16 ';
-		packet.prop = 390 - 3;
-		packet.val = -27;
-		diablo2::d2_client::send_to_server(&packet, sizeof packet);
-
-		D2PropertyStrc itemProperty = {};
-		itemProperty.nProperty = 390 - 3; // Adjust the property ID
-		itemProperty.nLayer = 0;
-		itemProperty.nMin = -27;
-		itemProperty.nMax = -27;
-		diablo2::d2_common::add_property(bag, &itemProperty, 0);
-	}
+	extract_item(value, 390, 27, 'r16 ', diablo2::UNIT_STAT_runebag_RunesC);
 }
-
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r17(bool value) {
 	loot_filter_settings::get().m_show_r17 = value;
-	auto player = diablo2::d2_client::get_local_player();
-	auto inventory = player->inventory;
-	diablo2::structures::unit* bag;
-	uint32_t bagGuid = -1;
-	uint32_t statValue = 0;
-
-	for (auto item = inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
-		const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
-		auto recordType = diablo2::d2_common::get_item_type_record(record->type);
-		char* normCode1 = record->string_code;
-		if (strncmp(normCode1, "ib1", 3) == 0) {
-			bag = item;
-			bagGuid = item->guid;
-			statValue = diablo2::d2_common::get_stat(item, diablo2::UNIT_STAT_runebag_RunesC, NULL);
-		}
-	}
-	if (statValue >= 81) {
-		static d2_tweaks::common::item_move_cs packet;
-		packet.item_guid = bagGuid;
-		packet.bag_guid = bagGuid;
-		packet.target_page = 0;
-		packet.extract = 1;
-		packet.iCode = 'r17 ';
-		packet.prop = 390 - 3;
-		packet.val = -81;
-		diablo2::d2_client::send_to_server(&packet, sizeof packet);
-
-		D2PropertyStrc itemProperty = {};
-		itemProperty.nProperty = 390 - 3; // Adjust the property ID
-		itemProperty.nLayer = 0;
-		itemProperty.nMin = -81;
-		itemProperty.nMax = -81;
-		diablo2::d2_common::add_property(bag, &itemProperty, 0);
-	}
+	extract_item(value, 390, 81, 'r17 ', diablo2::UNIT_STAT_runebag_RunesC);
 }
-
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r18(bool value) {
 	loot_filter_settings::get().m_show_r18 = value;
-	auto player = diablo2::d2_client::get_local_player();
-	auto inventory = player->inventory;
-	diablo2::structures::unit* bag;
-	uint32_t bagGuid = -1;
-	uint32_t statValue = 0;
-
-	for (auto item = inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
-		const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
-		auto recordType = diablo2::d2_common::get_item_type_record(record->type);
-		char* normCode1 = record->string_code;
-		if (strncmp(normCode1, "ib1", 3) == 0) {
-			bag = item;
-			bagGuid = item->guid;
-			statValue = diablo2::d2_common::get_stat(item, diablo2::UNIT_STAT_runebag_RunesC, NULL);
-		}
-	}
-	if (statValue >= 243) {
-		static d2_tweaks::common::item_move_cs packet;
-		packet.item_guid = bagGuid;
-		packet.bag_guid = bagGuid;
-		packet.target_page = 0;
-		packet.extract = 1;
-		packet.iCode = 'r18 ';
-		packet.prop = 390 - 3;
-		packet.val = -243;
-		diablo2::d2_client::send_to_server(&packet, sizeof packet);
-
-		D2PropertyStrc itemProperty = {};
-		itemProperty.nProperty = 390 - 3; // Adjust the property ID
-		itemProperty.nLayer = 0;
-		itemProperty.nMin = -243;
-		itemProperty.nMax = -243;
-		diablo2::d2_common::add_property(bag, &itemProperty, 0);
-	}
+	extract_item(value, 390, 243, 'r18 ', diablo2::UNIT_STAT_runebag_RunesC);
 }
-
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r19(bool value) {
 	loot_filter_settings::get().m_show_r19 = value;
-	auto player = diablo2::d2_client::get_local_player();
-	auto inventory = player->inventory;
-	diablo2::structures::unit* bag;
-	uint32_t bagGuid = -1;
-	uint32_t statValue = 0;
-
-	for (auto item = inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
-		const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
-		auto recordType = diablo2::d2_common::get_item_type_record(record->type);
-		char* normCode1 = record->string_code;
-		if (strncmp(normCode1, "ib1", 3) == 0) {
-			bag = item;
-			bagGuid = item->guid;
-			statValue = diablo2::d2_common::get_stat(item, diablo2::UNIT_STAT_runebag_RunesD, NULL);
-		}
-	}
-	if (statValue >= 1) {
-		static d2_tweaks::common::item_move_cs packet;
-		packet.item_guid = bagGuid;
-		packet.bag_guid = bagGuid;
-		packet.target_page = 0;
-		packet.extract = 1;
-		packet.iCode = 'r19 ';
-		packet.prop = 391 - 3;
-		packet.val = -1;
-		diablo2::d2_client::send_to_server(&packet, sizeof packet);
-
-		D2PropertyStrc itemProperty = {};
-		itemProperty.nProperty = 391 - 3; // Adjust the property ID
-		itemProperty.nLayer = 0;
-		itemProperty.nMin = -1;
-		itemProperty.nMax = -1;
-		diablo2::d2_common::add_property(bag, &itemProperty, 0);
-	}
+	extract_item(value, 391, 1, 'r19 ', diablo2::UNIT_STAT_runebag_RunesD);
 }
-
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r20(bool value) {
 	loot_filter_settings::get().m_show_r20 = value;
-	auto player = diablo2::d2_client::get_local_player();
-	auto inventory = player->inventory;
-	diablo2::structures::unit* bag;
-	uint32_t bagGuid = -1;
-	uint32_t statValue = 0;
-
-	for (auto item = inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
-		const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
-		auto recordType = diablo2::d2_common::get_item_type_record(record->type);
-		char* normCode1 = record->string_code;
-		if (strncmp(normCode1, "ib1", 3) == 0) {
-			bag = item;
-			bagGuid = item->guid;
-			statValue = diablo2::d2_common::get_stat(item, diablo2::UNIT_STAT_runebag_RunesD, NULL);
-		}
-	}
-	if (statValue >= 3) {
-		static d2_tweaks::common::item_move_cs packet;
-		packet.item_guid = bagGuid;
-		packet.bag_guid = bagGuid;
-		packet.target_page = 0;
-		packet.extract = 1;
-		packet.iCode = 'r20 ';
-		packet.prop = 391 - 3;
-		packet.val = -3;
-		diablo2::d2_client::send_to_server(&packet, sizeof packet);
-
-		D2PropertyStrc itemProperty = {};
-		itemProperty.nProperty = 391 - 3; // Adjust the property ID
-		itemProperty.nLayer = 0;
-		itemProperty.nMin = -3;
-		itemProperty.nMax = -3;
-		diablo2::d2_common::add_property(bag, &itemProperty, 0);
-	}
+	extract_item(value, 391, 3, 'r20 ', diablo2::UNIT_STAT_runebag_RunesD);
 }
-
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r21(bool value) {
 	loot_filter_settings::get().m_show_r21 = value;
-	auto player = diablo2::d2_client::get_local_player();
-	auto inventory = player->inventory;
-	diablo2::structures::unit* bag;
-	uint32_t bagGuid = -1;
-	uint32_t statValue = 0;
-
-	for (auto item = inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
-		const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
-		auto recordType = diablo2::d2_common::get_item_type_record(record->type);
-		char* normCode1 = record->string_code;
-		if (strncmp(normCode1, "ib1", 3) == 0) {
-			bag = item;
-			bagGuid = item->guid;
-			statValue = diablo2::d2_common::get_stat(item, diablo2::UNIT_STAT_runebag_RunesD, NULL);
-		}
-	}
-	if (statValue >= 9) {
-		static d2_tweaks::common::item_move_cs packet;
-		packet.item_guid = bagGuid;
-		packet.bag_guid = bagGuid;
-		packet.target_page = 0;
-		packet.extract = 1;
-		packet.iCode = 'r21 ';
-		packet.prop = 391 - 3;
-		packet.val = -9;
-		diablo2::d2_client::send_to_server(&packet, sizeof packet);
-
-		D2PropertyStrc itemProperty = {};
-		itemProperty.nProperty = 391 - 3; // Adjust the property ID
-		itemProperty.nLayer = 0;
-		itemProperty.nMin = -9;
-		itemProperty.nMax = -9;
-		diablo2::d2_common::add_property(bag, &itemProperty, 0);
-	}
+	extract_item(value, 391, 9, 'r21 ', diablo2::UNIT_STAT_runebag_RunesD);
 }
-
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r22(bool value) {
 	loot_filter_settings::get().m_show_r22 = value;
-	auto player = diablo2::d2_client::get_local_player();
-	auto inventory = player->inventory;
-	diablo2::structures::unit* bag;
-	uint32_t bagGuid = -1;
-	uint32_t statValue = 0;
-
-	for (auto item = inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
-		const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
-		auto recordType = diablo2::d2_common::get_item_type_record(record->type);
-		char* normCode1 = record->string_code;
-		if (strncmp(normCode1, "ib1", 3) == 0) {
-			bag = item;
-			bagGuid = item->guid;
-			statValue = diablo2::d2_common::get_stat(item, diablo2::UNIT_STAT_runebag_RunesD, NULL);
-		}
-	}
-	if (statValue >= 27) {
-		static d2_tweaks::common::item_move_cs packet;
-		packet.item_guid = bagGuid;
-		packet.bag_guid = bagGuid;
-		packet.target_page = 0;
-		packet.extract = 1;
-		packet.iCode = 'r22 ';
-		packet.prop = 391 - 3;
-		packet.val = -27;
-		diablo2::d2_client::send_to_server(&packet, sizeof packet);
-
-		D2PropertyStrc itemProperty = {};
-		itemProperty.nProperty = 391 - 3; // Adjust the property ID
-		itemProperty.nLayer = 0;
-		itemProperty.nMin = -27;
-		itemProperty.nMax = -27;
-		diablo2::d2_common::add_property(bag, &itemProperty, 0);
-	}
+	extract_item(value, 391, 27, 'r22 ', diablo2::UNIT_STAT_runebag_RunesD);
 }
-
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r23(bool value) {
 	loot_filter_settings::get().m_show_r23 = value;
-	auto player = diablo2::d2_client::get_local_player();
-	auto inventory = player->inventory;
-	diablo2::structures::unit* bag;
-	uint32_t bagGuid = -1;
-	uint32_t statValue = 0;
-
-	for (auto item = inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
-		const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
-		auto recordType = diablo2::d2_common::get_item_type_record(record->type);
-		char* normCode1 = record->string_code;
-		if (strncmp(normCode1, "ib1", 3) == 0) {
-			bag = item;
-			bagGuid = item->guid;
-			statValue = diablo2::d2_common::get_stat(item, diablo2::UNIT_STAT_runebag_RunesD, NULL);
-		}
-	}
-	if (statValue >= 81) {
-		static d2_tweaks::common::item_move_cs packet;
-		packet.item_guid = bagGuid;
-		packet.bag_guid = bagGuid;
-		packet.target_page = 0;
-		packet.extract = 1;
-		packet.iCode = 'r23 ';
-		packet.prop = 3901 - 3;
-		packet.val = -81;
-		diablo2::d2_client::send_to_server(&packet, sizeof packet);
-
-		D2PropertyStrc itemProperty = {};
-		itemProperty.nProperty = 3901 - 3; // Adjust the property ID
-		itemProperty.nLayer = 0;
-		itemProperty.nMin = -81;
-		itemProperty.nMax = -81;
-		diablo2::d2_common::add_property(bag, &itemProperty, 0);
-	}
+	extract_item(value, 391, 81, 'r23 ', diablo2::UNIT_STAT_runebag_RunesD);
 }
-
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r24(bool value) {
 	loot_filter_settings::get().m_show_r24 = value;
-	auto player = diablo2::d2_client::get_local_player();
-	auto inventory = player->inventory;
-	diablo2::structures::unit* bag;
-	uint32_t bagGuid = -1;
-	uint32_t statValue = 0;
-
-	for (auto item = inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
-		const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
-		auto recordType = diablo2::d2_common::get_item_type_record(record->type);
-		char* normCode1 = record->string_code;
-		if (strncmp(normCode1, "ib1", 3) == 0) {
-			bag = item;
-			bagGuid = item->guid;
-			statValue = diablo2::d2_common::get_stat(item, diablo2::UNIT_STAT_runebag_RunesD, NULL);
-		}
-	}
-	if (statValue >= 243) {
-		static d2_tweaks::common::item_move_cs packet;
-		packet.item_guid = bagGuid;
-		packet.bag_guid = bagGuid;
-		packet.target_page = 0;
-		packet.extract = 1;
-		packet.iCode = 'r24 ';
-		packet.prop = 391 - 3;
-		packet.val = -243;
-		diablo2::d2_client::send_to_server(&packet, sizeof packet);
-
-		D2PropertyStrc itemProperty = {};
-		itemProperty.nProperty = 391 - 3; // Adjust the property ID
-		itemProperty.nLayer = 0;
-		itemProperty.nMin = -243;
-		itemProperty.nMax = -243;
-		diablo2::d2_common::add_property(bag, &itemProperty, 0);
-	}
+	extract_item(value, 391, 243, 'r24 ', diablo2::UNIT_STAT_runebag_RunesD);
 }
-
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r25(bool value) {
 	loot_filter_settings::get().m_show_r25 = value;
-	auto player = diablo2::d2_client::get_local_player();
-	auto inventory = player->inventory;
-	diablo2::structures::unit* bag;
-	uint32_t bagGuid = -1;
-	uint32_t statValue = 0;
-
-	for (auto item = inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
-		const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
-		auto recordType = diablo2::d2_common::get_item_type_record(record->type);
-		char* normCode1 = record->string_code;
-		if (strncmp(normCode1, "ib1", 3) == 0) {
-			bag = item;
-			bagGuid = item->guid;
-			statValue = diablo2::d2_common::get_stat(item, diablo2::UNIT_STAT_runebag_RunesE, NULL);
-		}
-	}
-	if (statValue >= 1) {
-		static d2_tweaks::common::item_move_cs packet;
-		packet.item_guid = bagGuid;
-		packet.bag_guid = bagGuid;
-		packet.target_page = 0;
-		packet.extract = 1;
-		packet.iCode = 'r25 ';
-		packet.prop = 392 - 3;
-		packet.val = -1;
-		diablo2::d2_client::send_to_server(&packet, sizeof packet);
-
-		D2PropertyStrc itemProperty = {};
-		itemProperty.nProperty = 392 - 3; // Adjust the property ID
-		itemProperty.nLayer = 0;
-		itemProperty.nMin = -1;
-		itemProperty.nMax = -1;
-		diablo2::d2_common::add_property(bag, &itemProperty, 0);
-	}
+	extract_item(value, 392, 1, 'r25 ', diablo2::UNIT_STAT_runebag_RunesE);
 }
-
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r26(bool value) {
 	loot_filter_settings::get().m_show_r26 = value;
-	auto player = diablo2::d2_client::get_local_player();
-	auto inventory = player->inventory;
-	diablo2::structures::unit* bag;
-	uint32_t bagGuid = -1;
-	uint32_t statValue = 0;
-
-	for (auto item = inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
-		const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
-		auto recordType = diablo2::d2_common::get_item_type_record(record->type);
-		char* normCode1 = record->string_code;
-		if (strncmp(normCode1, "ib1", 3) == 0) {
-			bag = item;
-			bagGuid = item->guid;
-			statValue = diablo2::d2_common::get_stat(item, diablo2::UNIT_STAT_runebag_RunesE, NULL);
-		}
-	}
-	if (statValue >= 3) {
-		static d2_tweaks::common::item_move_cs packet;
-		packet.item_guid = bagGuid;
-		packet.bag_guid = bagGuid;
-		packet.target_page = 0;
-		packet.extract = 1;
-		packet.iCode = 'r26 ';
-		packet.prop = 392 - 3;
-		packet.val = -3;
-		diablo2::d2_client::send_to_server(&packet, sizeof packet);
-
-		D2PropertyStrc itemProperty = {};
-		itemProperty.nProperty = 392 - 3; // Adjust the property ID
-		itemProperty.nLayer = 0;
-		itemProperty.nMin = -3;
-		itemProperty.nMax = -3;
-		diablo2::d2_common::add_property(bag, &itemProperty, 0);
-	}
+	extract_item(value, 392, 3, 'r26 ', diablo2::UNIT_STAT_runebag_RunesE);
 }
-
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r27(bool value) {
 	loot_filter_settings::get().m_show_r27 = value;
-	auto player = diablo2::d2_client::get_local_player();
-	auto inventory = player->inventory;
-	diablo2::structures::unit* bag;
-	uint32_t bagGuid = -1;
-	uint32_t statValue = 0;
-
-	for (auto item = inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
-		const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
-		auto recordType = diablo2::d2_common::get_item_type_record(record->type);
-		char* normCode1 = record->string_code;
-		if (strncmp(normCode1, "ib1", 3) == 0) {
-			bag = item;
-			bagGuid = item->guid;
-			statValue = diablo2::d2_common::get_stat(item, diablo2::UNIT_STAT_runebag_RunesE, NULL);
-		}
-	}
-	if (statValue >= 9) {
-		static d2_tweaks::common::item_move_cs packet;
-		packet.item_guid = bagGuid;
-		packet.bag_guid = bagGuid;
-		packet.target_page = 0;
-		packet.extract = 1;
-		packet.iCode = 'r27 ';
-		packet.prop = 392 - 3;
-		packet.val = -9;
-		diablo2::d2_client::send_to_server(&packet, sizeof packet);
-
-		D2PropertyStrc itemProperty = {};
-		itemProperty.nProperty = 392 - 3; // Adjust the property ID
-		itemProperty.nLayer = 0;
-		itemProperty.nMin = -9;
-		itemProperty.nMax = -9;
-		diablo2::d2_common::add_property(bag, &itemProperty, 0);
-	}
+	extract_item(value, 392, 9, 'r27 ', diablo2::UNIT_STAT_runebag_RunesE);
 }
-
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r28(bool value) {
 	loot_filter_settings::get().m_show_r28 = value;
-	auto player = diablo2::d2_client::get_local_player();
-	auto inventory = player->inventory;
-	diablo2::structures::unit* bag;
-	uint32_t bagGuid = -1;
-	uint32_t statValue = 0;
-
-	for (auto item = inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
-		const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
-		auto recordType = diablo2::d2_common::get_item_type_record(record->type);
-		char* normCode1 = record->string_code;
-		if (strncmp(normCode1, "ib1", 3) == 0) {
-			bag = item;
-			bagGuid = item->guid;
-			statValue = diablo2::d2_common::get_stat(item, diablo2::UNIT_STAT_runebag_RunesE, NULL);
-		}
-	}
-	if (statValue >= 27) {
-		static d2_tweaks::common::item_move_cs packet;
-		packet.item_guid = bagGuid;
-		packet.bag_guid = bagGuid;
-		packet.target_page = 0;
-		packet.extract = 1;
-		packet.iCode = 'r28 ';
-		packet.prop = 392 - 3;
-		packet.val = -27;
-		diablo2::d2_client::send_to_server(&packet, sizeof packet);
-
-		D2PropertyStrc itemProperty = {};
-		itemProperty.nProperty = 392 - 3; // Adjust the property ID
-		itemProperty.nLayer = 0;
-		itemProperty.nMin = -27;
-		itemProperty.nMax = -27;
-		diablo2::d2_common::add_property(bag, &itemProperty, 0);
-	}
+	extract_item(value, 392, 27, 'r28 ', diablo2::UNIT_STAT_runebag_RunesE);
 }
-
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r29(bool value) {
 	loot_filter_settings::get().m_show_r29 = value;
-	auto player = diablo2::d2_client::get_local_player();
-	auto inventory = player->inventory;
-	diablo2::structures::unit* bag;
-	uint32_t bagGuid = -1;
-	uint32_t statValue = 0;
-
-	for (auto item = inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
-		const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
-		auto recordType = diablo2::d2_common::get_item_type_record(record->type);
-		char* normCode1 = record->string_code;
-		if (strncmp(normCode1, "ib1", 3) == 0) {
-			bag = item;
-			bagGuid = item->guid;
-			statValue = diablo2::d2_common::get_stat(item, diablo2::UNIT_STAT_runebag_RunesE, NULL);
-		}
-	}
-	if (statValue >= 81) {
-		static d2_tweaks::common::item_move_cs packet;
-		packet.item_guid = bagGuid;
-		packet.bag_guid = bagGuid;
-		packet.target_page = 0;
-		packet.extract = 1;
-		packet.iCode = 'r29 ';
-		packet.prop = 392 - 3;
-		packet.val = -81;
-		diablo2::d2_client::send_to_server(&packet, sizeof packet);
-
-		D2PropertyStrc itemProperty = {};
-		itemProperty.nProperty = 392 - 3; // Adjust the property ID
-		itemProperty.nLayer = 0;
-		itemProperty.nMin = -81;
-		itemProperty.nMax = -81;
-		diablo2::d2_common::add_property(bag, &itemProperty, 0);
-	}
+	extract_item(value, 392, 81, 'r29 ', diablo2::UNIT_STAT_runebag_RunesE);
 }
-
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r30(bool value) {
 	loot_filter_settings::get().m_show_r30 = value;
-	auto player = diablo2::d2_client::get_local_player();
-	auto inventory = player->inventory;
-	diablo2::structures::unit* bag;
-	uint32_t bagGuid = -1;
-	uint32_t statValue = 0;
-
-	for (auto item = inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
-		const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
-		auto recordType = diablo2::d2_common::get_item_type_record(record->type);
-		char* normCode1 = record->string_code;
-		if (strncmp(normCode1, "ib1", 3) == 0) {
-			bag = item;
-			bagGuid = item->guid;
-			statValue = diablo2::d2_common::get_stat(item, diablo2::UNIT_STAT_runebag_RunesE, NULL);
-		}
-	}
-	if (statValue >= 243) {
-		static d2_tweaks::common::item_move_cs packet;
-		packet.item_guid = bagGuid;
-		packet.bag_guid = bagGuid;
-		packet.target_page = 0;
-		packet.extract = 1;
-		packet.iCode = 'r30 ';
-		packet.prop = 392 - 3;
-		packet.val = -243;
-		diablo2::d2_client::send_to_server(&packet, sizeof packet);
-
-		D2PropertyStrc itemProperty = {};
-		itemProperty.nProperty = 392 - 3; // Adjust the property ID
-		itemProperty.nLayer = 0;
-		itemProperty.nMin = -243;
-		itemProperty.nMax = -243;
-		diablo2::d2_common::add_property(bag, &itemProperty, 0);
-	}
+	extract_item(value, 392, 243, 'r30 ', diablo2::UNIT_STAT_runebag_RunesE);
 }
-
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r31(bool value) {
 	loot_filter_settings::get().m_show_r31 = value;
-	auto player = diablo2::d2_client::get_local_player();
-	auto inventory = player->inventory;
-	diablo2::structures::unit* bag;
-	uint32_t bagGuid = -1;
-	uint32_t statValue = 0;
-
-	for (auto item = inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
-		const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
-		auto recordType = diablo2::d2_common::get_item_type_record(record->type);
-		char* normCode1 = record->string_code;
-		if (strncmp(normCode1, "ib1", 3) == 0) {
-			bag = item;
-			bagGuid = item->guid;
-			statValue = diablo2::d2_common::get_stat(item, diablo2::UNIT_STAT_runebag_RunesF, NULL);
-		}
-	}
-	if (statValue >= 1) {
-		static d2_tweaks::common::item_move_cs packet;
-		packet.item_guid = bagGuid;
-		packet.bag_guid = bagGuid;
-		packet.target_page = 0;
-		packet.extract = 1;
-		packet.iCode = 'r31 ';
-		packet.prop = 393 - 3;
-		packet.val = -1;
-		diablo2::d2_client::send_to_server(&packet, sizeof packet);
-
-		D2PropertyStrc itemProperty = {};
-		itemProperty.nProperty = 393 - 3; // Adjust the property ID
-		itemProperty.nLayer = 0;
-		itemProperty.nMin = -1;
-		itemProperty.nMax = -1;
-		diablo2::d2_common::add_property(bag, &itemProperty, 0);
-	}
+	extract_item(value, 393, 1, 'r31 ', diablo2::UNIT_STAT_runebag_RunesF);
 }
-
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r32(bool value) {
 	loot_filter_settings::get().m_show_r32 = value;
-	auto player = diablo2::d2_client::get_local_player();
-	auto inventory = player->inventory;
-	diablo2::structures::unit* bag;
-	uint32_t bagGuid = -1;
-	uint32_t statValue = 0;
-
-	for (auto item = inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
-		const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
-		auto recordType = diablo2::d2_common::get_item_type_record(record->type);
-		char* normCode1 = record->string_code;
-		if (strncmp(normCode1, "ib1", 3) == 0) {
-			bag = item;
-			bagGuid = item->guid;
-			statValue = diablo2::d2_common::get_stat(item, diablo2::UNIT_STAT_runebag_RunesF, NULL);
-		}
-	}
-	if (statValue >= 2) {
-		static d2_tweaks::common::item_move_cs packet;
-		packet.item_guid = bagGuid;
-		packet.bag_guid = bagGuid;
-		packet.target_page = 0;
-		packet.extract = 1;
-		packet.iCode = 'r32 ';
-		packet.prop = 393 - 3;
-		packet.val = -2;
-		diablo2::d2_client::send_to_server(&packet, sizeof packet);
-
-		D2PropertyStrc itemProperty = {};
-		itemProperty.nProperty = 393 - 3; // Adjust the property ID
-		itemProperty.nLayer = 0;
-		itemProperty.nMin = -2;
-		itemProperty.nMax = -2;
-		diablo2::d2_common::add_property(bag, &itemProperty, 0);
-	}
+	extract_item(value, 393, 2, 'r32 ', diablo2::UNIT_STAT_runebag_RunesF);
 }
-
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_r33(bool value) {
 	loot_filter_settings::get().m_show_r33 = value;
-	auto player = diablo2::d2_client::get_local_player();
-	auto inventory = player->inventory;
-	diablo2::structures::unit* bag;
-	uint32_t bagGuid = -1;
-	uint32_t statValue = 0;
-
-	for (auto item = inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
-		const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
-		auto recordType = diablo2::d2_common::get_item_type_record(record->type);
-		char* normCode1 = record->string_code;
-		if (strncmp(normCode1, "ib1", 3) == 0) {
-			bag = item;
-			bagGuid = item->guid;
-			statValue = diablo2::d2_common::get_stat(item, diablo2::UNIT_STAT_runebag_RunesF, NULL);
-		}
-	}
-	if (statValue >= 4) {
-		static d2_tweaks::common::item_move_cs packet;
-		packet.item_guid = bagGuid;
-		packet.bag_guid = bagGuid;
-		packet.target_page = 0;
-		packet.extract = 1;
-		packet.iCode = 'r33 ';
-		packet.prop = 393 - 3;
-		packet.val = -4;
-		diablo2::d2_client::send_to_server(&packet, sizeof packet);
-
-		D2PropertyStrc itemProperty = {};
-		itemProperty.nProperty = 393 - 3; // Adjust the property ID
-		itemProperty.nLayer = 0;
-		itemProperty.nMin = -4;
-		itemProperty.nMax = -4;
-		diablo2::d2_common::add_property(bag, &itemProperty, 0);
-	}
+	extract_item(value, 393, 4, 'r33 ', diablo2::UNIT_STAT_runebag_RunesF);
 }
 
 // End Rune Extraction Functions
