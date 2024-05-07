@@ -4,6 +4,8 @@
 
 #include <d2tweaks/ui/menu.h>
 
+#include <chrono>  // Add this line
+
 namespace diablo2 {
 	namespace structures {
 		struct unit;
@@ -74,6 +76,35 @@ namespace d2_tweaks {
 				ui::controls::checkbox* m_show_flawless;
 				ui::controls::checkbox* m_show_perfect;
 
+				ui::controls::checkbox* m_show_flourite;
+				ui::controls::checkbox* m_show_jade;
+				ui::controls::checkbox* m_show_argonite;
+				ui::controls::checkbox* m_show_azurite;
+				ui::controls::checkbox* m_show_sulpher;
+				ui::controls::checkbox* m_show_quartz;
+				ui::controls::checkbox* m_show_tiger_eye;
+
+
+				ui::controls::checkbox* m_show_rough;
+				ui::controls::checkbox* m_show_faded;
+				ui::controls::checkbox* m_show_blemished;
+				ui::controls::checkbox* m_show_cleaned;
+				ui::controls::checkbox* m_show_triangle;
+				ui::controls::checkbox* m_show_trangle_cut;
+				ui::controls::checkbox* m_show_square;
+				ui::controls::checkbox* m_show_square_cut;
+				ui::controls::checkbox* m_show_regular;
+				ui::controls::checkbox* m_show_regular_cut;
+				ui::controls::checkbox* m_show_star;
+				ui::controls::checkbox* m_show_star_cut;
+				ui::controls::checkbox* m_show_imperial;
+				ui::controls::checkbox* m_show_imperial_cut;
+				ui::controls::checkbox* m_show_royal;
+				ui::controls::checkbox* m_show_royal_cut;
+				ui::controls::checkbox* m_show_spectacular;
+				ui::controls::checkbox* m_show_legendary;
+				ui::controls::checkbox* m_show_legendary_cut;
+
 
 
 				void(__fastcall* m_draw_dropped_items_names_original)(void*, void*);
@@ -86,10 +117,16 @@ namespace d2_tweaks {
 				void draw() override;
 			private:
 				std::string m_selected_gem;
+				
+				std::chrono::steady_clock::time_point m_last_packet_sent;
+
 				void gem_checkbox_clicked(const std::string& gem);
+				void stone_checkbox_clicked(const std::string& gem);
 
 				void register_misc_checkboxes();
 				void register_quality_checkboxes();
+
+				void extract_rune(bool value, uint32_t runeCode, uint32_t minValue, int propertyRowID);
 
 				void update_alt_only(bool value);
 				void extract_r01(bool value);
@@ -140,7 +177,33 @@ namespace d2_tweaks {
 				void extract_flawless(bool value);
 				void extract_perfect(bool value);
 
+				void extract_rough(bool value);
+				void extract_faded(bool value);
+				void extract_blemished(bool value);
+				void extract_cleaned(bool value);
+				void extract_triangle(bool value);
+				void extract_trangle_cut(bool value);
+				void extract_square(bool value);
+				void extract_square_cut(bool value);
+				void extract_regular(bool value);
+				void extract_regular_cut(bool value);
+				void extract_star(bool value);
+				void extract_star_cut(bool value);
+				void extract_imperial(bool value);
+				void extract_imperial_cut(bool value);
+				void extract_royal(bool value);
+				void extract_royal_cut(bool value);
+				void extract_spectacular(bool value);
+				void extract_legendary(bool value);
+				void extract_legendary_cut(bool value);
 
+				void extract_flourite(bool value);
+				void extract_jade(bool value);
+				void extract_argonite(bool value);
+				void extract_azurite(bool value);
+				void extract_sulpher(bool value);
+				void extract_quartz(bool value);
+				void extract_tiger_eye(bool value);
 
 				void update_show_gold(bool value);
 				void update_show_runes(bool value);

@@ -151,21 +151,7 @@ const char* ITEMS_armor_and_weapons[] = {
 	"drd", "dre", "drf", "bab", "bac", "bad", "bae", "baf", "pab", "pac",
 	"pad", "pae", "paf", "neb", "neg", "ned", "nee", "nef", "tor", "ooc",
 	"eaq", "ebq", "ib1", "ib3",
-	// stones
-	"abc", "abd", "abe", "abf", "abg", "abh", "abi", "abj", "abk", "abl",
-	"abm", "abn", "abo", "abp", "abq", "abr", "abs", "abt", "abu", "abv",
-	"abw", "abx", "aby", "abz", "ab0", "ab1", "ab2", "ab3", "ab4", "ab5",
-	"ab6", "ab7", "ab8", "ab9", "acb", "acd", "ace", "acf", "acg", "ach",
-	"aci", "acj", "ack", "acl", "acm", "acn", "aco", "acp", "acq", "acr",
-	"acs", "act", "acu", "acv", "acw", "acx", "acy", "acz", "ac0", "ac1",
-	"ac2", "ac3", "ac4", "ac5", "ac6", "ac7", "ac8", "ac9", "adb", "adc",
-	"ade", "adf", "adg", "adh", "adi", "adj", "adk", "adl", "adm", "adn",
-	"ado", "adp", "adq", "adr", "ads", "adt", "adu", "adv", "adw", "adx",
-	"ady", "adz", "ad0", "ad1", "ad2", "ad3", "ad4", "ad5", "ad6", "ad7",
-	"ad8", "ad9", "aeb", "aec", "aed", "aef", "aeg", "aeh", "aei", "aej",
-	"aek", "ael", "aem", "aen", "aeo", "aep", "aeq", "aer", "aes", "aet",
-	"aeu", "aev", "aew", "aex", "aey", "aez", "ae0", "ae1", "ae2", "ae3",
-	"ae4", "ae5", "ae6",
+
 	// demon keys/chests
 	"dkr1", "dkr2", "dkr3", "dkr4", "dkr5", "da1", "db1", "dc1"
 	// crafting items
@@ -186,6 +172,24 @@ const char* ITEMS_gems_and_runes[] = {
 	
 };
 
+const char* ITEMS_Stones[] = {
+	// stones
+	"abc", "abd", "abe", "abf", "abg", "abh", "abi", "abj", "abk", "abl",
+	"abm", "abn", "abo", "abp", "abq", "abr", "abs", "abt", "abu", "abv",
+	"abw", "abx", "aby", "abz", "ab0", "ab1", "ab2", "ab3", "ab4", "ab5",
+	"ab6", "ab7", "ab8", "ab9", "acb", "acd", "ace", "acf", "acg", "ach",
+	"aci", "acj", "ack", "acl", "acm", "acn", "aco", "acp", "acq", "acr",
+	"acs", "act", "acu", "acv", "acw", "acx", "acy", "acz", "ac0", "ac1",
+	"ac2", "ac3", "ac4", "ac5", "ac6", "ac7", "ac8", "ac9", "adb", "adc",
+	"ade", "adf", "adg", "adh", "adi", "adj", "adk", "adl", "adm", "adn",
+	"ado", "adp", "adq", "adr", "ads", "adt", "adu", "adv", "adw", "adx",
+	"ady", "adz", "ad0", "ad1", "ad2", "ad3", "ad4", "ad5", "ad6", "ad7",
+	"ad8", "ad9", "aeb", "aec", "aed", "aef", "aeg", "aeh", "aei", "aej",
+	"aek", "ael", "aem", "aen", "aeo", "aep", "aeq", "aer", "aes", "aet",
+	"aeu", "aev", "aew", "aex", "aey", "aez", "ae0", "ae1", "ae2", "ae3",
+	"ae4", "ae5", "ae6",
+};
+
 // Define a structure named GemType
 struct GemType {
 	// Comment: The number of chipped gems of this type
@@ -193,6 +197,11 @@ struct GemType {
 
 	// Comment: The row number in properties.txt minus 3, representing the type of gem
 	int rowID;
+};
+
+// Gem/Rune Extractors
+static std::unordered_map<std::string, GemType> stoneTypes = {
+
 };
 
 // Gems/runes and their corresponding codes and properties.txt line numbers
@@ -264,7 +273,141 @@ static std::unordered_map<std::string, GemType> gemTypes = {
 	{"r30", {243, 392}}, // Ber Rune
 	{"r31", {1, 393}},   // Jah Rune
 	{"r32", {2, 393}},   // Cham Rune
-	{"r33", {4, 393}}    // Zod Rune
+	{"r33", {4, 393}},    // Zod Rune
+	//stones
+	{"abc", {1, 351}},
+	{"abd", {2, 351}},
+	{"abe", {4, 351}},
+	{"abf", {8, 351}},
+	{"abg", {16, 351}},
+	{"abh", {32, 351}},
+	{"abi", {64, 351}},
+	{"abj", {128, 351}},
+	{"abk", {256, 351}},
+	{"abl", {512, 351}},
+	{"abm", {1024, 351}},
+	{"abn", {2048, 351}},
+	{"abo", {4096, 351}},
+	{"abp", {8192, 351}},
+	{"abq", {16384, 351}},
+	{"abr", {32768, 351}},
+	{"abs", {65536, 351}},
+	{"abt", {131072, 351}},
+	{"abu", {262144, 351}},
+	{"abv", {1, 352}},
+	{"abw", {2, 352}},
+	{"abx", {4, 352}},
+	{"aby", {8, 352}},
+	{"abz", {16, 352}},
+	{"ab0", {32, 352}},
+	{"ab1", {64, 352}},
+	{"ab2", {128, 352}},
+	{"ab3", {256, 352}},
+	{"ab4", {512, 352}},
+	{"ab5", {1024, 352}},
+	{"ab6", {2048, 352}},
+	{"ab7", {4096, 352}},
+	{"ab8", {8192, 352}},
+	{"ab9", {16384, 352}},
+	{"acb", {32768, 352}},
+	{"acd", {65536, 352}},
+	{"ace", {131072, 352}},
+	{"acf", {262144, 352}},
+	{"acg", {1, 353}},
+	{"ach", {2, 353}},
+	{"aci", {4, 353}},
+	{"acj", {8, 353}},
+	{"ack", {16, 353}},
+	{"acl", {32, 353}},
+	{"acm", {64, 353}},
+	{"acn", {128, 353}},
+	{"aco", {256, 353}},
+	{"acp", {512, 353}},
+	{"acq", {1024, 353}},
+	{"acr", {2048, 353}},
+	{"acs", {4096, 353}},
+	{"act", {8192, 353}},
+	{"acu", {16384, 353}},
+	{"acv", {32768, 353}},
+	{"acw", {65536, 353}},
+	{"acx", {131072, 353}},
+	{"acy", {262144, 353}},
+	{"acz", {1, 354}},
+	{"ac0", {2, 354}},
+	{"ac1", {4, 354}},
+	{"ac2", {8, 354}},
+	{"ac3", {16, 354}},
+	{"ac4", {32, 354}},
+	{"ac5", {64, 354}},
+	{"ac6", {128, 354}},
+	{"ac7", {256, 354}},
+	{"ac8", {512, 354}},
+	{"ac9", {1024, 354}},
+	{"adb", {2048, 354}},
+	{"adc", {4096, 354}},
+	{"ade", {8192, 354}},
+	{"adf", {16384, 354}},
+	{"adg", {32768, 354}},
+	{"adh", {65536, 354}},
+	{"adi", {131072, 354}},
+	{"adj", {262144, 354}},
+	{"adk", {1, 355}},
+	{"adl", {2, 355}},
+	{"adm", {4, 355}},
+	{"adn", {8, 355}},
+	{"ado", {16, 355}},
+	{"adp", {32, 355}},
+	{"adq", {64, 355}},
+	{"adr", {128, 355}},
+	{"ads", {256, 355}},
+	{"adt", {512, 355}},
+	{"adu", {1024, 355}},
+	{"adv", {2048, 355}},
+	{"adw", {4096, 355}},
+	{"adx", {8192, 355}},
+	{"ady", {16384, 355}},
+	{"adz", {32768, 355}},
+	{"ad0", {65536, 355}},
+	{"ad1", {131072, 355}},
+	{"ad2", {262144, 355}},
+	{"ad3", {1, 356}},
+	{"ad4", {2, 356}},
+	{"ad5", {4, 356}},
+	{"ad6", {8, 356}},
+	{"ad7", {16, 356}},
+	{"ad8", {32, 356}},
+	{"ad9", {64, 356}},
+	{"aeb", {128, 356}},
+	{"aec", {256, 356}},
+	{"aed", {512, 356}},
+	{"aef", {1024, 356}},
+	{"aeg", {2048, 356}},
+	{"aeh", {4096, 356}},
+	{"aei", {8192, 356}},
+	{"aej", {16384, 356}},
+	{"aek", {32768, 356}},
+	{"ael", {65536, 356}},
+	{"aem", {131072, 356}},
+	{"aen", {262144, 356}},
+	{"aeo", {1, 357}},
+	{"aep", {2, 357}},
+	{"aeq", {4, 357}},
+	{"aer", {8, 357}},
+	{"aes", {16, 357}},
+	{"aet", {32, 357}},
+	{"aeu", {64, 357}},
+	{"aev", {128, 357}},
+	{"aew", {256, 357}},
+	{"aex", {512, 357}},
+	{"aey", {1024, 357}},
+	{"aez", {2048, 357}},
+	{"ae0", {4096, 357}},
+	{"ae1", {8192, 357}},
+	{"ae2", {16384, 357}},
+	{"ae3", {32768, 357}},
+	{"ae4", {65536, 357}},
+	{"ae5", {131072, 357}},
+	{"ae6", {262144, 357}},
 };
 
 // Gem/Rune Extractors
@@ -352,6 +495,16 @@ bool isGemOrRuneCode(const char* normCode) {
 bool isArmorOrWeaponCode(const char* normCode) {
 	// Iterate over the gemRuneCodes array and check if normCode matches any of the codes
 	for (const auto& code : ITEMS_armor_and_weapons) {
+		if (strncmp(normCode, code, 3) == 0) {
+			return true;
+		}
+	}
+	return false;
+}
+
+bool isStoneCode(const char* normCode) {
+	// Iterate over the gemRuneCodes array and check if normCode matches any of the codes
+	for (const auto& code : ITEMS_Stones) {
 		if (strncmp(normCode, code, 3) == 0) {
 			return true;
 		}

@@ -946,14 +946,14 @@ namespace diablo2 {
 		UNIT_STAT_UNUSED_68 = 484,
 		UNIT_STAT_UNUSED_69 = 485,
 		UNIT_STAT_UNUSED_70 = 486,
-		UNIT_STAT_UNUSED_71 = 487,
-		UNIT_STAT_UNUSED_72 = 488,
-		UNIT_STAT_UNUSED_73 = 489,
-		UNIT_STAT_UNUSED_74 = 490,
-		UNIT_STAT_UNUSED_75 = 491,
-		UNIT_STAT_UNUSED_76 = 492,
-		UNIT_STAT_UNUSED_77 = 493,
-		UNIT_STAT_UNUSED_78 = 494,
+		UNIT_STAT_gembag_Stones_Flourite = 487,
+		UNIT_STAT_gembag_Stones_Jade = 488,
+		UNIT_STAT_gembag_Stones_Argonite = 489,
+		UNIT_STAT_gembag_Stones_Azurite = 490,
+		UNIT_STAT_gembag_Stones_Sulpher = 491,
+		UNIT_STAT_gembag_Stones_Quartz = 492,
+		UNIT_STAT_gembag_Stones_TigerEye = 493,
+		UNIT_STAT_BoH_Desc = 494,
 		UNIT_STAT_runebag_RunesE = 495,
 		UNIT_STAT_runebag_RunesF = 496,
 		UNIT_STAT_passive_sum_mastery = 497,
@@ -1050,6 +1050,5 @@ namespace diablo2 {
 		//D2Common.0x6FD576D0 (#10601)
 		// D2ItemsTxt* __stdcall DATATBLS_GetItemRecordFromItemCode(uint32_t dwCode, int* pItemId)
 		static structures::items_line* get_item_record_from_item_code(uint32_t dwCode, int* pItemId);
-
 	};
 }

@@ -23,7 +23,7 @@ namespace diablo2 {
 		UI_COLOR_DARK_WHITE = 0xF,
 		UI_COLOR_LIGHT_GREY = 0x10,
 	};
-
+	 
 	enum ui_font_t {
 		UI_FONT_8 = 0,
 		UI_FONT_16 = 1,

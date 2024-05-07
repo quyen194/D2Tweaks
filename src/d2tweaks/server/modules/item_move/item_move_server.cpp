@@ -73,6 +73,10 @@ bool d2_tweaks::server::modules::item_move::handle_packet(diablo2::structures::g
 	//MessageBox(NULL, bag_guid.c_str(), "Bag GUID", MB_OK | MB_ICONINFORMATION);
 
 
+	// display itemMove->iCode in a messagebox
+	std::string iCode = std::to_string(itemMove->iCode);
+	//MessageBox(NULL, iCode.c_str(), "iCode", MB_OK | MB_ICONINFORMATION);
+
 	if (itemMove->extract == 1) {
 
 		// display bag guid in a messagebox 

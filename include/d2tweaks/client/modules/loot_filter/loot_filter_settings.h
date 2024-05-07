@@ -63,6 +63,34 @@ namespace d2_tweaks {
 				bool m_show_flawless;
 				bool m_show_perfect;
 
+				bool m_show_rough;
+				bool m_show_faded;
+				bool m_show_blemished;
+				bool m_show_cleaned;
+				bool m_show_triangle;
+				bool m_show_trangle_cut;
+				bool m_show_square;
+				bool m_show_square_cut;
+				bool m_show_regular;
+				bool m_show_regular_cut;
+				bool m_show_star;
+				bool m_show_star_cut;
+				bool m_show_imperial;
+				bool m_show_imperial_cut;
+				bool m_show_royal;
+				bool m_show_royal_cut;
+				bool m_show_spectacular;
+				bool m_show_legendary;
+				bool m_show_legendary_cut;
+
+				bool m_show_flourite;
+				bool m_show_jade;
+				bool m_show_argonite;
+				bool m_show_azurite;
+				bool m_show_sulpher;
+				bool m_show_quartz;
+				bool m_show_tiger_eye;
+
 
 				bool quality_settings[static_cast<size_t>(diablo2::structures::item_quality_t::ITEM_QUALITY_COUNT)];
 
