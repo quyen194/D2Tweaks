@@ -128,6 +128,7 @@ namespace d2_tweaks {
 				void reload_settings();
 
 				void draw() override;
+
 			private:
 				std::string m_selected_gem;
 

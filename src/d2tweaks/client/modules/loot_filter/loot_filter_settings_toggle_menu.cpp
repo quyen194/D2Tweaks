@@ -133,6 +133,7 @@ d2_tweaks::client::modules::loot_filter_settings_toggle_menu::loot_filter_settin
 
 void d2_tweaks::client::modules::loot_filter_settings_toggle_menu::toggle_filter_settings_click() {
 	m_show = !m_show;
+	m_stats_enabled = !m_stats_enabled;
 
 	m_filter_settings_menu->set_enabled(m_show);
 	m_filter_settings_menu->set_visible(m_show);
@@ -251,6 +252,20 @@ void d2_tweaks::client::modules::loot_filter_settings_toggle_menu::draw() {
 }
 
 bool d2_tweaks::client::modules::loot_filter_settings_toggle_menu::key_event(uint32_t key, bool up) {
+	
+	if (key == 'E' && up) {
+		m_show = !m_show;
+		m_stats_enabled = !m_stats_enabled;
+
+		m_filter_settings_menu->set_enabled(m_show);
+		m_filter_settings_menu->set_visible(m_show);
+
+		m_btn_toggle_stats->set_enabled(true);
+		m_btn_toggle_stats->set_visible(true);
+	}
+	return menu::key_event(key, up);
+	
+	
 	if (key == VK_ESCAPE && m_show) {
 		m_show = false;
 

@@ -29,6 +29,12 @@ namespace d2_tweaks {
 			public:
 				explicit loot_filter_settings_toggle_menu(token);
 
+				void toggle_show() {
+					m_show = !m_show;
+					set_enabled(m_show);
+					set_visible(m_show);
+				}
+
 				void toggle_filter_settings_click();
 				void toggle_stats_settings_click();
 				void toggle_help_click();

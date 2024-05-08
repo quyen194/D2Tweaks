@@ -56,7 +56,7 @@ bool d2_tweaks::server::modules::item_move::handle_packet(diablo2::structures::g
 	// Display key in a message box
 	//MessageBox(NULL, key, "Item code", MB_OK | MB_ICONINFORMATION);
 
-	const auto item = instance.get_server_unit(game, itemMove->item_guid, diablo2::structures::unit_type_t::UNIT_TYPE_ITEM); //0x4 = item
+	auto item = instance.get_server_unit(game, itemMove->item_guid, diablo2::structures::unit_type_t::UNIT_TYPE_ITEM); //0x4 = item
 
 	const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
 
@@ -123,13 +123,20 @@ bool d2_tweaks::server::modules::item_move::handle_packet(diablo2::structures::g
 
 			//diablo2::d2_common::set_unit_mode(item, 0); // mode 4 - предмет нельзя взять мышкой из инвентаря, mode 0 - обычный режим
 
+			// here we need to remove the item if item data page is 99
+			//if (itemMove->target_page == 99) {
+			//	diablo2::d2_common::inv_remove_item(player->inventory, item);				
+			//}
+
+
 			item->item_data->page = itemMove->target_page;
 
-			diablo2::d2_common::inv_add_item(player->inventory, item, tx, ty, inventoryIndex, false, item->item_data->page);
-			diablo2::d2_common::inv_update_item(player->inventory, item, false);
+			//if (itemMove->target_page != 99) {
 
-			diablo2::d2_game::update_inventory_items(game, player);
-
+				diablo2::d2_common::inv_add_item(player->inventory, item, tx, ty, inventoryIndex, false, item->item_data->page);
+				diablo2::d2_common::inv_update_item(player->inventory, item, false);
+				diablo2::d2_game::update_inventory_items(game, player);
+			//}
 			//send update packet
 			resp.item_guid = itemMove->item_guid;
 			resp.target_page = itemMove->target_page;

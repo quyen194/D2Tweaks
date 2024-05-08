@@ -40,6 +40,8 @@
 #include <vector>
 #include <CommCtrl.h> // Include for edit control
 
+#include "d2tweaks/client/modules/loot_filter/loot_filter_settings_toggle_menu.h"
+
 // Define a static variable to keep track of the last time the stash window was toggled
 static std::chrono::steady_clock::time_point lastToggleTime;
 
@@ -542,6 +544,13 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 		diablo2::d2_client::send_to_server_7(0x4F, 0x18, 0, 0);
 		block = true; // block the game from processing this key
 	}
+
+	// Send transmute packet
+	if (wParam == 'E') {
+		// send packet from server to client
+		block = true; // block the game from processing this key
+	}
+
 
 	if (wParam == 'V') {
 		// Define a cooldown duration in milliseconds
