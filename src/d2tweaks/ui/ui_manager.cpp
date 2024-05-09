@@ -40,8 +40,6 @@
 #include <vector>
 #include <CommCtrl.h> // Include for edit control
 
-#include "d2tweaks/client/modules/loot_filter/loot_filter_settings_toggle_menu.h"
-
 // Define a static variable to keep track of the last time the stash window was toggled
 static std::chrono::steady_clock::time_point lastToggleTime;
 
@@ -513,6 +511,10 @@ bool isStoneCode(const char* normCode) {
 }
 
 void sendPacketAndUpdateProperty(int gemBagGuid, uint32_t iCode, int prop, int val, int item_guid, diablo2::structures::unit* gemBag) {
+
+	// get item using item guid
+
+
 	// Create the packet
 	static d2_tweaks::common::item_move_cs packet;
 	packet.bag_guid = gemBagGuid;
@@ -544,13 +546,6 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 		diablo2::d2_client::send_to_server_7(0x4F, 0x18, 0, 0);
 		block = true; // block the game from processing this key
 	}
-
-	// Send transmute packet
-	if (wParam == 'E') {
-		// send packet from server to client
-		block = true; // block the game from processing this key
-	}
-
 
 	if (wParam == 'V') {
 		// Define a cooldown duration in milliseconds
@@ -811,6 +806,8 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 							packet.target_page = 99;
 							diablo2::d2_client::send_to_server(&packet, sizeof packet);
 
+							diablo2::d2_common::inv_remove_item(player->inventory, g_hoverItem);
+
 							// Clear the hovered item after processing
 							(*reinterpret_cast<diablo2::structures::unit**>(diablo2::d2_client::get_base() + 0x1158F4)) = nullptr;
 						}
@@ -879,6 +876,8 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 							packet.val = itemProperty.nMin;
 							packet.target_page = 99;
 							diablo2::d2_client::send_to_server(&packet, sizeof packet);
+
+							diablo2::d2_common::inv_remove_item(player->inventory, g_hoverItem);
 
 							// Clear the hovered item after processing
 							(*reinterpret_cast<diablo2::structures::unit**>(diablo2::d2_client::get_base() + 0x1158F4)) = nullptr;
@@ -1195,51 +1194,63 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 			if (strncmp(normCode, "rvs", 3) == 0) {
 				// Create the packet
 				sendPacketAndUpdateProperty(gemBagGuid, 'rvs ', 396, 1, g_hoverItem->guid, gemBag);
+				diablo2::d2_common::inv_remove_item(player->inventory, g_hoverItem);
 			}
 			if (strncmp(normCode, "rvl", 3) == 0) {
 				// Create the packet
 				sendPacketAndUpdateProperty(gemBagGuid, 'rvl ', 396, 3, g_hoverItem->guid, gemBag);
+				diablo2::d2_common::inv_remove_item(player->inventory, g_hoverItem);
 			}
 
 
 			if (strncmp(normCode, "hp1", 3) == 0) {
 				sendPacketAndUpdateProperty(gemBagGuid, 'hp1 ', 397, 1, g_hoverItem->guid, gemBag);
+				diablo2::d2_common::inv_remove_item(player->inventory, g_hoverItem);
 			}
 
 			if (strncmp(normCode, "mp1", 3) == 0) {
 				sendPacketAndUpdateProperty(gemBagGuid, 'mp1 ', 398, 1, g_hoverItem->guid, gemBag);
+				diablo2::d2_common::inv_remove_item(player->inventory, g_hoverItem);
 			}
 
 			if (strncmp(normCode, "hp2", 3) == 0) {
 				sendPacketAndUpdateProperty(gemBagGuid, 'hp2 ', 397, 3, g_hoverItem->guid, gemBag);
+				diablo2::d2_common::inv_remove_item(player->inventory, g_hoverItem);
 			}
 
 			if (strncmp(normCode, "mp2", 3) == 0) {
 				sendPacketAndUpdateProperty(gemBagGuid, 'mp2 ', 398, 3, g_hoverItem->guid, gemBag);
+				diablo2::d2_common::inv_remove_item(player->inventory, g_hoverItem);
 			}
 
 			if (strncmp(normCode, "hp3", 3) == 0) {
 				sendPacketAndUpdateProperty(gemBagGuid, 'hp3 ', 397, 9, g_hoverItem->guid, gemBag);
+				diablo2::d2_common::inv_remove_item(player->inventory, g_hoverItem);
 			}
 
 			if (strncmp(normCode, "mp3", 3) == 0) {
 				sendPacketAndUpdateProperty(gemBagGuid, 'mp3 ', 398, 9, g_hoverItem->guid, gemBag);
+				diablo2::d2_common::inv_remove_item(player->inventory, g_hoverItem);
 			}
 
 			if (strncmp(normCode, "hp4", 3) == 0) {
 				sendPacketAndUpdateProperty(gemBagGuid, 'hp4 ', 397, 27, g_hoverItem->guid, gemBag);
+				diablo2::d2_common::inv_remove_item(player->inventory, g_hoverItem);
 			}
 
 			if (strncmp(normCode, "mp4", 3) == 0) {
 				sendPacketAndUpdateProperty(gemBagGuid, 'mp4 ', 398, 27, g_hoverItem->guid, gemBag);
+				diablo2::d2_common::inv_remove_item(player->inventory, g_hoverItem);
 			}
 
 			if (strncmp(normCode, "hp5", 3) == 0) {
 				sendPacketAndUpdateProperty(gemBagGuid, 'hp5 ', 397, 81, g_hoverItem->guid, gemBag);
+				diablo2::d2_common::inv_remove_item(player->inventory, g_hoverItem);
 			}
 
 			if (strncmp(normCode, "mp5", 3) == 0) {
 				sendPacketAndUpdateProperty(gemBagGuid, 'mp5 ', 398, 81, g_hoverItem->guid, gemBag);
+				diablo2::d2_common::inv_remove_item(player->inventory, g_hoverItem);
 			}
 
 

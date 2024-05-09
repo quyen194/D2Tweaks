@@ -56,7 +56,7 @@ bool d2_tweaks::server::modules::item_move::handle_packet(diablo2::structures::g
 	// Display key in a message box
 	//MessageBox(NULL, key, "Item code", MB_OK | MB_ICONINFORMATION);
 
-	auto item = instance.get_server_unit(game, itemMove->item_guid, diablo2::structures::unit_type_t::UNIT_TYPE_ITEM); //0x4 = item
+	const auto item = instance.get_server_unit(game, itemMove->item_guid, diablo2::structures::unit_type_t::UNIT_TYPE_ITEM); //0x4 = item
 
 	const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
 
@@ -93,62 +93,43 @@ bool d2_tweaks::server::modules::item_move::handle_packet(diablo2::structures::g
 		diablo2::d2_game::QUESTS_CreateItem(game, player, reverseDWORD(itemMove->iCode), 1, diablo2::structures::ITEMQUAL_NORMAL, true);
 		return true;
 	}
-	else
-		if (itemMove->tmog == 1) {
-			// here we need to add item to inventory
+	else if (itemMove->tmog == 1) {
+		const auto item = instance.get_server_unit(game, itemMove->item_guid, diablo2::structures::unit_type_t::UNIT_TYPE_ITEM); //0x4 = item
+		diablo2::d2_game::D2GAME_Transmogrify_6FC4A660(game, player, item);
+		diablo2::d2_game::QUESTS_CreateItem(game, player, reverseDWORD('gfv '), 1, diablo2::structures::ITEMQUAL_NORMAL, true);
+	}
+	else if (itemMove->updateBag == 1) {
+		D2PropertyStrc itemProperty = {};
+		itemProperty.nProperty = itemMove->prop;
+		itemProperty.nLayer = 0;
+		itemProperty.nMin = itemMove->val;
+		itemProperty.nMax = itemMove->val;
+		diablo2::d2_common::add_property(bag, &itemProperty, 1);
 
-			const auto item = instance.get_server_unit(game, itemMove->item_guid, diablo2::structures::unit_type_t::UNIT_TYPE_ITEM); //0x4 = item
+		diablo2::d2_common::inv_remove_item(player->inventory, item);
 
-			diablo2::d2_game::D2GAME_Transmogrify_6FC4A660(game, player, item);
+	} 
+	else {
+		if (item == nullptr)
+			return true; //block further packet processing
 
-			diablo2::d2_game::QUESTS_CreateItem(game, player, reverseDWORD('gfv '), 1, diablo2::structures::ITEMQUAL_NORMAL, true);
-		}
-		else {
-			D2PropertyStrc itemProperty = {};
-			itemProperty.nProperty = itemMove->prop;
-			itemProperty.nLayer = 0;
-			itemProperty.nMin = itemMove->val;
-			itemProperty.nMax = itemMove->val;
-			diablo2::d2_common::add_property(bag, &itemProperty, 1);
+		const auto inventoryIndex = diablo2::d2_common::get_inventory_index(player, itemMove->target_page, game->item_format == 101);
+		uint32_t tx, ty;
+		if (!find_free_space(player->inventory, item, inventoryIndex, itemMove->target_page, tx, ty))
+			return true; //block further packet processing
 
-			if (item == nullptr)
-				return true; //block further packet processing
-
-			const auto inventoryIndex = diablo2::d2_common::get_inventory_index(player, itemMove->target_page, game->item_format == 101);
-
-			uint32_t tx, ty;
-
-			if (!find_free_space(player->inventory, item, inventoryIndex, itemMove->target_page, tx, ty))
-				return true; //block further packet processing
-
-			//diablo2::d2_common::set_unit_mode(item, 0); // mode 4 - предмет нельзя взять мышкой из инвентаря, mode 0 - обычный режим
-
-			// here we need to remove the item if item data page is 99
-			//if (itemMove->target_page == 99) {
-			//	diablo2::d2_common::inv_remove_item(player->inventory, item);				
-			//}
-
-
-			item->item_data->page = itemMove->target_page;
-
-			//if (itemMove->target_page != 99) {
-
-				diablo2::d2_common::inv_add_item(player->inventory, item, tx, ty, inventoryIndex, false, item->item_data->page);
-				diablo2::d2_common::inv_update_item(player->inventory, item, false);
-				diablo2::d2_game::update_inventory_items(game, player);
-			//}
-			//send update packet
-			resp.item_guid = itemMove->item_guid;
-			resp.target_page = itemMove->target_page;
-			resp.tx = tx;
-			resp.ty = ty;
-
-			const auto client = player->player_data->net_client;
-
-			diablo2::d2_net::send_to_client(1, client->client_id, &resp, sizeof resp);
-
-			return true;
-		}
+		item->item_data->page = itemMove->target_page;
+		diablo2::d2_common::inv_add_item(player->inventory, item, tx, ty, inventoryIndex, false, item->item_data->page);
+		diablo2::d2_common::inv_update_item(player->inventory, item, false);
+		diablo2::d2_game::update_inventory_items(game, player);
+		resp.item_guid = itemMove->item_guid;
+		resp.target_page = itemMove->target_page;
+		resp.tx = tx;
+		resp.ty = ty;
+		const auto client = player->player_data->net_client;
+		diablo2::d2_net::send_to_client(1, client->client_id, &resp, sizeof resp);
+		return true;
+	}
 }
 
 bool d2_tweaks::server::modules::item_move::find_free_space(diablo2::structures::inventory* inv,
