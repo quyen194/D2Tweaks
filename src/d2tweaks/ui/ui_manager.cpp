@@ -510,28 +510,33 @@ bool isStoneCode(const char* normCode) {
 	return false;
 }
 
+auto D2CLIENT_StoredTickCount1 = GetTickCount();
+
 void sendPacketAndUpdateProperty(int gemBagGuid, uint32_t iCode, int prop, int val, int item_guid, diablo2::structures::unit* gemBag) {
 
 	// get item using item guid
 
+	if (250 < GetTickCount() - D2CLIENT_StoredTickCount1) {
+		D2CLIENT_StoredTickCount1 = GetTickCount();
 
-	// Create the packet
-	static d2_tweaks::common::item_move_cs packet;
-	packet.bag_guid = gemBagGuid;
-	packet.updateBag = 1;
-	packet.iCode = iCode;
-	packet.prop = prop - 3;
-	packet.val = val;
-	packet.item_guid = item_guid;
-	packet.target_page = 99;
-	diablo2::d2_client::send_to_server(&packet, sizeof packet);
+		// Create the packet
+		static d2_tweaks::common::item_move_cs packet;
+		packet.bag_guid = gemBagGuid;
+		packet.updateBag = 1;
+		packet.iCode = iCode;
+		packet.prop = prop - 3;
+		packet.val = val;
+		packet.item_guid = item_guid;
+		packet.target_page = 99;
+		diablo2::d2_client::send_to_server(&packet, sizeof packet);
 
-	D2PropertyStrc itemProperty = {};
-	itemProperty.nProperty = prop - 3; // Adjust the property ID
-	itemProperty.nLayer = 0;
-	itemProperty.nMin = val;
-	itemProperty.nMax = val;
-	diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
+		D2PropertyStrc itemProperty = {};
+		itemProperty.nProperty = prop - 3; // Adjust the property ID
+		itemProperty.nLayer = 0;
+		itemProperty.nMin = val;
+		itemProperty.nMax = val;
+		diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
+	}
 }
 
 

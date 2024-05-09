@@ -263,7 +263,6 @@ bool d2_tweaks::client::modules::loot_filter_settings_toggle_menu::key_event(uin
 		m_btn_toggle_stats->set_enabled(true);
 		m_btn_toggle_stats->set_visible(true);
 	}
-	return menu::key_event(key, up);
 	
 	
 	if (key == VK_ESCAPE && m_show) {

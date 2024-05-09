@@ -159,8 +159,8 @@ void displayStat() {
 
 	// get the value of x , y, and z from the d2tweaks.ini file using getprofileint
 	int x = GetPrivateProfileInt("Options", "bagStatsx", 360, "d2tweaks.ini");
-	int y = GetPrivateProfileInt("Options", "bagStatsy", 155, "d2tweaks.ini");
-	int z = GetPrivateProfileInt("Options", "bagStatsz", 160, "d2tweaks.ini");
+	int y = GetPrivateProfileInt("Options", "bagStatsy", 25, "d2tweaks.ini");
+	int z = GetPrivateProfileInt("Options", "bagStatsz", 140, "d2tweaks.ini");
 
 	for (auto item = inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
 		const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
@@ -310,6 +310,12 @@ void displayStat() {
 			diablo2::d2_win::draw_text(const_cast<wchar_t*>((L"Gem/Rune/Stone/Potion storage & extraction menu")), 10, 25, diablo2::UI_COLOR_YELLOW, 0);
 
 			diablo2::d2_win::set_current_font(diablo2::UI_FONT_16);
+
+
+			diablo2::d2_gfx::draw_filled_rect(0, 0, 100, 100, 113, 0);
+
+
+
 		}
 	}
 
