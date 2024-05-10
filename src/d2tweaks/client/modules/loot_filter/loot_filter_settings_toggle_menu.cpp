@@ -253,7 +253,14 @@ void d2_tweaks::client::modules::loot_filter_settings_toggle_menu::draw() {
 
 bool d2_tweaks::client::modules::loot_filter_settings_toggle_menu::key_event(uint32_t key, bool up) {
 	
-	if (key == 'E' && up) {
+	// Read the key from the ./d2tweaks.ini file from [ExPanel] section, key: key
+	char keyBuffer[3];
+	GetPrivateProfileStringA("ExPanel", "key", "", keyBuffer, sizeof(keyBuffer), "./d2tweaks.ini");
+
+	// Convert the key character to uppercase for case-insensitive comparison
+	char configKey = toupper(keyBuffer[0]);
+
+	if (key == configKey && up) {
 		m_show = !m_show;
 		m_stats_enabled = !m_stats_enabled;
 
@@ -262,7 +269,10 @@ bool d2_tweaks::client::modules::loot_filter_settings_toggle_menu::key_event(uin
 
 		m_btn_toggle_stats->set_enabled(true);
 		m_btn_toggle_stats->set_visible(true);
+
+		return true; // Block the key stroke
 	}
+
 	
 	
 	if (key == VK_ESCAPE && m_show) {

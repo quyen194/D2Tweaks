@@ -150,7 +150,7 @@ const char* ITEMS_armor_and_weapons[] = {
 	"pa8", "pa9", "paa", "ne6", "ne7", "ne8", "ne9", "nea", "drb", "drc",
 	"drd", "dre", "drf", "bab", "bac", "bad", "bae", "baf", "pab", "pac",
 	"pad", "pae", "paf", "neb", "neg", "ned", "nee", "nef", "tor", "ooc",
-	"eaq", "ebq", "ib1", "ib3",
+	"eaq", "ebq", "ib1", "ib3", "aqv", "cqv"
 
 	// demon keys/chests
 	"dkr1", "dkr2", "dkr3", "dkr4", "dkr5", "da1", "db1", "dc1"

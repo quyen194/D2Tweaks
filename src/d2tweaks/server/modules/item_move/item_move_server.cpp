@@ -96,7 +96,6 @@ bool d2_tweaks::server::modules::item_move::handle_packet(diablo2::structures::g
 	else if (itemMove->tmog == 1) {
 		const auto item = instance.get_server_unit(game, itemMove->item_guid, diablo2::structures::unit_type_t::UNIT_TYPE_ITEM); //0x4 = item
 		diablo2::d2_game::D2GAME_Transmogrify_6FC4A660(game, player, item);
-		diablo2::d2_game::QUESTS_CreateItem(game, player, reverseDWORD('gfv '), 1, diablo2::structures::ITEMQUAL_NORMAL, true);
 	}
 	else if (itemMove->updateBag == 1) {
 		D2PropertyStrc itemProperty = {};
