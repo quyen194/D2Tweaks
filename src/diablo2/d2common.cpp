@@ -274,3 +274,18 @@ diablo2::structures::items_line* diablo2::d2_common::get_item_record_from_item_c
 	static wrap_func_std_import<diablo2::structures::items_line* (uint32_t, int*)> get_item_record_from_item_code(10601, get_base());
 	return get_item_record_from_item_code(dwCode, pItemId);
 }
+
+// Add a wrapper function for the following:
+// //D2Common.0x6FD5EAA0 (#10620)
+// D2COMMON_DLL_DECL D2RunesTxt* __stdcall DATATBLS_GetRunesTxtRecord(int nRunewordId);
+diablo2::structures::D2RunesTxt* diablo2::d2_common::get_runes_txt_record(int nRunewordId) {
+	static wrap_func_std_import<diablo2::structures::D2RunesTxt* (int)> get_runes_txt_record(10620, get_base());
+	return get_runes_txt_record(nRunewordId);
+}
+
+//D2Common.0x6FD57680 (#10600)
+//D2ItemsTxt* __stdcall DATATBLS_GetItemsTxtRecord(int nItemId)
+diablo2::structures::items_line* diablo2::d2_common::get_items_txt_record(int nItemId) {
+	static wrap_func_std_import<diablo2::structures::items_line* (int)> get_items_txt_record(10600, get_base());
+	return get_items_txt_record(nItemId);
+}

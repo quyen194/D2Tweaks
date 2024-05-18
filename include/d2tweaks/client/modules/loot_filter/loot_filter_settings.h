@@ -106,6 +106,17 @@ namespace d2_tweaks {
 				bool m_show_mp4;
 				bool m_show_mp5;
 
+				bool m_show_frp;
+				bool m_show_mrp;
+				bool m_show_prp;
+				bool m_show_crp;
+				bool m_show_lrp;
+				bool m_show_vps;
+				bool m_show_yps;
+				bool m_show_wms;
+
+				bool m_show_close;
+
 				bool quality_settings[static_cast<size_t>(diablo2::structures::item_quality_t::ITEM_QUALITY_COUNT)];
 
 				char reserved[1004];

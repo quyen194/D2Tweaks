@@ -260,7 +260,7 @@ bool d2_tweaks::client::modules::loot_filter_settings_toggle_menu::key_event(uin
 	// Convert the key character to uppercase for case-insensitive comparison
 	char configKey = toupper(keyBuffer[0]);
 
-	if (key == configKey && up) {
+	if (key == configKey && up && !diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_MSGS) && !diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_CHAT)) {
 		m_show = !m_show;
 		m_stats_enabled = !m_stats_enabled;
 

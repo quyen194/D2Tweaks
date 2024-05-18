@@ -22,11 +22,14 @@ namespace d2_tweaks {
 				ui::controls::button* m_btn_toggle_stash;
 				ui::controls::button* m_btn_toggle_bag;
 
+
+
+			public:
 				menu* m_filter_settings_menu;
 				menu* m_menu;
 				bool m_show;
 				bool m_show_bag;
-			public:
+
 				explicit loot_filter_settings_toggle_menu(token);
 
 				void toggle_show() {

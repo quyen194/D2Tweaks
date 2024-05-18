@@ -317,6 +317,92 @@ public:
 
 					diablo2::d2_win::set_current_font(fontMap[statsFont]); // Set font to FONT16
 					diablo2::d2_win::draw_text(const_cast<wchar_t*>(statValueStr.c_str()), stat.x2, stat.y2 + textOffset, stat.colorStatValue, 0);
+
+
+					/*
+
+					auto runeword = diablo2::d2_common::get_runes_txt_record(169);
+					
+
+					// Assuming szName is a null-terminated C-string.
+					wchar_t wText[1024]; // Ensure this buffer is large enough to hold the converted string.
+					wchar_t wLine[128]; // Buffer for each line
+					size_t convertedChars = 0;
+
+					// Initialize vertical offset
+					int yOffset = 200;
+
+					// Convert and draw each field
+					mbstowcs_s(&convertedChars, wText, "szName: ", _TRUNCATE);
+					mbstowcs_s(&convertedChars, wLine, runeword->szName, _TRUNCATE);
+					swprintf(wText, L"%s%s", wText, wLine);
+					diablo2::d2_win::draw_text(wText, 200, yOffset, diablo2::UI_COLOR_GOLD, 0);
+					yOffset += 14;
+
+					mbstowcs_s(&convertedChars, wText, "szRuneName: ", _TRUNCATE);
+					mbstowcs_s(&convertedChars, wLine, runeword->szRuneName, _TRUNCATE);
+					swprintf(wText, L"%s%s", wText, wLine);
+					diablo2::d2_win::draw_text(wText, 200, yOffset, diablo2::UI_COLOR_GOLD, 0);
+					yOffset += 14;
+
+					mbstowcs_s(&convertedChars, wText, "nComplete: ", _TRUNCATE);
+					swprintf(wText, L"%s%d", wText, runeword->nComplete);
+					diablo2::d2_win::draw_text(wText, 200, yOffset, diablo2::UI_COLOR_GOLD, 0);
+					yOffset += 14;
+
+					mbstowcs_s(&convertedChars, wText, "nServer: ", _TRUNCATE);
+					swprintf(wText, L"%s%d", wText, runeword->nServer);
+					diablo2::d2_win::draw_text(wText, 200, yOffset, diablo2::UI_COLOR_GOLD, 0);
+					yOffset += 14;
+
+					mbstowcs_s(&convertedChars, wText, "wStringId: ", _TRUNCATE);
+					swprintf(wText, L"%s%d", wText, runeword->wStringId);
+					diablo2::d2_win::draw_text(wText, 200, yOffset, diablo2::UI_COLOR_GOLD, 0);
+					yOffset += 14;
+
+					mbstowcs_s(&convertedChars, wText, "pad0x84: ", _TRUNCATE);
+					swprintf(wText, L"%s%d", wText, runeword->pad0x84);
+					diablo2::d2_win::draw_text(wText, 200, yOffset, diablo2::UI_COLOR_GOLD, 0);
+					yOffset += 14;
+
+					mbstowcs_s(&convertedChars, wText, "wIType: ", _TRUNCATE);
+					for (int i = 0; i < 6; ++i) {
+						swprintf(wLine, L"%d ", runeword->wIType[i]);
+						wcscat_s(wText, wLine);
+					}
+					diablo2::d2_win::draw_text(wText, 200, yOffset, diablo2::UI_COLOR_GOLD, 0);
+					yOffset += 14;
+
+					mbstowcs_s(&convertedChars, wText, "wEType: ", _TRUNCATE);
+					for (int i = 0; i < 3; ++i) {
+						swprintf(wLine, L"%d ", runeword->wEType[i]);
+						wcscat_s(wText, wLine);
+					}
+					diablo2::d2_win::draw_text(wText, 200, yOffset, diablo2::UI_COLOR_GOLD, 0);
+					yOffset += 14;
+
+					mbstowcs_s(&convertedChars, wText, "nRune: ", _TRUNCATE);
+					for (int i = 0; i < 6; ++i) {
+						diablo2::structures::items_line* rItem = diablo2::d2_common::get_items_txt_record(runeword->nRune[i]);
+						auto code = rItem->string_code;
+
+						// Ensure code is not null before attempting to use it
+						if (code) {
+							// Format code and add to wLine
+							//swprintf(wLine, L"%ls ", code);
+
+							// Concatenate wLine to wText
+							wcscat_s(wText, wLine);
+						}
+					}
+					diablo2::d2_win::draw_text(wText, 200, yOffset, diablo2::UI_COLOR_GOLD, 0);
+					yOffset += 14;
+
+					*/
+					
+
+
+
 				}
 
 				//diablo2::d2_win::draw_boxed_text(const_cast<wchar_t*>(statText.c_str()), stat.x1, stat.y1 + textOffset, 1, 0, stat.colorStat);

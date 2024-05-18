@@ -119,6 +119,17 @@ namespace d2_tweaks {
 				ui::controls::checkbox* m_show_mp4;
 				ui::controls::checkbox* m_show_mp5;
 
+				ui::controls::checkbox* m_show_frp;
+				ui::controls::checkbox* m_show_mrp;
+				ui::controls::checkbox* m_show_prp;
+				ui::controls::checkbox* m_show_crp;
+				ui::controls::checkbox* m_show_lrp;
+
+				ui::controls::checkbox* m_show_vps;
+				ui::controls::checkbox* m_show_yps;
+				ui::controls::checkbox* m_show_wms;
+
+				ui::controls::checkbox* m_close;
 
 				void(__fastcall* m_draw_dropped_items_names_original)(void*, void*);
 				void(__fastcall* m_handle_dropped_items_original)(void*, void*);
@@ -221,6 +232,16 @@ namespace d2_tweaks {
 				void extract_mp5(bool value);
 
 
+				void extract_frp(bool value);
+				void extract_mrp(bool value);
+				void extract_prp(bool value);
+				void extract_crp(bool value);
+				void extract_lrp(bool value);
+				void extract_vps(bool value);
+				void extract_yps(bool value);
+				void extract_wms(bool value);
+
+				void close_window(bool value);
 
 				//void extract_flourite(bool value);
 				//void extract_jade(bool value);

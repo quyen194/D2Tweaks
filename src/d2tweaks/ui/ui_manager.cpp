@@ -1198,12 +1198,12 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 
 			if (strncmp(normCode, "rvs", 3) == 0) {
 				// Create the packet
-				sendPacketAndUpdateProperty(gemBagGuid, 'rvs ', 396, 1, g_hoverItem->guid, gemBag);
+				sendPacketAndUpdateProperty(gemBagGuid, 'rvs ', 396, 1000, g_hoverItem->guid, gemBag);
 				diablo2::d2_common::inv_remove_item(player->inventory, g_hoverItem);
 			}
 			if (strncmp(normCode, "rvl", 3) == 0) {
 				// Create the packet
-				sendPacketAndUpdateProperty(gemBagGuid, 'rvl ', 396, 3, g_hoverItem->guid, gemBag);
+				sendPacketAndUpdateProperty(gemBagGuid, 'rvl ', 396, 5000, g_hoverItem->guid, gemBag);
 				diablo2::d2_common::inv_remove_item(player->inventory, g_hoverItem);
 			}
 
@@ -1255,6 +1255,47 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 
 			if (strncmp(normCode, "mp5", 3) == 0) {
 				sendPacketAndUpdateProperty(gemBagGuid, 'mp5 ', 398, 81, g_hoverItem->guid, gemBag);
+				diablo2::d2_common::inv_remove_item(player->inventory, g_hoverItem);
+			}
+
+			// add if block for the following codes: vps, yps, wms, frp, lrp, crp, prp, mrp
+			if (strncmp(normCode, "vps", 3) == 0) {
+				sendPacketAndUpdateProperty(gemBagGuid, 'vps ', 396, 5, g_hoverItem->guid, gemBag);
+				diablo2::d2_common::inv_remove_item(player->inventory, g_hoverItem);
+			}
+
+			if (strncmp(normCode, "yps", 3) == 0) {
+				sendPacketAndUpdateProperty(gemBagGuid, 'yps ', 396, 10, g_hoverItem->guid, gemBag);
+				diablo2::d2_common::inv_remove_item(player->inventory, g_hoverItem);
+			}
+
+			if (strncmp(normCode, "wms", 3) == 0) {
+				sendPacketAndUpdateProperty(gemBagGuid, 'wms ', 396, 15, g_hoverItem->guid, gemBag);
+				diablo2::d2_common::inv_remove_item(player->inventory, g_hoverItem);
+			}
+
+			if (strncmp(normCode, "frp", 3) == 0) {
+				sendPacketAndUpdateProperty(gemBagGuid, 'frp ', 396, 50, g_hoverItem->guid, gemBag);
+				diablo2::d2_common::inv_remove_item(player->inventory, g_hoverItem);
+			}
+
+			if (strncmp(normCode, "lrp", 3) == 0) {
+				sendPacketAndUpdateProperty(gemBagGuid, 'lrp ', 396, 50, g_hoverItem->guid, gemBag);
+				diablo2::d2_common::inv_remove_item(player->inventory, g_hoverItem);
+			}
+
+			if (strncmp(normCode, "crp", 3) == 0) {
+				sendPacketAndUpdateProperty(gemBagGuid, 'crp ', 396, 50, g_hoverItem->guid, gemBag);
+				diablo2::d2_common::inv_remove_item(player->inventory, g_hoverItem);
+			}
+
+			if (strncmp(normCode, "prp", 3) == 0) {
+				sendPacketAndUpdateProperty(gemBagGuid, 'prp ', 396, 50, g_hoverItem->guid, gemBag);
+				diablo2::d2_common::inv_remove_item(player->inventory, g_hoverItem);
+			}
+
+			if (strncmp(normCode, "mrp", 3) == 0) {
+				sendPacketAndUpdateProperty(gemBagGuid, 'mrp ', 396, 50, g_hoverItem->guid, gemBag);
 				diablo2::d2_common::inv_remove_item(player->inventory, g_hoverItem);
 			}
 

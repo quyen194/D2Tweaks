@@ -83,6 +83,8 @@ struct D2PropertyStrc
 	int32_t nMax;						//0x0C
 };
 
+
+
 namespace diablo2 {
 	namespace structures {
 		struct unit;
@@ -92,6 +94,20 @@ namespace diablo2 {
 
 		struct items_line;
 		struct item_types_line;
+		
+		struct D2RunesTxt
+		{
+			char szName[64];						//0x00
+			char szRuneName[64];					//0x40
+			uint8_t nComplete;						//0x80
+			uint8_t nServer;						//0x81
+			uint16_t wStringId;						//0x82
+			uint16_t pad0x84;						//0x84
+			uint16_t wIType[6];						//0x86
+			uint16_t wEType[3];						//0x92
+			int32_t nRune[6];						//0x98
+			D2PropertyStrc pProperties[7];			//0xB0
+		};
 
 		struct D2OpStatDataStrc
 		{
@@ -1050,5 +1066,13 @@ namespace diablo2 {
 		//D2Common.0x6FD576D0 (#10601)
 		// D2ItemsTxt* __stdcall DATATBLS_GetItemRecordFromItemCode(uint32_t dwCode, int* pItemId)
 		static structures::items_line* get_item_record_from_item_code(uint32_t dwCode, int* pItemId);
+
+		// //D2Common.0x6FD5EAA0 (#10620)
+		// D2COMMON_DLL_DECL D2RunesTxt* __stdcall DATATBLS_GetRunesTxtRecord(int nRunewordId);
+		static structures::D2RunesTxt* get_runes_txt_record(int nRunewordId);
+
+		//D2Common.0x6FD57680 (#10600)
+		//D2ItemsTxt* __stdcall DATATBLS_GetItemsTxtRecord(int nItemId)
+		static structures::items_line* get_items_txt_record(int nItemId);
 	};
 }
