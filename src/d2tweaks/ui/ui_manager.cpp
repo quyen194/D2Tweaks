@@ -513,7 +513,6 @@ bool isStoneCode(const char* normCode) {
 auto D2CLIENT_StoredTickCount1 = GetTickCount();
 
 void sendPacketAndUpdateProperty(int gemBagGuid, uint32_t iCode, int prop, int val, int item_guid, diablo2::structures::unit* gemBag) {
-
 	// get item using item guid
 
 	if (250 < GetTickCount() - D2CLIENT_StoredTickCount1) {
@@ -538,8 +537,6 @@ void sendPacketAndUpdateProperty(int gemBagGuid, uint32_t iCode, int prop, int v
 		diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
 	}
 }
-
-
 
 LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 	static auto& instance = singleton<ui_manager>::instance();
@@ -1207,7 +1204,6 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 				diablo2::d2_common::inv_remove_item(player->inventory, g_hoverItem);
 			}
 
-
 			if (strncmp(normCode, "hp1", 3) == 0) {
 				sendPacketAndUpdateProperty(gemBagGuid, 'hp1 ', 397, 1, g_hoverItem->guid, gemBag);
 				diablo2::d2_common::inv_remove_item(player->inventory, g_hoverItem);
@@ -1299,16 +1295,48 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 				diablo2::d2_common::inv_remove_item(player->inventory, g_hoverItem);
 			}
 
+			char currentPage;
+			const char* key;
+			// Iterate through each gem type in the gemTypes map
+			for (const auto& gem : gemTypes) {
+				// Accessing the key and value of the gemTypes map
+				const std::string& _key = gem.first;
+				key = gem.first.c_str();
 
+				const GemType& value = gem.second;
 
+				// Check if the code of the hovered item matches the current gem type
+				if (strncmp(normCode, key, 3) == 0) {
+					// Create a D2PropertyStrc structure to represent the gem property
+					D2PropertyStrc itemProperty = {};
+					itemProperty.nProperty = value.rowID - 3; // Adjust the property ID
+					itemProperty.nLayer = 0;
+					itemProperty.nMin = value.chippedCount;
+					itemProperty.nMax = value.chippedCount;
 
+					// Add the gem property to the gem bag
+					diablo2::d2_common::add_property(gemBag, &itemProperty, 0);
 
+					// Play the drop sound associated with the hovered item
+					diablo2::d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
 
+					// Create and send a packet to the server to move the item
+					static d2_tweaks::common::item_move_cs packet;
+					packet.item_guid = g_hoverItem->guid;
+					packet.item_code = key;
+					packet.bag_guid = gemBagGuid;
+					packet.updateBag = 1;
+					packet.prop = itemProperty.nProperty;
+					packet.val = itemProperty.nMin;
+					packet.target_page = 99;
+					diablo2::d2_client::send_to_server(&packet, sizeof packet);
 
+					diablo2::d2_common::inv_remove_item(player->inventory, g_hoverItem);
 
-
-
-
+					// Clear the hovered item after processing
+					(*reinterpret_cast<diablo2::structures::unit**>(diablo2::d2_client::get_base() + 0x1158F4)) = nullptr;
+				}
+			}
 
 			if (isArmorOrWeaponCode(normCode)
 				|| record->type == 61 - 3 // jewel

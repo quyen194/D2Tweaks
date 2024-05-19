@@ -140,6 +140,9 @@ void d2_tweaks::client::modules::loot_filter_settings_toggle_menu::toggle_filter
 
 	m_btn_toggle_stats->set_enabled(true);
 	m_btn_toggle_stats->set_visible(true);
+
+	toggle_cube_click();
+
 }
 
 void d2_tweaks::client::modules::loot_filter_settings_toggle_menu::toggle_stats_settings_click() {
@@ -270,6 +273,8 @@ bool d2_tweaks::client::modules::loot_filter_settings_toggle_menu::key_event(uin
 		m_btn_toggle_stats->set_enabled(true);
 		m_btn_toggle_stats->set_visible(true);
 
+		toggle_cube_click();
+
 		return true; // Block the key stroke
 	}
 
@@ -280,6 +285,8 @@ bool d2_tweaks::client::modules::loot_filter_settings_toggle_menu::key_event(uin
 
 		m_filter_settings_menu->set_enabled(m_show);
 		m_filter_settings_menu->set_visible(m_show);
+
+		toggle_cube_click();
 
 		return true; //block escape key stroke
 	}
