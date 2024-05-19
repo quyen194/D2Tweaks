@@ -27,23 +27,16 @@ namespace d2_tweaks {
 			public:
 				menu* m_filter_settings_menu;
 				menu* m_menu;
-				bool m_show;
-				bool m_show_bag;
+				bool m_show;	
 
 				explicit loot_filter_settings_toggle_menu(token);
-
-				void toggle_show() {
-					m_show = !m_show;
-					set_enabled(m_show);
-					set_visible(m_show);
-				}
 
 				void toggle_filter_settings_click();
 				void toggle_stats_settings_click();
 				void toggle_help_click();
 				void toggle_cube_click();
 				void toggle_stash_click();
-				void toggle_bag_click();
+				
 				void draw() override;
 
 				bool key_event(uint32_t key, bool up) override;
