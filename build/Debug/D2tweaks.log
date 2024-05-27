@@ -1,2 +1,4 @@
-﻿  loot_filter_settings_toggle_menu.cpp
+﻿  autosort_client.cpp
+D:\VSCode\d2tweaks-rnd2k\src\d2tweaks\client\modules\autosort\autosort_client.cpp(197,15): warning C4018: '<': signed/unsigned mismatch
+D:\VSCode\d2tweaks-rnd2k\src\d2tweaks\client\modules\autosort\autosort_client.cpp(197,66): warning C4018: '<=': signed/unsigned mismatch
   D2tweaks.vcxproj -> D:\Diablo II\MODS\ironman-dev\D2tweaks.dll

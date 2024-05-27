@@ -135,13 +135,13 @@ bool d2_tweaks::server::modules::autosort::sort(diablo2::structures::game* game,
 			occupied_cells += record->inv_height * record->inv_width;
 		}
 
-		spdlog::info("--------------------------------");
-		spdlog::info("Item Type: {0}", record->type);
-		spdlog::info("Item Type 2: {0}", record->type2);
-		spdlog::info("Occupied Cells: {0}", occupied_cells);
-		spdlog::info("x: {0}", backup.x);
-		spdlog::info("y: {0}", backup.y);
-		spdlog::info("is_charm: {0}\n\n", is_charm);
+		//spdlog::info("--------------------------------");
+		//spdlog::info("Item Type: {0}", record->type);
+		//spdlog::info("Item Type 2: {0}", record->type2);
+		//spdlog::info("Occupied Cells: {0}", occupied_cells);
+		//spdlog::info("x: {0}", backup.x);
+		//spdlog::info("y: {0}", backup.y);
+		//spdlog::info("is_charm: {0}\n\n", is_charm);
 	}
 
 	if (occupied_cells > inventoryHeight * inventoryWidth) {

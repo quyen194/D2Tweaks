@@ -17,6 +17,9 @@
 #include <diablo2/d2cmp.h>
 #include <common/hooking.h>
 
+#include <diablo2/structures/monster_data.h>
+
+
 MODULE_INIT(damage_display)
 
 struct damage_label {
@@ -32,6 +35,9 @@ struct damage_label {
 	int32_t maxHp;      // New field for maximum hit points
 	int32_t text_width;
 	wchar_t text[64];
+	bool isChampion;
+	bool isUnique;
+	bool isSuperUnique;
 
 	damage_label(uint32_t x, uint32_t y, uint32_t uw, uint32_t uh, int32_t damage, int32_t hp, int32_t maxHp)
 		: screen_space(false), color(diablo2::ui_color_t::UI_COLOR_WHITE), x(x), y(y),
@@ -273,6 +279,10 @@ static void draw_damage_labels() {
 				diablo2::d2_win::draw_text(const_cast<wchar_t*>(dmgTextPtr), textX + diablo2::d2_win::get_text_pixel_width(const_cast<wchar_t*>(combinedTextPtr)) / 2, my + label->unit_height / 2, textColor, 0);
 			}
 		}
+
+
+
+
 	}
 
 	diablo2::d2_win::set_current_font(font);
@@ -390,10 +400,45 @@ void d2_tweaks::client::modules::damage_display::handle_packet(common::packet_he
 	swprintf_s(label->text, L"%i", label->damage);
 	label->text_width = diablo2::d2_win::get_text_pixel_width(label->text);
 
+	/*
+	// Assuming info is already defined and contains the GUID
+	auto monster = diablo2::d2_client::get_unit_by_guid(info->guid, 0x01);
+	auto monsterData = monster->monster_data;
+
+	bool isChampion = monsterData->is_champion;
+	bool isSuperUnique = monsterData->is_super_unique;
+	bool isUnique = monsterData->is_unique;
+
+	if (info->currentHp == 0) {
+		//MessageBoxA(nullptr, "Monster is dead", "Monster is dead", MB_OK);
+		if (isChampion) {
+			//MessageBoxA(nullptr, "Monster is a Champion", "Monster is a Champion", MB_OK);
+			auto isChampionValue = diablo2::d2_common::get_stat(player, diablo2::UNIT_STAT_is_champion, 0);
+			diablo2::d2_common::set_stat(player, diablo2::UNIT_STAT_is_champion, isChampionValue + 1, 0);
+
+		}
+		else if (isUnique) {
+			//MessageBoxA(nullptr, "Monster is Unique", "Monster is Unique", MB_OK);
+			auto isUniqueValue = diablo2::d2_common::get_stat(player, diablo2::UNIT_STAT_is_unique, 0);
+			diablo2::d2_common::set_stat(player, diablo2::UNIT_STAT_is_unique, isUniqueValue + 1, 0);
+		}
+		else if (isSuperUnique) {
+			//MessageBoxA(nullptr, "Monster is Super Unique", "Monster is Super Unique", MB_OK);
+			auto isSuperUniqueValue = diablo2::d2_common::get_stat(player, diablo2::UNIT_STAT_is_super_unique, 0);
+			diablo2::d2_common::set_stat(player, diablo2::UNIT_STAT_is_super_unique, isSuperUniqueValue + 1, 0);
+		}
+	}
+	*/
+
 	if (add_label(label))
 		return;
 
 	g_label_pool.put(label); //prevent memory leak if there's no room for another label
+
+
+
+
+
 }
 
 void d2_tweaks::client::modules::damage_display::tick() {

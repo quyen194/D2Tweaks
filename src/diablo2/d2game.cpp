@@ -3,6 +3,12 @@
 #include <diablo2/structures/npc_record.h>
 #include <common/ptr_wrapper.h>
 
+DWORD D2GAME_BASE = 0x6FC30000;
+
+DWORD D2GAME_GetOffset(DWORD offset) {
+	return offset - D2GAME_BASE;
+}
+
 char* diablo2::d2_game::get_base() {
 	static auto base = reinterpret_cast<char*>(GetModuleHandle("d2game.dll"));
 	return base;
@@ -158,3 +164,105 @@ diablo2::structures::unit* __fastcall diablo2::d2_game::QUESTS_CreateItem(diablo
 	static wrap_func_fast< diablo2::structures::unit* (diablo2::structures::game*, diablo2::structures::unit*, uint32_t, int32_t, uint8_t, int32_t)>QUESTS_CreateItem(0x65DF0, get_base());
 	return QUESTS_CreateItem(pGame, pPlayer, dwCode, nLevel, nQuality, bDroppable);
 }
+
+// Add wrapper for D2Game.0x6FC603D0
+// D2MonPropTxt* __fastcall MONSTER_GetMonPropTxtRecord(int32_t nId) 
+diablo2::structures::D2MonPropTxt* __fastcall diablo2::d2_game::MONSTER_GetMonPropTxtRecord(int32_t nId) {
+	static wrap_func_fast<diablo2::structures::D2MonPropTxt* (int32_t)>MONSTER_GetMonPropTxtRecord(0x303D0, get_base());
+	return MONSTER_GetMonPropTxtRecord(nId);
+}
+
+// add wrapper for //D2Game.0x6FCBC900
+// D2UnitStrc* __stdcall SUNIT_GetTargetUnit(D2GameStrc* pGame, D2UnitStrc* pUnit)
+diablo2::structures::unit* __stdcall diablo2::d2_game::SUNIT_GetTargetUnit(structures::game* pGame, structures::unit* pUnit) {
+	static wrap_func_std<diablo2::structures::unit* (diablo2::structures::game*, diablo2::structures::unit*)>SUNIT_GetTargetUnit(0x8C900, get_base());
+	return SUNIT_GetTargetUnit(pGame, pUnit);
+}
+
+//D2Game.0x6FCF5B90
+//D2SkillsTxt* __fastcall SKILLS_GetSkillsTxtRecord(int32_t nSkillId)
+diablo2::structures::D2SkillsTxt* __fastcall diablo2::d2_game::SKILLS_GetSkillsTxtRecord(int32_t nSkillId) {
+	static wrap_func_fast<diablo2::structures::D2SkillsTxt* (int32_t)>SKILLS_GetSkillsTxtRecord(0xC5B90, get_base());
+	return SKILLS_GetSkillsTxtRecord(nSkillId);
+}
+
+//D2Game.0x6FD15580
+// int32_t __fastcall D2GAME_GetSummonIdFromSkill_6FD15580(D2UnitStrc* pUnit, int32_t bFromMonster, int32_t nSkillId, int32_t nSkillLevel, int32_t* pSpawnMode, int32_t* pX, int32_t* pY)
+int32_t __fastcall diablo2::d2_game::D2GAME_GetSummonIdFromSkill_6FD15580(diablo2::structures::unit* pUnit, int32_t bFromMonster, int32_t nSkillId, int32_t nSkillLevel, int32_t* pSpawnMode, int32_t* pX, int32_t* pY) {
+	static wrap_func_fast<int32_t(diablo2::structures::unit*, int32_t, int32_t, int32_t, int32_t*, int32_t*, int32_t*)>D2GAME_GetSummonIdFromSkill_6FD15580(0xE5580, get_base());
+	return D2GAME_GetSummonIdFromSkill_6FD15580(pUnit, bFromMonster, nSkillId, nSkillLevel, pSpawnMode, pX, pY);
+}
+
+//D2Game.0x6FD14430
+//D2UnitStrc* __fastcall D2GAME_SummonPet_6FD14430(D2GameStrc* pGame, D2SummonArgStrc* pSummonArg)
+diablo2::structures::unit* __fastcall diablo2::d2_game::D2GAME_SummonPet_6FD14430(diablo2::structures::game* pGame, diablo2::structures::D2SummonArgStrc* pSummonArg) {
+	static wrap_func_fast<diablo2::structures::unit* (diablo2::structures::game*, diablo2::structures::D2SummonArgStrc*)>D2GAME_SummonPet_6FD14430(0xE4430, get_base());
+	return D2GAME_SummonPet_6FD14430(pGame, pSummonArg);
+}
+
+
+//D2Game.0x6FD0CB10
+//int32_t __fastcall D2GAME_SKILLS_SetSummonBaseStats_6FD0CB10(D2GameStrc* pGame, D2UnitStrc* pUnit, D2UnitStrc* pPet, int32_t nPetLevelArg, int32_t nSkillLevel)
+int32_t __fastcall diablo2::d2_game::D2GAME_SKILLS_SetSummonBaseStats_6FD0CB10(diablo2::structures::game* pGame, diablo2::structures::unit* pUnit, diablo2::structures::unit* pPet, int32_t nPetLevelArg, int32_t nSkillLevel) {
+	static wrap_func_fast<int32_t(diablo2::structures::game*, diablo2::structures::unit*, diablo2::structures::unit*, int32_t, int32_t)>D2GAME_SKILLS_SetSummonBaseStats_6FD0CB10(D2GAME_GetOffset(0x6FD0CB10), get_base());
+	return D2GAME_SKILLS_SetSummonBaseStats_6FD0CB10(pGame, pUnit, pPet, nPetLevelArg, nSkillLevel);
+}
+
+//D2Game.0x6FD0C530
+//int32_t __fastcall D2GAME_SetSummonPassiveStats_6FD0C530(D2GameStrc* pGame, D2UnitStrc* pUnit, D2UnitStrc* pPet, int32_t nSkillId, int32_t nSkillLevel, int32_t nItemLevel)
+// use D2GAME_GetOffset(0x6FD0C530)
+int32_t __fastcall diablo2::d2_game::D2GAME_SetSummonPassiveStats_6FD0C530(diablo2::structures::game* pGame, diablo2::structures::unit* pUnit, diablo2::structures::unit* pPet, int32_t nSkillId, int32_t nSkillLevel, int32_t nItemLevel) {
+	static wrap_func_fast<int32_t(diablo2::structures::game*, diablo2::structures::unit*, diablo2::structures::unit*, int32_t, int32_t, int32_t)>D2GAME_SetSummonPassiveStats_6FD0C530(D2GAME_GetOffset(0x6FD0C530), get_base());
+	return D2GAME_SetSummonPassiveStats_6FD0C530(pGame, pUnit, pPet, nSkillId, nSkillLevel, nItemLevel);
+}
+
+//D2Game.0x6FD0C2E0
+//void __fastcall D2GAME_SetSummonResistance_6FD0C2E0(D2UnitStrc* pUnit, D2UnitStrc* pPet)
+void __fastcall diablo2::d2_game::D2GAME_SetSummonResistance_6FD0C2E0(diablo2::structures::unit* pUnit, diablo2::structures::unit* pPet) {
+	static wrap_func_fast<void(diablo2::structures::unit*, diablo2::structures::unit*)>D2GAME_SetSummonResistance_6FD0C2E0(D2GAME_GetOffset(0x6FD0C2E0), get_base());
+	D2GAME_SetSummonResistance_6FD0C2E0(pUnit, pPet);
+}
+
+//D2Game.0x6FC3E200
+//void __fastcall sub_6FC3E200(D2ClientStrc* pClient, D2UnitStrc* pUnit)
+void __fastcall diablo2::d2_game::sub_6FC3E200(diablo2::structures::net_client* pClient , diablo2::structures::unit* pUnit) {
+	static wrap_func_fast<void(diablo2::structures::net_client*, diablo2::structures::unit*)>sub_6FC3E200(D2GAME_GetOffset(0x6FC3E200), get_base());
+	sub_6FC3E200(pClient, pUnit);
+}
+
+
+//D2Game.0x6FC69F10
+//D2UnitStrc* __fastcall D2GAME_SpawnMonster_6FC69F10(D2GameStrc* pGame, D2ActiveRoomStrc* pRoom, int32_t nX, int32_t nY, int32_t nMonsterId, int32_t nAnimMode, int32_t a7, int16_t nFlags)
+diablo2::structures::unit* __fastcall diablo2::d2_game::D2GAME_SpawnMonster_6FC69F10(diablo2::structures::game* pGame, diablo2::structures::room* pRoom, int32_t nX, int32_t nY, int32_t nMonsterId, int32_t nAnimMode, int32_t a7, int16_t nFlags) {
+	static wrap_func_fast<diablo2::structures::unit* (diablo2::structures::game*, diablo2::structures::room*, int32_t, int32_t, int32_t, int32_t, int32_t, int16_t)>D2GAME_SpawnMonster_6FC69F10(D2GAME_GetOffset(0x6FC69F10), get_base());
+	return diablo2::d2_game::D2GAME_SpawnMonster_6FC69F10(pGame, pRoom, nX, nY, nMonsterId, nAnimMode, a7, nFlags);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

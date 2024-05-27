@@ -1239,7 +1239,7 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_item(bool va
 			packet.val = -val;
 			diablo2::d2_client::send_to_server(&packet, sizeof packet);
 
-			D2PropertyStrc itemProperty = {};
+			diablo2::structures::D2PropertyStrc itemProperty = {};
 			itemProperty.nProperty = prop - 3; // Adjust the property ID
 			itemProperty.nLayer = 0;
 			itemProperty.nMin = -val;
@@ -1269,7 +1269,7 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_rejuv_potion
 
 void d2_tweaks::client::modules::loot_filter_settings_menu::extract_full_rejuv_potion(bool value) {
 	loot_filter_settings::get().m_show_full_rejuv_potion = value;
-	extract_item(value, 396, 5000, 'rvl ', diablo2::UNIT_STAT_gembag_Potions);
+	extract_item(value, 396, 3000, 'rvl ', diablo2::UNIT_STAT_gembag_Potions);
 }
 
 // stones

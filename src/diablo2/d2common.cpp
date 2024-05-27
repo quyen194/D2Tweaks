@@ -244,8 +244,8 @@ void diablo2::d2_common::update_trade(structures::inventory* inventory, structur
 //	set_item_flags(item, dwFlag, bSet);
 //}
 
-void diablo2::d2_common::add_property(structures::unit* item, D2PropertyStrc* prop, int nUnused) {
-	static wrap_func_std_import<void(structures::unit* item, D2PropertyStrc* prop, int nUnused)> add_property(10868, get_base());
+void diablo2::d2_common::add_property(structures::unit* item, diablo2::structures::D2PropertyStrc* prop, int nUnused) {
+	static wrap_func_std_import<void(structures::unit* item, diablo2::structures::D2PropertyStrc* prop, int nUnused)> add_property(10868, get_base());
 	add_property(item, prop, nUnused);
 }
 
@@ -289,3 +289,5 @@ diablo2::structures::items_line* diablo2::d2_common::get_items_txt_record(int nI
 	static wrap_func_std_import<diablo2::structures::items_line* (int)> get_items_txt_record(10600, get_base());
 	return get_items_txt_record(nItemId);
 }
+
+

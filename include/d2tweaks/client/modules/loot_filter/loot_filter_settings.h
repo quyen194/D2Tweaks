@@ -119,7 +119,7 @@ namespace d2_tweaks {
 
 				bool quality_settings[static_cast<size_t>(diablo2::structures::item_quality_t::ITEM_QUALITY_COUNT)];
 
-				char reserved[1004];
+				char reserved[888];
 
 				static loot_filter_settings& get();
 

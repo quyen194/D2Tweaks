@@ -39,6 +39,7 @@
 #include <unordered_map>
 #include <vector>
 #include <CommCtrl.h> // Include for edit control
+#include <d2tweaks/client/modules/loot_filter/loot_filter_settings_toggle_menu.h>
 
 // Define a static variable to keep track of the last time the stash window was toggled
 static std::chrono::steady_clock::time_point lastToggleTime;
@@ -150,7 +151,7 @@ const char* ITEMS_armor_and_weapons[] = {
 	"pa8", "pa9", "paa", "ne6", "ne7", "ne8", "ne9", "nea", "drb", "drc",
 	"drd", "dre", "drf", "bab", "bac", "bad", "bae", "baf", "pab", "pac",
 	"pad", "pae", "paf", "neb", "neg", "ned", "nee", "nef", "tor", "ooc",
-	"eaq", "ebq", "ib1", "ib3", "aqv", "cqv"
+	"eaq", "ebq", "ib3", "aqv", "cqv"
 
 	// demon keys/chests
 	"dkr1", "dkr2", "dkr3", "dkr4", "dkr5", "da1", "db1", "dc1"
@@ -158,7 +159,10 @@ const char* ITEMS_armor_and_weapons[] = {
 	"afr", "afy", "afp", "af0", "afx", "afh", "afq", "afj", "aft", "afi",
 	"afe", "afg", "afk", "ae7", "afn", "ae8", "afl", "ae9", "afv", "afz",
 	"af3", "af1", "afm", "af5", "afc", "afo", "afw", "afs", "af2", "afd",
-	"afb", "af4", "afu"
+	"afb", "af4", "afu",
+
+	// rings/amulets
+	"rin", "amu", "jew"
 };
 
 const char* ITEMS_gems_and_runes[] = {
@@ -529,7 +533,7 @@ void sendPacketAndUpdateProperty(int gemBagGuid, uint32_t iCode, int prop, int v
 		packet.target_page = 99;
 		diablo2::d2_client::send_to_server(&packet, sizeof packet);
 
-		D2PropertyStrc itemProperty = {};
+		diablo2::structures::D2PropertyStrc itemProperty = {};
 		itemProperty.nProperty = prop - 3; // Adjust the property ID
 		itemProperty.nLayer = 0;
 		itemProperty.nMin = val;
@@ -770,6 +774,7 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 			// Check if the current page is the stash or inventory, right click on gem/rune will
 			// add it to the cube and send it to page 99 which is non existent
 			// (hope it doesn't bloat save file size and actualy disappears from memory)
+			/*
 			if (currentPage == 0 || currentPage == 4) {
 				// Check if the stash or inventory window is open
 				if (diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_STASH) ||
@@ -785,7 +790,7 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 						// Check if the code of the hovered item matches the current gem type
 						if (strncmp(normCode, key, 3) == 0) {
 							// Create a D2PropertyStrc structure to represent the gem property
-							D2PropertyStrc itemProperty = {};
+							diablo2::structures::D2PropertyStrc itemProperty = {};
 							itemProperty.nProperty = value.rowID - 3; // Adjust the property ID
 							itemProperty.nLayer = 0;
 							itemProperty.nMin = value.chippedCount;
@@ -856,7 +861,7 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 						// Check if the code of the hovered item matches the current gem type
 						if (strncmp(normCode, key, 3) == 0) {
 							// Create a D2PropertyStrc structure to represent the gem property
-							D2PropertyStrc itemProperty = {};
+							diablo2::structures::D2PropertyStrc itemProperty = {};
 							itemProperty.nProperty = value.rowID - 3; // Adjust the property ID
 							itemProperty.nLayer = 0;
 							itemProperty.nMin = value.chippedCount;
@@ -977,6 +982,11 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 					}
 				}
 			}
+			*/
+
+
+
+
 
 			// For armor and weapon codes, right click will move the item to the stash or cube and transmute
 			if (isArmorOrWeaponCode(normCode)
@@ -1036,6 +1046,62 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 				// Clear the hovered item after processing
 				(*reinterpret_cast<diablo2::structures::unit**>(diablo2::d2_client::get_base() + 0x1158F4)) = nullptr;
 			}
+
+			if (strncmp(normCode, "ib1", 3) == 0) {
+				// we need to get instance of loot_filter_settings_menu class singleton
+				auto& toggle_menu = singleton<d2_tweaks::client::modules::loot_filter_settings_toggle_menu>::instance();
+				
+				toggle_menu.m_show = !toggle_menu.m_show;
+				
+				m_stats_enabled = !m_stats_enabled;
+
+				toggle_menu.m_filter_settings_menu->set_enabled(toggle_menu.m_show);
+				toggle_menu.m_filter_settings_menu->set_visible(toggle_menu.m_show);
+			}
+
+
+			if (strncmp(normCode, "r01", 3) == 0) {
+				auto localPlayer = diablo2::d2_client::get_local_player();
+				diablo2::structures::path* playerPath = localPlayer->path;
+				//diablo2::structures::room* pRoom = playerPath->pt_room;
+				//diablo2::structures::game* pGame = player->game;
+				//struct D2UnkMonCreateStrc
+				//{
+				//	diablo2::structures::game* pGame;						//0x00
+				//	diablo2::structures::room* pRoom;						//0x04
+				//	DWORD pRoomCoordList;					//0x08
+				//	int32_t nMonsterId;						//0x0C
+				//	int32_t nAnimMode;						//0x10
+				//	int32_t nUnitGUID;						//0x14
+				//	int32_t nX;								//0x18
+				//	int32_t nY;								//0x1C
+				//	int32_t field_20;						//0x20
+				//	int16_t nFlags;							//0x24
+				//};
+				//auto nX = playerPath->mapx + 50;
+				//auto nY = playerPath->mapy + 50;
+				////auto nMonsterId = 1272;
+				////int32_t nMode = 1;
+				////auto rubyGolem = diablo2::d2_game::D2GAME_SpawnMonster_6FC69F10(pGame, pRoom, nX, nY, nMonsterId, nMode, -1, 0);
+
+				//// Create a packet to move an item
+				//static d2_tweaks::common::item_move_cs packet;
+				//packet.item_guid = g_hoverItem->guid;
+				//packet.item_code = normCode;
+				//packet.target_page = 99;
+				//packet.summon = 1;
+				//packet.x = nX;
+				//packet.y = nY;
+				//diablo2::d2_client::send_to_server(&packet, sizeof packet);
+				//diablo2::d2_common::inv_remove_item(player->inventory, g_hoverItem);
+
+				//// Clear the hovered item after processing
+				//(*reinterpret_cast<diablo2::structures::unit**>(diablo2::d2_client::get_base() + 0x1158F4)) = nullptr;
+
+			}
+
+
+
 		}
 
 		block = instance.process_right_mouse(false);
@@ -1200,7 +1266,7 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 			}
 			if (strncmp(normCode, "rvl", 3) == 0) {
 				// Create the packet
-				sendPacketAndUpdateProperty(gemBagGuid, 'rvl ', 396, 5000, g_hoverItem->guid, gemBag);
+				sendPacketAndUpdateProperty(gemBagGuid, 'rvl ', 396, 3000, g_hoverItem->guid, gemBag);
 				diablo2::d2_common::inv_remove_item(player->inventory, g_hoverItem);
 			}
 
@@ -1295,7 +1361,7 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 				diablo2::d2_common::inv_remove_item(player->inventory, g_hoverItem);
 			}
 
-			char currentPage;
+			
 			const char* key;
 			// Iterate through each gem type in the gemTypes map
 			for (const auto& gem : gemTypes) {
@@ -1308,7 +1374,7 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 				// Check if the code of the hovered item matches the current gem type
 				if (strncmp(normCode, key, 3) == 0) {
 					// Create a D2PropertyStrc structure to represent the gem property
-					D2PropertyStrc itemProperty = {};
+					diablo2::structures::D2PropertyStrc itemProperty = {};
 					itemProperty.nProperty = value.rowID - 3; // Adjust the property ID
 					itemProperty.nLayer = 0;
 					itemProperty.nMin = value.chippedCount;

@@ -10,6 +10,7 @@
 #include <diablo2/structures/net_client.h>
 #include <diablo2/structures/item_data.h>
 #include <diablo2/structures/player_data.h>
+#include <diablo2/structures/path.h>
 
 #include <spdlog/spdlog.h>
 
@@ -57,6 +58,10 @@ bool d2_tweaks::server::modules::item_move::handle_packet(diablo2::structures::g
 	//MessageBox(NULL, key, "Item code", MB_OK | MB_ICONINFORMATION);
 
 	const auto item = instance.get_server_unit(game, itemMove->item_guid, diablo2::structures::unit_type_t::UNIT_TYPE_ITEM); //0x4 = item
+	
+	// Get player room
+	diablo2::structures::room* room = diablo2::d2_common::get_room_from_unit(player);
+
 
 	const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
 
@@ -81,7 +86,7 @@ bool d2_tweaks::server::modules::item_move::handle_packet(diablo2::structures::g
 		std::string bag_guid = std::to_string(itemMove->bag_guid);
 		//MessageBox(NULL, bag_guid.c_str(), "Bag GUID", MB_OK | MB_ICONINFORMATION);
 
-		D2PropertyStrc itemProperty = {};
+		diablo2::structures::D2PropertyStrc itemProperty = {};
 		itemProperty.nProperty = itemMove->prop; // Adjust the property ID
 		itemProperty.nLayer = 0;
 		itemProperty.nMin = itemMove->val;
@@ -98,7 +103,7 @@ bool d2_tweaks::server::modules::item_move::handle_packet(diablo2::structures::g
 		diablo2::d2_game::D2GAME_Transmogrify_6FC4A660(game, player, item);
 	}
 	else if (itemMove->updateBag == 1) {
-		D2PropertyStrc itemProperty = {};
+		diablo2::structures::D2PropertyStrc itemProperty = {};
 		itemProperty.nProperty = itemMove->prop;
 		itemProperty.nLayer = 0;
 		itemProperty.nMin = itemMove->val;
@@ -107,7 +112,7 @@ bool d2_tweaks::server::modules::item_move::handle_packet(diablo2::structures::g
 
 		diablo2::d2_common::inv_remove_item(player->inventory, item);
 
-	} 
+	}
 	else {
 		if (item == nullptr)
 			return true; //block further packet processing

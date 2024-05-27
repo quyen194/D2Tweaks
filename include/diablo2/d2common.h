@@ -75,13 +75,7 @@
 //
 //extern DataTables* sgptDataTables;
 
-struct D2PropertyStrc
-{
-	int32_t nProperty;					//0x00
-	int32_t nLayer;						//0x04
-	int32_t nMin;						//0x08
-	int32_t nMax;						//0x0C
-};
+
 
 
 
@@ -95,6 +89,14 @@ namespace diablo2 {
 		struct items_line;
 		struct item_types_line;
 		
+		struct D2PropertyStrc
+		{
+			int32_t nProperty;					//0x00
+			int32_t nLayer;						//0x04
+			int32_t nMin;						//0x08
+			int32_t nMax;						//0x0C
+		};
+
 		struct D2RunesTxt
 		{
 			char szName[64];						//0x00
@@ -373,10 +375,10 @@ namespace diablo2 {
 		UNIT_STAT_ITEM_SKILLONLEVELUP = 0xC7,
 		UNIT_STAT_UNUSED200 = 0xC8,
 		UNIT_STAT_ITEM_SKILLONGETHIT = 0xC9,
-		UNIT_STAT_UNUSED202 = 0xCA,
-		UNIT_STAT_UNUSED203 = 0xCB,
-		UNIT_STAT_ITEM_CHARGED_SKILL = 0xCC,
-		UNIT_STAT_UNUSED204 = 0xCD,
+		UNIT_STAT_is_champion = 0xCA, // 202
+		UNIT_STAT_is_unique = 0xCB, // 203
+		UNIT_STAT_ITEM_CHARGED_SKILL = 0xCC, // 204
+		UNIT_STAT_is_super_unique = 0xCD, // 205
 		UNIT_STAT_UNUSED205 = 0xCE,
 		UNIT_STAT_UNUSED206 = 0xCF,
 		UNIT_STAT_UNUSED207 = 0xD0,
@@ -969,7 +971,7 @@ namespace diablo2 {
 		UNIT_STAT_gembag_Stones_Sulpher = 491,
 		UNIT_STAT_gembag_Stones_Quartz = 492,
 		UNIT_STAT_gembag_Stones_TigerEye = 493,
-		UNIT_STAT_BoH_Desc = 494,
+		UNIT_STAT_UNUSED_68 = 494,
 		UNIT_STAT_runebag_RunesE = 495,
 		UNIT_STAT_runebag_RunesF = 496,
 		UNIT_STAT_passive_sum_mastery = 497,
@@ -1051,7 +1053,7 @@ namespace diablo2 {
 		static void diablo2::d2_common::update_trade(structures::inventory* inventory, structures::unit* item);
 		//static void diablo2::d2_common::set_item_flags(structures::unit* item, structures::itemflags_t dwFlag, bool bSet);
 
-		static void diablo2::d2_common::add_property(structures::unit* item, D2PropertyStrc* pProperty, int nUnused);
+		static void diablo2::d2_common::add_property(structures::unit* item, diablo2::structures::D2PropertyStrc* pProperty, int nUnused);
 		static void diablo2::d2_common::ITEMS_SetItemFlag(structures::unit* item, uint32_t dwFlag, BOOL bSet);
 
 		//D2Common.0x6FDA42B0
@@ -1074,5 +1076,6 @@ namespace diablo2 {
 		//D2Common.0x6FD57680 (#10600)
 		//D2ItemsTxt* __stdcall DATATBLS_GetItemsTxtRecord(int nItemId)
 		static structures::items_line* get_items_txt_record(int nItemId);
+
 	};
 }

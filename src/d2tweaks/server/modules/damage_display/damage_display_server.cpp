@@ -64,6 +64,62 @@ static void send_damage_data(diablo2::structures::unit* defender,
 	auto currentHp = diablo2::d2_common::get_stat(defender, diablo2::UNIT_STAT_HITPOINTS, 0);
 	auto maxHp = diablo2::d2_common::get_stat(defender, diablo2::UNIT_STAT_MAXHP, 0);
 
+	/*
+	if (defender->type == diablo2::structures::unit_type_t::UNIT_TYPE_PLAYER) {
+		auto player = defender;
+
+		// spdlog player name
+		spdlog::info("Player name: {0}", player->player_data->name);
+
+		diablo2::d2_common::set_stat(player, diablo2::UNIT_STAT_is_champion, 100, 0);
+
+		// if defender is a monster, get the monster data
+		if (defender->type == diablo2::structures::unit_type_t::UNIT_TYPE_MONSTER) {
+			auto monsterData = defender->monster_data;
+			if (monsterData) {
+				bool isChampion = monsterData->is_champion;
+				bool isUnique = monsterData->is_unique;
+				bool isSuperUnique = monsterData->is_super_unique;
+
+				spdlog::info("Monster isChampion: {0}", isChampion);
+				spdlog::info("Monster isUnique: {0}", isUnique);
+				spdlog::info("Monster isSuperUnique: {0}", isSuperUnique);
+
+				// You can add these details to the packet if needed
+				packet.isChampion = isChampion;
+				packet.isUnique = isUnique;
+				packet.isSuperUnique = isSuperUnique;
+
+				// if currentHP is 0, if is_champion, then set_stat for player and increment the player stat diablo2::UNIT_STAT_is_champion by 1
+				if (currentHp == 0) {
+					if (isChampion) {
+						// get the player is_champion stat
+						auto isChampionValue = diablo2::d2_common::get_stat(player, diablo2::UNIT_STAT_is_champion, 0);
+						diablo2::d2_common::set_stat(player, diablo2::UNIT_STAT_is_champion, isChampionValue + 1, 0);
+						MessageBoxA(NULL, "Champion killed", "Champion killed", MB_OK);
+						spdlog::info("Champion killed");
+					}
+					// do the if condition for isUnique and isSuperUnique here
+					if (isUnique) {
+						// get the player is_unique stat
+						auto isUniqueValue = diablo2::d2_common::get_stat(player, diablo2::UNIT_STAT_is_unique, 0);
+						diablo2::d2_common::set_stat(player, diablo2::UNIT_STAT_is_unique, isUniqueValue + 1, 0);
+						MessageBoxA(NULL, "Unique killed", "Unique killed", MB_OK);
+						spdlog::info("Unique killed");
+					}
+					if (isSuperUnique) {
+						// get the player is_super_unique stat
+						auto isSuperUniqueValue = diablo2::d2_common::get_stat(player, diablo2::UNIT_STAT_is_super_unique, 0);
+						diablo2::d2_common::set_stat(player, diablo2::UNIT_STAT_is_super_unique, isSuperUniqueValue + 1, 0);
+						MessageBoxA(NULL, "SuperUnique killed", "SuperUnique killed", MB_OK);
+						spdlog::info("SuperUnique killed");
+					}
+				}
+			}
+		}
+	}
+	*/
+
 	packet.unit_type = static_cast<uint8_t>(defender->type);
 	packet.guid = defender->guid;
 	packet.damage_type = get_damage_type(dmg);
@@ -71,9 +127,9 @@ static void send_damage_data(diablo2::structures::unit* defender,
 	packet.currentHp = currentHp / 256;
 	packet.maxHp = maxHp / 256;
 
-	spdlog::info("currentHp: {0}", packet.currentHp);
-	spdlog::info("maxHp: {0}", packet.maxHp);
-	spdlog::info("damage: {0}", packet.damage);
+	//spdlog::info("currentHp: {0}", packet.currentHp);
+	//spdlog::info("maxHp: {0}", packet.maxHp);
+	//spdlog::info("damage: {0}", packet.damage);
 
 	if (packet.damage_type == d2_tweaks::common::DAMAGE_TYPE_UNKNOWN)
 		return;

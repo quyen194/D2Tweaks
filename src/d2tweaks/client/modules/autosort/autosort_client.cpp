@@ -310,13 +310,18 @@ public:
 					&& !diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_BELT)
 					&& !diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_HELP)
 					&& !diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_MERC)
-					&& !diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_SCROLL)) {
+					&& !diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_SCROLL)) {				
+					
 					// Draw stats
 					diablo2::d2_win::set_current_font(fontMap[statsFont]); // Set font to FONT16
 					diablo2::d2_win::draw_text(const_cast<wchar_t*>(statText.c_str()), stat.x1, stat.y1 + textOffset, stat.colorStat, 0);
 
 					diablo2::d2_win::set_current_font(fontMap[statsFont]); // Set font to FONT16
 					diablo2::d2_win::draw_text(const_cast<wchar_t*>(statValueStr.c_str()), stat.x2, stat.y2 + textOffset, stat.colorStatValue, 0);
+
+
+
+
 
 
 					/*

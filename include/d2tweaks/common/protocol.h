@@ -241,6 +241,7 @@ namespace d2_tweaks {
 			uint32_t bag_guid = 0;
 			bool updateBag;
 			bool removeFromBag;
+			bool summon;
 			int prop;
 			int val;
 			int tmog;
@@ -306,7 +307,16 @@ namespace d2_tweaks {
 			uint32_t currentHp;  // New field for current hit points
 			uint32_t maxHp;      // New field for maximum hit points
 
-			damage_info_sc() : unit_type(0), guid(0), damage_type(DAMAGE_TYPE_UNKNOWN), damage(0), currentHp(0), maxHp(0) {
+			// You can add these details to the packet if needed
+			// packet.isChampion = isChampion;
+			// packet.isUnique = isUnique;
+			// packet.isSuperUnique = isSuperUnique 
+
+			bool isChampion;
+			bool isUnique;
+			bool isSuperUnique;
+
+			damage_info_sc() : unit_type(0), guid(0), damage_type(DAMAGE_TYPE_UNKNOWN), damage(0), currentHp(0), maxHp(0), isChampion(0), isUnique(0), isSuperUnique(0) {
 				message_type = MESSAGE_TYPE_DAMAGE_INFO;
 			}
 		};
