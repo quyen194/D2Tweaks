@@ -234,36 +234,42 @@ void displayStat() {
 			if (statSkull > 0) {
 				diablo2::d2_win::draw_text(const_cast<wchar_t*>((std::to_wstring(statSkull)).c_str()), x + z, y + 87 + textOffset, diablo2::UI_COLOR_GREY, 0);
 			}
-
-			diablo2::d2_win::draw_text(const_cast<wchar_t*>((L"Runes 1 - 6: ")), x, y + 109 + textOffset, diablo2::UI_COLOR_GREY, 0);
+			// Displaying the names for Runes 1-6: El, Eld, Tir, Nef, Eth, Ith
+			diablo2::d2_win::draw_text(const_cast<wchar_t*>((L"El Runes:")), x, y + 109 + textOffset, diablo2::UI_COLOR_GREY, 0);
 			if (runebag_RunesA > 0) {
-				diablo2::d2_win::draw_text(const_cast<wchar_t*>((std::to_wstring(runebag_RunesA)).c_str()), x + z, y + 109 + textOffset, diablo2::UI_COLOR_GREY, 0);
+				diablo2::d2_win::draw_text(const_cast<wchar_t*>((std::to_wstring(runebag_RunesA)).c_str()), x + z, y + 109 + textOffset, diablo2::UI_COLOR_WHITE, 0);
 			}
 
-			diablo2::d2_win::draw_text(const_cast<wchar_t*>((L"Runes 7 - 12: ")), x, y + 121 + textOffset, diablo2::UI_COLOR_GREY, 0);
+			// Displaying the names for Runes 7-12: Tal, Ral, Ort, Thul, Amn, Sol
+			diablo2::d2_win::draw_text(const_cast<wchar_t*>((L"Tal Runes:")), x, y + 121 + textOffset, diablo2::UI_COLOR_GREY, 0);
 			if (runebag_RunesB > 0) {
-				diablo2::d2_win::draw_text(const_cast<wchar_t*>((std::to_wstring(runebag_RunesB)).c_str()), x + z, y + 121 + textOffset, diablo2::UI_COLOR_GREY, 0);
+				diablo2::d2_win::draw_text(const_cast<wchar_t*>((std::to_wstring(runebag_RunesB)).c_str()), x + z, y + 121 + textOffset, diablo2::UI_COLOR_WHITE, 0);
 			}
 
-			diablo2::d2_win::draw_text(const_cast<wchar_t*>((L"Runes 13 - 18: ")), x, y + 133 + textOffset, diablo2::UI_COLOR_GREY, 0);
+			// Displaying the names for Runes 13-18: Shael, Dol, Hel, Io, Lum, Ko
+			diablo2::d2_win::draw_text(const_cast<wchar_t*>((L"Shael Runes:")), x, y + 133 + textOffset, diablo2::UI_COLOR_GREY, 0);
 			if (runebag_RunesC > 0) {
-				diablo2::d2_win::draw_text(const_cast<wchar_t*>((std::to_wstring(runebag_RunesC)).c_str()), x + z, y + 133 + textOffset, diablo2::UI_COLOR_GREY, 0);
+				diablo2::d2_win::draw_text(const_cast<wchar_t*>((std::to_wstring(runebag_RunesC)).c_str()), x + z, y + 133 + textOffset, diablo2::UI_COLOR_WHITE, 0);
 			}
 
-			diablo2::d2_win::draw_text(const_cast<wchar_t*>((L"Runes 19 - 24: ")), x, y + 145 + textOffset, diablo2::UI_COLOR_GREY, 0);
+			// Displaying the names for Runes 19-24: Fal, Lem, Pul, Um, Mal, Ist
+			diablo2::d2_win::draw_text(const_cast<wchar_t*>((L"Fal Runes:")), x, y + 145 + textOffset, diablo2::UI_COLOR_GREY, 0);
 			if (runebag_RunesD > 0) {
-				diablo2::d2_win::draw_text(const_cast<wchar_t*>((std::to_wstring(runebag_RunesD)).c_str()), x + z, y + 145 + textOffset, diablo2::UI_COLOR_GREY, 0);
+				diablo2::d2_win::draw_text(const_cast<wchar_t*>((std::to_wstring(runebag_RunesD)).c_str()), x + z, y + 145 + textOffset, diablo2::UI_COLOR_WHITE, 0);
 			}
 
-			diablo2::d2_win::draw_text(const_cast<wchar_t*>((L"Runes 25 - 30: ")), x, y + 157 + textOffset, diablo2::UI_COLOR_GREY, 0);
+			// Displaying the names for Runes 25-30: Gul, Vex, Ohm, Lo, Sur, Ber
+			diablo2::d2_win::draw_text(const_cast<wchar_t*>((L"Gul Runes:")), x, y + 157 + textOffset, diablo2::UI_COLOR_GREY, 0);
 			if (runebag_RunesE > 0) {
-				diablo2::d2_win::draw_text(const_cast<wchar_t*>((std::to_wstring(runebag_RunesE)).c_str()), x + z, y + 157 + textOffset, diablo2::UI_COLOR_GREY, 0);
+				diablo2::d2_win::draw_text(const_cast<wchar_t*>((std::to_wstring(runebag_RunesE)).c_str()), x + z, y + 157 + textOffset, diablo2::UI_COLOR_WHITE, 0);
 			}
 
-			diablo2::d2_win::draw_text(const_cast<wchar_t*>((L"Runes 31 - 33: ")), x, y + 169 + textOffset, diablo2::UI_COLOR_GREY, 0);
+			// Displaying the names for Runes 31-33: Jah, Cham, Zod
+			diablo2::d2_win::draw_text(const_cast<wchar_t*>((L"Jah Runes:")), x, y + 169 + textOffset, diablo2::UI_COLOR_GREY, 0);
 			if (runebag_RunesF > 0) {
-				diablo2::d2_win::draw_text(const_cast<wchar_t*>((std::to_wstring(runebag_RunesF)).c_str()), x + z, y + 169 + textOffset, diablo2::UI_COLOR_GREY, 0);
+				diablo2::d2_win::draw_text(const_cast<wchar_t*>((std::to_wstring(runebag_RunesF)).c_str()), x + z, y + 169 + textOffset, diablo2::UI_COLOR_WHITE, 0);
 			}
+
 
 			diablo2::d2_win::draw_text(const_cast<wchar_t*>((L"Rejuv ")), x, y + 191 + textOffset, diablo2::UI_COLOR_PURPLE, 0);
 			diablo2::d2_win::draw_text(const_cast<wchar_t*>((L"& Misc Potions: ")), x + 48, y + 191 + textOffset, diablo2::UI_COLOR_WHITE, 0);
