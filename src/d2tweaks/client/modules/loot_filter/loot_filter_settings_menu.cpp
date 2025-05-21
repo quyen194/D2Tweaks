@@ -138,7 +138,7 @@ void displayStat() {
 	uint32_t runebag_RunesD;
 	uint32_t runebag_RunesE;
 	uint32_t runebag_RunesF;
-	uint32_t runebag_Stones;
+	// uint32_t runebag_Stones;
 	uint32_t gembag_Potions;
 	uint32_t gembag_PotionsHP;
 	uint32_t gembag_PotionsMana;

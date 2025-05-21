@@ -111,7 +111,6 @@ bool d2_tweaks::server::modules::item_move::handle_packet(diablo2::structures::g
 		diablo2::d2_common::add_property(bag, &itemProperty, 1);
 
 		diablo2::d2_common::inv_remove_item(player->inventory, item);
-
 	}
 	else {
 		if (item == nullptr)
@@ -134,6 +133,8 @@ bool d2_tweaks::server::modules::item_move::handle_packet(diablo2::structures::g
 		diablo2::d2_net::send_to_client(1, client->client_id, &resp, sizeof resp);
 		return true;
 	}
+
+	return false;
 }
 
 bool d2_tweaks::server::modules::item_move::find_free_space(diablo2::structures::inventory* inv,

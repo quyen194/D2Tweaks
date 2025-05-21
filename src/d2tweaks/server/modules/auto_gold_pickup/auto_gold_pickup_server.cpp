@@ -46,14 +46,14 @@ bool d2_tweaks::server::modules::auto_gold_pickup::au_pickup_gold(diablo2::struc
 	const auto goldToPickup = diablo2::d2_common::get_stat(item, diablo2::UNIT_STAT_GOLD, 0);
 	const auto maxGold = diablo2::d2_common::get_maximum_character_gold(unit);
 
-	if (currentGold + goldToPickup > maxGold)
-		return FALSE;
+	if (static_cast<unsigned int>(currentGold + goldToPickup) > maxGold)
+		return false;
 
 	diablo2::d2_game::pickup_gold_pile(game, unit, item);
 	packet.gold = goldToPickup;
 
 	singleton<server>::instance().send_packet(unit->player_data->net_client, &packet, sizeof packet);
-	return TRUE;
+	return true;
 }
 
 void d2_tweaks::server::modules::auto_gold_pickup::tick(diablo2::structures::game* game,

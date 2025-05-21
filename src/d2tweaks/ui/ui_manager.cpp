@@ -769,7 +769,7 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 			auto currentPage = diablo2::d2_common::get_item_page(g_hoverItem);
 
 			// Declare a pointer to store the string key
-			const char* key;
+			// const char* key;
 
 			// Check if the current page is the stash or inventory, right click on gem/rune will
 			// add it to the cube and send it to page 99 which is non existent

@@ -336,16 +336,16 @@ bool d2_tweaks::server::modules::autosort::find_free_space(diablo2::structures::
 	const auto mx = static_cast<uint32_t>(data[0]);
 	const auto my = static_cast<uint32_t>(data[1]);
 
-	const int minValidX = isCharmZone ? cminValidX : iminValidX;
-	const int maxValidX = isCharmZone ? cmaxValidX : imaxValidX;
-	const int minValidY = isCharmZone ? cminValidY : iminValidY;
-	const int maxValidY = isCharmZone ? cmaxValidY : imaxValidY;
+	const unsigned int minValidX = isCharmZone ? cminValidX : iminValidX;
+	const unsigned int maxValidX = isCharmZone ? cmaxValidX : imaxValidX;
+	const unsigned int minValidY = isCharmZone ? cminValidY : iminValidY;
+	const unsigned int maxValidY = isCharmZone ? cmaxValidY : imaxValidY;
 
 	// Get the item record to access the item size
 	const auto record = diablo2::d2_common::get_item_record(item->data_record_index);
 
 	// Update the maximum valid Y coordinate for the inventory zone
-	const int inventoryMaxValidY = isCharmZone ? maxValidY : 11;
+	const unsigned int inventoryMaxValidY = isCharmZone ? maxValidY : 11;
 
 	if (page == 0x03 || page == 0x04) {
 		for (x = 0; x < mx; x++) {

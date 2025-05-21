@@ -184,14 +184,14 @@ public:
 	// Function to draw justified text inside a box with padding
 	void drawJustifiedTextInBox(const std::string& text, int boxX, int boxY, int boxWidth, int boxHeight, int padding) {
 		std::vector<std::string> words = split(text, ' ');
-		int maxLineLength = boxWidth;
+		unsigned int maxLineLength = boxWidth;
 		int xPos = boxX + padding;
 		int yPos = boxY + padding;
 
 		for (size_t i = 0; i < words.size(); ) {
-			int start = i;
-			int end = i;
-			int lineLength = 0;
+			unsigned int start = i;
+			unsigned int end = i;
+			unsigned int lineLength = 0;
 
 			// Find the end index for the current line
 			while (end < words.size() && lineLength + words[end].length() <= maxLineLength) {

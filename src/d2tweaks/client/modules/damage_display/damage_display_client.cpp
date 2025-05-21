@@ -133,12 +133,12 @@ void drawHealthBar(HWND hWnd, int x, int y, int maxWidth, int height, float heal
 }
 
 int frame = 0;
-long nEndTime = 0;
+unsigned long long nEndTime = 0;
 int nTip = 0;
 long DURATION = 500;
 
 void OnLoad() {
-	srand(time(NULL));
+	srand(static_cast<unsigned int>(time(nullptr)));
 }
 
 static void onDraw(HWND hWnd, int x, int y, int maxWidth, int height, float healthPercentage, COLORREF fillColor, COLORREF outlineColor) {
@@ -267,7 +267,7 @@ static void draw_damage_labels() {
 
 				diablo2::d2_win::set_current_font(diablo2::UI_FONT_6); // Set font to FONT16
 				diablo2::d2_win::draw_text(const_cast<wchar_t*>(combinedText.c_str()), textX, textY, textColor, 0);
-				diablo2::d2_gfx::draw_filled_rect(textX, textY, textX + healthPercentage * combinedTextWidth, textY + _barHeight, barColor, 255);
+				diablo2::d2_gfx::draw_filled_rect(textX, textY, textX + static_cast<int>(healthPercentage * combinedTextWidth), textY + _barHeight, barColor, 255);
 
 				const auto offset = static_cast<int32_t>(lerp(static_cast<float>(label->unit_height) + 5.f, static_cast<float>(label->unit_height) + 30.f, static_cast<float>(delta) / static_cast<float>(DISPLAY_TIME)));
 				my -= offset;

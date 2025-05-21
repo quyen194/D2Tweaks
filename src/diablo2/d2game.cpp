@@ -235,7 +235,7 @@ void __fastcall diablo2::d2_game::sub_6FC3E200(diablo2::structures::net_client* 
 //D2UnitStrc* __fastcall D2GAME_SpawnMonster_6FC69F10(D2GameStrc* pGame, D2ActiveRoomStrc* pRoom, int32_t nX, int32_t nY, int32_t nMonsterId, int32_t nAnimMode, int32_t a7, int16_t nFlags)
 diablo2::structures::unit* __fastcall diablo2::d2_game::D2GAME_SpawnMonster_6FC69F10(diablo2::structures::game* pGame, diablo2::structures::room* pRoom, int32_t nX, int32_t nY, int32_t nMonsterId, int32_t nAnimMode, int32_t a7, int16_t nFlags) {
 	static wrap_func_fast<diablo2::structures::unit* (diablo2::structures::game*, diablo2::structures::room*, int32_t, int32_t, int32_t, int32_t, int32_t, int16_t)>D2GAME_SpawnMonster_6FC69F10(D2GAME_GetOffset(0x6FC69F10), get_base());
-	return diablo2::d2_game::D2GAME_SpawnMonster_6FC69F10(pGame, pRoom, nX, nY, nMonsterId, nAnimMode, a7, nFlags);
+	return D2GAME_SpawnMonster_6FC69F10(pGame, pRoom, nX, nY, nMonsterId, nAnimMode, a7, nFlags);
 }
 
 

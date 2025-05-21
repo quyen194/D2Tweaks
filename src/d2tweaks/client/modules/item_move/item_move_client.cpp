@@ -96,7 +96,7 @@ int32_t __fastcall item_click(diablo2::structures::unit* owner, diablo2::structu
 		const auto itemid = diablo2::d2_common::get_item_unique_index(clickedItem);
 		const auto itemRecord = diablo2::d2_common::get_item_record(clickedItem->data_record_index);
 		if (itemid != 0) {
-			if ((itemid >= 0) && (itemid < (int)sgptdataTables->nUniqueItems)) {
+			if ((itemid >= 0) && (itemid < (unsigned int)sgptdataTables->nUniqueItems)) {
 				diablo2::structures::unique_items* uniqueItems = sgptdataTables->pUniqueItems + itemid;
 				if (uniqueItems && (uniqueItems->carry1 == 1)) {
 					//spdlog::warn("ItemID int: {0:d};  hex: {0:x};  oct: {0:o}; bin: {0:b}", itemid);
