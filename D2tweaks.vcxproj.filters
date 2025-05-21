@@ -185,4 +185,7 @@
     <None Include="vendor\minhook\dll_resources\MinHook.def" />
     <None Include="ClassDiagram.cd" />
   </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="resources.rc" />
+  </ItemGroup>
 </Project>
