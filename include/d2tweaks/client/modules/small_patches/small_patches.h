@@ -1,4 +1,4 @@
-#pragma once
+ #pragma once
 
 #include <d2tweaks/client/modules/client_module.h>
 
