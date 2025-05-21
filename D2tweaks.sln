@@ -12,6 +12,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "vendor", "vendor", "{2EE862
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libMinHook", "vendor\minhook\build\VC15\libMinHook.vcxproj", "{F142A341-5EE0-442D-A15F-98AE9B48DBAE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_scripts", "_scripts", "{EF609B78-BDBF-4F2B-B255-6A94C74D1486}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deploy", "deploy", "{632D6B45-D770-4EB1-90FB-93B008031900}"
+	ProjectSection(SolutionItems) = preProject
+		_dev_debug.bat = _dev_debug.bat
+		_dev_release.bat = _dev_release.bat
+		config.bat = config.bat
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "package", "package", "{E0A53B36-8341-4E12-AB48-7C9FCD1BB88B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -40,6 +51,8 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{F142A341-5EE0-442D-A15F-98AE9B48DBAE} = {2EE86227-1CC5-4A8D-B26B-C6617CE4AAD5}
+		{632D6B45-D770-4EB1-90FB-93B008031900} = {EF609B78-BDBF-4F2B-B255-6A94C74D1486}
+		{E0A53B36-8341-4E12-AB48-7C9FCD1BB88B} = {EF609B78-BDBF-4F2B-B255-6A94C74D1486}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8F0108AD-9A15-43A0-A115-910627CF0586}
