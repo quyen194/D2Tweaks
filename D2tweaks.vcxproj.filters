@@ -179,8 +179,10 @@
     <ClInclude Include="vendor\D2Template\D2TemplateStructs.h" />
     <ClInclude Include="vendor\D2Template\D2TemplateVars.h" />
     <ClInclude Include="vendor\DllNotify\DllNotify.h" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="vendor\minhook\dll_resources\MinHook.def" />
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>
