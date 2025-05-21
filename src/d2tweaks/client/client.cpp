@@ -195,7 +195,7 @@ d2_tweaks::client::client::client(token) {
 
 __declspec(naked) void __stdcall game_tick_wrapper()
 {
-	// usercall, использует ecx = param1, esi = param2
+	// usercall, uses ecx = param1, esi = param2
 	__asm
 	{
 		pushad
@@ -216,7 +216,7 @@ __declspec (naked) void handle_cs_packet_wrapper() {
 		call[d2_tweaks::client::client::handle_cs_packet]
 			popfd;
 		popad;
-		// оригинальные инструкции
+		// original instructions
 		sub esp, 0x200;
 	}
 	RET_TO_RVA(DLLBASE_D2CLIENT, 0xD856);
@@ -229,7 +229,7 @@ __declspec (naked) void handle_sc_standart_packet_wrapper() {
 		call[d2_tweaks::client::client::handle_standart_packet]
 			popfd;
 		popad;
-		// оригинальные инструкции
+		// original instructions
 		sub esp, 0x54;
 		push ebx;
 		push ebp;
@@ -253,7 +253,7 @@ static const DLLPatchStrc gpt_handle_sc_standart_packet[] =
 };
 
 void d2_tweaks::client::client::init() {
-	// handle packet обрабатывает пакет перед GamePacketReceivedIntercept
+	// handle packet processes the packet before GamePacketReceivedIntercept
 	hooking::hook(diablo2::d2_client::get_base() + 0x11CB0, handle_packet, reinterpret_cast<void**>(&g_handle_packet));
 	hooking::hook(diablo2::d2_client::get_base() + 0x9640, game_tick_wrapper, reinterpret_cast<void**>(&g_game_tick_original));
 	hooking::hook(diablo2::d2_client::get_base() + 0x5E650, draw_game_ui, reinterpret_cast<void**>(&g_draw_game_ui_original));
@@ -343,7 +343,7 @@ void d2_tweaks::client::client::handle_packet(common::packet_header* packet, siz
 
 static bool g_is_init = false;
 void d2_tweaks::client::client::game_tick() {
-	static auto& instance = singleton<client>::instance();  /// конфликт с текстом на d2 gl
+	static auto& instance = singleton<client>::instance();  /// conflict with text on d2 gl
 
 	if (g_is_init == false) {
 		D2TEMPLATE_Init();

@@ -122,7 +122,7 @@ void ReloadFilters(char* szPathToIni) {
 	/// Parse ItemCode
 	dwLenght = lstrlen(m_pcItemListAll);
 	memcpy(m_pcItemListAllTemp, m_pcItemListAll, dwLenght + 1);
-	// считаем количество всех предметов
+	// Count the total number of all items
 	char* token_string_itemcode = strtok(m_pcItemListAllTemp, " ,|");
 	while (token_string_itemcode)
 	{
@@ -130,11 +130,11 @@ void ReloadFilters(char* szPathToIni) {
 		token_string_itemcode = strtok(NULL, " ,|");
 	}
 
-	// создать массив структур, равный количеству предметов
+	// Create an array of structures equal to the number of items
 	m_stItemList = (item_code*)malloc(m_nCountItemListAll * sizeof(item_code));
 	memset(m_stItemList, 0, m_nCountItemListAll * sizeof(item_code));
 
-	// парсим каждый предмет
+	// Parse each item
 	memcpy(m_pcItemListAllTemp, m_pcItemListAll, dwLenght + 1);
 	token_string_itemcode = strtok(m_pcItemListAllTemp, " ,|");
 
@@ -427,7 +427,7 @@ void d2_tweaks::client::modules::auto_item_pickup::tick() {
 		if (distance > m_iDistance)
 			continue;
 
-		//// за один фрейм нельзя поднимать больше одного предмета, иначе предмет исчезнет
+		//// Only one item can be picked up per frame; picking more will cause items to disappear.
 		//if (record->string_code[0] == 'g' &&
 		//	record->string_code[1] == 'l' &&
 		//	record->string_code[2] == 'd')
@@ -444,22 +444,22 @@ void d2_tweaks::client::modules::auto_item_pickup::tick() {
 
 		uint32_t quality = diablo2::d2_common::get_item_quality(item);
 
-		// очищаем массив
+		// Clear the array
 		char arr_itemtype_codestr_equivstr[20][5] = { 0 };
 
-		// itemtype code первый элемент в массиве всегда
+		// Item type code is always the first element in the array
 		*(DWORD*)arr_itemtype_codestr_equivstr[0] = *(DWORD*)itemtype_record->code;
 		// index second code in array
 		uint32_t index_arr_itemtype = 1;
 
 		if (itemtype_record_equiv1) {
 			if (*(DWORD*)itemtype_record_equiv1->code != 0x20202020) {
-				// сохранить первый ранее полученый equiv1
+				// Save the first previously obtained equiv1
 				*(DWORD*)arr_itemtype_codestr_equivstr[index_arr_itemtype] = *(DWORD*)itemtype_record_equiv1->code;
 				index_arr_itemtype++;
-				// развернуть все eqiv1 в массив
+				// Unpack all equiv1 into an array
 				for (index_arr_itemtype; itemtype_record_equiv1->equiv1 != 0; index_arr_itemtype++) {
-					// получить следующий
+					// Get the next one
 					itemtype_record_equiv1 = diablo2::d2_common::get_item_type_record(itemtype_record_equiv1->equiv1);
 					if (*(DWORD*)itemtype_record_equiv1->code != 0x20202020) {
 						*(DWORD*)arr_itemtype_codestr_equivstr[index_arr_itemtype] = *(DWORD*)itemtype_record_equiv1->code;
@@ -471,12 +471,12 @@ void d2_tweaks::client::modules::auto_item_pickup::tick() {
 
 		if (itemtype_record_equiv2) {
 			if (*(DWORD*)itemtype_record_equiv2->code != 0x20202020) {
-				// сохранить первый ранее полученый equiv1
+				// Save the first previously obtained equiv1
 				*(DWORD*)arr_itemtype_codestr_equivstr[index_arr_itemtype] = *(DWORD*)itemtype_record_equiv2->code;
 				index_arr_itemtype++;
-				// развернуть все eqiv1 в массив
+				// Expand all equiv1 into an array
 				for (index_arr_itemtype; itemtype_record_equiv2->equiv2 != 0; index_arr_itemtype++) {
-					// получить следующий
+					// Get the next one
 					itemtype_record_equiv2 = diablo2::d2_common::get_item_type_record(itemtype_record_equiv2->equiv2);
 					if (*(DWORD*)itemtype_record_equiv2->code != 0x20202020) {
 						*(DWORD*)arr_itemtype_codestr_equivstr[index_arr_itemtype] = *(DWORD*)itemtype_record_equiv2->code;

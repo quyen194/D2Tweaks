@@ -87,7 +87,7 @@ void d2_tweaks::server::modules::auto_gold_pickup::tick(diablo2::structures::gam
 	//	if (distance > g_distance)
 	//		continue;
 
-	//	// за один тик нельзя поднимать больше одного предмета, иначе предмет пропадет
+	//	// cannot pick up more than one item per tick, otherwise the item will disappear
 	//	if (record->string_code[0] == 'g' &&
 	//		record->string_code[1] == 'l' &&
 	//		record->string_code[2] == 'd')

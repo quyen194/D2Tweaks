@@ -89,7 +89,7 @@ static uint32_t m_nParam4 = 1;
 //		mov [g_ret], eax;
 //		popfd;
 //		popad;
-//		// оригинальные инструкции
+//		// original instructions
 //		mov edx, dword ptr [esp + 0x10];
 //		mov ecx, edi;
 //		jmp [g_ret];
@@ -170,10 +170,10 @@ bool d2_tweaks::server::modules::trader_update::handle_packet(diablo2::structure
 	if (!ptNPC)
 		return true;
 
-	// нажатие кнопки, чистим инвентарь торговца на сервере
+	// button press, clear the merchant's inventory on the server
 	if (income_packet_cs->command == COMMAND_FREE_NPC_INVENTORY) {
-		// отправить пакет об обновлении всем подлключенным клиентам
-		// id net client - 1 всегда хост, потом каждый нечетный, 3, 5, 7, 9, 11, 13, 15
+		// send update packet to all connected clients
+		// net client id - 1 is always the host, then every odd number: 3, 5, 7, 9, 11, 13, 15
 		for (uint32_t i = 0; i < 16; i++) {
 			diablo2::structures::net_client* netclient = diablo2::d2_game::get_net_client_from_id(game, i);
 			if (netclient != 0) {
@@ -196,13 +196,13 @@ bool d2_tweaks::server::modules::trader_update::handle_packet(diablo2::structure
 	}
 
 	if (income_packet_cs->command == COMMAND_FILL_NPC_INVENTORY) {
-		// заполнить инвентарь торговца
+		// fill the merchant's inventory
 		npcrecord->bRefreshInventory = true;
 		diablo2::d2_game::create_vendor_cache1(game, player, ptNPC, 1, false);
 		npcrecord->bRefreshInventory = false;
 
-		// отправить пакет об обновлении всем подлключенным клиентам
-		// id net client - 1 всегда хост, потом каждый нечетный, 3, 5, 7, 9, 11, 13, 15
+		// send an update packet to all connected clients
+		// net client id - 1 is always the host, then every odd number: 3, 5, 7, 9, 11, 13, 15
 		for (uint32_t i = 0; i < 16; i++) {
 			diablo2::structures::net_client* netclient = diablo2::d2_game::get_net_client_from_id(game, i);
 			if (netclient != 0) {

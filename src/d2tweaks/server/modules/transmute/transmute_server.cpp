@@ -70,12 +70,12 @@ bool d2_tweaks::server::modules::transmute::handle_packet(diablo2::structures::g
 	const auto income_packet_cs = static_cast<common::transmute_info_cs*>(packet);
 	static common::transmute_info_sc response_packet_sc;
 
-	// обрабатываем запрос от клиента
+	// process request from client
 	if (income_packet_cs->command == COMMAND_CALL_TRANSMUTE) {
 #ifndef NDEBUG
 		uint64_t time = TimeStart();
 #endif
-		// возвращает сгенерированый item, или getmaxcuberecipes если неудачно
+		// returns the generated item, or getmaxcuberecipes if unsuccessful
 		if (diablo2::d2_game::transmogrify(game, player) == diablo2::d2_common::get_max_cube_recipes()) {
 			response_packet_sc.command = COMMAND_ABORT;
 			singleton<server>::instance().send_packet(player->player_data->net_client, &response_packet_sc, sizeof response_packet_sc);

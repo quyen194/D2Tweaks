@@ -66,22 +66,22 @@ void d2_tweaks::server::modules::auto_item_pickup::tick(diablo2::structures::gam
 
 	//	uint32_t quality = diablo2::d2_common::get_item_quality(item);
 
-	//	// очищаем массив
+	//	// clear the array
 	//	char arr_itemtype_codestr_equivstr[20][5] = { 0 };
 
-	//	// itemtype code первый элемент в массиве всегда
+	//	// itemtype code is always the first element in the array
 	//	*(DWORD*)arr_itemtype_codestr_equivstr[0] = *(DWORD*)itemtype_record->code;
 	//	// index second code in array
 	//	uint32_t index_arr_itemtype = 1;
 
 	//	if (itemtype_record_equiv1) {
 	//		if (*(DWORD*)itemtype_record_equiv1->code != 0x20202020) {
-	//			// сохранить первый ранее полученый equiv1
+	//			// save the first previously obtained equiv1
 	//			*(DWORD*)arr_itemtype_codestr_equivstr[index_arr_itemtype] = *(DWORD*)itemtype_record_equiv1->code;
 	//			index_arr_itemtype++;
-	//			// развернуть все eqiv1 в массив
+	//			// expand all equiv1 into the array
 	//			for (index_arr_itemtype; itemtype_record_equiv1->equiv1 != 0; index_arr_itemtype++) {
-	//				// получить следующий
+	//				// get the next one
 	//				itemtype_record_equiv1 = diablo2::d2_common::get_item_type_record(itemtype_record_equiv1->equiv1);
 	//				if (*(DWORD*)itemtype_record_equiv1->code != 0x20202020) {
 	//					*(DWORD*)arr_itemtype_codestr_equivstr[index_arr_itemtype] = *(DWORD*)itemtype_record_equiv1->code;
@@ -93,12 +93,12 @@ void d2_tweaks::server::modules::auto_item_pickup::tick(diablo2::structures::gam
 
 	//	if (itemtype_record_equiv2) {
 	//		if (*(DWORD*)itemtype_record_equiv2->code != 0x20202020) {
-	//			// сохранить первый ранее полученый equiv1
+	//			// save the first previously obtained equiv2
 	//			*(DWORD*)arr_itemtype_codestr_equivstr[index_arr_itemtype] = *(DWORD*)itemtype_record_equiv2->code;
 	//			index_arr_itemtype++;
-	//			// развернуть все eqiv1 в массив
+	//			// expand all equiv2 into the array
 	//			for (index_arr_itemtype; itemtype_record_equiv2->equiv2 != 0; index_arr_itemtype++) {
-	//				// получить следующий
+	//				// get the next one
 	//				itemtype_record_equiv2 = diablo2::d2_common::get_item_type_record(itemtype_record_equiv2->equiv2);
 	//				if (*(DWORD*)itemtype_record_equiv2->code != 0x20202020) {
 	//					*(DWORD*)arr_itemtype_codestr_equivstr[index_arr_itemtype] = *(DWORD*)itemtype_record_equiv2->code;

@@ -245,7 +245,7 @@ void d2_tweaks::client::modules::transmute::init() {
 		/////// Parse ItemCode
 		dwLenght = lstrlen(m_acItemListAll);
 		memcpy(m_acItemListAllTemp, m_acItemListAll, dwLenght + 1);
-		// считаем количество всех предметов
+		// Count the total number of all items
 		char* token_string_itemcode = strtok(m_acItemListAllTemp, " ,|");
 		while (token_string_itemcode)
 		{
@@ -438,23 +438,23 @@ void d2_tweaks::client::modules::transmute::tick() {
 				auto itemtype_record_equiv2 = diablo2::d2_common::get_item_type_record(itemtype_record->equiv2);
 
 				uint32_t quality = diablo2::d2_common::get_item_quality(item);
-				// очищаем массив
+				// Clear the array
 				char arr_itemtype_codestr_equivstr[20][5] = { 0 };
 
-				// itemtype code первый элемент в массиве всегда
+				// Item type code is always the first element in the array
 				*(DWORD*)arr_itemtype_codestr_equivstr[0] = *(DWORD*)itemtype_record->code;
-				// index second code in array
+				// Index of the second code in the array
 				uint32_t index_arr_itemtype = 1;
 
-				// подготовить массив equiv1
+				// Prepare equiv1 array
 				if (itemtype_record_equiv1) {
 					if (*(DWORD*)itemtype_record_equiv1->code != 0x20202020) {
-						// сохранить первый ранее полученый equiv1
+						// Save the first previously obtained equiv1
 						*(DWORD*)arr_itemtype_codestr_equivstr[index_arr_itemtype] = *(DWORD*)itemtype_record_equiv1->code;
 						index_arr_itemtype++;
-						// развернуть все eqiv1 в массив
-						for (index_arr_itemtype; itemtype_record_equiv1->equiv1 != 0; index_arr_itemtype++) {
-							// получить следующий
+						// Expand all equiv1 into the array
+						for (; itemtype_record_equiv1->equiv1 != 0; index_arr_itemtype++) {
+							// Get the next one
 							itemtype_record_equiv1 = diablo2::d2_common::get_item_type_record(itemtype_record_equiv1->equiv1);
 							if (*(DWORD*)itemtype_record_equiv1->code != 0x20202020) {
 								*(DWORD*)arr_itemtype_codestr_equivstr[index_arr_itemtype] = *(DWORD*)itemtype_record_equiv1->code;
@@ -464,15 +464,15 @@ void d2_tweaks::client::modules::transmute::tick() {
 					}
 				}
 
-				// подготовить массив equiv2
+				// Prepare equiv2 array
 				if (itemtype_record_equiv2) {
 					if (*(DWORD*)itemtype_record_equiv2->code != 0x20202020) {
-						// сохранить первый ранее полученый equiv2
+						// Save the first previously obtained equiv2
 						*(DWORD*)arr_itemtype_codestr_equivstr[index_arr_itemtype] = *(DWORD*)itemtype_record_equiv2->code;
 						index_arr_itemtype++;
-						// развернуть все eqiv2 в массив
-						for (index_arr_itemtype; itemtype_record_equiv2->equiv2 != 0; index_arr_itemtype++) {
-							// получить следующий
+						// Expand all equiv2 into the array
+						for (; itemtype_record_equiv2->equiv2 != 0; index_arr_itemtype++) {
+							// Get the next one
 							itemtype_record_equiv2 = diablo2::d2_common::get_item_type_record(itemtype_record_equiv2->equiv2);
 							if (*(DWORD*)itemtype_record_equiv2->code != 0x20202020) {
 								*(DWORD*)arr_itemtype_codestr_equivstr[index_arr_itemtype] = *(DWORD*)itemtype_record_equiv2->code;

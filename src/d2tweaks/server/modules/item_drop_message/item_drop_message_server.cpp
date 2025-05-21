@@ -64,7 +64,7 @@ void d2_tweaks::server::modules::item_drop_message::init() {
 		/////// Parse ItemCode
 		dwLenght = lstrlen(m_acItemListAll);
 		memcpy(m_acItemListAllTemp, m_acItemListAll, dwLenght + 1);
-		// считаем количество всех предметов
+		// count the total number of items
 		char* token_string_itemcode = strtok(m_acItemListAllTemp, " ,|");
 		while (token_string_itemcode)
 		{
@@ -72,11 +72,11 @@ void d2_tweaks::server::modules::item_drop_message::init() {
 			token_string_itemcode = strtok(NULL, " ,|");
 		}
 
-		// создать массив структур, равный количеству предметов
+		// Create an array of structures equal to the number of items
 		m_stItemList = (item_code*)malloc(m_nCountItemListAll * sizeof(item_code));
 		memset(m_stItemList, 0, m_nCountItemListAll * sizeof(item_code));
 
-		// парсим каждый предмет
+		// Parse each item
 		memcpy(m_acItemListAllTemp, m_acItemListAll, dwLenght + 1);
 		token_string_itemcode = strtok(m_acItemListAllTemp, " ,|");
 
@@ -249,20 +249,20 @@ bool d2_tweaks::server::modules::item_drop_message::handle_packet(diablo2::struc
 					wcstombs(string_mb, string_wc, 256);
 
 					memset(response_item_dropped_packet.arr_itemtype_codestr_equivstr, 0, sizeof response_item_dropped_packet.arr_itemtype_codestr_equivstr);
-					// itemtype code первый элемент в массиве всегда
+					// Item type code is always the first element in the array
 					*(DWORD*)response_item_dropped_packet.arr_itemtype_codestr_equivstr[0] = *(DWORD*)itemtype_record->code;
-					// index second code in array
+					// Index of the second code in the array
 					uint32_t index_arr_itemtype = 1;
 
 					if (itemtype_record_equiv1) {
 						//
 						if (*(DWORD*)itemtype_record_equiv1->code != 0x20202020) {
-							// сохранить первый ранее полученый equiv1
+							// Save the first previously obtained equiv1
 							*(DWORD*)response_item_dropped_packet.arr_itemtype_codestr_equivstr[index_arr_itemtype] = *(DWORD*)itemtype_record_equiv1->code;
 							index_arr_itemtype++;
-							// развернуть все eqiv1 в массив
+							// Expand all equiv1 into the array
 							for (index_arr_itemtype; itemtype_record_equiv1->equiv1 != 0; index_arr_itemtype++) {
-								// получить следующий
+								// Get the next one
 								itemtype_record_equiv1 = diablo2::d2_common::get_item_type_record(itemtype_record_equiv1->equiv1);
 								if (*(DWORD*)itemtype_record_equiv1->code != 0x20202020) {
 									*(DWORD*)response_item_dropped_packet.arr_itemtype_codestr_equivstr[index_arr_itemtype] = *(DWORD*)itemtype_record_equiv1->code;
@@ -274,12 +274,12 @@ bool d2_tweaks::server::modules::item_drop_message::handle_packet(diablo2::struc
 
 					if (itemtype_record_equiv2) {
 						if (*(DWORD*)itemtype_record_equiv2->code != 0x20202020) {
-							// сохранить первый ранее полученый equiv1
+							// Save the first previously obtained equiv2
 							*(DWORD*)response_item_dropped_packet.arr_itemtype_codestr_equivstr[index_arr_itemtype] = *(DWORD*)itemtype_record_equiv2->code;
 							index_arr_itemtype++;
-							// развернуть все eqiv1 в массив
+							// Expand all equiv2 into the array
 							for (index_arr_itemtype; itemtype_record_equiv2->equiv2 != 0; index_arr_itemtype++) {
-								// получить следующий
+								// Get the next equiv2
 								itemtype_record_equiv2 = diablo2::d2_common::get_item_type_record(itemtype_record_equiv2->equiv2);
 								if (*(DWORD*)itemtype_record_equiv2->code != 0x20202020) {
 									*(DWORD*)response_item_dropped_packet.arr_itemtype_codestr_equivstr[index_arr_itemtype] = *(DWORD*)itemtype_record_equiv2->code;
@@ -295,7 +295,7 @@ bool d2_tweaks::server::modules::item_drop_message::handle_packet(diablo2::struc
 						response_item_dropped_packet.code[1] = record->string_code[1];
 						response_item_dropped_packet.code[2] = record->string_code[2];
 
-						// общее количество строк в массиве itemtypes
+						// total number of entries in the itemtypes array
 						response_item_dropped_packet.index_arr_itemtype = index_arr_itemtype;
 
 						response_item_dropped_packet.quality = quality;

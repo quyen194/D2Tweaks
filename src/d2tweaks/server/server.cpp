@@ -90,7 +90,7 @@ __declspec (naked) void hook_sc_packet_before_sent_wrapper() {
 			call[hook_sc_packet_before_sent]
 			popfd;
 		popad;
-		// оригинальные инструкции
+		// original instructions
 		push ecx
 			push ebp
 			push esi

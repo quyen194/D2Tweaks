@@ -165,7 +165,7 @@ void d2_tweaks::client::modules::trader_update::handle_packet(common::packet_hea
 		return;
 
 	if (income_packet_sc->command == COMMAND_FREE_NPC_INVENTORY) {
-		// если пакет пришел от нашего торговца и открыто меню торговли
+		// if the packet came from our merchant and the trade menu is open
 		if (income_packet_sc->npc_id == m_nNpcId && income_packet_sc->is_gamble_menu_open == diablo2::d2_client::is_gamble_open()) {
 			diablo2::d2_client::resync_vendor_inventory(ptNPC);
 			//diablo2::d2_common::empty_inventory_2(ptNPC->inventory);
@@ -180,7 +180,7 @@ void d2_tweaks::client::modules::trader_update::handle_packet(common::packet_hea
 	}
 
 	if (income_packet_sc->command == COMMAND_FREE_NPC_GAMBLE) {
-		// если пакет пришел от нашего торговца и открыто меню торговли
+		// if the packet is from our merchant and the trade menu is open
 		if (income_packet_sc->npc_id == m_nNpcId && income_packet_sc->is_gamble_menu_open == diablo2::d2_client::is_gamble_open()) {
 			diablo2::d2_client::resync_vendor_inventory(ptNPC);
 			//diablo2::d2_common::empty_inventory_2(ptNPC->inventory);
