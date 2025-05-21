@@ -13,6 +13,6 @@ config::config(token) {
 		std::stringstream ss;
 		ss << cfgFile.rdbuf();
 
-		m_json->parse(ss.str());
+		nlohmann::json obj = m_json->parse(ss.str());
 	}
 }

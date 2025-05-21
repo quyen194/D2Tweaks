@@ -1242,14 +1242,14 @@ void d2_tweaks::client::modules::loot_filter_settings_menu::extract_item(bool va
 			packet.extract = 1;
 			packet.iCode = itemCode;
 			packet.prop = prop - 3;
-			packet.val = -val;
+			packet.val = -(int)val;
 			diablo2::d2_client::send_to_server(&packet, sizeof packet);
 
 			diablo2::structures::D2PropertyStrc itemProperty = {};
 			itemProperty.nProperty = prop - 3; // Adjust the property ID
 			itemProperty.nLayer = 0;
-			itemProperty.nMin = -val;
-			itemProperty.nMax = -val;
+			itemProperty.nMin = -(int)val;
+			itemProperty.nMax = -(int)val;
 			diablo2::d2_common::add_property(bag, &itemProperty, 0);
 		}
 	}
