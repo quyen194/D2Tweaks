@@ -113,17 +113,14 @@ public:
 			return;
 		}
 
-		m_auto_transmute_btn->set_enabled(true);
-		m_auto_transmute_btn->set_visible(true);
+		m_auto_transmute_btn->set_enabled(diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_INTERFACE));
+		m_auto_transmute_btn->set_visible(diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_INTERFACE));
 
 		menu::draw();
 	}
 private:
 	static bool should_draw() {
-		return diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_INVENTORY) ||
-			diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_STASH) ||
-			diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_CUBE) ||
-			diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_NPCSHOP);
+		return diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_INTERFACE);
 	}
 
 	d2_tweaks::ui::controls::button* get_button(const std::string& name, const std::function<void()>& onClick) {
