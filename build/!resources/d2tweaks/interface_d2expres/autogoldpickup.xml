@@ -1,29 +1,29 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <interface>
   <menu name="autogoldpickup" default_pos_x="0" default_pos_y="0" width="-1" height="-1">
-    <label name="m_gold_label" 
-        default_pos_x="0" 
-        default_pos_y="0" 
-        text="" 
-        color="7" 
-        font="2" 
+    <label name="m_gold_label"
+        default_pos_x="0"
+        default_pos_y="0"
+        text=""
+        color="7"
+        font="2"
         resolution_count="6"
-    
+
         res1_x="1024"  pos1_x="752"
         res1_y="700"   pos1_y="640"
-                    
+
         res2_x="1280"  pos2_x="880"
         res2_y="700"   pos2_y="689"
-                    
+
         res3_x="1024"  pos3_x="752"
         res3_y="720"   pos3_y="660"
-                    
+
         res4_x="1280"  pos4_x="880"
         res4_y="720"   pos4_y="709"
-           
+
         res5_x="1024" pos5_x="752"
         res5_y="768"  pos5_y="708"
-        
+
         res6_x="1280" pos6_x="880"
         res6_y="768"  pos6_y="757"
     />

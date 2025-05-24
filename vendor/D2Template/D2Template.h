@@ -58,80 +58,76 @@ extern DWORD DLLBASE_SGD2FREERES;
 #include "D2TemplatePtrs.h"
 #include "D2TemplateVars.h"
 
-struct DLLBaseStrc
-{
-	char* szName;
-	DWORD dwAddress;
+struct DLLBaseStrc {
+  char* szName;
+  DWORD dwAddress;
 };
 
-struct DLLPatchStrc
-{
-	int nDLL;
-	DWORD dwAddress;
-	DWORD dwData;
-	BOOL bRelative;
-	size_t nPatchSize;
+struct DLLPatchStrc {
+  int nDLL;
+  DWORD dwAddress;
+  DWORD dwData;
+  BOOL bRelative;
+  size_t nPatchSize;
 };
 
-enum D2TEMPLATE_DLL_FILES
-{
-	D2DLL_BINKW32,
-	D2DLL_BNCLIENT,
-	D2DLL_D2CLIENT,
-	D2DLL_D2CMP,
-	D2DLL_D2COMMON,
-	D2DLL_D2DDRAW,
-	D2DLL_D2DIRECT3D,
-	D2DLL_D2GAME,
-	D2DLL_D2GDI,
-	D2DLL_D2GFX,
-	D2DLL_D2GLIDE,
-	D2DLL_D2LANG,
-	D2DLL_D2LAUNCH,
-	D2DLL_D2MCPCLIENT,
-	D2DLL_D2MULTI,
-	D2DLL_D2NET,
-	D2DLL_D2SOUND,
-	D2DLL_D2WIN,
-	D2DLL_FOG,
-	D2DLL_IJL11,
-	D2DLL_SMACKW32,
-	D2DLL_STORM,
-	D2DLL_UTILITY,
-	D2DLL_PLUGY,
-	D2DLL_D2EXPRES,
-	D2DLL_SGD2FREERES,
-	D2DLL_INVALID
+enum D2TEMPLATE_DLL_FILES {
+  D2DLL_BINKW32,
+  D2DLL_BNCLIENT,
+  D2DLL_D2CLIENT,
+  D2DLL_D2CMP,
+  D2DLL_D2COMMON,
+  D2DLL_D2DDRAW,
+  D2DLL_D2DIRECT3D,
+  D2DLL_D2GAME,
+  D2DLL_D2GDI,
+  D2DLL_D2GFX,
+  D2DLL_D2GLIDE,
+  D2DLL_D2LANG,
+  D2DLL_D2LAUNCH,
+  D2DLL_D2MCPCLIENT,
+  D2DLL_D2MULTI,
+  D2DLL_D2NET,
+  D2DLL_D2SOUND,
+  D2DLL_D2WIN,
+  D2DLL_FOG,
+  D2DLL_IJL11,
+  D2DLL_SMACKW32,
+  D2DLL_STORM,
+  D2DLL_UTILITY,
+  D2DLL_PLUGY,
+  D2DLL_D2EXPRES,
+  D2DLL_SGD2FREERES,
+  D2DLL_INVALID
 };
 
-static DLLBaseStrc gptDllFiles[] =
-{
-	{"Binkw32.dll",         NULL},
-	{"BnClient.dll",        NULL},
-	{"D2Client.dll",        NULL},
-	{"D2CMP.dll",           NULL},
-	{"D2Common.dll",        NULL},
-	{"D2DDraw.dll",         NULL},
-	{"D2Direct3D.dll",      NULL},
-	{"D2Game.dll",          NULL},
-	{"D2Gdi.dll",           NULL},
-	{"D2Gfx.dll",           NULL},
-	{"D2Glide.dll",         NULL},
-	{"D2Lang.dll",          NULL},
-	{"D2Launch.dll",        NULL},
-	{"D2MCPClient.dll",     NULL},
-	{"D2Multi.dll",         NULL},
-	{"D2Net.dll",           NULL},
-	{"D2Sound.dll",         NULL},
-	{"D2Win.dll",           NULL},
-	{"Fog.dll",             NULL},
-	{"Ijl11.dll",           NULL},
-	{"SmackW32.dll",        NULL},
-	{"Storm.dll",           NULL},
-	{"Utility.dll",         NULL},
-	{"Plugy.dll",           NULL},
-	{"d2expres.dll",        NULL},
-	{"SGD2FreeRes.dll",     NULL},
+static DLLBaseStrc gptDllFiles[] = {
+  {"Binkw32.dll",         NULL},
+  {"BnClient.dll",        NULL},
+  {"D2Client.dll",        NULL},
+  {"D2CMP.dll",           NULL},
+  {"D2Common.dll",        NULL},
+  {"D2DDraw.dll",         NULL},
+  {"D2Direct3D.dll",      NULL},
+  {"D2Game.dll",          NULL},
+  {"D2Gdi.dll",           NULL},
+  {"D2Gfx.dll",           NULL},
+  {"D2Glide.dll",         NULL},
+  {"D2Lang.dll",          NULL},
+  {"D2Launch.dll",        NULL},
+  {"D2MCPClient.dll",     NULL},
+  {"D2Multi.dll",         NULL},
+  {"D2Net.dll",           NULL},
+  {"D2Sound.dll",         NULL},
+  {"D2Win.dll",           NULL},
+  {"Fog.dll",             NULL},
+  {"Ijl11.dll",           NULL},
+  {"SmackW32.dll",        NULL},
+  {"Storm.dll",           NULL},
+  {"Utility.dll",         NULL},
+  {"Plugy.dll",           NULL},
+  {"d2expres.dll",        NULL},
+  {"SGD2FreeRes.dll",     NULL},
 };
 
 #define PATCH_JMP               0x000000E9
@@ -159,23 +155,23 @@ char* __fastcall GetModuleExt(char* ModuleName);
 
 static void* g_ret = 0;
 
-#define JMP_TO_RVA(BASE, RVA) __asm		\
-{										\
-__asm push eax							\
-__asm pushfd							\
-__asm mov eax, BASE						\
-__asm add eax, RVA						\
-__asm mov [g_ret], eax					\
-__asm popfd								\
-__asm pop eax							\
-__asm jmp [g_ret]						\
+#define JMP_TO_RVA(BASE, RVA) \
+__asm {                       \
+  __asm push eax              \
+  __asm pushfd                \
+  __asm mov eax, BASE         \
+  __asm add eax, RVA          \
+  __asm mov [g_ret], eax      \
+  __asm popfd                 \
+  __asm pop eax               \
+  __asm jmp [g_ret]           \
 }
 
-#define RET_TO_RVA(BASE, RVA) __asm		\
-{										\
-__asm push BASE							\
-__asm pushfd							\
-__asm add dword ptr [esp+4], RVA		\
-__asm popfd								\
-__asm retn								\
+#define RET_TO_RVA(BASE, RVA)       \
+__asm {                             \
+  __asm push BASE                   \
+  __asm pushfd                      \
+  __asm add dword ptr [esp+4], RVA  \
+  __asm popfd                       \
+  __asm retn                        \
 }

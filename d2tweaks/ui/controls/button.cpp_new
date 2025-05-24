@@ -9,7 +9,7 @@
 #include <d2tweaks/common/asset_manager.h>
 #include <common/string_utils.h>
 
-d2_tweaks::ui::controls::button::button(menu* menu,
+button::button(menu* menu,
 										const rect& rect, const std::function<void()>& onClick,
 										common::asset* image,
 										int32_t frameDown, int32_t frameUp, int32_t clickSound) : control(menu,
@@ -35,7 +35,7 @@ d2_tweaks::ui::controls::button::button(menu* menu,
 	m_on_click = onClick;
 }
 
-d2_tweaks::ui::controls::button::button(menu* menu, const pugi::xml_node& node) : control(menu, 0, 0, 0, 0) {
+button::button(menu* menu, const pugi::xml_node& node) : control(menu, 0, 0, 0, 0) {
 	const auto cname = node.attribute("name").as_string();
 	const auto cx_lo = node.attribute("x_lowres").as_int(0);
 	const auto cy_lo = node.attribute("y_lowres").as_int(0);
@@ -61,7 +61,7 @@ d2_tweaks::ui::controls::button::button(menu* menu, const pugi::xml_node& node) 
 	control::set_enabled(true);
 	control::set_visible(true);
 
-	if (diablo2::d2_gfx::get_resolution_mode() == 0) {
+	if (d2_gfx::get_resolution_mode() == 0) {
 		m_rect = rect(cx_hi, cy_hi, cw, ch);
 	}
 	else {
@@ -75,11 +75,11 @@ d2_tweaks::ui::controls::button::button(menu* menu, const pugi::xml_node& node) 
 	m_is_down = false;
 	m_current_frame = m_frame_up;
 
-	if (diablo2::d2_gfx::get_resolution_mode() == 0) {
+	if (d2_gfx::get_resolution_mode() == 0) {
 		set_x(cx_hi);
 		set_y(cy_hi);
 	} 
-	else if (diablo2::d2_gfx::get_resolution_mode() == 2) {
+	else if (d2_gfx::get_resolution_mode() == 2) {
 		set_x(cx_lo);
 		set_y(cy_lo);
 	}
@@ -91,49 +91,49 @@ d2_tweaks::ui::controls::button::button(menu* menu, const pugi::xml_node& node) 
 	set_popup(string_utils::string_to_wstring(popup));
 }
 
-d2_tweaks::ui::controls::button::~button() {
+button::~button() {
 	delete m_image;
 }
 
-void d2_tweaks::ui::controls::button::set_x(int32_t value) {
+void button::set_x(int32_t value) {
 	m_rect.set_x(value);
 	m_image->set_x(value);
 	control::set_x(value);
 }
 
-void d2_tweaks::ui::controls::button::set_y(int32_t value) {
+void button::set_y(int32_t value) {
 	m_rect.set_y(value);
 	m_image->set_y(value);
 	control::set_y(value);
 }
 
-void d2_tweaks::ui::controls::button::draw() {
+void button::draw() {
 	draw(0, 0);
 }
 
-void d2_tweaks::ui::controls::button::draw(int32_t offsetX, int32_t offsetY) {
-	if (m_rect.contains(diablo2::d2_client::get_mouse_x(), diablo2::d2_client::get_mouse_y(), offsetX, offsetY) &&
+void button::draw(int32_t offsetX, int32_t offsetY) {
+	if (m_rect.contains(d2_client::get_mouse_x(), d2_client::get_mouse_y(), offsetX, offsetY) &&
 		!m_popup.empty()) {
-		diablo2::d2_win::set_current_font(diablo2::UI_FONT_16);
-		diablo2::d2_win::set_popup_properties(const_cast<wchar_t*>(m_popup.c_str()),
+		d2_win::set_current_font(UI_FONT_16);
+		d2_win::set_popup_properties(const_cast<wchar_t*>(m_popup.c_str()),
 											  get_x() + offsetX + m_rect.get_width() / 2,
 											  get_y() + offsetY - m_rect.get_height(),
-											  diablo2::UI_COLOR_WHITE, TRUE);
-		diablo2::d2_win::draw_popup();
+											  UI_COLOR_WHITE, TRUE);
+		d2_win::draw_popup();
 	}
 
 	m_image->set_frame(m_current_frame);
 	m_image->draw(offsetX, offsetY);
 }
 
-void d2_tweaks::ui::controls::button::left_mouse(int32_t offsetX, int32_t offsetY, bool up, bool& block) {
+void button::left_mouse(int32_t offsetX, int32_t offsetY, bool up, bool& block) {
 	if (up && m_is_down) {
 		block = true;
 
 		m_is_down = false;
 		m_current_frame = m_frame_up;
 
-		if (!m_rect.contains(diablo2::d2_client::get_mouse_x(), diablo2::d2_client::get_mouse_y(), offsetX, offsetY))
+		if (!m_rect.contains(d2_client::get_mouse_x(), d2_client::get_mouse_y(), offsetX, offsetY))
 			return;
 
 		if (m_on_click)
@@ -142,7 +142,7 @@ void d2_tweaks::ui::controls::button::left_mouse(int32_t offsetX, int32_t offset
 		return;
 	}
 
-	if (!m_rect.contains(diablo2::d2_client::get_mouse_x(), diablo2::d2_client::get_mouse_y(), offsetX, offsetY))
+	if (!m_rect.contains(d2_client::get_mouse_x(), d2_client::get_mouse_y(), offsetX, offsetY))
 		return;
 
 	block = true;
@@ -153,9 +153,9 @@ void d2_tweaks::ui::controls::button::left_mouse(int32_t offsetX, int32_t offset
 	if (m_click_sound < 0)
 		return;
 
-	diablo2::d2_client::play_sound(m_click_sound, nullptr, 0, FALSE, 0);
+	d2_client::play_sound(m_click_sound, nullptr, 0, FALSE, 0);
 }
 
-void d2_tweaks::ui::controls::button::right_mouse(int32_t offsetX, int32_t offsetY, bool up, bool& block) {}
+void button::right_mouse(int32_t offsetX, int32_t offsetY, bool up, bool& block) {}
 
-void d2_tweaks::ui::controls::button::key_event(int32_t offsetX, int32_t offsetY, uint32_t key, bool up, bool& block) {}
+void button::key_event(int32_t offsetX, int32_t offsetY, uint32_t key, bool up, bool& block) {}

@@ -1,31 +1,31 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <interface>
-  <menu name="loot_filter_settings_menu" 
-    default_pos_x="0" 
-    default_pos_y="0" 
-    width="402" 
-    height="224"  
+  <menu name="loot_filter_settings_menu"
+    default_pos_x="0"
+    default_pos_y="0"
+    width="402"
+    height="224"
     resolution_count="15"
 
     res1_x="1024"  pos1_x="0"
     res1_y="700"   pos1_y="434"
-                
+
     res2_x="1280"  pos2_x="0"
     res2_y="700"   pos2_y="434"
-                
+
     res3_x="1024"  pos3_x="0"
     res3_y="720"   pos3_y="444"
-                
+
     res4_x="1280"  pos4_x="0"
     res4_y="720"   pos4_y="444"
-    
+
     res5_x="1024" pos5_x="0"
     res5_y="768"  pos5_y="468"
 
     res6_x="1280" pos6_x="0"
     res6_y="768"  pos6_y="468"
   >
-  
+
     <image name="m_bg1"
            x="0" y="224"
            image="data\global\UI\FrontEnd\PopUpWideNoHoles"

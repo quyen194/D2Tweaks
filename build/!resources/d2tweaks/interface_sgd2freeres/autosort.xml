@@ -58,6 +58,7 @@
         res15_x=""  pos15_x=""
         res15_y=""  pos15_y=""
     />
+
     <button name="m_sort_stash_btn" 
         default_pos_x="508" 
         default_pos_y="688"
@@ -115,6 +116,7 @@
         res15_x=""  pos15_x=""
         res15_y=""  pos15_y=""
     />
+
     <button name="m_sort_cube_btn" 
         default_pos_x="518" 
         default_pos_y="272"

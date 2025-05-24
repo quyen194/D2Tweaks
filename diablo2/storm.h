@@ -1,8 +1,10 @@
 #pragma once
 
 namespace diablo2 {
-	class storm {
-	public:
-		static char* get_base();
-	};
-}
+
+class storm {
+ public:
+  static char* get_base();
+};
+
+}  // namespace diablo2

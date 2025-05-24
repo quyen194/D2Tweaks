@@ -2,14 +2,22 @@
 
 #include <d2tweaks/client/client.h>
 
-d2_tweaks::client::modules::client_module::client_module() {
-	singleton<client>::instance().register_module(this);
+namespace d2_tweaks {
+namespace client {
+namespace modules {
+
+client_module::client_module() {
+  singleton<client>::instance().register_module(this);
 }
 
-void d2_tweaks::client::modules::client_module::draw_ui() {}
+void client_module::draw_ui() {}
 
-void d2_tweaks::client::modules::client_module::tick() {}
+void client_module::tick() {}
 
-void d2_tweaks::client::modules::client_module::handle_packet(common::packet_header* packet) {}
+void client_module::handle_packet(common::packet_header* packet) {}
 
-void d2_tweaks::client::modules::client_module::handle_cs_packet(common::packet_header* packet) {}
+void client_module::handle_cs_packet(common::packet_header* packet) {}
+
+}  // namespace modules
+}  // namespace client
+}  // namespace d2_tweaks

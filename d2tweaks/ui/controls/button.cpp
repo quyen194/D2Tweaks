@@ -9,178 +9,215 @@
 #include <d2tweaks/common/asset_manager.h>
 #include <common/string_utils.h>
 
-d2_tweaks::ui::controls::button::button(menu* menu,
-	const rect& rect, const std::function<void()>& onClick,
-	common::asset* image,
-	int32_t frameDown, int32_t frameUp, int32_t clickSound) : control(menu,
-		rect.get_x(),
-		rect.get_y(),
-		rect.get_width(),
-		rect.get_height()) {
-	control::set_enabled(true);
-	control::set_visible(true);
+using namespace diablo2;
 
-	set_x(rect.get_x());
-	set_y(rect.get_y());
+namespace d2_tweaks {
+namespace ui {
+namespace controls {
 
-	m_rect = rect;
-	m_image = new controls::image(menu, image, m_rect.get_x(), m_rect.get_y(), frameUp);
-	m_frame_down = frameDown;
-	m_frame_up = frameUp;
-	m_click_sound = clickSound;
+button::button(menu* menu,
+               const rect& rect,
+               const std::function<void()>& onClick,
+               common::asset* image,
+               int32_t frameDown,
+               int32_t frameUp,
+               int32_t clickSound)
+    : control(menu,
+              rect.get_x(),
+              rect.get_y(),
+              rect.get_width(),
+              rect.get_height()) {
+  control::set_enabled(true);
+  control::set_visible(true);
 
-	m_is_down = false;
-	m_current_frame = m_frame_up;
+  set_x(rect.get_x());
+  set_y(rect.get_y());
 
-	m_on_click = onClick;
+  m_rect = rect;
+  m_image =
+      new controls::image(menu, image, m_rect.get_x(), m_rect.get_y(), frameUp);
+  m_frame_down = frameDown;
+  m_frame_up = frameUp;
+  m_click_sound = clickSound;
+
+  m_is_down = false;
+  m_current_frame = m_frame_up;
+
+  m_on_click = onClick;
 }
 
 //struct respos {
-//	uint32_t res_x;
-//	uint32_t res_y;
-//	uint32_t pos_x;
-//	uint32_t pos_y;
+//  uint32_t res_x;
+//  uint32_t res_y;
+//  uint32_t pos_x;
+//  uint32_t pos_y;
 //};
 
-d2_tweaks::ui::controls::button::button(menu* menu, const pugi::xml_node& node) : control(menu, 0, 0, 0, 0) {
-	char buf[32] = { 0 };
+button::button(menu* menu, const pugi::xml_node& node)
+    : control(menu, 0, 0, 0, 0) {
+  char buf[32] = { 0 };
 
-	auto cx = node.attribute("default_pos_x").as_int(0);
-	auto cy = node.attribute("default_pos_y").as_int(0);
+  auto cx = node.attribute("default_pos_x").as_int(0);
+  auto cy = node.attribute("default_pos_y").as_int(0);
 
-	m_res_count = node.attribute("resolution_count").as_int(1);
+  m_res_count = node.attribute("resolution_count").as_int(1);
 
-	respos temp;
-	for (uint32_t i = 1; i <= m_res_count; i++) {
-		sprintf_s(buf, "res%d_x", i);
-		temp.res_x = node.attribute(buf).as_int(0);
-		sprintf_s(buf, "res%d_y", i);
-		temp.res_y = node.attribute(buf).as_int(0);
-		sprintf_s(buf, "pos%d_x", i);
-		temp.pos_x = node.attribute(buf).as_int(0);
-		sprintf_s(buf, "pos%d_y", i);
-		temp.pos_y = node.attribute(buf).as_int(0);
+  respos temp;
+  for (uint32_t i = 1; i <= m_res_count; i++) {
+    sprintf_s(buf, "res%d_x", i);
+    temp.res_x = node.attribute(buf).as_int(0);
+    sprintf_s(buf, "res%d_y", i);
+    temp.res_y = node.attribute(buf).as_int(0);
+    sprintf_s(buf, "pos%d_x", i);
+    temp.pos_x = node.attribute(buf).as_int(0);
+    sprintf_s(buf, "pos%d_y", i);
+    temp.pos_y = node.attribute(buf).as_int(0);
 
-		if (temp.pos_x == diablo2::d2_client::screen_width() && temp.pos_y == diablo2::d2_client::screen_height()) {
-			cx = temp.pos_x;
-			cy = temp.pos_y;
-		}
+    if (temp.pos_x == d2_client::screen_width() &&
+        temp.pos_y == d2_client::screen_height()) {
+      cx = temp.pos_x;
+      cy = temp.pos_y;
+    }
 
-		m_respos.push_back(temp);
-	}
+    m_respos.push_back(temp);
+  }
 
-	const auto cname = node.attribute("name").as_string();
+  const auto cname = node.attribute("name").as_string();
 
-	const auto cw = node.attribute("width").as_int(0);
-	const auto ch = node.attribute("height").as_int(0);
+  const auto cw = node.attribute("width").as_int(0);
+  const auto ch = node.attribute("height").as_int(0);
 
-	const auto cImgPath = node.attribute("image").as_string(nullptr);
-	const auto cimg = singleton<common::asset_manager>::instance().get_mpq_file(const_cast<char*>(cImgPath), common::MPQ_FILE_TYPE_DC6);
+  const auto cImgPath = node.attribute("image").as_string(nullptr);
+  const auto cimg = singleton<common::asset_manager>::instance().get_mpq_file(
+      const_cast<char*>(cImgPath), common::MPQ_FILE_TYPE_DC6);
 
-	if (!cimg) {
-		spdlog::critical("Cannot load {0} image for {1} control!", cImgPath, cname);
-		exit(-1);
-	}
+  if (!cimg) {
+    spdlog::critical("Cannot load {0} image for {1} control!", cImgPath, cname);
+    exit(-1);
+  }
 
-	const auto frameDown = node.attribute("frameDown").as_int();
-	const auto frameUp = node.attribute("frameUp").as_int();
-	const auto clickSound = node.attribute("clickSound").as_int(-1);
-	const auto popup = node.attribute("popup").as_string();
+  const auto frameDown = node.attribute("frameDown").as_int();
+  const auto frameUp = node.attribute("frameUp").as_int();
+  const auto clickSound = node.attribute("clickSound").as_int(-1);
+  const auto popup = node.attribute("popup").as_string();
 
-	control::set_enabled(true);
-	control::set_visible(true);
+  control::set_enabled(true);
+  control::set_visible(true);
 
-	m_rect = rect(cx, cy, cw, ch);
-	m_image = new image(menu, cimg, m_rect.get_x(), m_rect.get_y(), frameUp);
-	m_frame_down = frameDown;
-	m_frame_up = frameUp;
-	m_click_sound = clickSound;
+  m_rect = rect(cx, cy, cw, ch);
+  m_image = new image(menu, cimg, m_rect.get_x(), m_rect.get_y(), frameUp);
+  m_frame_down = frameDown;
+  m_frame_up = frameUp;
+  m_click_sound = clickSound;
 
-	m_is_down = false;
-	m_current_frame = m_frame_up;
+  m_is_down = false;
+  m_current_frame = m_frame_up;
 
-	set_x(cx);
-	set_y(cy);
-	control::set_width(cw);
-	control::set_height(ch);
+  set_x(cx);
+  set_y(cy);
+  control::set_width(cw);
+  control::set_height(ch);
 
-	set_name(cname);
-	set_popup(string_utils::string_to_wstring(popup));
+  set_name(cname);
+  set_popup(string_utils::string_to_wstring(popup));
 }
 
-d2_tweaks::ui::controls::button::~button() {
-	delete m_image;
+button::~button() {
+  delete m_image;
 }
 
-void d2_tweaks::ui::controls::button::set_x(int32_t value) {
-	m_rect.set_x(value);
-	m_image->set_x(value);
-	control::set_x(value);
+void button::set_x(int32_t value) {
+  m_rect.set_x(value);
+  m_image->set_x(value);
+  control::set_x(value);
 }
 
-void d2_tweaks::ui::controls::button::set_y(int32_t value) {
-	m_rect.set_y(value);
-	m_image->set_y(value);
-	control::set_y(value);
+void button::set_y(int32_t value) {
+  m_rect.set_y(value);
+  m_image->set_y(value);
+  control::set_y(value);
 }
 
-void d2_tweaks::ui::controls::button::draw() {
-	draw(0, 0);
+void button::draw() {
+  draw(0, 0);
 }
 
-void d2_tweaks::ui::controls::button::draw(int32_t offsetX, int32_t offsetY) {
-	for (auto it = m_respos.begin(); it != m_respos.end(); it++) {
-		if (it->res_x == diablo2::d2_client::screen_width() && it->res_y == diablo2::d2_client::screen_height()) {
-			set_x(it->pos_x);
-			set_y(it->pos_y);
-			break;
-		}
-	}
+void button::draw(int32_t offsetX, int32_t offsetY) {
+  for (auto it = m_respos.begin(); it != m_respos.end(); it++) {
+    if (it->res_x == d2_client::screen_width() &&
+        it->res_y == d2_client::screen_height()) {
+      set_x(it->pos_x);
+      set_y(it->pos_y);
+      break;
+    }
+  }
 
-	if (m_rect.contains(diablo2::d2_client::get_mouse_x(), diablo2::d2_client::get_mouse_y(), offsetX, offsetY) &&
-		!m_popup.empty()) {
-		diablo2::d2_win::set_current_font(diablo2::UI_FONT_16);
-		diablo2::d2_win::set_popup_properties(const_cast<wchar_t*>(m_popup.c_str()),
-			get_x() + offsetX + m_rect.get_width() / 2,
-			get_y() + offsetY - m_rect.get_height(),
-			diablo2::UI_COLOR_WHITE, TRUE);
-		diablo2::d2_win::draw_popup();
-	}
+  if (m_rect.contains(d2_client::get_mouse_x(),
+                      d2_client::get_mouse_y(),
+                      offsetX,
+                      offsetY) &&
+      !m_popup.empty()) {
+    d2_win::set_current_font(UI_FONT_16);
+    d2_win::set_popup_properties(
+        const_cast<wchar_t*>(m_popup.c_str()),
+        get_x() + offsetX + m_rect.get_width() / 2,
+        get_y() + offsetY - m_rect.get_height(),
+        UI_COLOR_WHITE,
+        TRUE);
+    d2_win::draw_popup();
+  }
 
-	m_image->set_frame(m_current_frame);
-	m_image->draw(offsetX, offsetY);
+  m_image->set_frame(m_current_frame);
+  m_image->draw(offsetX, offsetY);
 }
 
-void d2_tweaks::ui::controls::button::left_mouse(int32_t offsetX, int32_t offsetY, bool up, bool& block) {
-	if (up && m_is_down) {
-		block = true;
+void button::left_mouse(int32_t offsetX,
+                        int32_t offsetY,
+                        bool up,
+                        bool& block) {
+  if (up && m_is_down) {
+    block = true;
 
-		m_is_down = false;
-		m_current_frame = m_frame_up;
+    m_is_down = false;
+    m_current_frame = m_frame_up;
 
-		if (!m_rect.contains(diablo2::d2_client::get_mouse_x(), diablo2::d2_client::get_mouse_y(), offsetX, offsetY))
-			return;
+    if (!m_rect.contains(d2_client::get_mouse_x(),
+                         d2_client::get_mouse_y(),
+                         offsetX,
+                         offsetY))
+      return;
 
-		if (m_on_click)
-			m_on_click();
+    if (m_on_click)
+      m_on_click();
 
-		return;
-	}
+    return;
+  }
 
-	if (!m_rect.contains(diablo2::d2_client::get_mouse_x(), diablo2::d2_client::get_mouse_y(), offsetX, offsetY))
-		return;
+  if (!m_rect.contains(d2_client::get_mouse_x(),
+                       d2_client::get_mouse_y(),
+                       offsetX,
+                       offsetY))
+    return;
 
-	block = true;
+  block = true;
 
-	m_is_down = true;
-	m_current_frame = m_frame_down;
+  m_is_down = true;
+  m_current_frame = m_frame_down;
 
-	if (m_click_sound < 0)
-		return;
+  if (m_click_sound < 0)
+    return;
 
-	diablo2::d2_client::play_sound(m_click_sound, nullptr, 0, FALSE, 0);
+  d2_client::play_sound(m_click_sound, nullptr, 0, FALSE, 0);
 }
 
-void d2_tweaks::ui::controls::button::right_mouse(int32_t offsetX, int32_t offsetY, bool up, bool& block) {}
+void button::right_mouse(int32_t offsetX,
+                         int32_t offsetY,
+                         bool up,
+                         bool& block) {}
 
-void d2_tweaks::ui::controls::button::key_event(int32_t offsetX, int32_t offsetY, uint32_t key, bool up, bool& block) {}
+void button::key_event(
+    int32_t offsetX, int32_t offsetY, uint32_t key, bool up, bool& block) {}
+
+}  // namespace controls
+}  // namespace ui
+}  // namespace d2_tweaks

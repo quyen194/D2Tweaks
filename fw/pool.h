@@ -3,39 +3,36 @@
 #include <cstdint>
 #include <queue>
 
-template<typename T>
+template <typename T>
 class growing_object_pool {
-	std::queue<T*> m_objects;
-	uint32_t m_objects_count;
-	T* (*m_factory)();
-public:
-	explicit growing_object_pool(T* (*factory)(), uint32_t initialSize = 0) {
-		m_factory = factory;
+  std::queue<T*> m_objects;
+  uint32_t m_objects_count;
+  T* (*m_factory)();
 
-		m_objects_count = initialSize;
-		for (size_t i = 0; i < initialSize; i++) {
-			m_objects.push(m_factory());
-		}
-	}
+ public:
+  explicit growing_object_pool(T* (*factory)(), uint32_t initialSize = 0) {
+    m_factory = factory;
 
-	uint32_t get_count() const {
-		return m_objects_count;
-	}
+    m_objects_count = initialSize;
+    for (size_t i = 0; i < initialSize; i++) {
+      m_objects.push(m_factory());
+    }
+  }
 
-	T* get() {
-		if (m_objects.empty()) {
-			m_objects.push(m_factory());
-			m_objects_count++;
-		}
+  uint32_t get_count() const { return m_objects_count; }
 
-		auto result = m_objects.front();
+  T* get() {
+    if (m_objects.empty()) {
+      m_objects.push(m_factory());
+      m_objects_count++;
+    }
 
-		m_objects.pop();
+    auto result = m_objects.front();
 
-		return result;
-	}
+    m_objects.pop();
 
-	void put(T* obj) {
-		m_objects.push(obj);
-	}
+    return result;
+  }
+
+  void put(T* obj) { m_objects.push(obj); }
 };

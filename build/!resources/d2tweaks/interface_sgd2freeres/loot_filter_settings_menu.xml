@@ -1,58 +1,58 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <interface>
-  <menu name="loot_filter_settings_menu" 
-    default_pos_x="0" 
-    default_pos_y="300" 
-    width="402" 
-    height="224" 
+  <menu name="loot_filter_settings_menu"
+    default_pos_x="0"
+    default_pos_y="300"
+    width="402"
+    height="224"
     resolution_count="15"
-      
+
     res1_x="800"  pos1_x="0"
     res1_y="600"  pos1_y="300"
-                  
+
     res2_x="1068" pos2_x="0"
     res2_y="600"  pos2_y="300"
-                  
+
     res3_x="960"  pos3_x="0"
     res3_y="720"  pos3_y="420"
-                  
+
     res4_x="1280" pos4_x="0"
     res4_y="720"  pos4_y="420"
-                  
+
     res5_x="1024" pos5_x="0"
     res5_y="768"  pos5_y="468"
-                  
+
     res6_x="1280" pos6_x="0"
     res6_y="768"  pos6_y="468"
-                  
+
     res7_x="1280" pos7_x="0"
     res7_y="960"  pos7_y="660"
-                  
+
     res8_x="1200" pos8_x="0"
     res8_y="900"  pos8_y="600"
-                  
+
     res9_x="1600" pos9_x="200"
     res9_y="900"  pos9_y="600"
 
     res10_x="1920" pos10_x="360"
     res10_y="1080" pos10_y="780"
-    
+
     res11_x="1366"  pos11_x="0"
     res11_y="768"   pos11_y="468"
-    
+
     res12_x="1360"  pos12_x="0"
     res12_y="768"   pos12_y="468"
-    
+
     res13_x="1440"  pos13_x="100"
     res13_y="900"   pos13_y="600"
-    
+
     res14_x="1152"  pos14_x="0"
     res14_y="864"  pos14_y="582"
-    
+
     res15_x=""  pos15_x=""
     res15_y=""  pos15_y=""
   >
-  
+
     <image name="m_bg1"
            x="0" y="224"
            image="data\global\UI\FrontEnd\PopUpWideNoHoles"

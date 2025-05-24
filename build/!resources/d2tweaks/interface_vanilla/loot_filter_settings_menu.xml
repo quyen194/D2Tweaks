@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <interface>
-  <menu 
-    name="loot_filter_settings_menu" 
-    default_pos_x="0" 
-    default_pos_y="300" 
-    width="402" 
-    height="224" 
+  <menu
+    name="loot_filter_settings_menu"
+    default_pos_x="0"
+    default_pos_y="300"
+    width="402"
+    height="224"
     resolution_count="1"
-      
+
     res1_x="800"  pos1_x="0"
     res1_y="600"  pos1_y="300"
   >
-  
+
     <image name="m_bg1"
            x="0" y="224"
            image="data\global\UI\FrontEnd\PopUpWideNoHoles"
