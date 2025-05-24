@@ -58,7 +58,7 @@ bool d2_tweaks::server::modules::item_move::handle_packet(diablo2::structures::g
 	//MessageBox(NULL, key, "Item code", MB_OK | MB_ICONINFORMATION);
 
 	const auto item = instance.get_server_unit(game, itemMove->item_guid, diablo2::structures::unit_type_t::UNIT_TYPE_ITEM); //0x4 = item
-	
+
 	// Get player room
 	diablo2::structures::room* room = diablo2::d2_common::get_room_from_unit(player);
 

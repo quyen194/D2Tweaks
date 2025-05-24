@@ -29,7 +29,6 @@ namespace d2_tweaks {
 				menu* m_menu;
 				bool m_show;
 				bool m_show_bag;
-				
 
 				explicit loot_filter_settings_toggle_menu(token);
 

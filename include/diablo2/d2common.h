@@ -88,7 +88,7 @@ namespace diablo2 {
 
 		struct items_line;
 		struct item_types_line;
-		
+
 		struct D2PropertyStrc
 		{
 			int32_t nProperty;					//0x00

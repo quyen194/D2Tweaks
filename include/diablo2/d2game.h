@@ -118,7 +118,7 @@ namespace diablo2 {
 			uint16_t wCltDoFunc;					//0xF4
 			uint16_t wCltPrgFunc[3];				//0xF6
 			uint16_t wStSound;						//0xFC
-			uint16_t nStSoundClass;					//0x0FE	
+			uint16_t nStSoundClass;					//0x0FE
 			uint16_t wDoSound;						//0x100
 			uint16_t wDoSoundA;						//0x102
 			uint16_t wDoSoundB;						//0x104
@@ -201,11 +201,11 @@ namespace diablo2 {
 		struct D2SummonArgStrc
 		{
 			uint32_t dwFlags;						//0x00
-			diablo2::structures::unit* pOwner;						//0x04
+			diablo2::structures::unit* pOwner;		//0x04
 			int32_t nHcIdx;							//0x08
 			D2C_AiSpecialState nAiSpecialState;		//0x0C
 			int32_t nMonMode;						//0x10
-			D2CoordStrc pPosition;					//0x14		
+			D2CoordStrc pPosition;					//0x14
 			int32_t nPetType;						//0x1C
 			int32_t nPetMax;						//0x20
 		};
@@ -259,7 +259,6 @@ namespace diablo2 {
 		// Add wrapper for D2Game.0x6FC603D0
 		// D2MonPropTxt* __fastcall MONSTER_GetMonPropTxtRecord(int32_t nId) 
 		static diablo2::structures::D2MonPropTxt* __fastcall diablo2::d2_game::MONSTER_GetMonPropTxtRecord(int32_t nId);
-		
 
 		// add wrapper for //D2Game.0x6FCBC900
 		// D2UnitStrc* __stdcall SUNIT_GetTargetUnit(D2GameStrc* pGame, D2UnitStrc* pUnit)
@@ -272,7 +271,7 @@ namespace diablo2 {
 		//D2Game.0x6FD15580
 		//int32_t __fastcall D2GAME_GetSummonIdFromSkill_6FD15580(D2UnitStrc* pUnit, int32_t bFromMonster, int32_t nSkillId, int32_t nSkillLevel, int32_t* pSpawnMode, int32_t* pX, int32_t* pY)
 		static int32_t __fastcall diablo2::d2_game::D2GAME_GetSummonIdFromSkill_6FD15580(structures::unit* pUnit, int32_t bFromMonster, int32_t nSkillId, int32_t nSkillLevel, int32_t* pSpawnMode, int32_t* pX, int32_t* pY);
-		
+
 		//D2Game.0x6FD14430
 		//D2UnitStrc* __fastcall D2GAME_SummonPet_6FD14430(D2GameStrc* pGame, D2SummonArgStrc* pSummonArg)
 		static diablo2::structures::unit* __fastcall diablo2::d2_game::D2GAME_SummonPet_6FD14430(structures::game* pGame, structures::D2SummonArgStrc* pSummonArg);
@@ -293,11 +292,8 @@ namespace diablo2 {
 		//void __fastcall sub_6FC3E200(D2ClientStrc* pClient, D2UnitStrc* pUnit)
 		static void __fastcall diablo2::d2_game::sub_6FC3E200(structures::net_client* pClient, structures::unit* pUnit);
 
-
 		//D2Game.0x6FC69F10
 		//D2UnitStrc* __fastcall D2GAME_SpawnMonster_6FC69F10(D2GameStrc* pGame, D2ActiveRoomStrc* pRoom, int32_t nX, int32_t nY, int32_t nMonsterId, int32_t nAnimMode, int32_t a7, int16_t nFlags)
 		static diablo2::structures::unit* __fastcall diablo2::d2_game::D2GAME_SpawnMonster_6FC69F10(structures::game* pGame, structures::room* pRoom, int32_t nX, int32_t nY, int32_t nMonsterId, int32_t nAnimMode, int32_t a7, int16_t nFlags);
-
-
 	};
 }

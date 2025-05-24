@@ -255,7 +255,6 @@ void d2_tweaks::client::modules::loot_filter_settings_toggle_menu::draw() {
 }
 
 bool d2_tweaks::client::modules::loot_filter_settings_toggle_menu::key_event(uint32_t key, bool up) {
-	
 	// Read the key from the ./d2tweaks.ini file from [ExPanel] section, key: key
 	char keyBuffer[3];
 	GetPrivateProfileStringA("ExPanel", "key", "", keyBuffer, sizeof(keyBuffer), "./d2tweaks.ini");
@@ -278,8 +277,6 @@ bool d2_tweaks::client::modules::loot_filter_settings_toggle_menu::key_event(uin
 		return true; // Block the key stroke
 	}
 
-	
-	
 	if (key == VK_ESCAPE && m_show) {
 		m_show = false;
 

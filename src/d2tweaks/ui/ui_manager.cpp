@@ -1050,9 +1050,9 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 			if (strncmp(normCode, "ib1", 3) == 0) {
 				// we need to get instance of loot_filter_settings_menu class singleton
 				auto& toggle_menu = singleton<d2_tweaks::client::modules::loot_filter_settings_toggle_menu>::instance();
-				
+
 				toggle_menu.m_show = !toggle_menu.m_show;
-				
+
 				m_stats_enabled = !m_stats_enabled;
 
 				toggle_menu.m_filter_settings_menu->set_enabled(toggle_menu.m_show);
@@ -1361,7 +1361,6 @@ LRESULT d2_tweaks::ui::ui_manager::wnd_proc(HWND hWnd, UINT msg, WPARAM wParam, 
 				diablo2::d2_common::inv_remove_item(player->inventory, g_hoverItem);
 			}
 
-			
 			const char* key;
 			// Iterate through each gem type in the gemTypes map
 			for (const auto& gem : gemTypes) {

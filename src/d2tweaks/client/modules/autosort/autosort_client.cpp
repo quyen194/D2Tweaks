@@ -310,8 +310,8 @@ public:
 					&& !diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_BELT)
 					&& !diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_HELP)
 					&& !diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_MERC)
-					&& !diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_SCROLL)) {				
-					
+					&& !diablo2::d2_client::get_ui_window_state(diablo2::UI_WINDOW_SCROLL)) {
+
 					// Draw stats
 					diablo2::d2_win::set_current_font(fontMap[statsFont]); // Set font to FONT16
 					diablo2::d2_win::draw_text(const_cast<wchar_t*>(statText.c_str()), stat.x1, stat.y1 + textOffset, stat.colorStat, 0);
@@ -327,7 +327,7 @@ public:
 					/*
 
 					auto runeword = diablo2::d2_common::get_runes_txt_record(169);
-					
+
 
 					// Assuming szName is a null-terminated C-string.
 					wchar_t wText[1024]; // Ensure this buffer is large enough to hold the converted string.
@@ -404,10 +404,6 @@ public:
 					yOffset += 14;
 
 					*/
-					
-
-
-
 				}
 
 				//diablo2::d2_win::draw_boxed_text(const_cast<wchar_t*>(statText.c_str()), stat.x1, stat.y1 + textOffset, 1, 0, stat.colorStat);

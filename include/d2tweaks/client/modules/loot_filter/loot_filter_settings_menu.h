@@ -155,7 +155,7 @@ namespace d2_tweaks {
 
 
 				void extract_item(bool value, int prop, uint32_t val, uint32_t rune, diablo2::unit_stats_t stat);
-					
+
 				void extract_r01(bool value);
 				void extract_r02(bool value);
 				void extract_r03(bool value);
