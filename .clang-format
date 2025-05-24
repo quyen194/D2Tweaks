@@ -1,0 +1,35 @@
+# Format Style Options - Created with Clang Power Tools
+---
+AllowAllConstructorInitializersOnNextLine: true
+AllowShortIfStatementsOnASingleLine: Never
+AllowShortLoopsOnASingleLine: false
+BasedOnStyle: Google
+BinPackArguments: false
+BinPackParameters: false
+BraceWrapping: 
+  AfterCaseLabel: false
+  AfterClass: false
+  AfterControlStatement: false
+  AfterEnum: false
+  AfterFunction: true
+  AfterNamespace: false
+  AfterObjCDeclaration: false
+  AfterStruct: false
+  AfterUnion: false
+  AfterExternBlock: false
+  BeforeCatch: false
+  BeforeElse: false
+  IndentBraces: false
+  SplitEmptyFunction: false
+  SplitEmptyRecord: false
+  SplitEmptyNamespace: false
+  BeforeLambdaBody: false
+  BeforeWhile: false
+BreakBeforeInheritanceComma: false
+BreakInheritanceList: BeforeColon
+BreakConstructorInitializers: BeforeColon
+BreakStringLiterals: false
+ConstructorInitializerAllOnOneLineOrOnePerLine: true
+IndentCaseLabels: true
+SpaceAfterCStyleCast: true
+...

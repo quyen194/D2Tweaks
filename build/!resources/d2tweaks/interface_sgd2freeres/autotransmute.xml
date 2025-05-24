@@ -1,60 +1,60 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <interface>
   <menu name="autotransmute" default_pos_x="0" default_pos_y="0" width="-1" height="-1">
-    <button name="m_auto_transmute_btn" 
-        default_pos_x="600" 
+    <button name="m_auto_transmute_btn"
+        default_pos_x="600"
         default_pos_y="400"
-        width="32" 
-        height="32" 
-        image="d2tweaks\assets\buttons" 
-        frameDown="5" 
-        frameUp="4" 
-        clickSound="4" 
-        popup="Auto transmute" 
+        width="32"
+        height="32"
+        image="d2tweaks\assets\buttons"
+        frameDown="5"
+        frameUp="4"
+        clickSound="4"
+        popup="Auto transmute"
         resolution_count="15"
-    
+
         res1_x="0"  pos1_x="0"
         res1_y="0"  pos1_y="0"
-                    
+
         res2_x="0"  pos2_x="0"
         res2_y="0"  pos2_y="0"
-                    
+
         res3_x="0"  pos3_x="0"
         res3_y="0"  pos3_y="0"
-                    
+
         res4_x="0"  pos4_x="0"
         res4_y="0"  pos4_y="0"
-                    
+
         res5_x="0"  pos5_x="0"
         res5_y="0"  pos5_y="0"
-                    
+
         res6_x="0"  pos6_x="0"
         res6_y="0"  pos6_y="0"
-                    
+
         res7_x="0"  pos7_x="0"
         res7_y="0"  pos7_y="0"
-                    
+
         res8_x="0"  pos8_x="0"
         res8_y="0"  pos8_y="0"
-                    
+
         res9_x="0"  pos9_x="0"
         res9_y="0"  pos9_y="0"
 
         res10_x="0" pos10_x="0"
         res10_y="0" pos10_y="0"
-        
+
         res11_x="0" pos11_x="0"
         res11_y="0" pos11_y="0"
-        
+
         res12_x="0" pos12_x="0"
         res12_y="0" pos12_y="0"
-        
+
         res13_x="0" pos13_x="0"
         res13_y="0" pos13_y="0"
-        
+
         res14_x="0" pos14_x="0"
         res14_y="0" pos14_y="0"
-        
+
         res15_x="0" pos15_x="0"
         res15_y="0" pos15_y="0"
     />

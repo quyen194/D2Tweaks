@@ -1,34 +1,34 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <interface>
   <menu name="autotransmute" default_pos_x="0" default_pos_y="0" width="-1" height="-1">
-    <button name="m_auto_transmute_btn" 
-        default_pos_x="600" 
+    <button name="m_auto_transmute_btn"
+        default_pos_x="600"
         default_pos_y="400"
-        width="32" 
-        height="32" 
-        image="d2tweaks\assets\buttons" 
-        frameDown="5" 
-        frameUp="4" 
-        clickSound="4" 
+        width="32"
+        height="32"
+        image="d2tweaks\assets\buttons"
+        frameDown="5"
+        frameUp="4"
+        clickSound="4"
         popup="Auto transmute"
         resolution_count="6"
         from_center="1"
-    
+
         res1_x="1024"  pos1_x="967"
         res1_y="700"  pos1_y="321"
-                    
+
         res2_x="1280"  pos2_x="1095"
         res2_y="700"  pos2_y="321"
-                    
+
         res3_x="1024"  pos3_x="967"
         res3_y="720"  pos3_y="331"
-                    
+
         res4_x="1280"  pos4_x="1095"
         res4_y="720"  pos4_y="331"
-        
+
         res5_x="1024" pos5_x="967"
         res5_y="768"  pos5_y="355"
-        
+
         res6_x="1280" pos6_x="1095"
         res6_y="768"  pos6_y="355"
     />

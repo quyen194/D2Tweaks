@@ -2,17 +2,17 @@
 <interface>
   <menu name="loot_filter_settings_menu_toggle_menu" default_pos_x="0" default_pos_y="0" width="-1" height="-1">
     <button name="m_toggle_filter_settings_btn"
-        default_pos_x="170" 
+        default_pos_x="170"
         default_pos_y="594"
-        width="32" 
+        width="32"
         height="32"
         image="d2tweaks\assets\buttons"
-        frameDown="3" 
-        frameUp="2" 
+        frameDown="3"
+        frameUp="2"
         clickSound="4"
         popup="Open/Close loot filter settings"
         resolution_count="15"
-            
+
         res1_x="800"  pos1_x="170"
         res1_y="600"  pos1_y="594"
 
@@ -42,19 +42,19 @@
 
         res10_x="1920" pos10_x="731"
         res10_y="1080" pos10_y="1073"
-        
+
         res11_x="1366"  pos11_x="453"
         res11_y="768"   pos11_y="761"
-        
+
         res12_x="1360"  pos12_x="450"
         res12_y="768"   pos12_y="761"
-        
+
         res13_x="1440"  pos13_x="490"
         res13_y="900"   pos13_y="893"
-        
+
         res14_x="1152"  pos14_x="346"
         res14_y="864"  pos14_y="857"
-        
+
         res15_x=""  pos15_x=""
         res15_y=""  pos15_y=""
     />

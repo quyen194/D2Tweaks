@@ -2,14 +2,22 @@
 
 #include <d2tweaks/server/server.h>
 
-d2_tweaks::server::modules::server_module::server_module() {
-	singleton<server>::instance().register_module(this);
+namespace d2_tweaks {
+namespace server {
+namespace modules {
+
+server_module::server_module() {
+  singleton<server>::instance().register_module(this);
 }
 
-bool d2_tweaks::server::modules::server_module::handle_packet(diablo2::structures::game* game,
-	diablo2::structures::unit* player, common::packet_header* packet) {
-	return false;
+bool server_module::handle_packet(game* game,
+                                  unit* player,
+                                  common::packet_header* packet) {
+  return false;
 }
 
-void d2_tweaks::server::modules::server_module::tick(diablo2::structures::game* game,
-	diablo2::structures::unit* unit) {}
+void server_module::tick(game* game, unit* unit) {}
+
+}  // namespace modules
+}  // namespace server
+}  // namespace d2_tweaks
