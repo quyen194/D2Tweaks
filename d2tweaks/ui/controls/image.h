@@ -22,6 +22,8 @@ class image : public control {
 
   rect m_rect;
   bool m_block_click;
+
+  // object state
   gfxdata m_draw_info;
 
  public:
@@ -31,6 +33,12 @@ class image : public control {
                  int32_t y = 0,
                  int32_t frame = 0);
   explicit image(menu* menu, const pugi::xml_node& node);
+  explicit image(image &obj);
+  virtual ~image() = default;
+
+  void set(image &obj);
+  void set_attr(image &obj);
+  void set_state(image &obj);
 
   void set_frame(int32_t frame) { m_frame = static_cast<uint32_t>(frame); }
 

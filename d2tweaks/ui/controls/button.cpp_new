@@ -24,7 +24,7 @@ button::button(menu* menu,
 	set_y(rect.get_y());
 
 	m_rect = rect;
-	m_image = new controls::image(menu, image, m_rect.get_x(), m_rect.get_y(), frameUp);
+	m_image = new image(menu, image, m_rect.get_x(), m_rect.get_y(), frameUp);
 	m_frame_down = frameDown;
 	m_frame_up = frameUp;
 	m_click_sound = clickSound;

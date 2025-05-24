@@ -18,11 +18,12 @@ checkbox::checkbox(menu* menu,
                    const std::wstring& text,
                    const rect& rect,
                    const std::function<void()>& onClick,
-                   common::asset* image,
+                   common::asset* img,
                    int32_t frameChecked,
                    int32_t frameUnchecked,
                    int32_t clickSound)
-    : control(menu,
+    : control(type::kCheckbox,
+              menu,
               rect.get_x(),
               rect.get_y(),
               rect.get_width(),
@@ -35,8 +36,7 @@ checkbox::checkbox(menu* menu,
 
   m_rect = rect;
 
-  m_image = new controls::image(
-      menu, image, rect.get_x(), rect.get_y(), frameUnchecked);
+  m_image = new image(menu, img, rect.get_x(), rect.get_y(), frameUnchecked);
   m_label = new label(menu,
                       text,
                       rect.get_x() + m_image->get_width() + PADDING,
@@ -52,7 +52,7 @@ checkbox::checkbox(menu* menu,
 }
 
 checkbox::checkbox(menu* menu, const pugi::xml_node& node)
-    : control(menu, 0, 0, 0, 0) {
+    : control(type::kCheckbox, menu, 0, 0, 0, 0) {
   control::set_enabled(true);
   control::set_visible(true);
 
@@ -98,6 +98,33 @@ checkbox::checkbox(menu* menu, const pugi::xml_node& node)
   checkbox::set_y(cy);
 
   set_name(cname);
+}
+
+checkbox::~checkbox() {
+  delete m_image;
+  delete m_label;
+}
+
+void checkbox::set(checkbox& obj) {
+  set_attr(obj);
+  set_state(obj);
+}
+
+void checkbox::set_attr(checkbox& obj) {
+  control::set(obj);
+  m_rect.set(obj.m_rect);
+  m_image = new image(*obj.m_image);
+  m_label = new label(*obj.m_label);
+  m_popup = obj.m_popup;
+  m_frame_checked = obj.m_frame_checked;
+  m_frame_unchecked = obj.m_frame_unchecked;
+  m_click_sound = obj.m_click_sound;
+}
+
+void checkbox::set_state(checkbox& obj) {
+  m_on_click = obj.m_on_click;
+  m_is_down = obj.m_is_down;
+  m_state = obj.m_state;
 }
 
 void checkbox::set_x(int32_t value) {

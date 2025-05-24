@@ -86,27 +86,53 @@ bool menu::load_xml(const char* path) {
     const auto name = child.name();
 
     if (strcmp(name, "button") == 0) {
-      add_control(new button(this, child));
+      auto obj = new button(this, child);
+      if (!add_control(obj)) {
+        if (obj) {
+          delete obj;
+        }
+      }
       continue;
     }
 
     if (strcmp(name, "checkbox") == 0) {
-      add_control(new checkbox(this, child));
+      auto obj = new checkbox(this, child);
+      if (!add_control(obj)) {
+        if (obj) {
+          delete obj;
+        }
+      }
       continue;
     }
 
     if (strcmp(name, "group") == 0) {
-      add_control(new group(this, child));
+      auto obj = new group(this, child);
+      if (!add_control(obj)) {
+        if (obj) {
+          delete obj;
+        }
+      }
       continue;
     }
 
     if (strcmp(name, "image") == 0) {
-      add_control(new image(this, child));
+      auto obj = new image(this, child);
+      if (!add_control(obj)) {
+        if (obj) {
+          delete obj;
+        }
+      }
       continue;
     }
 
     if (strcmp(name, "label") == 0) {
-      add_control(new label(this, child));
+      auto obj = new label(this, child);
+      if (!add_control(obj)) {
+        if (obj) {
+          delete obj;
+        }
+      }
+      continue;
     }
   }
 
@@ -125,22 +151,60 @@ bool menu::load_xml(const char* path) {
   return true;
 }
 
-void menu::add_control(control* control) {
-  if (control == nullptr)
-    return;
+bool menu::add_control(control* obj) {
+  if (obj == nullptr)
+    return false;
 
-  if (control->get_name().empty()) {
+  if (obj->get_name().empty()) {
     spdlog::error("Cannot add control: empty name!");
-    return;
+    return false;
   }
 
-  const auto it = m_named_controls.find(control->get_name());
+  const auto it = m_named_controls.find(obj->get_name());
 
-  if (it != m_named_controls.end())
-    return;
+  if (it != m_named_controls.end()) {
+    // update existing control
+    control* current = m_named_controls[obj->get_name()];
 
-  m_named_controls[control->get_name()] = control;
-  m_controls.push_back(control);
+    if (obj->get_type() != current->get_type()) {
+      return false;
+    }
+
+    switch (obj->get_type()) {
+      case type::kButton: {
+        auto exp_obj = dynamic_cast<button*>(current);
+        auto new_obj = dynamic_cast<button*>(obj);
+        exp_obj->set_attr(*new_obj);
+      } break;
+      case type::kCheckbox: {
+        auto exp_obj = dynamic_cast<checkbox*>(current);
+        auto new_obj = dynamic_cast<checkbox*>(obj);
+        exp_obj->set_attr(*new_obj);
+      } break;
+      case type::kGroup: {
+        auto exp_obj = dynamic_cast<group*>(current);
+        auto new_obj = dynamic_cast<group*>(obj);
+        exp_obj->set_attr(*new_obj);
+      } break;
+      case type::kImage: {
+        auto exp_obj = dynamic_cast<image*>(current);
+        auto new_obj = dynamic_cast<image*>(obj);
+        exp_obj->set_attr(*new_obj);
+      } break;
+      case type::kLabel: {
+        auto exp_obj = dynamic_cast<label*>(current);
+        auto new_obj = dynamic_cast<label*>(obj);
+        exp_obj->set_attr(*new_obj);
+      } break;
+    }
+
+    return false;
+  }
+
+  m_named_controls[obj->get_name()] = obj;
+  m_controls.push_back(obj);
+
+  return true;
 }
 
 void menu::remove_control(control* control) {

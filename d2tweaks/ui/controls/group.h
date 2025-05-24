@@ -17,6 +17,9 @@ class group : public control {
  public:
   explicit group(menu* menu, int32_t x, int32_t y);
   explicit group(menu* menu, const pugi::xml_node& node);
+  virtual ~group();
+
+  void set_attr(group &obj);
 
   void draw() override;
   void draw(int32_t offsetX, int32_t offsetY) override;

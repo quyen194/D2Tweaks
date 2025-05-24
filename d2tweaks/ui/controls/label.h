@@ -28,6 +28,9 @@ class label : public control {
                  ui_color_t color = UI_COLOR_WHITE,
                  ui_font_t font = UI_FONT_16);
   explicit label(menu* menu, const pugi::xml_node& node);
+  virtual ~label() = default;
+
+  void set_attr(label &obj);
 
   void set_text(const std::wstring& text) { m_text = text; }
 

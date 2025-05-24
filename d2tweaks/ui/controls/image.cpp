@@ -19,24 +19,25 @@ namespace controls {
 
 image::image(
     menu* menu, common::asset* image, int32_t x, int32_t y, int32_t frame)
-    : control(menu, x, y, 0, 0) {
+    : control(type::kImage, menu, x, y, 0, 0),
+      m_image(image),
+      m_frame(frame),
+      m_block_click(false),
+      m_draw_info({0}) {
   control::set_enabled(true);
   control::set_visible(true);
 
-  m_image = image;
-  m_frame = frame;
   auto cellFile = static_cast<cellfile*>(m_image->get());
   const auto cell = cellFile->cells[m_frame];
   m_rect =
       rect(x, y, cell->width + cell->offset_x, cell->height - cell->offset_y);
-  m_block_click = false;
 
   control::set_width(m_rect.get_width());
   control::set_height(m_rect.get_height());
 }
 
 image::image(menu* menu, const pugi::xml_node& node)
-    : control(menu, 0, 0, 0, 0) {
+    : control(type::kImage, menu, 0, 0, 0, 0), m_draw_info({0}) {
   const auto cname = node.attribute("name").as_string();
   const auto cx = node.attribute("x").as_int(0);
   const auto cy = node.attribute("y").as_int(0);
@@ -70,6 +71,31 @@ image::image(menu* menu, const pugi::xml_node& node)
   control::set_height(m_rect.get_height());
 
   set_name(cname);
+}
+
+image::image(image& obj)
+    : control(obj),
+      m_image(obj.m_image),
+      m_frame(obj.m_frame),
+      m_rect(obj.m_rect),
+      m_block_click(obj.m_block_click),
+      m_draw_info({0}) {}
+
+void image::set(image& obj) {
+  set_attr(obj);
+  set_state(obj);
+}
+
+void image::set_attr(image& obj) {
+  control::set(obj);
+  m_image = obj.m_image;
+  m_frame = obj.m_frame;
+  m_rect.set(obj.m_rect);
+  m_block_click = obj.m_block_click;
+}
+
+void image::set_state(image& obj) {
+  memcpy(&m_draw_info, &obj.m_draw_info, sizeof(m_draw_info));
 }
 
 void image::draw() {

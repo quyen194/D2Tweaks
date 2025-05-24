@@ -14,7 +14,7 @@ label::label(menu* menu,
              int32_t y,
              ui_color_t color,
              ui_font_t font)
-    : control(menu, x, y, 0, 0) {
+    : control(type::kLabel, menu, x, y, 0, 0) {
   control::set_enabled(true);
   control::set_visible(true);
 
@@ -28,7 +28,7 @@ label::label(menu* menu,
 }
 
 label::label(menu* menu, const pugi::xml_node& node)
-    : control(menu, 0, 0, 0, 0) {
+    : control(type::kLabel, menu, 0, 0, 0, 0) {
   const auto cname = node.attribute("name").as_string();
 
   char buf[32] = { 0 };
@@ -76,6 +76,16 @@ label::label(menu* menu, const pugi::xml_node& node)
   control::set_width(0);
 
   set_name(cname);
+}
+
+void label::set_attr(label& obj) {
+  control::set(obj);
+  m_text = obj.m_text;
+  m_text_owned = obj.m_text_owned;
+  m_color = obj.m_color;
+  m_font = obj.m_font;
+  m_res_count = obj.m_res_count;
+  m_respos = obj.m_respos;
 }
 
 void label::draw() {

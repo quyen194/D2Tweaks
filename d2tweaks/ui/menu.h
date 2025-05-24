@@ -66,7 +66,7 @@ class menu {
     return static_cast<TControl*>(it->second);
   }
 
-  virtual void add_control(control* control);
+  virtual bool add_control(control* control);
   // virtual control* get_control(const std::string& name);
   virtual void remove_control(control* control);
 

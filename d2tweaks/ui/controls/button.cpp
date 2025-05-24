@@ -18,11 +18,12 @@ namespace controls {
 button::button(menu* menu,
                const rect& rect,
                const std::function<void()>& onClick,
-               common::asset* image,
+               common::asset* img,
                int32_t frameDown,
                int32_t frameUp,
                int32_t clickSound)
-    : control(menu,
+    : control(type::kButton,
+              menu,
               rect.get_x(),
               rect.get_y(),
               rect.get_width(),
@@ -34,8 +35,7 @@ button::button(menu* menu,
   set_y(rect.get_y());
 
   m_rect = rect;
-  m_image =
-      new controls::image(menu, image, m_rect.get_x(), m_rect.get_y(), frameUp);
+  m_image = new image(menu, img, m_rect.get_x(), m_rect.get_y(), frameUp);
   m_frame_down = frameDown;
   m_frame_up = frameUp;
   m_click_sound = clickSound;
@@ -54,7 +54,7 @@ button::button(menu* menu,
 //};
 
 button::button(menu* menu, const pugi::xml_node& node)
-    : control(menu, 0, 0, 0, 0) {
+    : control(type::kButton, menu, 0, 0, 0, 0) {
   char buf[32] = { 0 };
 
   auto cx = node.attribute("default_pos_x").as_int(0);
@@ -124,6 +124,29 @@ button::button(menu* menu, const pugi::xml_node& node)
 
 button::~button() {
   delete m_image;
+}
+
+void button::set(button& obj) {
+  set_attr(obj);
+  set_state(obj);
+}
+
+void button::set_attr(button& obj) {
+  control::set(obj);
+  m_rect.set(obj.m_rect);
+  m_image = new image(*obj.m_image);
+  m_frame_down = obj.m_frame_down;
+  m_frame_up = obj.m_frame_up;
+  m_click_sound = obj.m_click_sound;
+  m_popup = obj.m_popup;
+  m_res_count = obj.m_res_count;
+  m_respos = obj.m_respos;
+}
+
+void button::set_state(button& obj) {
+  m_on_click = obj.m_on_click;
+  m_is_down = obj.m_is_down;
+  m_current_frame = obj.m_current_frame;
 }
 
 void button::set_x(int32_t value) {
