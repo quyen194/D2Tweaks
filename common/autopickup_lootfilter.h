@@ -17,15 +17,15 @@ enum D2ItemQuality
 };
 
 struct item_code {
-	char code0;
-	char code1;
-	char code2;
-	char code3;
+	char code0 = 0;
+	char code1 = 0;
+	char code2 = 0;
+	char code3 = 0;
 	uint32_t qualityinclude[10] = { 0 };
 };
 
 struct item_type {
-	uint32_t dwtype;
+	uint32_t dwtype = 0;
 	uint32_t qualityinclude[10] = { 0 };
 };
 
@@ -44,7 +44,7 @@ struct recipe {
 	item_type input5_type;
 	item_type input6_type;
 	item_type input7_type;
-	uint32_t repeat_count;
-	bool back_to_inventory;
-	bool auto_transmute;
+	uint32_t repeat_count = 0;
+	bool back_to_inventory = false;
+	bool auto_transmute = false;
 };
