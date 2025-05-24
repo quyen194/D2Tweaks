@@ -14,6 +14,13 @@ class rect {
   rect(int32_t x, int32_t y, int32_t width, int32_t height)
       : m_x(x), m_y(y), m_w(width), m_h(height) {}
 
+  void set(rect &obj) {
+    m_x = obj.m_x;
+    m_y = obj.m_y;
+    m_w = obj.m_w;
+    m_h = obj.m_h;
+  }
+
   int32_t get_x() const { return m_x; }
 
   void set_x(int32_t value) { m_x = value; }

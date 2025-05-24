@@ -30,10 +30,10 @@ class checkbox : public control {
   int32_t m_frame_unchecked;
   int32_t m_click_sound;
 
+  // object state
+  std::function<void(bool)> m_on_click;
   bool m_is_down;
   bool m_state;
-
-  std::function<void(bool)> m_on_click;
 
  public:
   explicit checkbox(menu* menu,
@@ -45,6 +45,11 @@ class checkbox : public control {
                     int32_t frameUnchecked,
                     int32_t clickSound = -1);
   explicit checkbox(menu* menu, const pugi::xml_node& node);
+  virtual ~checkbox();
+
+  void set(checkbox &obj);
+  void set_attr(checkbox &obj);
+  void set_state(checkbox &obj);
 
   void set_x(int32_t value) override;
   int32_t get_x() const override { return m_rect.get_x(); }

@@ -9,13 +9,14 @@ namespace d2_tweaks {
 namespace ui {
 namespace controls {
 
-group::group(menu* menu, int32_t x, int32_t y) : control(menu, x, y, 0, 0) {
+group::group(menu* menu, int32_t x, int32_t y)
+    : control(type::kGroup, menu, x, y, 0, 0) {
   control::set_enabled(true);
   control::set_visible(true);
 }
 
 group::group(menu* menu, const pugi::xml_node& node)
-    : control(menu, 0, 0, 0, 0) {
+    : control(type::kGroup, menu, 0, 0, 0, 0) {
   control::set_enabled(true);
   control::set_visible(true);
 
@@ -59,6 +60,16 @@ group::group(menu* menu, const pugi::xml_node& node)
       add_control(new label(menu, child));
     }
   }
+}
+
+group::~group() {
+  for (auto child : m_controls) {
+    delete child;
+  }
+}
+
+void group::set_attr(group& obj) {
+  control::set(obj);
 }
 
 void group::draw() {

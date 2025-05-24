@@ -9,6 +9,14 @@ class menu;
 
 namespace controls {
 
+enum class type : int {
+  kButton,
+  kCheckbox,
+  kGroup,
+  kImage,
+  kLabel,
+};
+
 struct respos {
   uint32_t res_x;
   uint32_t res_y;
@@ -17,27 +25,55 @@ struct respos {
 };
 
 class control {
+  type m_type;
   control* m_parent;
   menu* m_menu;
 
   std::string m_name;
-  bool m_enabled = false;
-  bool m_visible = false;
+  bool m_enabled;
+  bool m_visible;
   int32_t m_x;
   int32_t m_y;
   int32_t m_width;
   int32_t m_height;
 
  public:
-  control(menu* menu, int32_t x, int32_t y, int32_t w, int32_t h)
-      : m_parent(nullptr),
+  control(type type, menu* menu, int32_t x, int32_t y, int32_t w, int32_t h)
+      : m_type(type),
+        m_parent(nullptr),
         m_menu(menu),
+        m_enabled(false),
+        m_visible(false),
         m_x(x),
         m_y(y),
         m_width(w),
         m_height(h) {}
+  control(control& obj)
+      : m_type(obj.m_type),
+        m_parent(obj.m_parent),
+        m_menu(obj.m_menu),
+        m_enabled(obj.m_enabled),
+        m_visible(obj.m_visible),
+        m_x(obj.m_x),
+        m_y(obj.m_y),
+        m_width(obj.m_width),
+        m_height(obj.m_height) {}
 
   virtual ~control() = default;
+
+  void set(control &obj) {
+    m_type = obj.m_type;
+    m_parent = obj.m_parent;
+    m_menu = obj.m_menu;
+    m_enabled = obj.m_enabled;
+    m_visible = obj.m_visible;
+    m_x = obj.m_x;
+    m_y = obj.m_y;
+    m_width = obj.m_width;
+    m_height = obj.m_height;
+  }
+
+  type get_type() const { return m_type; }
 
   control* get_parent() const { return m_parent; }
 
