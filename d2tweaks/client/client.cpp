@@ -39,10 +39,14 @@
 #include <diablo2/structures/item_data.h>
 #include <diablo2/structures/player_data.h>
 
+using namespace d2_tweaks;
+using namespace diablo2;
+using namespace diablo2::structures;
+
 #define STB_IMAGE_IMPLEMENTATION
 
 std::vector<StatEntry> globalStatsVector;
-diablo2::structures::gfxdata g_gfxdata; // global gfxdata
+gfxdata g_gfxdata; // global gfxdata
 
 std::wstring ConvertCharToWString(const std::string& charString) {
 	std::wstring_convert<std::codecvt_utf8<wchar_t>> converter;
@@ -64,24 +68,24 @@ std::wstring StringToWString(const std::string& str) {
 }
 
 // Define the mapColorToEnum function
-diablo2::ui_color_t mapColorToEnum(const std::string& colorName) {
-	static const std::unordered_map<std::string, diablo2::ui_color_t> colorMap = {
-		{"RED", diablo2::ui_color_t::UI_COLOR_RED},
-		{"LIGHT_GREEN", diablo2::ui_color_t::UI_COLOR_LIGHT_GREEN},
-		{"BLUE", diablo2::ui_color_t::UI_COLOR_BLUE},
-		{"DARK_GOLD", diablo2::ui_color_t::UI_COLOR_DARK_GOLD},
-		{"GREY", diablo2::ui_color_t::UI_COLOR_GREY},
-		{"BLACK", diablo2::ui_color_t::UI_COLOR_BLACK},
-		{"GOLD", diablo2::ui_color_t::UI_COLOR_GOLD},
-		{"ORANGE", diablo2::ui_color_t::UI_COLOR_ORANGE},
-		{"YELLOW", diablo2::ui_color_t::UI_COLOR_YELLOW},
-		{"DARK_GREEN", diablo2::ui_color_t::UI_COLOR_DARK_GREEN},
-		{"PURPLE", diablo2::ui_color_t::UI_COLOR_PURPLE},
-		{"GREEN", diablo2::ui_color_t::UI_COLOR_GREEN},
-		{"WHITE", diablo2::ui_color_t::UI_COLOR_WHITE},
-		{"BLACK2", diablo2::ui_color_t::UI_COLOR_BLACK2},
-		{"DARK_WHITE", diablo2::ui_color_t::UI_COLOR_DARK_WHITE},
-		{"LIGHT_GREY", diablo2::ui_color_t::UI_COLOR_LIGHT_GREY}
+ui_color_t mapColorToEnum(const std::string& colorName) {
+	static const std::unordered_map<std::string, ui_color_t> colorMap = {
+		{"RED", ui_color_t::UI_COLOR_RED},
+		{"LIGHT_GREEN", ui_color_t::UI_COLOR_LIGHT_GREEN},
+		{"BLUE", ui_color_t::UI_COLOR_BLUE},
+		{"DARK_GOLD", ui_color_t::UI_COLOR_DARK_GOLD},
+		{"GREY", ui_color_t::UI_COLOR_GREY},
+		{"BLACK", ui_color_t::UI_COLOR_BLACK},
+		{"GOLD", ui_color_t::UI_COLOR_GOLD},
+		{"ORANGE", ui_color_t::UI_COLOR_ORANGE},
+		{"YELLOW", ui_color_t::UI_COLOR_YELLOW},
+		{"DARK_GREEN", ui_color_t::UI_COLOR_DARK_GREEN},
+		{"PURPLE", ui_color_t::UI_COLOR_PURPLE},
+		{"GREEN", ui_color_t::UI_COLOR_GREEN},
+		{"WHITE", ui_color_t::UI_COLOR_WHITE},
+		{"BLACK2", ui_color_t::UI_COLOR_BLACK2},
+		{"DARK_WHITE", ui_color_t::UI_COLOR_DARK_WHITE},
+		{"LIGHT_GREY", ui_color_t::UI_COLOR_LIGHT_GREY}
 	};
 
 	auto it = colorMap.find(colorName);
@@ -89,7 +93,7 @@ diablo2::ui_color_t mapColorToEnum(const std::string& colorName) {
 		return it->second;
 	}
 	// Default color if not found
-	return diablo2::ui_color_t::UI_COLOR_WHITE;
+	return ui_color_t::UI_COLOR_WHITE;
 }
 
 // Define a struct to hold key-value pairs within a section
@@ -179,16 +183,19 @@ void ParseIniFile(const std::string& iniFilePath) {
 
 #include <D2Template.h>
 
-static void(__fastcall* g_handle_packet)(d2_tweaks::common::packet_header* packet, size_t size);
-static void(__fastcall* g_handle_packet_standart)(d2_tweaks::common::packet_header* packet, size_t size);
-static void(__fastcall* g_handle_cs_packet)(d2_tweaks::common::packet_header* packet, size_t size);
+static void(__fastcall* g_handle_packet)(common::packet_header* packet, size_t size);
+static void(__fastcall* g_handle_packet_standart)(common::packet_header* packet, size_t size);
+static void(__fastcall* g_handle_cs_packet)(common::packet_header* packet, size_t size);
 static int32_t(__stdcall* g_draw_game_ui_original)();
 static int32_t(__fastcall* g_game_tick_original)(int32_t a1);
 //void(__fastcall* g_game_loop_start)();
 
 //static uint32_t g_ret;
 
-d2_tweaks::client::client::client(token) {
+namespace d2_tweaks {
+namespace client {
+
+client::client(token) {
 	m_module_id_counter = 0;
 	m_tick_handler_id_counter = 0;
 }
@@ -200,7 +207,7 @@ __declspec(naked) void __stdcall game_tick_wrapper()
 	{
 		pushad
 		pushfd
-		call[d2_tweaks::client::client::game_tick]
+		call[client::game_tick]
 		popfd
 		popad
 
@@ -213,7 +220,7 @@ __declspec (naked) void handle_cs_packet_wrapper() {
 	__asm {
 		pushad;
 		pushfd;
-		call[d2_tweaks::client::client::handle_cs_packet]
+		call[client::handle_cs_packet]
 			popfd;
 		popad;
 		// original instructions
@@ -226,7 +233,7 @@ __declspec (naked) void handle_sc_standart_packet_wrapper() {
 	__asm {
 		pushad;
 		pushfd;
-		call[d2_tweaks::client::client::handle_standart_packet]
+		call[client::handle_standart_packet]
 			popfd;
 		popad;
 		// original instructions
@@ -252,12 +259,12 @@ static const DLLPatchStrc gpt_handle_sc_standart_packet[] =
 	{D2DLL_INVALID}
 };
 
-void d2_tweaks::client::client::init() {
+void client::init() {
 	// handle packet processes the packet before GamePacketReceivedIntercept
-	hooking::hook(diablo2::d2_client::get_base() + 0x11CB0, handle_packet, reinterpret_cast<void**>(&g_handle_packet));
-	hooking::hook(diablo2::d2_client::get_base() + 0x9640, game_tick_wrapper, reinterpret_cast<void**>(&g_game_tick_original));
-	hooking::hook(diablo2::d2_client::get_base() + 0x5E650, draw_game_ui, reinterpret_cast<void**>(&g_draw_game_ui_original));
-	//hooking::hook(diablo2::d2_client::get_base() + 0x150B0, handle_standart_packet, reinterpret_cast<void**>(&g_handle_packet_standart));
+	hooking::hook(d2_client::get_base() + 0x11CB0, handle_packet, reinterpret_cast<void**>(&g_handle_packet));
+	hooking::hook(d2_client::get_base() + 0x9640, game_tick_wrapper, reinterpret_cast<void**>(&g_game_tick_original));
+	hooking::hook(d2_client::get_base() + 0x5E650, draw_game_ui, reinterpret_cast<void**>(&g_draw_game_ui_original));
+	//hooking::hook(d2_client::get_base() + 0x150B0, handle_standart_packet, reinterpret_cast<void**>(&g_handle_packet_standart));
 
 		// Get the path to the INI file
 	std::string iniFilePath = std::filesystem::current_path().generic_string() + "/d2tweaks.ini";
@@ -283,7 +290,7 @@ void d2_tweaks::client::client::init() {
 }
 
 static int32_t g_ebp_send_to_client;
-void d2_tweaks::client::client::handle_cs_packet(common::packet_header* packet, size_t size) {
+void client::handle_cs_packet(common::packet_header* packet, size_t size) {
 #ifndef NDEBUG
 	__asm {
 		push[ebp + 0x2C];
@@ -306,7 +313,7 @@ void d2_tweaks::client::client::handle_cs_packet(common::packet_header* packet, 
 	handler->handle_cs_packet(packet);
 }
 
-void d2_tweaks::client::client::handle_standart_packet(common::packet_header* packet, size_t size) {
+void client::handle_standart_packet(common::packet_header* packet, size_t size) {
 	if (size == -1)
 		return;
 
@@ -317,7 +324,7 @@ void d2_tweaks::client::client::handle_standart_packet(common::packet_header* pa
 	return;
 }
 
-void d2_tweaks::client::client::handle_packet(common::packet_header* packet, size_t size) {
+void client::handle_packet(common::packet_header* packet, size_t size) {
 	static common::packet_header dummy;
 	static auto& instance = singleton<client>::instance();
 
@@ -342,7 +349,7 @@ void d2_tweaks::client::client::handle_packet(common::packet_header* packet, siz
 }
 
 static bool g_is_init = false;
-void d2_tweaks::client::client::game_tick() {
+void client::game_tick() {
 	static auto& instance = singleton<client>::instance();  /// conflict with text on d2 gl
 
 	if (g_is_init == false) {
@@ -367,7 +374,7 @@ void d2_tweaks::client::client::game_tick() {
 	return;
 }
 
-int32_t d2_tweaks::client::client::draw_game_ui() {
+int32_t client::draw_game_ui() {
 	static auto& ui = singleton<ui::ui_manager>::instance();
 
 	const auto result = g_draw_game_ui_original();
@@ -377,15 +384,15 @@ int32_t d2_tweaks::client::client::draw_game_ui() {
 	return result;
 }
 
-void d2_tweaks::client::client::register_module(modules::client_module* module) {
+void client::register_module(modules::client_module* module) {
 	m_modules[m_module_id_counter++] = module;
 }
 
-void d2_tweaks::client::client::register_tick_handler(modules::client_module* module) {
+void client::register_tick_handler(modules::client_module* module) {
 	m_tick_handlers[m_tick_handler_id_counter++] = module;
 }
 
-void d2_tweaks::client::client::register_packet_cs_handler(common::packet_types_cs_t packet, common::message_types_t type, modules::client_module* module) {
+void client::register_packet_cs_handler(common::packet_types_cs_t packet, common::message_types_t type, modules::client_module* module) {
 	if (m_packet_cs_handlers[packet] != nullptr) {
 		spdlog::warn("Clientside packet cs handler for {0} is already registered!", type);
 	}
@@ -393,7 +400,7 @@ void d2_tweaks::client::client::register_packet_cs_handler(common::packet_types_
 	m_packet_cs_handlers[packet] = module;
 }
 
-void d2_tweaks::client::client::register_packet_handler(common::message_types_t type, modules::client_module* module) {
+void client::register_packet_handler(common::message_types_t type, modules::client_module* module) {
 	if (m_packet_handlers[type] != nullptr) {
 		spdlog::warn("Clientside packet handler for {0} is already registered!", type);
 	}
@@ -401,8 +408,8 @@ void d2_tweaks::client::client::register_packet_handler(common::message_types_t 
 	m_packet_handlers[type] = module;
 }
 
-diablo2::structures::unit* d2_tweaks::client::client::get_client_unit(uint32_t type, uint32_t guid) {
-	static auto units = diablo2::d2_client::get_client_unit_list();
+unit* client::get_client_unit(uint32_t type, uint32_t guid) {
+	static auto units = d2_client::get_client_unit_list();
 
 	const auto index = guid & 127;
 
@@ -414,3 +421,6 @@ diablo2::structures::unit* d2_tweaks::client::client::get_client_unit(uint32_t t
 
 	return result;
 }
+
+}  // namespace client
+}  // namespace d2_tweaks

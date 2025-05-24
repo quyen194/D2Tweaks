@@ -1,32 +1,33 @@
 #pragma once
 
-#include <cstdint>
-
 #include <d2tweaks/server/modules/server_module.h>
 
-//Display damage server side
+#include <cstdint>
+
+// Display damage server side
 
 namespace diablo2 {
-	namespace structures {
-		struct inventory;
-		struct game;
-		struct unit;
-	}
-}
+namespace structures {
+struct inventory;
+struct game;
+struct unit;
+}  // namespace structures
+}  // namespace diablo2
 
 namespace d2_tweaks {
-	namespace server {
-		class server;
+namespace server {
+class server;
 
-		namespace modules {
-			class damage_display final : public server_module {
-			public:
-				void init() override;
+namespace modules {
+class damage_display final : public server_module {
+ public:
+  void init() override;
 
-				bool handle_packet(diablo2::structures::game* game, diablo2::structures::unit* player,
-					common::packet_header* packet) override;
-				void tick(diablo2::structures::game* game, diablo2::structures::unit* unit) override;
-			};
-		}
-	}
-}
+  bool handle_packet(game* game,
+                     unit* player,
+                     common::packet_header* packet) override;
+  void tick(game* game, unit* unit) override;
+};
+}  // namespace modules
+}  // namespace server
+}  // namespace d2_tweaks
