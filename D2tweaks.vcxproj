@@ -124,6 +124,7 @@
     <ClCompile Include="d2tweaks\client\modules\autosort\autosort_client.cpp" />
     <ClCompile Include="d2tweaks\client\modules\auto_gold_pickup\auto_gold_pickup_client.cpp" />
     <ClCompile Include="d2tweaks\client\modules\auto_item_pickup\auto_item_pickup_client.cpp" />
+    <ClCompile Include="d2tweaks\client\modules\character_stats_display\character_stats_display.cpp" />
     <ClCompile Include="d2tweaks\client\modules\client_module.cpp" />
     <ClCompile Include="d2tweaks\client\modules\damage_display\damage_display_client.cpp" />
     <ClCompile Include="d2tweaks\client\modules\item_drop_message\item_drop_message_client.cpp" />
@@ -208,6 +209,7 @@
     <ClInclude Include="d2tweaks\client\modules\autosort\autosort_client.h" />
     <ClInclude Include="d2tweaks\client\modules\auto_gold_pickup\auto_gold_pickup_client.h" />
     <ClInclude Include="d2tweaks\client\modules\auto_item_pickup\auto_item_pickup_client.h" />
+    <ClInclude Include="d2tweaks\client\modules\character_stats_display\character_stats_display.h" />
     <ClInclude Include="d2tweaks\client\modules\client_module.h" />
     <ClInclude Include="d2tweaks\client\modules\damage_display\damage_display_client.h" />
     <ClInclude Include="d2tweaks\client\modules\item_drop_message\item_drop_message_client.h" />
