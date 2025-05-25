@@ -133,11 +133,13 @@ class auto_transmute_menu : public ui::menu {
 #endif
 
     if (m_bToggleTransmute) {
-      //d2_client::print_chat(L"AUTO TRANSMUTE ON", 1);
-      m_auto_transmute_btn->set_current_frame(5); // index of frame in buttons.dc6
+      // d2_client::print_chat(L"AUTO TRANSMUTE ON", 1);
+      // index of frame in buttons.dc6
+      // m_auto_transmute_btn->set_current_frame(m_auto_transmute_btn->get_frame_down());
     } else {
-      //d2_client::print_chat(L"AUTO TRANSMUTE OFF", 2);
-      m_auto_transmute_btn->set_current_frame(4);
+      // d2_client::print_chat(L"AUTO TRANSMUTE OFF", 2);
+      // index of frame in buttons.dc6
+      // m_auto_transmute_btn->set_current_frame(m_auto_transmute_btn->get_frame_up());
     }
 
     if (!should_draw()) {
