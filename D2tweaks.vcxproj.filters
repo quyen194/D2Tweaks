@@ -192,8 +192,43 @@
     <None Include="_dev_release.bat" />
     <None Include="config.bat" />
     <None Include="README.md" />
+    <None Include="build\!resources\d2tweaks\assets\buttons.dc6" />
+    <None Include="build\!resources\d2tweaks.ini" />
+    <None Include="build\!resources\d2tweaks_tfwa_a2p17a.ini" />
+    <None Include="build\D2tweaks_17.04.2024.rar" />
+    <None Include="build\D2tweaks_18.04.2023.zip" />
+    <None Include="build\D2tweaks_27.04.2023.zip" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resources.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="build\!resources\d2tweaks\interface_sgd2freeres\autogoldpickup.xml" />
+    <Xml Include="build\!resources\d2tweaks\interface_sgd2freeres\autopickup.xml" />
+    <Xml Include="build\!resources\d2tweaks\interface_sgd2freeres\autosort.xml" />
+    <Xml Include="build\!resources\d2tweaks\interface_sgd2freeres\autotransmute.xml" />
+    <Xml Include="build\!resources\d2tweaks\interface_sgd2freeres\loot_filter_settings_menu.xml" />
+    <Xml Include="build\!resources\d2tweaks\interface_sgd2freeres\loot_filter_settings_toggle_menu.xml" />
+    <Xml Include="build\!resources\d2tweaks\interface_sgd2freeres\reloaditems.xml" />
+    <Xml Include="build\!resources\d2tweaks\interface_d2expres\autogoldpickup.xml" />
+    <Xml Include="build\!resources\d2tweaks\interface_d2expres\autopickup.xml" />
+    <Xml Include="build\!resources\d2tweaks\interface_d2expres\autosort.xml" />
+    <Xml Include="build\!resources\d2tweaks\interface_d2expres\autotransmute.xml" />
+    <Xml Include="build\!resources\d2tweaks\interface_d2expres\loot_filter_settings_menu.xml" />
+    <Xml Include="build\!resources\d2tweaks\interface_d2expres\loot_filter_settings_toggle_menu.xml" />
+    <Xml Include="build\!resources\d2tweaks\interface_d2expres\reloaditems.xml" />
+    <Xml Include="build\!resources\d2tweaks\interface_vanilla\autogoldpickup.xml" />
+    <Xml Include="build\!resources\d2tweaks\interface_vanilla\autopickup.xml" />
+    <Xml Include="build\!resources\d2tweaks\interface_vanilla\autosort.xml" />
+    <Xml Include="build\!resources\d2tweaks\interface_vanilla\autotransmute.xml" />
+    <Xml Include="build\!resources\d2tweaks\interface_vanilla\loot_filter_settings_menu.xml" />
+    <Xml Include="build\!resources\d2tweaks\interface_vanilla\loot_filter_settings_toggle_menu.xml" />
+    <Xml Include="build\!resources\d2tweaks\interface_vanilla\reloaditems.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="build\!resources\LOD item code\armor.txt" />
+    <Text Include="build\!resources\LOD item code\misc.txt" />
+    <Text Include="build\!resources\LOD item code\weapons.txt" />
+    <Text Include="build\!resources\LOD item type\Item Types.txt" />
   </ItemGroup>
 </Project>
