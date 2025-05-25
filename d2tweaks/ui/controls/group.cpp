@@ -77,6 +77,10 @@ void group::draw() {
 }
 
 void group::draw(int32_t offsetX, int32_t offsetY) {
+  if (!get_visible()) {
+    return;
+  }
+
   for (auto control : m_controls) {
     if (!control->get_visible())
       continue;

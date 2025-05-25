@@ -146,6 +146,10 @@ void checkbox::draw() {
 }
 
 void checkbox::draw(int32_t offsetX, int32_t offsetY) {
+  if (!get_visible()) {
+    return;
+  }
+
   if (m_rect.contains(d2_client::get_mouse_x(),
                       d2_client::get_mouse_y(),
                       offsetX,
