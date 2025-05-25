@@ -110,8 +110,7 @@
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>_dev_debug.bat</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
