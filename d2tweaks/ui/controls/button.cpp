@@ -166,6 +166,10 @@ void button::draw() {
 }
 
 void button::draw(int32_t offsetX, int32_t offsetY) {
+  if (!get_visible()) {
+    return;
+  }
+
   for (auto it = m_respos.begin(); it != m_respos.end(); it++) {
     if (it->res_x == d2_client::screen_width() &&
         it->res_y == d2_client::screen_height()) {

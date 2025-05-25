@@ -106,6 +106,10 @@ void image::draw(int32_t offsetX, int32_t offsetY) {
   if (m_image == nullptr || !m_image->get())
     return;
 
+  if (!get_visible()) {
+    return;
+  }
+
   //I don't like to call memset for each draw_info every frame, but if we wouldn't clear it - we'll get access violation inside draw_image
   memset(&m_draw_info, 0x00, sizeof m_draw_info);
   m_draw_info.cell_file = static_cast<cellfile*>(m_image->get());
