@@ -217,13 +217,16 @@ void menu::remove_control(control* control) {
 }
 
 void menu::draw() {
+  uint32_t screen_width = d2_client::screen_width();
+  uint32_t screen_height = d2_client::screen_height();
+
   for (auto control : m_controls) {
     if (!control->get_visible() || control->get_parent() != nullptr)
       continue;
 
     for (auto it = m_respos.begin(); it != m_respos.end(); it++) {
-      if (it->res_x == d2_client::screen_width() &&
-          it->res_y == d2_client::screen_height()) {
+      if (it->res_x == screen_width &&
+          it->res_y == screen_height) {
         m_x = it->pos_x;
         m_y = it->pos_y;
         break;

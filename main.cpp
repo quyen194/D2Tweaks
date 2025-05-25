@@ -61,6 +61,13 @@ void initialize(uint32_t param) {
     exit(0);
   }
 
+#ifndef NDEBUG
+  MessageBox(FindWindowA("Diablo II", "Diablo II"),
+             "Wait for debugger",
+             "D2TWeaks",
+             MB_OK);
+#endif
+
   singleton<common::common>::instance().init();
   singleton<server::server>::instance().init();
   singleton<client::client>::instance().init();
