@@ -2,6 +2,7 @@
 #include <DllNotify.h>
 #include <d2tweaks/client/client.h>
 #include <d2tweaks/client/modules/auto_gold_pickup/auto_gold_pickup_client.h>
+#include <d2tweaks/common/asset_manager.h>
 #include <d2tweaks/common/protocol.h>
 #include <d2tweaks/ui/controls/label.h>
 #include <d2tweaks/ui/menu.h>
@@ -75,18 +76,13 @@ MODULE_INIT(auto_gold_pickup)
 void auto_gold_pickup::init_early() {}
 
 void auto_gold_pickup::init() {
-  char acPathToIni[MAX_PATH] = {0};
-  const char* pcIniFile = "\\d2tweaks.ini";
+  const char* config_path = common::get_config_path();
 
-  GetCurrentDirectory(MAX_PATH, acPathToIni);
-  lstrcat(acPathToIni, pcIniFile);
-
-  if (GetPrivateProfileInt("modules", "AutoGoldPickup", 1, acPathToIni) !=
-      FALSE) {
+  if (GetPrivateProfileInt("modules", "AutoGoldPickup", 1, config_path)) {
     m_iDistance = GetPrivateProfileInt(
-        "AutoGoldPickup", "PickupDistance", 4, acPathToIni);
+        "AutoGoldPickup", "PickupDistance", 4, config_path);
     m_nDisplayTime = GetPrivateProfileInt(
-        "AutoGoldPickup", "DisplayTime", 2500, acPathToIni);
+        "AutoGoldPickup", "DisplayTime", 2500, config_path);
     singleton<client>::instance().register_packet_handler(
         common::message_types_t::MESSAGE_TYPE_GOLD_PICKUP_INFO, this);
     singleton<client>::instance().register_tick_handler(this);

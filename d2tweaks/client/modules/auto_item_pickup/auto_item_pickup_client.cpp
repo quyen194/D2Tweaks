@@ -59,10 +59,8 @@ static char* m_pcItemTypesAll;
 static char* m_pcItemTypesAllTemp;
 
 static char m_acBuffer[1024] = {0};
-static char m_acPathToIni[MAX_PATH] = {0};
-static const char* m_pcIniFile = "\\d2tweaks.ini";
 
-void ReloadFilters(char* szPathToIni) {
+void ReloadFilters(const char* szPathToIni) {
   uint32_t dwLenght = 0;
 
   m_nCountItemListAll = 0;
@@ -354,10 +352,12 @@ class auto_item_pickup_menu : public ui::menu {
   }
 
   void auto_item_pickup_click() {
+    const char* config_path = common::get_config_path();
+
     m_bToggleAutoItemPickup ^= true;
 
     if (m_bToggleAutoItemPickup) {
-      ReloadFilters(m_acPathToIni);
+      ReloadFilters(config_path);
       d2_client::print_chat(L"AUTO PICKUP ON", 1);
     } else {
       d2_client::print_chat(L"AUTO PICKUP OFF", 2);
@@ -370,13 +370,11 @@ MODULE_INIT(auto_item_pickup)
 void auto_item_pickup::init_early() {}
 
 void auto_item_pickup::init() {
-  GetCurrentDirectory(MAX_PATH, m_acPathToIni);
-  lstrcat(m_acPathToIni, m_pcIniFile);
+  const char* config_path = common::get_config_path();
 
-  if (GetPrivateProfileInt("modules", "AutoItemPickup", 1, m_acPathToIni) !=
-      FALSE) {
+  if (GetPrivateProfileInt("modules", "AutoItemPickup", 1, config_path)) {
     m_iDistance = GetPrivateProfileInt(
-        "AutoItemPickup", "PickupDistance", 4, m_acPathToIni);
+        "AutoItemPickup", "PickupDistance", 4, config_path);
 
     // ReloadFilters(m_acPathToIni);
 

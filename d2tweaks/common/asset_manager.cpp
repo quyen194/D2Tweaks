@@ -1,3 +1,5 @@
+#include <Windows.h>
+
 #include <d2tweaks/common/asset_manager.h>
 
 #include <spdlog/spdlog.h>
@@ -13,8 +15,31 @@ using namespace d2_tweaks;
 using namespace diablo2;
 using namespace diablo2::structures;
 
+extern HMODULE g_hModule;
+
 namespace d2_tweaks {
 namespace common {
+
+static std::string config_path;
+const char* get_config_path() {
+  if (!config_path.empty()) {
+    return config_path.c_str();
+  }
+
+  char path[MAX_PATH];
+  DWORD length = GetModuleFileNameA(g_hModule, path, MAX_PATH);
+  if (length == 0 || length == MAX_PATH)
+      return "";
+
+  std::string fullPath(path);
+
+  size_t pos = fullPath.find_last_of("\\/");
+  if (pos == std::string::npos)
+      return "";
+
+  config_path = fullPath.substr(0, pos) + "\\d2tweaks.ini";
+  return config_path.c_str();
+}
 
 static void* g_d2_tweaks_mpq = nullptr;
 

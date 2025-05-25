@@ -223,18 +223,12 @@ void transmute::init_early() {
 }
 
 void transmute::init() {
-  char szDir[MAX_PATH];
-  char szPath[MAX_PATH];
+  const char* config_path = common::get_config_path();
+  CIni config(config_path);
+
   uint32_t dwLenght = 0;
-  const char szConfig[] = "d2tweaks.ini";
 
-  GetCurrentDirectory(MAX_PATH, szDir);
-  sprintf_s(szPath, MAX_PATH, "%s\\%s", szDir, szConfig);
-  CIni config(szPath);
-
-  // const char szRecipes[] = "d2tweaks.recipes.ini";
-  // snprintf(szPath, MAX_PATH, "%s\\%s", szDir, szRecipes);
-  // CIni recipes(szPath);
+  // CIni recipes(config_path);
   // // key enlarging the buffer unless we make sure all section names are loaded.
   // DWORD dwBufSize = 1024;
   // char* pszBuffer = new char[dwBufSize];
@@ -245,11 +239,10 @@ void transmute::init() {
   //   pszBuffer = new char[dwBufSize];
   //   dwCopied = recipes.GetSectionNames(pszBuffer, dwBufSize - 1);
   // }
-  // for (char* pSection = pszBuffer; pSection[0];
-  //      pSection = &pSection[strlen(pSection) + 1]) {
+  // for (char* pSection = pszBuffer; pSection[0]; pSection = &pSection[strlen(pSection) + 1]) {
   // }
 
-  if (config.GetInt("modules", "AutoTransmute", 1) != FALSE) {
+  if (config.GetInt("modules", "AutoTransmute", 1)) {
     m_nDelayFrames = config.GetUInt("AutoTransmute", "DelayInFrames", 10);
     m_nTransmuteSound = config.GetUInt("AutoTransmute", "EnableTransmuteSound", 0);
 

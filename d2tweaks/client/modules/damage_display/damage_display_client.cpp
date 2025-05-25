@@ -1,5 +1,6 @@
 #include <d2tweaks/client/modules/damage_display/damage_display_client.h>
 
+#include <d2tweaks/common/asset_manager.h>
 #include <d2tweaks/common/protocol.h>
 #include <d2tweaks/client/client.h>
 #include <spdlog/spdlog.h>
@@ -193,6 +194,7 @@ static void onDraw(HWND hWnd,
 }
 
 static void draw_damage_labels() {
+  const char* config_path = common::get_config_path();
   const auto player = d2_client::get_local_player();
 
   if (!player)
@@ -361,7 +363,7 @@ static void draw_damage_labels() {
         //     3,
         //     textColor);
 
-        int _barHeight = GetPrivateProfileIntA("Options", "barHeight", 0, "./D2Tweaks.ini");
+        int _barHeight = GetPrivateProfileIntA("Options", "barHeight", 0, config_path);
 
         d2_win::set_current_font(UI_FONT_6); // Set font to FONT16
         d2_win::draw_text(const_cast<wchar_t*>(combinedText.c_str()),
@@ -423,18 +425,14 @@ void damage_display::init_early() {
 }
 
 void damage_display::init() {
-  char acPathToIni[MAX_PATH] = { 0 };
-  const char* pcIniFile = "\\d2tweaks.ini";
+  const char* config_path = common::get_config_path();
 
-  GetCurrentDirectory(MAX_PATH, acPathToIni);
-  lstrcat(acPathToIni, pcIniFile);
-
-  if (GetPrivateProfileInt("modules", "DamageDisplay", 1, acPathToIni) != FALSE) {
-    g_font_enemy = GetPrivateProfileInt("DamageDisplay", "EnemyDamageFont", 0, acPathToIni);
-    g_font_player = GetPrivateProfileInt("DamageDisplay", "PlayerDamageFont", 1, acPathToIni);
-    g_player_label_posx = GetPrivateProfileInt("DamageDisplay", "PlayerDamagePosx", 70, acPathToIni);
-    g_player_label_posy = GetPrivateProfileInt("DamageDisplay", "PlayerDamagePosy", 500, acPathToIni);
-    DISPLAY_TIME = GetPrivateProfileInt("DamageDisplay", "DisplayTime", 1000, acPathToIni);
+  if (GetPrivateProfileInt("modules", "DamageDisplay", 1, config_path)) {
+    g_font_enemy = GetPrivateProfileInt("DamageDisplay", "EnemyDamageFont", 0, config_path);
+    g_font_player = GetPrivateProfileInt("DamageDisplay", "PlayerDamageFont", 1, config_path);
+    g_player_label_posx = GetPrivateProfileInt("DamageDisplay", "PlayerDamagePosx", 70, config_path);
+    g_player_label_posy = GetPrivateProfileInt("DamageDisplay", "PlayerDamagePosy", 500, config_path);
+    DISPLAY_TIME = GetPrivateProfileInt("DamageDisplay", "DisplayTime", 1000, config_path);
     singleton<client>::instance().register_packet_handler(common::MESSAGE_TYPE_DAMAGE_INFO, this);
     hooking::hook(d2_client::get_base() + 0x80A30,
                   draw_game_ui,

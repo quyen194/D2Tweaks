@@ -9,6 +9,8 @@
 namespace d2_tweaks {
 namespace common {
 
+const char* get_config_path();
+
 class asset;
 
 enum mpq_file_type_t {

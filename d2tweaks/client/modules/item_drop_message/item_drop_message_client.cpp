@@ -1,6 +1,7 @@
 ﻿#include <d2tweaks/client/modules/item_drop_message/item_drop_message_client.h>
 #include <d2tweaks/client/client.h>
 
+#include <d2tweaks/common/asset_manager.h>
 #include <d2tweaks/common/protocol.h>
 
 #include <common/hooking.h>
@@ -137,28 +138,24 @@ void item_drop_message::init_early() {
 }
 
 void item_drop_message::init() {
-  char acPathToIni[MAX_PATH] = { 0 };
-  const char* pcIniFile = "\\d2tweaks.ini";
+  const char* config_path = common::get_config_path();
 
-  GetCurrentDirectory(MAX_PATH, acPathToIni);
-  lstrcat(acPathToIni, pcIniFile);
+  if (GetPrivateProfileInt("modules", "ItemDropMessage", 1, config_path) != FALSE) {
+    m_nMsgCount = GetPrivateProfileInt("ItemDropMessage", "MaxNumMessages", 8, config_path);
+    m_nHookMethod = GetPrivateProfileInt("ItemDropMessage", "HookMethod", 1, config_path);
 
-  if (GetPrivateProfileInt("modules", "ItemDropMessage", 1, acPathToIni) != FALSE) {
-    m_nMsgCount = GetPrivateProfileInt("ItemDropMessage", "MaxNumMessages", 8, acPathToIni);
-    m_nHookMethod = GetPrivateProfileInt("ItemDropMessage", "HookMethod", 1, acPathToIni);
+    m_anQualityColor[0] = GetPrivateProfileInt("ItemDropMessage", "DefaultColor", 0, config_path);
+    m_anQualityColor[1] = GetPrivateProfileInt("ItemDropMessage", "Cracked", 0, config_path);
+    m_anQualityColor[2] = GetPrivateProfileInt("ItemDropMessage", "Normal", 0, config_path);
+    m_anQualityColor[3] = GetPrivateProfileInt("ItemDropMessage", "Superior", 0, config_path);
+    m_anQualityColor[4] = GetPrivateProfileInt("ItemDropMessage", "Magic", 3, config_path);
+    m_anQualityColor[5] = GetPrivateProfileInt("ItemDropMessage", "Set", 12, config_path);
+    m_anQualityColor[6] = GetPrivateProfileInt("ItemDropMessage", "Rare", 9, config_path);
+    m_anQualityColor[7] = GetPrivateProfileInt("ItemDropMessage", "Unique", 7, config_path);
+    m_anQualityColor[8] = GetPrivateProfileInt("ItemDropMessage", "Crafted", 8, config_path);
+    m_anQualityColor[9] = GetPrivateProfileInt("ItemDropMessage", "Tempered", 10, config_path);
 
-    m_anQualityColor[0] = GetPrivateProfileInt("ItemDropMessage", "DefaultColor", 0, acPathToIni);
-    m_anQualityColor[1] = GetPrivateProfileInt("ItemDropMessage", "Cracked", 0, acPathToIni);
-    m_anQualityColor[2] = GetPrivateProfileInt("ItemDropMessage", "Normal", 0, acPathToIni);
-    m_anQualityColor[3] = GetPrivateProfileInt("ItemDropMessage", "Superior", 0, acPathToIni);
-    m_anQualityColor[4] = GetPrivateProfileInt("ItemDropMessage", "Magic", 3, acPathToIni);
-    m_anQualityColor[5] = GetPrivateProfileInt("ItemDropMessage", "Set", 12, acPathToIni);
-    m_anQualityColor[6] = GetPrivateProfileInt("ItemDropMessage", "Rare", 9, acPathToIni);
-    m_anQualityColor[7] = GetPrivateProfileInt("ItemDropMessage", "Unique", 7, acPathToIni);
-    m_anQualityColor[8] = GetPrivateProfileInt("ItemDropMessage", "Crafted", 8, acPathToIni);
-    m_anQualityColor[9] = GetPrivateProfileInt("ItemDropMessage", "Tempered", 10, acPathToIni);
-
-    GetPrivateProfileString("ItemDropMessage", "SecondString", "", m_acSecondString, 1023, acPathToIni);
+    GetPrivateProfileString("ItemDropMessage", "SecondString", "", m_acSecondString, 1023, config_path);
     mbstowcs(m_awcSecondString, m_acSecondString, 1023);
 
     // d2hackit hook d2client:$0x15123

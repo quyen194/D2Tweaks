@@ -246,11 +246,13 @@ void loot_filter_settings_toggle_menu::toggle_stash_click() {
 }
 
 void loot_filter_settings_toggle_menu::toggle_help_click() {
+  const char* config_path = common::get_config_path();
+
   //m_help_enabled = !m_help_enabled;
   // Open the default OS browser to the URL
   // read the url from the ./d2tweaks.ini file
   char urlBuffer[256];
-  GetPrivateProfileStringA("Options", "help_url", "", urlBuffer, sizeof(urlBuffer), "./d2tweaks.ini");
+  GetPrivateProfileStringA("Options", "help_url", "", urlBuffer, sizeof(urlBuffer), config_path);
   const std::string url(urlBuffer);
 
 #ifdef _WIN32
@@ -275,9 +277,11 @@ void loot_filter_settings_toggle_menu::draw() {
 }
 
 bool loot_filter_settings_toggle_menu::key_event(uint32_t key, bool up) {
+  const char* config_path = common::get_config_path();
+
   // Read the key from the ./d2tweaks.ini file from [ExPanel] section, key: key
   char keyBuffer[3];
-  GetPrivateProfileStringA("ExPanel", "key", "", keyBuffer, sizeof(keyBuffer), "./d2tweaks.ini");
+  GetPrivateProfileStringA("ExPanel", "key", "", keyBuffer, sizeof(keyBuffer), config_path);
 
   // Convert the key character to uppercase for case-insensitive comparison
   char configKey = toupper(keyBuffer[0]);

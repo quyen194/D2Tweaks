@@ -88,12 +88,14 @@ void initialize(uint32_t param) {
 //   }
 // }
 
+HMODULE g_hModule = NULL;
 HANDLE g_hThread = 0;
 // ReSharper disable once CppInconsistentNaming
 BOOL APIENTRY DllMain(HMODULE moduleHandle, DWORD reason, LPVOID reserved) {
   // ReSharper disable once CppDefaultCaseNotHandledInSwitchStatement
   switch (reason) {
     case DLL_PROCESS_ATTACH: {
+      g_hModule = moduleHandle;
       // dllnotify::DllNotify::Init_Dllnotify();
       DisableThreadLibraryCalls(moduleHandle);
       initialize(0);

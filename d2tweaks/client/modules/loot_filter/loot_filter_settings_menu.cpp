@@ -128,6 +128,7 @@ void displayStat(const std::wstring& label, uint32_t value, int x, int y, int of
 }
 
 void displayStat() {
+  const char* config_path = common::get_config_path();
   auto player = d2_client::get_local_player();
   auto inventory = player->inventory;
   unit* bag;
@@ -164,9 +165,9 @@ void displayStat() {
   int textOffset = 0;
 
   // get the value of x , y, and z from the d2tweaks.ini file using getprofileint
-  int x = GetPrivateProfileInt("BagStats", "x", 0, "./d2tweaks.ini");
-  int y = GetPrivateProfileInt("BagStats", "y", 0, "./d2tweaks.ini");
-  int z = GetPrivateProfileInt("BagStats", "spacer", 0, "./d2tweaks.ini");
+  int x = GetPrivateProfileInt("BagStats", "x", 0, config_path);
+  int y = GetPrivateProfileInt("BagStats", "y", 0, config_path);
+  int z = GetPrivateProfileInt("BagStats", "spacer", 0, config_path);
 
   for (auto item = inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
     const auto record = d2_common::get_item_record(item->data_record_index);

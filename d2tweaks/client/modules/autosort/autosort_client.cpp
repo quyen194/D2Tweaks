@@ -753,13 +753,9 @@ MODULE_INIT(autosort)
 void autosort::init_early() {}
 
 void autosort::init() {
-  char acPathToIni[MAX_PATH] = {0};
-  const char* pcIniFile = "\\d2tweaks.ini";
+  const char* config_path = common::get_config_path();
 
-  GetCurrentDirectory(MAX_PATH, acPathToIni);
-  lstrcat(acPathToIni, pcIniFile);
-
-  if (GetPrivateProfileInt("modules", "Autosort", 1, acPathToIni) != FALSE) {
+  if (GetPrivateProfileInt("modules", "Autosort", 1, config_path)) {
     singleton<ui::ui_manager>::instance().add_menu(new inventory_sort_menu());
     singleton<client>::instance().register_packet_handler(
         common::MESSAGE_TYPE_INVENTORY_SORT, this);
