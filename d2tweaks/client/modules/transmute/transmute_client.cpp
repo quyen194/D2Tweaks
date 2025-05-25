@@ -32,10 +32,13 @@
 #include <DllNotify.h>
 #include <D2Template.h>
 
+#include <common/timer.h>
+
 using namespace d2_tweaks;
 using namespace diablo2;
 using namespace diablo2::structures;
 using namespace ui::controls;
+using namespace timer;
 
 namespace d2_tweaks {
 namespace client {
@@ -87,12 +90,26 @@ enum transmute_command {
 class auto_transmute_menu : public ui::menu {
   common::asset* m_buttons_img;
   button* m_auto_transmute_btn;
+#ifndef NDEBUG
+  CountdownTimer reload_setting_timer;
+#endif
 
  public:
   auto_transmute_menu() {
     menu::set_enabled(true);
     menu::set_visible(true);
 
+    load_settings();
+
+    m_buttons_img = singleton<common::asset_manager>::instance().get_mpq_file("d2tweaks\\assets\\buttons", common::MPQ_FILE_TYPE_DC6);
+    m_auto_transmute_btn = get_button("m_auto_transmute_btn", std::bind(&auto_transmute_menu::auto_transmute_click, this));
+
+#ifndef NDEBUG
+    reload_setting_timer.setDuration(1000);
+#endif
+  }
+
+  void load_settings() {
     //load_xml("d2tweaks\\interfaces\\autotransmute.xml");
     if (DLLBASE_D2EXPRES != 0)
       load_xml("d2tweaks\\interface_d2expres\\autotransmute.xml");
@@ -100,12 +117,21 @@ class auto_transmute_menu : public ui::menu {
       load_xml("d2tweaks\\interface_sgd2freeres\\autotransmute.xml");
     if (DLLBASE_SGD2FREERES == 0 && DLLBASE_D2EXPRES == 0)
       load_xml("d2tweaks\\interface_vanilla\\autotransmute.xml");
-
-    m_buttons_img = singleton<common::asset_manager>::instance().get_mpq_file("d2tweaks\\assets\\buttons", common::MPQ_FILE_TYPE_DC6);
-    m_auto_transmute_btn = get_button("m_auto_transmute_btn", std::bind(&auto_transmute_menu::auto_transmute_click, this));
   }
 
   void draw() override {
+#ifndef NDEBUG
+    if (!reload_setting_timer.isRunning()) {
+      reload_setting_timer.setDuration(1000);
+      reload_setting_timer.start();
+    }
+
+    if (reload_setting_timer.isExpired()) {
+      load_settings();
+      reload_setting_timer.restart();
+    }
+#endif
+
     if (m_bToggleTransmute) {
       //d2_client::print_chat(L"AUTO TRANSMUTE ON", 1);
       m_auto_transmute_btn->set_current_frame(5); // index of frame in buttons.dc6
