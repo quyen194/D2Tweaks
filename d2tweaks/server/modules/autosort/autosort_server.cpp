@@ -5,6 +5,7 @@
 #include <vector>
 #include <spdlog/spdlog.h>
 
+#include <d2tweaks/common/asset_manager.h>
 #include <d2tweaks/common/protocol.h>
 
 #include <diablo2/d2common.h>
@@ -45,25 +46,31 @@ struct packed_area {
 };
 
 // Define variables to store the inventory zone values
-int iminValidX = GetPrivateProfileInt("InventoryZone", "iminValidX", 0, "./D2Tweaks.ini");
-int imaxValidX = GetPrivateProfileInt("InventoryZone", "imaxValidX", 0, "./D2Tweaks.ini");
-int iminValidY = GetPrivateProfileInt("InventoryZone", "iminValidY", 0, "./D2Tweaks.ini");
-int imaxValidY = GetPrivateProfileInt("InventoryZone", "imaxValidY", 0, "./D2Tweaks.ini");
+int iminValidX = 0;
+int imaxValidX = 0;
+int iminValidY = 0;
+int imaxValidY = 0;
 
 // Define variables to store the charm zone values
-int cminValidX = GetPrivateProfileInt("CharmZone", "cminValidX", 0, "./D2Tweaks.ini");
-int cmaxValidX = GetPrivateProfileInt("CharmZone", "cmaxValidX", 0, "./D2Tweaks.ini");
-int cminValidY = GetPrivateProfileInt("CharmZone", "cminValidY", 0, "./D2Tweaks.ini");
-int cmaxValidY = GetPrivateProfileInt("CharmZone", "cmaxValidY", 0, "./D2Tweaks.ini");
+int cminValidX = 0;
+int cmaxValidX = 0;
+int cminValidY = 0;
+int cmaxValidY = 0;
 
 void autosort::init() {
-  char acPathToIni[MAX_PATH] = { 0 };
-  const char* pcIniFile = "\\d2tweaks.ini";
+  const char* config_path = common::get_config_path();
 
-  GetCurrentDirectory(MAX_PATH, acPathToIni);
-  lstrcat(acPathToIni, pcIniFile);
+  iminValidX = GetPrivateProfileInt("InventoryZone", "MinValidX", 0, config_path);
+  imaxValidX = GetPrivateProfileInt("InventoryZone", "MaxValidX", 0, config_path);
+  iminValidY = GetPrivateProfileInt("InventoryZone", "MinValidY", 0, config_path);
+  imaxValidY = GetPrivateProfileInt("InventoryZone", "MaxValidY", 0, config_path);
+ 
+  cminValidX = GetPrivateProfileInt("CharmZone", "MinValidX", 0, config_path);
+  cmaxValidX = GetPrivateProfileInt("CharmZone", "MaxValidX", 0, config_path);
+  cminValidY = GetPrivateProfileInt("CharmZone", "MinValidY", 0, config_path);
+  cmaxValidY = GetPrivateProfileInt("CharmZone", "MaxValidY", 0, config_path);
 
-  if (GetPrivateProfileInt("modules", "Autosort", 1, acPathToIni) != FALSE) {
+  if (GetPrivateProfileInt("modules", "Autosort", 1, config_path)) {
     singleton<server>::instance().register_packet_handler(
         common::MESSAGE_TYPE_INVENTORY_SORT, this);
   }

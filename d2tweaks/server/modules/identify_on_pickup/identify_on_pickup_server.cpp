@@ -1,3 +1,5 @@
+#include <d2tweaks/common/asset_manager.h>
+
 #include <d2tweaks/server/modules/identify_on_pickup/identify_on_pickup_server.h>
 #include <d2tweaks/server/server.h>
 
@@ -125,24 +127,20 @@ static uint32_t __fastcall pickup_item_cursor(game* game,
 }
 
 void identify_on_pickup::init() {
-  char acPathToIni[MAX_PATH] = { 0 };
-  const char* pcIniFile = "\\d2tweaks.ini";
+  const char* config_path = common::get_config_path();
 
-  GetCurrentDirectory(MAX_PATH, acPathToIni);
-  lstrcat(acPathToIni, pcIniFile);
-
-  if (GetPrivateProfileInt("modules", "IdentifyOnPickup", 1, acPathToIni) != FALSE) {
+  if (GetPrivateProfileInt("modules", "IdentifyOnPickup", 1, config_path)) {
     hooking::hook(d2_game::get_base() + 0x13340, pickup_item, &g_pickup_item_original);
     hooking::hook(d2_game::get_base() + 0x12B80, pickup_item_cursor, &g_pickup_item_cursor_original);
 
-    g_item_Normal = GetPrivateProfileInt("IdentifyOnPickup", "Normal", 1, acPathToIni);
-    g_item_Superior = GetPrivateProfileInt("IdentifyOnPickup", "Superior", 1, acPathToIni);
-    g_item_Magic = GetPrivateProfileInt("IdentifyOnPickup", "Magic", 1, acPathToIni);
-    g_item_Rare = GetPrivateProfileInt("IdentifyOnPickup", "Rare", 1, acPathToIni);
-    g_item_Set = GetPrivateProfileInt("IdentifyOnPickup", "Set", 1, acPathToIni);
-    g_item_Unique = GetPrivateProfileInt("IdentifyOnPickup", "Unique", 1, acPathToIni);
-    g_item_Crafted = GetPrivateProfileInt("IdentifyOnPickup", "Crafted", 1, acPathToIni);
-    g_item_Tempered = GetPrivateProfileInt("IdentifyOnPickup", "Tempered", 1, acPathToIni);
+    g_item_Normal = GetPrivateProfileInt("IdentifyOnPickup", "Normal", 1, config_path);
+    g_item_Superior = GetPrivateProfileInt("IdentifyOnPickup", "Superior", 1, config_path);
+    g_item_Magic = GetPrivateProfileInt("IdentifyOnPickup", "Magic", 1, config_path);
+    g_item_Rare = GetPrivateProfileInt("IdentifyOnPickup", "Rare", 1, config_path);
+    g_item_Set = GetPrivateProfileInt("IdentifyOnPickup", "Set", 1, config_path);
+    g_item_Unique = GetPrivateProfileInt("IdentifyOnPickup", "Unique", 1, config_path);
+    g_item_Crafted = GetPrivateProfileInt("IdentifyOnPickup", "Crafted", 1, config_path);
+    g_item_Tempered = GetPrivateProfileInt("IdentifyOnPickup", "Tempered", 1, config_path);
   }
 }
 

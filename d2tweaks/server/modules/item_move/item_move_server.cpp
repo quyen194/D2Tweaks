@@ -1,5 +1,6 @@
-#include <d2tweaks/server/modules/item_move/item_move_server.h>
+#include <d2tweaks/common/asset_manager.h>
 
+#include <d2tweaks/server/modules/item_move/item_move_server.h>
 #include <d2tweaks/server/server.h>
 
 #include <diablo2/d2net.h>
@@ -43,13 +44,9 @@ namespace modules {
 MODULE_INIT(item_move)
 
 void item_move::init() {
-  char acPathToIni[MAX_PATH] = { 0 };
-  const char* pcIniFile = "\\d2tweaks.ini";
+  const char* config_path = common::get_config_path();
 
-  GetCurrentDirectory(MAX_PATH, acPathToIni);
-  lstrcat(acPathToIni, pcIniFile);
-
-  if (GetPrivateProfileInt("modules", "ItemMover", 1, acPathToIni) != FALSE) {
+  if (GetPrivateProfileInt("modules", "ItemMover", 1, config_path)) {
     singleton<server>::instance().register_packet_handler(
         common::MESSAGE_TYPE_ITEM_MOVE, this);
   }

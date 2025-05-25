@@ -1,5 +1,6 @@
 #include <d2tweaks/server/modules/trader_update/trader_update_server.h>
 #include <d2tweaks/server/server.h>
+#include <d2tweaks/common/asset_manager.h>
 #include <d2tweaks/common/protocol.h>
 #include <spdlog/spdlog.h>
 #include <diablo2/d2game.h>
@@ -138,15 +139,10 @@ static uint32_t m_nParam4 = 1;
 // };
 
 void trader_update::init() {
-  char szDir[MAX_PATH];
-  char szPath[MAX_PATH];
-  const char szConfig[] = "d2tweaks.ini";
+  const char* config_path = common::get_config_path();
+  CIni config(config_path);
 
-  GetCurrentDirectory(MAX_PATH, szDir);
-  snprintf(szPath, MAX_PATH, "%s\\%s", szDir, szConfig);
-  CIni config(szPath);
-
-  if (config.GetInt("modules", "ReloadTradeGamble", 1) != FALSE) {
+  if (config.GetInt("modules", "ReloadTradeGamble", 1)) {
     singleton<server>::instance().register_packet_handler(
         common::MESSAGE_TYPE_TRADER_UPDATE, this);
     // D2TEMPLATE_ApplyPatch(gpt_click_trade_menu);

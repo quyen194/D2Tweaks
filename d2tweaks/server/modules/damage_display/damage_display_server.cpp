@@ -1,5 +1,6 @@
-#include <d2tweaks/server/modules/damage_display/damage_display_server.h>
+#include <d2tweaks/common/asset_manager.h>
 
+#include <d2tweaks/server/modules/damage_display/damage_display_server.h>
 #include <d2tweaks/server/server.h>
 
 #include <diablo2/d2game.h>
@@ -313,13 +314,9 @@ static char __fastcall apply_attack_results(game* game,
 }
 
 void damage_display::init() {
-  char acPathToIni[MAX_PATH] = {0};
-  const char* pcIniFile = "\\d2tweaks.ini";
+  const char* config_path = common::get_config_path();
 
-  GetCurrentDirectory(MAX_PATH, acPathToIni);
-  lstrcat(acPathToIni, pcIniFile);
-
-  if (GetPrivateProfileInt("modules", "DamageDisplay", 1, acPathToIni) != FALSE) {
+  if (GetPrivateProfileInt("modules", "DamageDisplay", 1, config_path)) {
     hooking::hook(d2_game::get_base() + 0x8FE90,
                   apply_attack_results,
                   reinterpret_cast<void**>(&g_apply_attack_results_origin));

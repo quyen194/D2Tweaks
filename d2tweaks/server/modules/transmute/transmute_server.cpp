@@ -1,5 +1,6 @@
 #include <d2tweaks/server/modules/transmute/transmute_server.h>
 #include <d2tweaks/server/server.h>
+#include <d2tweaks/common/asset_manager.h>
 #include <d2tweaks/common/protocol.h>
 #include <spdlog/spdlog.h>
 #include <diablo2/d2game.h>
@@ -41,13 +42,9 @@ enum transmute_command {
 };
 
 void transmute::init() {
-  char PathToIni[MAX_PATH] = { 0 };
-  const char IniFile[] = "\\d2tweaks.ini";
+  const char* config_path = common::get_config_path();
 
-  GetCurrentDirectory(MAX_PATH, PathToIni);
-  lstrcat(PathToIni, IniFile);
-
-  if (GetPrivateProfileInt("modules", "AutoTransmute", 0, PathToIni) != FALSE) {
+  if (GetPrivateProfileInt("modules", "AutoTransmute", 0, config_path)) {
     // singleton<server>::instance().register_tick_handler(this);
     singleton<server>::instance().register_packet_handler(common::MESSAGE_TYPE_TRANSMUTE, this);
   }

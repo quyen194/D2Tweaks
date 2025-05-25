@@ -1,3 +1,5 @@
+#include <d2tweaks/common/asset_manager.h>
+
 #include <d2tweaks/server/modules/auto_item_pickup/auto_item_pickup_server.h>
 #include <d2tweaks/server/server.h>
 
@@ -26,13 +28,9 @@ namespace modules {
 MODULE_INIT(auto_item_pickup)
 
 void auto_item_pickup::init() {
-  char acPathToIni[MAX_PATH] = { 0 };
-  const char* pcIniFile = "\\d2tweaks.ini";
+  const char* config_path = common::get_config_path();
 
-  GetCurrentDirectory(MAX_PATH, acPathToIni);
-  lstrcat(acPathToIni, pcIniFile);
-
-  if (GetPrivateProfileInt("modules", "AutoItemPickup", 1, acPathToIni) != FALSE) {
+  if (GetPrivateProfileInt("modules", "AutoItemPickup", 1, config_path)) {
     singleton<server>::instance().register_packet_handler(common::MESSAGE_TYPE_ITEM_PICKUP_INFO, this);
     singleton<server>::instance().register_tick_handler(this);
   }

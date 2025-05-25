@@ -1,3 +1,5 @@
+#include <d2tweaks/common/asset_manager.h>
+
 #include <d2tweaks/server/modules/item_drop_message/item_drop_message_server.h>
 #include <d2tweaks/server/server.h>
 
@@ -43,14 +45,10 @@ static item_code* m_stItemList;
 static item_type* m_stItemTypes;
 
 void item_drop_message::init() {
+  const char* config_path = common::get_config_path();
   uint32_t dwLenght = 0;
-  char acPathToIni[MAX_PATH] = { 0 };
-  const char* pcIniFile = "\\d2tweaks.ini";
 
-  GetCurrentDirectory(MAX_PATH, acPathToIni);
-  lstrcat(acPathToIni, pcIniFile);
-
-  if (GetPrivateProfileInt("modules", "ItemDropMessage", 1, acPathToIni) != FALSE) {
+  if (GetPrivateProfileInt("modules", "ItemDropMessage", 1, config_path)) {
     for (uint32_t i = 0; i < m_nCountItemListKeys; i++) {
       sprintf_s(m_acBuffer, sizeof(m_acBuffer), "ItemList%d", i + 1);
       dwLenght = GetPrivateProfileString("ItemDropMessage",
@@ -58,7 +56,7 @@ void item_drop_message::init() {
                                          0,
                                          m_aacItemList[i],
                                          MAX_STRING_LENGHT - 1,
-                                         acPathToIni);
+                                         config_path);
       if (dwLenght != 0) {
         lstrcat(m_acItemListAll, m_aacItemList[i]);
         lstrcat(m_acItemListAll, "|");
@@ -72,7 +70,7 @@ void item_drop_message::init() {
                                          0,
                                          m_aacItemList[i],
                                          MAX_STRING_LENGHT - 1,
-                                         acPathToIni);
+                                         config_path);
       if (dwLenght != 0) {
         lstrcat(m_acItemTypesAll, m_aacItemTypes[i]);
         lstrcat(m_acItemTypesAll, "|");

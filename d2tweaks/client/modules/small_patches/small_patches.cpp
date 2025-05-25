@@ -28,13 +28,9 @@ void small_patches::init_early() {
 void small_patches::init() {
   // // Ingame FPS unlock
   // DWORD oldProtect;
-  // char PathToIni[MAX_PATH] = {0};
-  // const char IniFile[] = "\\d2tweaks.ini";
+  // const char* config_path = common::get_config_path();
   // 
-  // GetCurrentDirectory(MAX_PATH, PathToIni);
-  // lstrcat(PathToIni, IniFile);
-  // 
-  // if (GetPrivateProfileInt("modules", "SmallPatches", 1, PathToIni) != FALSE) {
+  // if (GetPrivateProfileInt("modules", "SmallPatches", 1, config_path)) {
   //   if (VirtualProtect(d2_client::get_base() + 0xA2C9,
   //                      0x04,
   //                      PAGE_EXECUTE_READWRITE,

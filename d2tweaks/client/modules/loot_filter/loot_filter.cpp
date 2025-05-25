@@ -3,6 +3,7 @@
 #include <d2tweaks/client/modules/loot_filter/loot_filter_settings.h>
 #include <d2tweaks/client/modules/loot_filter/loot_filter_settings_menu.h>
 #include <d2tweaks/client/modules/loot_filter/loot_filter_settings_toggle_menu.h>
+#include <d2tweaks/common/asset_manager.h>
 #include <d2tweaks/ui/ui_manager.h>
 #include <diablo2/d2client.h>
 #include <diablo2/d2launch.h>
@@ -35,14 +36,9 @@ static HANDLE __fastcall delete_save_file(char* name, char* a2) {
 }
 
 void loot_filter::init_early() {
-  char acPathToIni[MAX_PATH] = { 0 };
-  const char* pcIniFile = "\\d2tweaks.ini";
+  const char* config_path = common::get_config_path();
 
-  GetCurrentDirectory(MAX_PATH, acPathToIni);
-  lstrcat(acPathToIni, pcIniFile);
-
-  if (GetPrivateProfileInt("modules", "LootFilter", 1, acPathToIni) !=
-            FALSE) {
+  if (GetPrivateProfileInt("modules", "LootFilter", 1, config_path)) {
     hooking::hook(d2_client::get_base() + 0xBDE0,
                   set_player_name,
                   &g_set_player_name_original);

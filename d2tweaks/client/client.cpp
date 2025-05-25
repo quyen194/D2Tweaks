@@ -26,6 +26,7 @@
 #include <regex>
 #include <regex>
 
+#include <d2tweaks/common/asset_manager.h>
 #include <d2tweaks/common/common.h>
 
 #include <diablo2/d2common.h>
@@ -256,22 +257,20 @@ static const DLLPatchStrc gpt_handle_sc_standart_packet[] = {
 };
 
 void client::init() {
+  const char* config_path = common::get_config_path();
+
   // handle packet processes the packet before GamePacketReceivedIntercept
   hooking::hook(d2_client::get_base() + 0x11CB0, handle_packet, reinterpret_cast<void**>(&g_handle_packet));
   hooking::hook(d2_client::get_base() + 0x9640, game_tick_wrapper, reinterpret_cast<void**>(&g_game_tick_original));
   hooking::hook(d2_client::get_base() + 0x5E650, draw_game_ui, reinterpret_cast<void**>(&g_draw_game_ui_original));
   //hooking::hook(d2_client::get_base() + 0x150B0, handle_standart_packet, reinterpret_cast<void**>(&g_handle_packet_standart));
 
-    // Get the path to the INI file
-  std::string iniFilePath = std::filesystem::current_path().generic_string() + "/d2tweaks.ini";
-  LPCSTR lpIniFilePath = iniFilePath.c_str();
-
   for (auto& m_module : m_modules) {
     if (m_module == nullptr)
       break;
 
     // Load and parse the INI file
-    ParseIniFile(iniFilePath);
+    ParseIniFile(config_path);
   }
 
   D2TEMPLATE_ApplyPatch(gpt_handle_cs_packet);

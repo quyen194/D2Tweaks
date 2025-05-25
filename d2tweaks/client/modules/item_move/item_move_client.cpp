@@ -2,6 +2,7 @@
 #include <common/ptr_wrapper.h>
 #include <d2tweaks/client/client.h>
 #include <d2tweaks/client/modules/item_move/item_move_client.h>
+#include <d2tweaks/common/asset_manager.h>
 #include <d2tweaks/common/protocol.h>
 #include <diablo2/d2client.h>
 #include <diablo2/d2common.h>
@@ -144,13 +145,9 @@ void item_move::init_early() {
 }
 
 void item_move::init() {
-  char acPathToIni[MAX_PATH] = { 0 };
-  const char* pcIniFile = "\\d2tweaks.ini";
+  const char* config_path = common::get_config_path();
 
-  GetCurrentDirectory(MAX_PATH, acPathToIni);
-  lstrcat(acPathToIni, pcIniFile);
-
-  if (GetPrivateProfileInt("modules", "ItemMover", 1, acPathToIni) != FALSE) {
+  if (GetPrivateProfileInt("modules", "ItemMover", 1, config_path)) {
     hooking::hook(d2_client::get_base() + 0x475C0,
                   item_click,
                   reinterpret_cast<void**>(&g_item_click_original));

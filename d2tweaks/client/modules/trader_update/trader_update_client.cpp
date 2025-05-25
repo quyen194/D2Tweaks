@@ -133,15 +133,10 @@ void trader_update::init_early() {
 }
 
 void trader_update::init() {
-  char szDir[MAX_PATH];
-  char szPath[MAX_PATH];
-  const char szConfig[] = "d2tweaks.ini";
+  const char* config_path = common::get_config_path();
+  CIni config(config_path);
 
-  GetCurrentDirectory(MAX_PATH, szDir);
-  snprintf(szPath, MAX_PATH, "%s\\%s", szDir, szConfig);
-  CIni config(szPath);
-
-  if (config.GetInt("modules", "ReloadTradeGamble", 1) != FALSE) {
+  if (config.GetInt("modules", "ReloadTradeGamble", 1)) {
     singleton<ui::ui_manager>::instance().add_menu(new trader_update_menu());
     singleton<client>::instance().register_packet_handler(
         common::message_types_t::MESSAGE_TYPE_TRADER_UPDATE, this);
