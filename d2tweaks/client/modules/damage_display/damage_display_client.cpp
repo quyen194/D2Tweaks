@@ -60,11 +60,14 @@ struct damage_label {
         y(y),
         unit_width(uw),
         unit_height(uh),
+        start(GetTickCount64()),
         damage(damage),
         currentHp(hp),
         maxHp(maxHp),
-        text_width(42) {
-    start = GetTickCount64();
+        text_width(42),
+        isChampion(false),
+        isUnique(false),
+        isSuperUnique(false) {
     memset(text, 0x00, sizeof text);
   }
 
@@ -75,11 +78,14 @@ struct damage_label {
         y(0),
         unit_width(0),
         unit_height(0),
+        start(GetTickCount64()),
         damage(0),
         currentHp(0),
         maxHp(0),
-        text_width(0) {
-    start = GetTickCount64();
+        text_width(0),
+        isChampion(false),
+        isUnique(false),
+        isSuperUnique(false) {
     memset(text, 0x00, sizeof text);
   }
 };
