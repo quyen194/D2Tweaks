@@ -1,35 +1,185 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <interface>
   <menu name="loot_filter_settings_menu_toggle_menu" default_pos_x="0" default_pos_y="0" width="-1" height="-1">
+	<button name="m_toggle_stats"
+        default_pos_x="0" 
+        default_pos_y="0"
+        width="32" 
+        height="32"
+        image="d2tweaks\assets\buttons"
+        frameDown="12" 
+        frameUp="11" 
+        clickSound="4"
+        popup="Show/Hide Stats Display"
+        resolution_count="6"
+        
+        res1_x="1024"  pos1_x="282"
+        res1_y="700"   pos1_y="693"
+                    
+        res2_x="1280"  pos2_x="169"
+        res2_y="700"   pos2_y="693"
+                    
+        res3_x="1024"  pos3_x="182"
+        res3_y="720"   pos3_y="713"
+                    
+        res4_x="1280"  pos4_x="169"
+        res4_y="720"   pos4_y="713"
+        
+        res5_x="1024" pos5_x="182"
+        res5_y="768"  pos5_y="761"
+
+        res6_x="1280" pos6_x="169"
+        res6_y="768"  pos6_y="761"
+    />
+	<button name="m_toggle_help"
+        default_pos_x="0" 
+        default_pos_y="0"
+        width="32" 
+        height="32"
+        image="d2tweaks\assets\buttons"
+        frameDown="14" 
+        frameUp="13" 
+        clickSound="4"
+        popup="Open Mod Documentation Page"
+        resolution_count="6"
+        
+        res1_x="1024"  pos1_x="282"
+        res1_y="700"   pos1_y="693"
+                    
+        res2_x="1280"  pos2_x="1078"
+        res2_y="700"   pos2_y="693"
+                    
+        res3_x="1024"  pos3_x="182"
+        res3_y="720"   pos3_y="713"
+                    
+        res4_x="1280"  pos4_x="1078"
+        res4_y="720"   pos4_y="713"
+        
+        res5_x="1024" pos5_x="182"
+        res5_y="768"  pos5_y="761"
+
+        res6_x="1280" pos6_x="1078"
+        res6_y="768"  pos6_y="761"
+    />
+		<button name="m_toggle_cube"
+        default_pos_x="0" 
+        default_pos_y="0"
+        width="32" 
+        height="32"
+        image="d2tweaks\assets\buttons"
+        frameDown="16" 
+        frameUp="16" 
+        clickSound="4"
+        popup="Open/Close the Horadric Cube"
+        resolution_count="6"
+        
+        res1_x="1024"  pos1_x="282"
+        res1_y="700"   pos1_y="693"
+                    
+        res2_x="1280"  pos2_x="796"
+        res2_y="700"   pos2_y="693"
+                    
+        res3_x="1024"  pos3_x="182"
+        res3_y="720"   pos3_y="713"
+                    
+        res4_x="1280"  pos4_x="796"
+        res4_y="720"   pos4_y="713"
+        
+        res5_x="1024" pos5_x="182"
+        res5_y="768"  pos5_y="761"
+
+        res6_x="1280" pos6_x="796"
+        res6_y="768"  pos6_y="761"
+    />
+	<button name="m_toggle_stash"
+        default_pos_x="0" 
+        default_pos_y="0"
+        width="32" 
+        height="32"
+        image="d2tweaks\assets\buttons"
+        frameDown="17" 
+        frameUp="18" 
+        clickSound="4"
+        popup="Open/Close the Stash. Only works if you have remote stash item at 25,000 souls vanquished"
+        resolution_count="6"
+        
+        res1_x="1024"  pos1_x="282"
+        res1_y="700"   pos1_y="693"
+                    
+        res2_x="1280"  pos2_x="834"
+        res2_y="700"   pos2_y="691"
+                    
+        res3_x="1024"  pos3_x="182"
+        res3_y="720"   pos3_y="713"
+                    
+        res4_x="1280"  pos4_x="834"
+        res4_y="720"   pos4_y="711"
+        
+        res5_x="1024" pos5_x="182"
+        res5_y="768"  pos5_y="761"
+
+        res6_x="1280" pos6_x="834"
+        res6_y="768"  pos6_y="759"
+    />
+	<!--<button name="m_toggle_bag"
+        default_pos_x="0" 
+        default_pos_y="0"
+        width="32" 
+        height="32"
+        image="d2tweaks\assets\buttons"
+        frameDown="19" 
+        frameUp="20" 
+        clickSound="4"
+        popup="Bag of Holding Gem/Rune Extraction Menu"
+        resolution_count="6"
+        
+        res1_x="1024"  pos1_x="282"
+        res1_y="700"   pos1_y="693"
+                    
+        res2_x="1280"  pos2_x="934"
+        res2_y="700"   pos2_y="691"
+                    
+        res3_x="1024"  pos3_x="182"
+        res3_y="720"   pos3_y="713"
+                    
+        res4_x="1280"  pos4_x="934"
+        res4_y="720"   pos4_y="711"
+        
+        res5_x="1024" pos5_x="182"
+        res5_y="768"  pos5_y="761"
+
+        res6_x="1280" pos6_x="934"
+        res6_y="768"  pos6_y="759"
+    />-->
     <button name="m_toggle_filter_settings_btn"
         default_pos_x="0"
         default_pos_y="0"
         width="32"
         height="32"
         image="d2tweaks\assets\buttons"
-        frameDown="3"
-        frameUp="2"
+        frameDown="19" 
+        frameUp="20" 
         clickSound="4"
-        popup="Open/Close loot filter settings"
+        popup="Open/Close loot filter settings & Bag of Holding Gem/Rune Extraction Menu"
         resolution_count="6"
 
         res1_x="1024"  pos1_x="282"
         res1_y="700"   pos1_y="693"
 
-        res2_x="1280"  pos2_x="410"
-        res2_y="700"   pos2_y="693"
+        res2_x="1280"  pos2_x="447"
+        res2_y="700"   pos2_y="698"
 
         res3_x="1024"  pos3_x="282"
         res3_y="720"   pos3_y="713"
 
-        res4_x="1280"  pos4_x="410"
-        res4_y="720"   pos4_y="713"
+        res4_x="1280"  pos4_x="447"
+        res4_y="720"   pos4_y="718"
 
         res5_x="1024" pos5_x="282"
         res5_y="768"  pos5_y="761"
 
-        res6_x="1280" pos6_x="410"
-        res6_y="768"  pos6_y="761"
+        res6_x="1280" pos6_x="447"
+        res6_y="768"  pos6_y="766"
     />
   </menu>
 </interface>

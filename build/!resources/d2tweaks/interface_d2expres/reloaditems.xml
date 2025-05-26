@@ -13,23 +13,23 @@
         popup="Reload items"
         resolution_count="6"
 
-        res1_x="1024"  pos1_x="270"
-        res1_y="700"   pos1_y="551"
+        res1_x="1024"  pos1_x="2700"
+        res1_y="700"   pos1_y="5510"
 
-        res2_x="1280"  pos2_x="398"
-        res2_y="700"   pos2_y="551"
+        res2_x="1280"  pos2_x="3980"
+        res2_y="700"   pos2_y="5510"
 
-        res3_x="1024"  pos3_x="270"
-        res3_y="720"   pos3_y="561"
+        res3_x="1024"  pos3_x="2700"
+        res3_y="720"   pos3_y="5610"
 
-        res4_x="1280"  pos4_x="398"
-        res4_y="720"   pos4_y="561"
+        res4_x="1280"  pos4_x="3980"
+        res4_y="720"   pos4_y="5610"
 
-        res5_x="1024" pos5_x="270"
-        res5_y="768"  pos5_y="585"
+        res5_x="1024" pos5_x="2700"
+        res5_y="768"  pos5_y="5850"
 
-        res6_x="1280" pos6_x="398"
-        res6_y="768"  pos6_y="585"
+        res6_x="1280" pos6_x="3980"
+        res6_y="768"  pos6_y="5850"
     />
   </menu>
 </interface>

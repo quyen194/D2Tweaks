@@ -16,20 +16,20 @@
         res1_x="1024"  pos1_x="967"
         res1_y="700"   pos1_y="658"
 
-        res2_x="1280"  pos2_x="1095"
-        res2_y="700"   pos2_y="658"
+        res2_x="1280"  pos2_x="880"
+        res2_y="700"   pos2_y="693"
 
         res3_x="1024"  pos3_x="967"
         res3_y="720"   pos3_y="668"
 
-        res4_x="1280"  pos4_x="1095"
-        res4_y="720"   pos4_y="668"
+        res4_x="1280"  pos4_x="880"
+        res4_y="720"   pos4_y="693"
 
         res5_x="1024"  pos5_x="967"
         res5_y="768"   pos5_y="692"
 
-        res6_x="1280"  pos6_x="1095"
-        res6_y="768"   pos6_y="692"
+        res6_x="1280"  pos6_x="880"
+        res6_y="768"   pos6_y="693"
     />
     <button name="m_sort_stash_btn"
         default_pos_x="0"
@@ -46,20 +46,20 @@
         res1_x="1024"  pos1_x="34"
         res1_y="700"   pos1_y="658"
 
-        res2_x="1280"  pos2_x="162"
-        res2_y="700"   pos2_y="658"
+        res2_x="1280"  pos2_x="367"
+        res2_y="700"   pos2_y="650"
 
         res3_x="1024"  pos3_x="34"
         res3_y="720"   pos3_y="668"
 
-        res4_x="1280"  pos4_x="162"
-        res4_y="720"   pos4_y="668"
+        res4_x="1280"  pos4_x="367"
+        res4_y="720"   pos4_y="650"
 
         res5_x="1024"  pos5_x="34"
         res5_y="768"   pos5_y="692"
 
-        res6_x="1280"  pos6_x="162"
-        res6_y="768"   pos6_y="692"
+        res6_x="1280"  pos6_x="367"
+        res6_y="768"   pos6_y="650"
     />
     <button name="m_sort_cube_btn"
         default_pos_x="0"
@@ -76,20 +76,20 @@
         res1_x="1024"  pos1_x="240"
         res1_y="700"   pos1_y="426"
 
-        res2_x="1280"  pos2_x="369"
-        res2_y="700"   pos2_y="426"
+        res2_x="1280"  pos2_x="367"
+        res2_y="700"   pos2_y="474"
 
         res3_x="1024"  pos3_x="240"
         res3_y="720"   pos3_y="436"
 
-        res4_x="1280"  pos4_x="369"
-        res4_y="720"   pos4_y="436"
+        res4_x="1280"  pos4_x="367"
+        res4_y="720"   pos4_y="486"
 
         res5_x="1024"  pos5_x="240"
         res5_y="768"   pos5_y="460"
 
-        res6_x="1280"  pos6_x="369"
-        res6_y="768"   pos6_y="460"
+        res6_x="1280"  pos6_x="367"
+        res6_y="768"   pos6_y="496"
     />
   </menu>
 </interface>
