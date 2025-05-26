@@ -1,155 +1,683 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <interface>
-  <menu name="loot_filter_settings_menu"
-    default_pos_x="0"
-    default_pos_y="0"
-    width="402"
-    height="224"
-    resolution_count="15"
+    <menu name="loot_filter_settings_menu"
+        default_pos_x="0"
+        default_pos_y="0"
+        width="402"
+        height="448"
+        resolution_count="15"
 
-    res1_x="1024"  pos1_x="0"
-    res1_y="700"   pos1_y="434"
+        res1_x="1024"  pos1_x="0"
+        res1_y="700"   pos1_y="434"
 
-    res2_x="1280"  pos2_x="0"
-    res2_y="700"   pos2_y="434"
+        res2_x="1280"  pos2_x="0"
+        res2_y="700"   pos2_y="434"
 
-    res3_x="1024"  pos3_x="0"
-    res3_y="720"   pos3_y="444"
+        res3_x="1024"  pos3_x="0"
+        res3_y="720"   pos3_y="444"
 
-    res4_x="1280"  pos4_x="0"
-    res4_y="720"   pos4_y="444"
+        res4_x="1280"  pos4_x="0"
+        res4_y="720"   pos4_y="444"
 
-    res5_x="1024" pos5_x="0"
-    res5_y="768"  pos5_y="468"
+        res5_x="1024" pos5_x="0"
+        res5_y="768"  pos5_y="468"
 
-    res6_x="1280" pos6_x="0"
-    res6_y="768"  pos6_y="468"
-  >
+        res6_x="1280" pos6_x="0"
+        res6_y="768"  pos6_y="468"
+    >
 
-    <image name="m_bg1"
-           x="0" y="224"
-           image="data\global\UI\FrontEnd\PopUpWideNoHoles"
-           frame="0" blockClick ="true"/>
+        <image name="m_bg1"
+            x="0" y="224"
+            image="data\global\UI\FrontEnd\PopUpWideNoHoles"
+            frame="0" blockClick ="true"/>
+        <image name="m_bg2"
+            x="224" y="224"
+            image="data\global\UI\FrontEnd\PopUpWideNoHoles"
+            frame="1" blockClick ="true"/>
+        <image name="m_bg3"
+            x="348" y="224"
+            image="data\global\UI\FrontEnd\PopUpWideNoHoles"
+            frame="0" blockClick ="true"/>
+        <image name="m_bg4"
+            x="386" y="224"
+            image="data\global\UI\FrontEnd\PopUpWideNoHoles"
+            frame="1" blockClick ="true"/>
+        <image name="m_bg5"
+            x="348" y="-20"
+            image="data\global\UI\FrontEnd\PopUpWideNoHoles"
+            frame="0" blockClick ="true"/>
+        <image name="m_bg6"
+            x="386" y="-20"
+            image="data\global\UI\FrontEnd\PopUpWideNoHoles"
+            frame="1" blockClick ="true"/>
+        <image name="m_bg7"
+            x="0" y="-20"
+            image="data\global\UI\FrontEnd\PopUpWideNoHoles"
+            frame="0" blockClick ="true"/>
 
-    <image name="m_bg2"
-           x="224" y="224"
-           image="data\global\UI\FrontEnd\PopUpWideNoHoles"
-           frame="1" blockClick ="true"/>
+        <!-- ironman-->
+        <image name="m_bg8"
+            x="175" y="0"
+            image="data\global\UI\FrontEnd\PopUpWideNoHoles"
+            frame="0" blockClick ="true"/>
+        <image name="m_bg9"
+            x="230" y="-245"
+            image="data\global\UI\FrontEnd\PopUpWideNoHoles"
+            frame="0" blockClick ="true"/>
+        <image name="m_bg10"
+            x="0" y="-245"
+            image="data\global\UI\FrontEnd\PopUpWideNoHoles"
+            frame="0" blockClick ="true"/>
+        <image name="m_bg11"
+            x="180" y="-245"
+            image="data\global\UI\FrontEnd\PopUpWideNoHoles"
+            frame="0" blockClick ="true"/>
+        <image name="m_bg12"
+            x="446" y="-245"
+            image="data\global\UI\FrontEnd\PopUpWideNoHoles"
+            frame="1" blockClick ="true"/>
 
-    <checkbox name ="m_altonly"
-              x="32" y="32"
-              frameChecked="1" frameUnchecked="0" clickSound="4"
-              popup="Show items only when ALT key is pressed"
-              text="ALT-only items"
-              color="0" font="1"
-              image="data\global\ui\PANEL\clickbox"/>
+        <image name="m_bg13"
+            x="290" y="-180"
+            image="data\global\UI\FrontEnd\vbar"
+            frame="0" blockClick ="true"/>
 
-    <!--=================================================-->
+        <image name="m_bg19"
+            x="165" y="77"
+            image="data\global\UI\FrontEnd\vbar"
+            frame="0" blockClick ="true"/>
 
-    <group name="m_misc_group"
-           x="32"
-           y="72">
-      <checkbox name ="m_show_gold"
+        <image name="m_bg14"
+            x="-90" y="20"
+            image="data\global\UI\FrontEnd\hbar"
+            frame="0" blockClick ="true"/>
+
+        <image name="m_bg15"
+            x="400" y="130"
+            image="data\global\UI\FrontEnd\vbar"
+            frame="1" blockClick ="true"/>
+
+
+        <image name="m_bg17"
+            x="0" y="-180"
+            image="data\global\UI\FrontEnd\hbar"
+            frame="0" blockClick ="true"/>
+
+        <image name="m_bg18"
+            x="34" y="-180"
+            image="data\global\UI\FrontEnd\hbar"
+            frame="0" blockClick ="true"/>
+
+        <image name="m_bg20"
+            x="400" y="220"
+            image="data\global\UI\FrontEnd\vbar"
+            frame="1" blockClick ="true"/>
+
+        <image name="m_bg21"
+            x="165" y="220"
+            image="data\global\UI\FrontEnd\vbar"
+            frame="1" blockClick ="true"/>
+
+        <image name="m_bg22"
+            x="165" y="-102"
+            image="data\global\UI\FrontEnd\hbar"
+            frame="0" blockClick ="true"/>
+        <image name="m_bg23"
+            x="348" y="-102"
+            image="data\global\UI\FrontEnd\hbar"
+            frame="0" blockClick ="true"/>
+
+        <checkbox name ="m_altonly"
+            x="10" y="80"
+            frameChecked="1" frameUnchecked="0" clickSound="4"
+            popup="Show items only when ALT key is pressed"
+            text="ALT-only items"
+            color="0" font="0"
+            image="data\global\ui\PANEL\clickbox"/>
+
+        <checkbox name ="m_close"
+            x="562" y="225"
+            frameChecked="10" frameUnchecked="10" clickSound="4"
+            popup="Close"
+            text=""
+            color="0" font="0"
+            image="data\global\ui\PANEL\buysellbtn"/>
+
+
+
+        <!--=================================================-->
+        <group name="extract_gems_group" x="300" y="-428">
+            <checkbox name="m_bag_stat_ruby" x="0" y="0" frameChecked="0" frameUnchecked="0" clickSound="4" popup="" text="" color="1" font="0" image="data\global\ui\PANEL\chips"/>
+            <checkbox name="m_bag_stat_amethyst" x="0" y="12" frameChecked="1" frameUnchecked="1" clickSound="4" popup="" text="" color="11" font="0" image="data\global\ui\PANEL\chips"/>
+            <checkbox name="m_bag_stat_emerald" x="0" y="24" frameChecked="2" frameUnchecked="2" clickSound="4" popup="" text="" color="2" font="0" image="data\global\ui\PANEL\chips"/>
+            <checkbox name="m_bag_stat_sapphire" x="0" y="36" frameChecked="3" frameUnchecked="3" clickSound="4" popup="" text="" color="3" font="0" image="data\global\ui\PANEL\chips"/>
+            <checkbox name="m_bag_stat_topaz" x="0" y="48" frameChecked="4" frameUnchecked="4" clickSound="4" popup="" text="" color="9" font="0" image="data\global\ui\PANEL\chips"/>
+            <checkbox name="m_bag_stat_skull" x="0" y="60" frameChecked="5" frameUnchecked="5" clickSound="4" popup="" text="" color="5" font="0" image="data\global\ui\PANEL\chips"/>
+            <checkbox name="m_bag_stat_diamond" x="0" y="72" frameChecked="6" frameUnchecked="6" clickSound="4" popup="" text="" color="0" font="0" image="data\global\ui\PANEL\chips"/>
+            <checkbox name="m_bag_rune1" x="0" y="96" frameChecked="0" frameUnchecked="0" clickSound="4" popup="" text="" color="5" font="0" image="data\global\ui\PANEL\rune"/>
+            <checkbox name="m_bag_rune2" x="0" y="108" frameChecked="0" frameUnchecked="0" clickSound="4" popup="" text="" color="5" font="0" image="data\global\ui\PANEL\rune"/>
+            <checkbox name="m_bag_rune3" x="0" y="120" frameChecked="0" frameUnchecked="0" clickSound="4" popup="" text="" color="5" font="0" image="data\global\ui\PANEL\rune"/>
+            <checkbox name="m_bag_rune4" x="0" y="132" frameChecked="0" frameUnchecked="0" clickSound="4" popup="" text="" color="5" font="0" image="data\global\ui\PANEL\rune"/>
+            <checkbox name="m_bag_rune5" x="0" y="144" frameChecked="0" frameUnchecked="0" clickSound="4" popup="" text="" color="5" font="0" image="data\global\ui\PANEL\rune"/>
+            <checkbox name="m_bag_rune6" x="0" y="156" frameChecked="0" frameUnchecked="0" clickSound="4" popup="" text="" color="5" font="0" image="data\global\ui\PANEL\rune"/>
+            <checkbox name="m_bag_rpot" x="-8" y="174" frameChecked="0" frameUnchecked="11" clickSound="11" popup="" text="" color="5" font="0" image="data\global\ui\PANEL\pots"/>
+            <checkbox name="m_bag_miscpots" x="5" y="174" frameChecked="14" frameUnchecked="13" clickSound="13" popup="" text="" color="0" font="0" image="data\global\ui\PANEL\pots"/>
+            <checkbox name="m_bag_hpot" x="0" y="198" frameChecked="4" frameUnchecked="4" clickSound="4" popup="" text="" color="5" font="0" image="data\global\ui\PANEL\pots"/>
+            <checkbox name="m_bag_mpot" x="0" y="212" frameChecked="5" frameUnchecked="9" clickSound="9" popup="" text="" color="5" font="0" image="data\global\ui\PANEL\pots"/>
+        </group>
+
+
+
+        <group name="m_stone_quality_group" x="25" y="-320">
+            <checkbox name="m_show_rough" x="0" y="0" frameChecked="0" frameUnchecked="0" clickSound="4" popup="Rough" text="Rough" color="0" font="0" image="data\global\ui\PANEL\stones"/>
+            <checkbox name="m_show_faded" x="0" y="15" frameChecked="1" frameUnchecked="1" clickSound="4" popup="Faded: Requires 2 Rough Stones" text="Faded" color="0" font="0" image="data\global\ui\PANEL\stones"/>
+            <checkbox name="m_show_blemished" x="0" y="30" frameChecked="2" frameUnchecked="2" clickSound="4" popup="Blemished: Requires 4 Rough Stones" text="Blemished" color="0" font="0" image="data\global\ui\PANEL\stones"/>
+            <checkbox name="m_show_cleaned" x="0" y="45" frameChecked="3" frameUnchecked="3" clickSound="4" popup="Cleaned: Requires 8 Rough Stones" text="Cleaned" color="0" font="0" image="data\global\ui\PANEL\stones"/>
+            <checkbox name="m_show_triangle" x="0" y="60" frameChecked="4" frameUnchecked="4" clickSound="4" popup="Triangle: Requires 16 Rough Stones" text="Triangle" color="0" font="0" image="data\global\ui\PANEL\stones"/>
+            <checkbox name="m_show_trangle_cut" x="0" y="75" frameChecked="5" frameUnchecked="5" clickSound="4" popup="Trangle Cut: Requires 32 Rough Stones" text="Trangle Cut" color="0" font="0" image="data\global\ui\PANEL\stones"/>
+            <checkbox name="m_show_square" x="0" y="90" frameChecked="6" frameUnchecked="6" clickSound="4" popup="Square: Requires 64 Rough Stones" text="Square" color="0" font="0" image="data\global\ui\PANEL\stones"/>
+            <checkbox name="m_show_square_cut" x="0" y="105" frameChecked="7" frameUnchecked="7" clickSound="4" popup="Square Cut: Requires 128 Rough Stones" text="Square Cut" color="0" font="0" image="data\global\ui\PANEL\stones"/>
+            <checkbox name="m_show_regular" x="0" y="120" frameChecked="8" frameUnchecked="8" clickSound="4" popup="Regular: Requires 256 Rough Stones" text="Regular" color="0" font="0" image="data\global\ui\PANEL\stones"/>
+            <checkbox name="m_show_regular_cut" x="0" y="135" frameChecked="9" frameUnchecked="9" clickSound="4" popup="Regular Cut: Requires 512 Rough Stones" text="Regular Cut" color="0" font="0" image="data\global\ui\PANEL\stones"/>
+            <checkbox name="m_show_star" x="120" y="0" frameChecked="10" frameUnchecked="10" clickSound="4" popup="Star: Requires 1024 Rough Stones" text="Star" color="0" font="0" image="data\global\ui\PANEL\stones"/>
+            <checkbox name="m_show_star_cut" x="120" y="15" frameChecked="11" frameUnchecked="11" clickSound="4" popup="Star Cut: Requires 2048 Rough Stones" text="Star Cut" color="0" font="0" image="data\global\ui\PANEL\stones"/>
+            <checkbox name="m_show_imperial" x="120" y="30" frameChecked="12" frameUnchecked="12" clickSound="4" popup="Imperial: Requires 4096 Rough Stones" text="Imperial" color="0" font="0" image="data\global\ui\PANEL\stones"/>
+            <checkbox name="m_show_imperial_cut" x="120" y="45" frameChecked="13" frameUnchecked="13" clickSound="4" popup="Imperial Cut: Requires 8192 Rough Stones" text="Imperial Cut" color="0" font="0" image="data\global\ui\PANEL\stones"/>
+            <checkbox name="m_show_royal" x="120" y="60" frameChecked="14" frameUnchecked="14" clickSound="4" popup="Royal: Requires 16384 Rough Stones" text="Royal" color="0" font="0" image="data\global\ui\PANEL\stones"/>
+            <checkbox name="m_show_royal_cut" x="120" y="75" frameChecked="15" frameUnchecked="15" clickSound="4" popup="Royal Cut: Requires 32768 Rough Stones" text="Royal Cut" color="0" font="0" image="data\global\ui\PANEL\stones"/>
+            <checkbox name="m_show_spectacular" x="120" y="90" frameChecked="16" frameUnchecked="16" clickSound="4" popup="Spectacular: Requires 65536 Rough Stones" text="Spectacular" color="0" font="0" image="data\global\ui\PANEL\stones"/>
+            <checkbox name="m_show_legendary" x="120" y="105" frameChecked="17" frameUnchecked="17" clickSound="4" popup="Legendary: Requires 131072 Rough Stones" text="Legendary" color="0" font="0" image="data\global\ui\PANEL\stones"/>
+            <checkbox name="m_show_legendary_cut" x="120" y="120" frameChecked="18" frameUnchecked="18" clickSound="4" popup="Legendary Cut: Requires 262144 Rough Stones" text="Legendary Cut" color="0" font="0" image="data\global\ui\PANEL\stones"/>
+        </group>
+
+
+
+        <!--=================================================-->
+        <group name="m_potions_group"
+            x="180"
+            y="-80">
+
+            <checkbox name="m_show_hp1"
+                x="0" y="0"
+                frameChecked="1" frameUnchecked="0" clickSound="4"
+                popup="Minor Healing Potion"
+                text="Minor Healing Potion"
+                color="1" font="0"
+                image="data\global\ui\panel\pots"/>
+            <checkbox name="m_show_hp2"
+                x="0" y="12"
+                frameChecked="1" frameUnchecked="1" clickSound="4"
+                popup="Light Healing Potion: Requires 3 Healing Potions"
+                text="Light Healing Potion"
+                color="1" font="0"
+                image="data\global\ui\panel\pots"/>
+            <checkbox name="m_show_hp3"
+                x="0" y="24"
+                frameChecked="2" frameUnchecked="2" clickSound="4"
+                popup="Normal Healing Potion: Requires 9 Healing Potions"
+                text="Healing Potion"
+                color="1" font="0"
+                image="data\global\ui\panel\pots"/>
+            <checkbox name="m_show_hp4"
+                x="0" y="36"
+                frameChecked="3" frameUnchecked="3" clickSound="4"
+                popup="Greater Healing Potion: Requires 27 Healing Potions"
+                text="Greater Healing Potion"
+                color="1" font="0"
+                image="data\global\ui\panel\pots"/>
+            <checkbox name="m_show_hp5"
+                x="0" y="48"
+                frameChecked="4" frameUnchecked="4" clickSound="4"
+                popup="Super Healing Potion: Requires 81 Healing Potions"
+                text="Super Healing Potion"
+                color="1" font="0"
+                image="data\global\ui\panel\pots"/>
+
+        </group>
+
+        <group name="m_mana_potions"
+            x="180"
+            y="-10">
+
+            <checkbox name="m_show_mp1"
+                x="0" y="0"
+                frameChecked="5" frameUnchecked="5" clickSound="4"
+                popup="Minor Mana Potion"
+                text="Minor Mana Potion"
+                color="3" font="0"
+                image="data\global\ui\panel\pots"/>
+            <checkbox name="m_show_mp2"
+                x="0" y="12"
+                frameChecked="6" frameUnchecked="6" clickSound="4"
+                popup="Light Mana Potion: Requires 3 Mana Potions"
+                text="Light Mana Potion"
+                color="3" font="0"
+                image="data\global\ui\panel\pots"/>
+            <checkbox name="m_show_mp3"
+                x="0" y="24"
+                frameChecked="7" frameUnchecked="7" clickSound="4"
+                popup="Normal Mana Potion: Requires 9 Mana Potions"
+                text="Mana Potion"
+                color="3" font="0"
+                image="data\global\ui\panel\pots"/>
+            <checkbox name="m_show_mp4"
+                x="0" y="36"
+                frameChecked="8" frameUnchecked="8" clickSound="4"
+                popup="Greater Mana Potion: Requires 27 Mana Potions"
+                text="Greater Mana Potion"
+                color="3" font="0"
+                image="data\global\ui\panel\pots"/>
+            <checkbox name="m_show_mp5"
+                x="0" y="48"
+                frameChecked="9" frameUnchecked="9" clickSound="4"
+                popup="Super Mana Potion: Requires 81 Mana Potions"
+                text="Super Mana Potion"
+                color="3" font="0"
+                image="data\global\ui\panel\pots"/>
+
+        </group>
+
+        <group name="m_rejuv_potions"
+            x="180"
+            y="-10">
+
+            <checkbox name ="m_show_rejuv_potion"
+                x="0" y="68"
+                frameChecked="10" frameUnchecked="10" clickSound="4"
+                popup="Rejuvination Potion: Requires 1000 Points"
+                text="Rejuvination Potion"
+                color="11" font="0"
+                image="data\global\ui\PANEL\pots"/>
+            <checkbox name ="m_show_full_rejuv_potion"
+                x="0" y="80"
+                frameChecked="11" frameUnchecked="11" clickSound="4"
+                popup="Full Rejuvination Potion: Requires 3000 Points"
+                text="Full Rejuvination Potion"
+                color="11" font="0"
+                image="data\global\ui\PANEL\pots"/>
+
+        </group>
+
+
+        <group name="m_misc_potions"
+           x="200"
+           y="100">
+                <checkbox name ="m_show_vps"
+                x="0" y="0"
+                frameChecked="14" frameUnchecked="14" clickSound="4"
+                popup="Stamina Potion Requires 5 Points"
+                text="Stamina Potion"
+                color="0" font="0"
+                image="data\global\ui\PANEL\pots"/>
+
+            <checkbox name ="m_show_yps"
+                x="0" y="12"
+                frameChecked="15" frameUnchecked="15" clickSound="4"
+                popup="Antidote Potion Requires 10 Points"
+                text="Antidote Potion"
+                color="0" font="0"
+                image="data\global\ui\PANEL\pots"/>
+
+            <checkbox name ="m_show_wms"
+                x="0" y="24"
+                frameChecked="16" frameUnchecked="16" clickSound="4"
+                popup="Thawing Potion Requires 15 Points"
+                text="Thawing Potion"
+                color="0" font="0"
+                image="data\global\ui\PANEL\pots"/>
+
+
+            <checkbox name="m_show_mrp"
+                x="0" y="48"
+                frameChecked="19" frameUnchecked="19" clickSound="4"
+                popup="Magic Resistance Potion Requires 50 Points"
+                text="Magic Repellent"
+                color="11" font="0"
+                image="data\global\ui\PANEL\pots"/>
+
+            <checkbox name="m_show_prp"
+                x="0" y="60"
+                frameChecked="18" frameUnchecked="18" clickSound="4"
+                popup="Poison Resistance Potion Requires 50 Points"
+                text="Antivenom"
+                color="2" font="0"
+                image="data\global\ui\PANEL\pots"/>
+
+            <checkbox name="m_show_crp"
+                x="0" y="72"
+                frameChecked="17" frameUnchecked="17" clickSound="4"
+                popup="Cold Resistance Potion Requires 50 Points"
+                text="Insulation Potion"
+                color="3" font="0"
+                image="data\global\ui\PANEL\pots"/>
+
+            <checkbox name="m_show_lrp"
+                x="0" y="84"
+                frameChecked="13" frameUnchecked="13" clickSound="4"
+                popup="Lightning Resistance Potion Requires 50 Points"
+                text="Eel Juice"
+                color="9" font="0"
+                image="data\global\ui\PANEL\pots"/>
+
+            <checkbox name="m_show_frp"
+                x="0" y="96"
+                frameChecked="12" frameUnchecked="12" clickSound="4"
+                popup="Fire Resistance Potion Requires 50 Points"
+                text="Fire Retardant"
+                color="1" font="0"
+                image="data\global\ui\PANEL\pots"/>
+        </group>
+
+
+
+        <!--=================================================-->
+        <group name="m_stone_group"
+           x="10"
+           y="-425">
+            <checkbox name="m_show_flourite"
+          x="0" y="0"
+          frameChecked="1" frameUnchecked="0" clickSound="4"
+          popup="Flourite Stone"
+          text="Flourite Stone"
+          color="11" font="0"
+          image="data\global\ui\PANEL\radio"/>
+            <checkbox name="m_show_jade"
+          x="0" y="15"
+          frameChecked="1" frameUnchecked="0" clickSound="4"
+          popup="Jade Stone"
+          text="Jade Stone"
+          color="12" font="0"
+          image="data\global\ui\PANEL\radio"/>
+            <checkbox name="m_show_argonite"
+          x="0" y="30"
+          frameChecked="1" frameUnchecked="0" clickSound="4"
+          popup="Argonite Stone"
+          text="Argonite Stone"
+          color="1" font="0"
+          image="data\global\ui\PANEL\radio"/>
+            <checkbox name="m_show_azurite"
+          x="0" y="45"
+          frameChecked="1" frameUnchecked="0" clickSound="4"
+          popup="Azurite Stone"
+          text="Azurite Stone"
+          color="3" font="0"
+          image="data\global\ui\PANEL\radio"/>
+            <checkbox name="m_show_sulpher"
+          x="0" y="60"
+          frameChecked="1" frameUnchecked="0" clickSound="4"
+          popup="Sulpher Stone"
+          text="Sulpher Stone"
+          color="8" font="0"
+          image="data\global\ui\PANEL\radio"/>
+            <checkbox name="m_show_quartz"
+          x="0" y="75"
+          frameChecked="1" frameUnchecked="0" clickSound="4"
+          popup="Quartz Stone"
+          text="Quartz Stone"
+          color="0" font="0"
+          image="data\global\ui\PANEL\radio"/>
+            <checkbox name="m_show_tiger_eye"
+          x="0" y="90"
+          frameChecked="1" frameUnchecked="0" clickSound="4"
+          popup="Tiger Eye Stone"
+          text="Tiger Eye Stone"
+          color="9" font="0"
+          image="data\global\ui\PANEL\radio"/>
+        </group>
+        <!--=================================================-->
+        <group name="m_runes_group" x="410" y="-80">
+            <checkbox name="m_show_r01" x="55" y="0" frameChecked="0" frameUnchecked="0" clickSound="4" popup="Rune 1" text="Rune 1" color="5" font="0" image="data\global\ui\PANEL\rune"/>
+            <checkbox name="m_show_r02" x="0" y="15" frameChecked="0" frameUnchecked="0" clickSound="4" popup="Rune 2: Requires 3 Rune 1" text="Rune 2" color="5" font="0" image="data\global\ui\PANEL\rune"/>
+            <checkbox name="m_show_r03" x="0" y="30" frameChecked="0" frameUnchecked="0" clickSound="4" popup="Rune 3: Requires 9 Rune 1" text="Rune 3" color="5" font="0" image="data\global\ui\PANEL\rune"/>
+            <checkbox name="m_show_r04" x="0" y="45" frameChecked="0" frameUnchecked="0" clickSound="4" popup="Rune 4: Requires 27 Rune 1" text="Rune 4" color="5" font="0" image="data\global\ui\PANEL\rune"/>
+            <checkbox name="m_show_r05" x="0" y="60" frameChecked="0" frameUnchecked="0" clickSound="4" popup="Rune 5: Requires 81 Rune 1" text="Rune 5" color="5" font="0" image="data\global\ui\PANEL\rune"/>
+            <checkbox name="m_show_r06" x="0" y="75" frameChecked="0" frameUnchecked="0" clickSound="4" popup="Rune 6: Requires 243 Rune 1" text="Rune 6" color="5" font="0" image="data\global\ui\PANEL\rune"/>
+            <checkbox name="m_show_r07" x="0" y="90" frameChecked="0" frameUnchecked="0" clickSound="4" popup="Rune 7: Requires 1 Rune 7" text="Rune 7" color="5" font="0" image="data\global\ui\PANEL\rune"/>
+            <checkbox name="m_show_r08" x="0" y="105" frameChecked="0" frameUnchecked="0" clickSound="4" popup="Rune 8: Requires 3 Rune 7" text="Rune 8" color="5" font="0" image="data\global\ui\PANEL\rune"/>
+            <checkbox name="m_show_r09" x="0" y="120" frameChecked="0" frameUnchecked="0" clickSound="4" popup="Rune 9: Requires 9 Rune 7" text="Rune 9" color="5" font="0" image="data\global\ui\PANEL\rune"/>
+            <checkbox name="m_show_r10" x="0" y="135" frameChecked="0" frameUnchecked="0" clickSound="4" popup="Rune 10: Requires 27 Rune 7" text="Rune 10" color="5" font="0" image="data\global\ui\PANEL\rune"/>
+            <checkbox name="m_show_r11" x="0" y="150" frameChecked="0" frameUnchecked="0" clickSound="4" popup="Rune 11: Requires 81 Rune 7" text="Rune 11" color="5" font="0" image="data\global\ui\PANEL\rune"/>
+            <checkbox name="m_show_r12" x="0" y="165" frameChecked="0" frameUnchecked="0" clickSound="4" popup="Rune 12: Requires 243 Rune 7" text="Rune 12" color="5" font="0" image="data\global\ui\PANEL\rune"/>
+            <checkbox name="m_show_r13" x="0" y="180" frameChecked="0" frameUnchecked="0" clickSound="4" popup="Rune 13: Requires 1 Rune 13" text="Rune 13" color="5" font="0" image="data\global\ui\PANEL\rune"/>
+            <checkbox name="m_show_r14" x="0" y="195" frameChecked="0" frameUnchecked="0" clickSound="4" popup="Rune 14: Requires 3 Rune 13" text="Rune 14" color="5" font="0" image="data\global\ui\PANEL\rune"/>
+            <checkbox name="m_show_r15" x="0" y="210" frameChecked="0" frameUnchecked="0" clickSound="4" popup="Rune 15: Requires 9 Rune 13" text="Rune 15" color="5" font="0" image="data\global\ui\PANEL\rune"/>
+            <checkbox name="m_show_r16" x="0" y="225" frameChecked="0" frameUnchecked="0" clickSound="4" popup="Rune 16: Requires 27 Rune 13" text="Rune 16" color="5" font="0" image="data\global\ui\PANEL\rune"/>
+            <checkbox name="m_show_r17" x="0" y="240" frameChecked="0" frameUnchecked="0" clickSound="4" popup="Rune 17: Requires 81 Rune 13" text="Rune 17" color="5" font="0" image="data\global\ui\PANEL\rune"/>
+            <checkbox name="m_show_r18" x="100" y="15" frameChecked="0" frameUnchecked="0" clickSound="4" popup="Rune 18: Requires 243 Rune 13" text="Rune 18" color="5" font="0" image="data\global\ui\PANEL\rune"/>
+            <checkbox name="m_show_r19" x="100" y="30" frameChecked="0" frameUnchecked="0" clickSound="4" popup="Rune 19: Requires 1 Rune 19" text="Rune 19" color="5" font="0" image="data\global\ui\PANEL\rune"/>
+            <checkbox name="m_show_r20" x="100" y="45" frameChecked="0" frameUnchecked="0" clickSound="4" popup="Rune 20: Requires 3 Rune 19" text="Rune 20" color="5" font="0" image="data\global\ui\PANEL\rune"/>
+            <checkbox name="m_show_r21" x="100" y="60" frameChecked="0" frameUnchecked="0" clickSound="4" popup="Rune 21: Requires 9 Rune 19" text="Rune 21" color="5" font="0" image="data\global\ui\PANEL\rune"/>
+            <checkbox name="m_show_r22" x="100" y="75" frameChecked="0" frameUnchecked="0" clickSound="4" popup="Rune 22: Requires 27 Rune 19" text="Rune 22" color="5" font="0" image="data\global\ui\PANEL\rune"/>
+            <checkbox name="m_show_r23" x="100" y="90" frameChecked="0" frameUnchecked="0" clickSound="4" popup="Rune 23: Requires 81 Rune 19" text="Rune 23" color="5" font="0" image="data\global\ui\PANEL\rune"/>
+            <checkbox name="m_show_r24" x="100" y="105" frameChecked="0" frameUnchecked="0" clickSound="4" popup="Rune 24: Requires 243 Rune 19" text="Rune 24" color="5" font="0" image="data\global\ui\PANEL\rune"/>
+            <checkbox name="m_show_r25" x="100" y="120" frameChecked="0" frameUnchecked="0" clickSound="4" popup="Rune 25: Requires 1 Rune 25" text="Rune 25" color="5" font="0" image="data\global\ui\PANEL\rune"/>
+            <checkbox name="m_show_r26" x="100" y="135" frameChecked="0" frameUnchecked="0" clickSound="4" popup="Rune 26: Requires 3 Rune 25" text="Rune 26" color="5" font="0" image="data\global\ui\PANEL\rune"/>
+            <checkbox name="m_show_r27" x="100" y="150" frameChecked="0" frameUnchecked="0" clickSound="4" popup="Rune 27: Requires 9 Rune 25" text="Rune 27" color="5" font="0" image="data\global\ui\PANEL\rune"/>
+            <checkbox name="m_show_r28" x="100" y="165" frameChecked="0" frameUnchecked="0" clickSound="4" popup="Rune 28: Requires 27 Rune 25" text="Rune 28" color="5" font="0" image="data\global\ui\PANEL\rune"/>
+            <checkbox name="m_show_r29" x="100" y="180" frameChecked="0" frameUnchecked="0" clickSound="4" popup="Rune 29: Requires 81 Rune 25" text="Rune 29" color="5" font="0" image="data\global\ui\PANEL\rune"/>
+            <checkbox name="m_show_r30" x="100" y="195" frameChecked="0" frameUnchecked="0" clickSound="4" popup="Rune 30: Requires 243 Rune 25" text="Rune 30" color="5" font="0" image="data\global\ui\PANEL\rune"/>
+            <checkbox name="m_show_r31" x="100" y="210" frameChecked="0" frameUnchecked="0" clickSound="4" popup="Rune 31: Requires 1 Rune 31" text="Rune 31" color="5" font="0" image="data\global\ui\PANEL\rune"/>
+            <checkbox name="m_show_r32" x="100" y="225" frameChecked="0" frameUnchecked="0" clickSound="4" popup="Rune 32: Requires 2 Rune 31" text="Rune 32" color="5" font="0" image="data\global\ui\PANEL\rune"/>
+            <checkbox name="m_show_r33" x="100" y="240" frameChecked="0" frameUnchecked="0" clickSound="4" popup="Rune 33: Requires 4 Rune 31" text="Rune 33" color="5" font="0" image="data\global\ui\PANEL\rune"/>
+        </group>
+
+        <group name="m_gems_group"
+           x="10"
+           y="-160">
+
+            <checkbox name ="m_show_ruby"
+                x="0" y="0"
+                frameChecked="1" frameUnchecked="0" clickSound="4"
+                popup="Ruby"
+                text="Ruby"
+                color="1" font="0"
+                image="data\global\ui\PANEL\radio"/>
+            <checkbox name ="m_show_amethyst"
+                x="0" y="15"
+                frameChecked="1" frameUnchecked="0" clickSound="4"
+                popup="Amethyst"
+                text="Amethyst"
+                color="11" font="0"
+                image="data\global\ui\PANEL\radio"/>
+            <checkbox name ="m_show_emerald"
+                x="0" y="30"
+                frameChecked="1" frameUnchecked="0" clickSound="4"
+                popup="Emerald"
+                text="Emerald"
+                color="2" font="0"
+                image="data\global\ui\PANEL\radio"/>
+            <checkbox name ="m_show_sapphire"
+                x="0" y="45"
+                frameChecked="1" frameUnchecked="0" clickSound="4"
+                popup="Sapphire"
+                text="Sapphire"
+                color="3" font="0"
+                image="data\global\ui\PANEL\radio"/>
+            <checkbox name ="m_show_topaz"
+                x="0" y="60"
+                frameChecked="1" frameUnchecked="0" clickSound="4"
+                popup="Topaz"
+                text="Topaz"
+                color="9" font="0"
+                image="data\global\ui\PANEL\radio"/>
+            <checkbox name ="m_show_skull"
+                x="0" y="75"
+                frameChecked="1" frameUnchecked="0" clickSound="4"
+                popup="Skull"
+                text="Skull"
+                color="5" font="0"
+                image="data\global\ui\PANEL\radio"/>
+            <checkbox name ="m_show_diamond"
+                x="0" y="90"
+                frameChecked="1" frameUnchecked="0" clickSound="4"
+                popup="Diamond"
+                text="Diamond"
+                color="0" font="0"
+                image="data\global\ui\PANEL\radio"/>
+
+        </group>
+
+<!--
+enum ui_color_t {
+    UI_COLOR_WHITE = 0x0,
+    UI_COLOR_RED = 0x1,
+    UI_COLOR_LIGHT_GREEN = 0x2,
+    UI_COLOR_BLUE = 0x3,
+    UI_COLOR_DARK_GOLD = 0x4,
+    UI_COLOR_GREY = 0x5,
+    UI_COLOR_BLACK = 0x6,
+    UI_COLOR_GOLD = 0x7,
+    UI_COLOR_ORANGE = 0x8,
+    UI_COLOR_YELLOW = 0x9,
+    UI_COLOR_DARK_GREEN = 10,
+    UI_COLOR_PURPLE = 011,
+    UI_COLOR_GREEN = 012,
+    UI_COLOR_WHITE2 = 013
+    UI_COLOR_BLACK2 = 14,
+    UI_COLOR_DARK_WHITE = 15,
+    UI_COLOR_LIGHT_GREY = 16,
+};
+-->?
+
+        <!--=================================================-->
+        <group name="m_gems_quality_group"
+           x="20"
+           y="-50">
+
+            <checkbox name ="m_show_chipped"
+                x="0" y="0"
+                frameChecked="0" frameUnchecked="0" clickSound="4"
+                popup="1 Chipped Gem"
+                text="Chipped"
+                color="0" font="0"
+                image="data\global\ui\PANEL\gems-sm"/>
+            <checkbox name ="m_show_flawed"
+                x="0" y="15"
+                frameChecked="1" frameUnchecked="1" clickSound="4"
+                popup="Flawed: Requires 3 Chipped Gems"
+                text="Flawed"
+                color="0" font="0"
+                image="data\global\ui\PANEL\gems-sm"/>
+            <checkbox name ="m_show_normal"
+                x="0" y="30"
+                frameChecked="2" frameUnchecked="2" clickSound="4"
+                popup="Normal: Requires 9 Chipped Gems"
+                text="Normal"
+                color="0" font="0"
+                image="data\global\ui\PANEL\gems-sm"/>
+            <checkbox name ="m_show_flawless"
+                x="0" y="45"
+                frameChecked="3" frameUnchecked="3" clickSound="4"
+                popup="Flawless: Requires 27 Chipped Gems"
+                text="Flawless"
+                color="0" font="0"
+                image="data\global\ui\PANEL\gems-sm"/>
+            <checkbox name ="m_show_perfect"
+                x="0" y="60"
+                frameChecked="4" frameUnchecked="4" clickSound="4"
+                popup="Perfect: Requires 81 Chipped Gems"
+                text="perfect"
+                color="0" font="0"
+                image="data\global\ui\PANEL\gems-sm"/>
+        </group>
+
+
+
+        <!--=================================================-->
+        <group name="m_misc_group"
+            x="10"
+            y="40">
+            <checkbox name ="m_show_gold"
                 x="0" y="0"
                 frameChecked="1" frameUnchecked="0" clickSound="4"
                 popup="Show gold piles"
                 text="Show gold"
-                color="7" font="1"
+                color="7" font="0"
                 image="data\global\ui\PANEL\clickbox"/>
-
-      <checkbox name ="m_show_runes"
-                x="0" y="20"
+            <checkbox name ="m_show_runes"
+                x="0" y="12"
                 frameChecked="1" frameUnchecked="0" clickSound="4"
                 popup="Show runes"
                 text="Show runes"
-                color="11" font="1"
+                color="5" font="0"
                 image="data\global\ui\PANEL\clickbox"/>
-
-      <checkbox name ="m_show_gems"
-                x="0" y="40"
+            <checkbox name ="m_show_gems"
+                x="0" y="24"
                 frameChecked="1" frameUnchecked="0" clickSound="4"
                 popup="Show gems and skulls"
                 text="Show gems"
-                color="11" font="1"
+                color="11" font="0"
                 image="data\global\ui\PANEL\clickbox"/>
-    </group>
+        </group>
 
     <!--=================================================-->
+        <group name="m_qualities_group"
+            x="10"
+            y="110">
 
-    <group name="m_qualities_group"
-           x="210"
-           y="32">
-      <checkbox name ="m_inferior"
+            <checkbox name ="m_inferior"
                 x="0" y="0"
                 frameChecked="1" frameUnchecked="0" clickSound="4"
                 popup="Show low-quality items"
                 text="Inferior items"
-                color="5" font="1"
+                color="5" font="0"
                 image="data\global\ui\PANEL\clickbox"/>
-
-      <checkbox name ="m_normal"
-                x="0" y="20"
+            <checkbox name ="m_normal"
+                x="0" y="12"
                 frameChecked="1" frameUnchecked="0" clickSound="4"
                 popup="Show normal items"
                 text="Normal items"
-                color="0" font="1"
+                color="0" font="0"
                 image="data\global\ui\PANEL\clickbox"/>
-
-      <checkbox name ="m_superior"
-                x="0" y="40"
+            <checkbox name ="m_superior"
+                x="0" y="24"
                 frameChecked="1" frameUnchecked="0" clickSound="4"
                 popup="Show superior items"
                 text="Superior items"
-                color="0" font="1"
+                color="0" font="0"
                 image="data\global\ui\PANEL\clickbox"/>
-
-      <checkbox name ="m_magic"
-                x="0" y="60"
+            <checkbox name ="m_magic"
+                x="0" y="36"
                 frameChecked="1" frameUnchecked="0" clickSound="4"
                 popup="Show magic items"
                 text="Magic items"
-                color="3" font="1"
+                color="3" font="0"
                 image="data\global\ui\PANEL\clickbox"/>
-
-      <checkbox name ="m_set"
-                x="0" y="80"
+            <checkbox name ="m_set"
+                x="0" y="48"
                 frameChecked="1" frameUnchecked="0" clickSound="4"
                 popup="Show set items"
                 text="Set items"
-                color="2" font="1"
+                color="2" font="0"
                 image="data\global\ui\PANEL\clickbox"/>
-
-      <checkbox name ="m_rare"
-                x="0" y="100"
+            <checkbox name ="m_rare"
+                x="0" y="60"
                 frameChecked="1" frameUnchecked="0" clickSound="4"
                 popup="Show rare items"
                 text="Rare items"
-                color="9" font="1"
+                color="9" font="0"
                 image="data\global\ui\PANEL\clickbox"/>
-
-      <checkbox name ="m_unique"
-                x="0" y="120"
+            <checkbox name ="m_unique"
+                x="0" y="72"
                 frameChecked="1" frameUnchecked="0" clickSound="4"
                 popup="Show unique items"
                 text="Unique items"
-                color="4" font="1"
+                color="4" font="0"
                 image="data\global\ui\PANEL\clickbox"/>
-
-      <checkbox name ="m_crafted"
-                x="0" y="140"
+            <checkbox name ="m_crafted"
+                x="0" y="96"
                 frameChecked="1" frameUnchecked="0" clickSound="4"
                 popup="Show crafted items"
                 text="Crafted items"
-                color="8" font="1"
+                color="8" font="0"
                 image="data\global\ui\PANEL\clickbox"/>
-
-      <checkbox name ="m_tempered"
-                x="0" y="160"
+            <checkbox name ="m_tempered"
+                x="0" y="108"
                 frameChecked="1" frameUnchecked="0" clickSound="4"
                 popup="Show tempered items"
                 text="Tempered items"
-                color="10" font="1"
+                color="10" font="0"
                 image="data\global\ui\PANEL\clickbox"/>
-    </group>
-  </menu>
+        </group>
+    </menu>
 </interface>
