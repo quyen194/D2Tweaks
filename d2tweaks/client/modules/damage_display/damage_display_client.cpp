@@ -135,6 +135,7 @@ static void remove_label(size_t index) {
   g_labels_count--;
 }
 
+static unsigned int g_bar_height_enemy = 0;
 static unsigned int g_font_enemy = 0;
 static unsigned int g_font_player = 1;
 static unsigned int g_player_label_posx = 70;
@@ -369,8 +370,6 @@ static void draw_damage_labels() {
         //     3,
         //     textColor);
 
-        int _barHeight = GetPrivateProfileIntA("Options", "barHeight", 0, config_path);
-
         d2_win::set_current_font(UI_FONT_6); // Set font to FONT16
         d2_win::draw_text(const_cast<wchar_t*>(combinedText.c_str()),
                           textX,
@@ -381,7 +380,7 @@ static void draw_damage_labels() {
             textX,
             textY,
             textX + static_cast<int>(healthPercentage * combinedTextWidth),
-            textY + _barHeight,
+            textY + g_bar_height_enemy,
             barColor,
             255);
 
@@ -434,6 +433,7 @@ void damage_display::init() {
   const char* config_path = common::get_config_path();
 
   if (GetPrivateProfileInt("modules", "DamageDisplay", 1, config_path)) {
+    g_bar_height_enemy = GetPrivateProfileInt("DamageDisplay", "EnemyBarHeight", 6, config_path);
     g_font_enemy = GetPrivateProfileInt("DamageDisplay", "EnemyDamageFont", 0, config_path);
     g_font_player = GetPrivateProfileInt("DamageDisplay", "PlayerDamageFont", 1, config_path);
     g_player_label_posx = GetPrivateProfileInt("DamageDisplay", "PlayerDamagePosx", 70, config_path);
