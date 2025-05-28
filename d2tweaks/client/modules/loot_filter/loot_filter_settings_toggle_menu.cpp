@@ -107,7 +107,11 @@ loot_filter_settings_toggle_menu::loot_filter_settings_toggle_menu(token) {
   m_btn_toggle_cube = static_cast<button*>(get_control("m_toggle_cube"));
   m_btn_toggle_cube->set_enabled(true);
   m_btn_toggle_cube->set_visible(true);
+  m_btn_toggle_cube->set_on_click(
+      std::bind(&loot_filter_settings_toggle_menu::toggle_cube_click, this));
+
   auto player = d2_client::get_local_player();
+
   //iterate over all items in player inventory
   for (auto item = player->inventory->first_item; item != nullptr;
        item = item->item_data->pt_next_item) {
@@ -123,14 +127,15 @@ loot_filter_settings_toggle_menu::loot_filter_settings_toggle_menu(token) {
       m_btn_toggle_cube->set_visible(false);
     }
   }
-  m_btn_toggle_cube->set_on_click(
-      std::bind(&loot_filter_settings_toggle_menu::toggle_cube_click, this));
 
   // toggle open/close stash button
   m_btn_toggle_stash = static_cast<button*>(get_control("m_toggle_stash"));
   m_btn_toggle_stash->set_enabled(true);
   m_btn_toggle_stash->set_visible(true);
-  //iterate over all items in player inventory
+  m_btn_toggle_stash->set_on_click(
+      std::bind(&loot_filter_settings_toggle_menu::toggle_stash_click, this));
+
+  // iterate over all items in player inventory
   for (auto item = player->inventory->first_item; item != nullptr;
        item = item->item_data->pt_next_item) {
     const auto record = d2_common::get_item_record(item->data_record_index);
@@ -145,8 +150,6 @@ loot_filter_settings_toggle_menu::loot_filter_settings_toggle_menu(token) {
       m_btn_toggle_stash->set_visible(false);
     }
   }
-  m_btn_toggle_stash->set_on_click(
-      std::bind(&loot_filter_settings_toggle_menu::toggle_stash_click, this));
 }
 
 void loot_filter_settings_toggle_menu::toggle_filter_settings_click() {
@@ -160,7 +163,6 @@ void loot_filter_settings_toggle_menu::toggle_filter_settings_click() {
   m_btn_toggle_stats->set_visible(true);
 
   toggle_cube_click();
-
 }
 
 void loot_filter_settings_toggle_menu::toggle_stats_settings_click() {
@@ -206,6 +208,7 @@ void loot_filter_settings_toggle_menu::toggle_cube_click() {
     d2_client::send_to_server_7(0x4F, 0x17, 0, 0);
   }
 }
+
 void loot_filter_settings_toggle_menu::toggle_stash_click() {
   m_stash_enabled = !m_stash_enabled;
   if (m_stash_enabled) {
