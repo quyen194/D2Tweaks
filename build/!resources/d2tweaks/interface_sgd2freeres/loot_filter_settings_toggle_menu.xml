@@ -1,6 +1,175 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <interface>
   <menu name="loot_filter_settings_menu_toggle_menu" default_pos_x="0" default_pos_y="0" width="-1" height="-1">
+    <button name="m_toggle_stats"
+        default_pos_x="413"
+        default_pos_y="761"
+        width="32"
+        height="32"
+        image="d2tweaks\assets\buttons"
+        frameDown="3"
+        frameUp="2"
+        clickSound="4"
+        popup="Open/Close Stats"
+        resolution_count="7"
+
+        res1_x="1024"  pos1_x="282"
+        res1_y="700"   pos1_y="693"
+
+        res2_x="1024"  pos2_x="182"
+        res2_y="720"   pos2_y="713"
+
+        res3_x="1024"  pos3_x="182"
+        res3_y="768"   pos3_y="761"
+
+        res4_x="1280"  pos4_x="169"
+        res4_y="700"   pos4_y="693"
+
+        res5_x="1280"  pos5_x="169"
+        res5_y="720"   pos5_y="713"
+
+        res6_x="1280"  pos6_x="169"
+        res6_y="768"   pos6_y="761"
+
+        res7_x="1366"  pos7_x="413"
+        res7_y="768"   pos7_y="761"
+    />
+
+    <button name="m_toggle_help"
+        default_pos_x="293"
+        default_pos_y="761"
+        width="32"
+        height="32"
+        image="d2tweaks\assets\buttons"
+        frameDown="3"
+        frameUp="2"
+        clickSound="4"
+        popup="Open Mod Documentation Page"
+        resolution_count="7"
+
+        res1_x="1024"  pos1_x="282"
+        res1_y="700"   pos1_y="693"
+
+        res2_x="1024"  pos2_x="182"
+        res2_y="720"   pos2_y="713"
+
+        res3_x="1024"  pos3_x="182"
+        res3_y="768"   pos3_y="761"
+
+        res4_x="1280"  pos4_x="1078"
+        res4_y="700"   pos4_y="693"
+
+        res5_x="1280"  pos5_x="1078"
+        res5_y="720"   pos5_y="713"
+
+        res6_x="1280"  pos6_x="1078"
+        res6_y="768"   pos6_y="761"
+
+        res7_x="1366"  pos7_x="293"
+        res7_y="768"   pos7_y="761"
+    />
+
+    <button name="m_toggle_cube"
+        default_pos_x="373"
+        default_pos_y="761"
+        width="32"
+        height="32"
+        image="d2tweaks\assets\buttons"
+        frameDown="3"
+        frameUp="2"
+        clickSound="4"
+        popup="Open/Close the Horadric Cube"
+        resolution_count="7"
+
+        res1_x="1024"  pos1_x="282"
+        res1_y="700"   pos1_y="693"
+
+        res2_x="1024"  pos2_x="182"
+        res2_y="720"   pos2_y="713"
+
+        res3_x="1024"  pos3_x="182"
+        res3_y="768"   pos3_y="761"
+
+        res4_x="1280"  pos4_x="796"
+        res4_y="700"   pos4_y="693"
+
+        res5_x="1280"  pos5_x="796"
+        res5_y="720"   pos5_y="713"
+
+        res6_x="1280"  pos6_x="796"
+        res6_y="768"   pos6_y="761"
+
+        res7_x="1366"  pos7_x="373"
+        res7_y="768"   pos7_y="761"
+    />
+
+    <button name="m_toggle_stash"
+        default_pos_x="333"
+        default_pos_y="761"
+        width="32"
+        height="32"
+        image="d2tweaks\assets\buttons"
+        frameDown="3"
+        frameUp="2"
+        clickSound="4"
+        popup="Open/Close Stash"
+        resolution_count="7"
+
+        res1_x="1024"  pos1_x="282"
+        res1_y="700"   pos1_y="693"
+
+        res2_x="1024"  pos2_x="182"
+        res2_y="720"   pos2_y="713"
+
+        res3_x="1024"  pos3_x="182"
+        res3_y="768"   pos3_y="761"
+
+        res4_x="1280"  pos4_x="834"
+        res4_y="700"   pos4_y="691"
+
+        res5_x="1280"  pos5_x="834"
+        res5_y="720"   pos5_y="711"
+
+        res6_x="1280"  pos6_x="834"
+        res6_y="768"   pos6_y="759"
+
+        res7_x="1366"  pos7_x="333"
+        res7_y="768"   pos7_y="761"
+    />
+
+<!--
+    <button name="m_toggle_bag"
+        default_pos_x="0"
+        default_pos_y="0"
+        width="32"
+        height="32"
+        image="d2tweaks\assets\buttons"
+        frameDown="19"
+        frameUp="20"
+        clickSound="4"
+        popup="Bag of Holding Gem/Rune Extraction Menu"
+        resolution_count="6"
+
+        res1_x="1024"  pos1_x="282"
+        res1_y="700"   pos1_y="693"
+
+        res2_x="1024"  pos2_x="182"
+        res2_y="720"   pos2_y="713"
+
+        res3_x="1024"  pos3_x="182"
+        res3_y="768"   pos3_y="761"
+
+        res4_x="1280"  pos4_x="934"
+        res4_y="700"   pos4_y="691"
+
+        res5_x="1280"  pos5_x="934"
+        res5_y="720"   pos5_y="711"
+
+        res6_x="1280"  pos6_x="934"
+        res6_y="768"   pos6_y="759"
+    />
+-->
+
     <button name="m_toggle_filter_settings_btn"
         default_pos_x="170"
         default_pos_y="594"
@@ -11,52 +180,58 @@
         frameUp="2"
         clickSound="4"
         popup="Open/Close loot filter settings"
-        resolution_count="15"
+        resolution_count="17"
 
-        res1_x="800"  pos1_x="170"
-        res1_y="600"  pos1_y="594"
+        res1_x="800"    pos1_x="170"
+        res1_y="600"    pos1_y="594"
 
-        res2_x="1068" pos2_x="304"
-        res2_y="600"  pos2_y="594"
+        res2_x="960"    pos2_x="250"
+        res2_y="720"    pos2_y="714"
 
-        res3_x="960"  pos3_x="250"
-        res3_y="720"  pos3_y="714"
+        res3_x="1024"   pos3_x="282"
+        res3_y="700"    pos3_y="693"
 
-        res4_x="1280" pos4_x="410"
-        res4_y="720"  pos4_y="714"
+        res4_x="1024"   pos4_x="282"
+        res4_y="720"    pos4_y="713"
 
-        res5_x="1024" pos5_x="282"
-        res5_y="768"  pos5_y="761"
+        res5_x="1024"   pos5_x="282"
+        res5_y="768"    pos5_y="761"
 
-        res6_x="1280" pos6_x="410"
-        res6_y="768"  pos6_y="761"
+        res6_x="1068"   pos6_x="304"
+        res6_y="600"    pos6_y="594"
 
-        res7_x="1280" pos7_x="410"
-        res7_y="960"  pos7_y="953"
+        res7_x="1152"   pos7_x="346"
+        res7_y="864"    pos7_y="857"
 
-        res8_x="1200" pos8_x="371"
-        res8_y="900"  pos8_y="893"
+        res8_x="1200"   pos8_x="371"
+        res8_y="900"    pos8_y="893"
 
-        res9_x="1600" pos9_x="571"
-        res9_y="900"  pos9_y="893"
+        res9_x="1280"   pos9_x="447"
+        res9_y="700"    pos9_y="698"
 
-        res10_x="1920" pos10_x="731"
-        res10_y="1080" pos10_y="1073"
+        res10_x="1280"  pos10_x="447"
+        res10_y="720"   pos10_y="718"
 
-        res11_x="1366"  pos11_x="453"
-        res11_y="768"   pos11_y="761"
+        res11_x="1280"  pos11_x="447"
+        res11_y="768"   pos11_y="766"
 
-        res12_x="1360"  pos12_x="450"
-        res12_y="768"   pos12_y="761"
+        res12_x="1280"  pos12_x="410"
+        res12_y="960"   pos12_y="953"
 
-        res13_x="1440"  pos13_x="490"
-        res13_y="900"   pos13_y="893"
+        res13_x="1360"  pos13_x="450"
+        res13_y="768"   pos13_y="761"
 
-        res14_x="1152"  pos14_x="346"
-        res14_y="864"  pos14_y="857"
+        res14_x="1366"  pos14_x="453"
+        res14_y="768"   pos14_y="761"
 
-        res15_x=""  pos15_x=""
-        res15_y=""  pos15_y=""
+        res15_x="1440"  pos15_x="490"
+        res15_y="900"   pos15_y="893"
+
+        res16_x="1600"  pos16_x="571"
+        res16_y="900"   pos16_y="893"
+
+        res17_x="1920"  pos17_x="731"
+        res17_y="1080"  pos17_y="1073"
     />
   </menu>
 </interface>
