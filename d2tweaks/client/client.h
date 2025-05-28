@@ -14,17 +14,6 @@
 using namespace diablo2;
 using namespace diablo2::structures;
 
-// Define the structure to hold stat information
-struct StatEntry {
-  std::wstring stat_display_string;
-  ui_color_t colorStat, colorStatValue;
-  int x1, y1, x2, y2, is_item_stat, item_type_id, stat, op,
-      param = 0;  // x1,y1 stat_display_string | x2,y2 statValue
-};
-
-// Declaration of the global variable
-extern std::vector<StatEntry> globalStatsVector;
-
 extern gfxdata g_gfxdata;  // global gfxdata
 
 extern bool m_stats_enabled;
