@@ -7,52 +7,49 @@
         text=""
         color="7"
         font="2"
-        resolution_count="15"
+        resolution_count="14"
 
-        res1_x="800"  pos1_x="600"
-        res1_y="600"  pos1_y="540"
+        res1_x="800"    pos1_x="600"
+        res1_y="600"    pos1_y="540"
 
-        res2_x="1068" pos2_x="774"
-        res2_y="600"  pos2_y="540"
+        res2_x="960"    pos2_x="720"
+        res2_y="720"    pos2_y="660"
 
-        res3_x="960"  pos3_x="720"
-        res3_y="720"  pos3_y="660"
+        res3_x="1068"   pos3_x="774"
+        res3_y="600"    pos3_y="540"
 
-        res4_x="1280" pos4_x="880"
-        res4_y="720"  pos4_y="660"
+        res4_x="1024"   pos4_x="752"
+        res4_y="768"    pos4_y="708"
 
-        res5_x="1024" pos5_x="752"
-        res5_y="768"  pos5_y="708"
+        res5_x="1152"   pos5_x="816"
+        res5_y="864"    pos5_y="804"
 
-        res6_x="1280" pos6_x="880"
-        res6_y="768"  pos6_y="708"
+        res6_x="1200"   pos6_x="840"
+        res6_y="900"    pos6_y="840"
 
-        res7_x="1280" pos7_x="880"
-        res7_y="960"  pos7_y="900"
+        res7_x="1280"   pos7_x="880"
+        res7_y="720"    pos7_y="660"
 
-        res8_x="1200" pos8_x="840"
-        res8_y="900"  pos8_y="840"
+        res8_x="1280"   pos8_x="880"
+        res8_y="768"    pos8_y="708"
 
-        res9_x="1600" pos9_x="1040"
-        res9_y="900"  pos9_y="840"
+        res9_x="1280"   pos9_x="880"
+        res9_y="960"    pos9_y="900"
 
-        res10_x="1920"  pos10_x="1200"
-        res10_y="1080"  pos10_y="1020"
+        res10_x="1360"  pos10_x="920"
+        res10_y="768"   pos10_y="708"
 
         res11_x="1366"  pos11_x="923"
         res11_y="768"   pos11_y="708"
 
-        res12_x="1360"  pos12_x="920"
-        res12_y="768"   pos12_y="708"
+        res12_x="1440"  pos12_x="960"
+        res12_y="900"   pos12_y="840"
 
-        res13_x="1440"  pos13_x="960"
+        res13_x="1600"  pos13_x="1040"
         res13_y="900"   pos13_y="840"
 
-        res14_x="1152"  pos14_x="816"
-        res14_y="864"  pos14_y="804"
-
-        res15_x=""  pos15_x=""
-        res15_y=""  pos15_y=""
+        res14_x="1920"  pos14_x="1200"
+        res14_y="1080"  pos14_y="1020"
     />
   </menu>
 </interface>
