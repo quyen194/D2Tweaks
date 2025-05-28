@@ -14,14 +14,12 @@
 #include <diablo2/d2common.h>
 #include <diablo2/d2gfx.h>
 #include <diablo2/d2win.h>
-#include <diablo2/structures/data/item_types_line.h>
-#include <diablo2/structures/data/items_line.h>
-#include <diablo2/structures/game.h>
+
 #include <diablo2/structures/inventory.h>
 #include <diablo2/structures/item_data.h>
-#include <diablo2/structures/path.h>
 #include <diablo2/structures/player_data.h>
 #include <diablo2/structures/unit.h>
+
 #include <spdlog/spdlog.h>
 #include <time.h>
 
@@ -67,23 +65,6 @@ enum ColorEnum {
   DARK_WHITE = ui_color_t::UI_COLOR_DARK_WHITE,
   LIGHT_GREY = ui_color_t::UI_COLOR_LIGHT_GREY
 };
-
-// Mapping from int to ui_font_t
-std::map<int, ui_font_t> fontMap = {
-    {0, ui_font_t::UI_FONT_8},
-    {1, ui_font_t::UI_FONT_16},
-    {2, ui_font_t::UI_FONT_30},
-    {3, ui_font_t::UI_FONT_42},
-    {4, ui_font_t::UI_FONT_FORMAL10},
-    {5, ui_font_t::UI_FONT_FORMAL12},
-    {6, ui_font_t::UI_FONT_6},
-    {7, ui_font_t::UI_FONT_24},
-    {8, ui_font_t::UI_FONT_FORMAL11},
-    {9, ui_font_t::UI_FONT_EXOCET10},
-    {10, ui_font_t::UI_FONT_RIDICULOUS},
-    {11, ui_font_t::UI_FONT_EXOCET8},
-    {12, ui_font_t::UI_FONT_REALLYTHELASTSUCKER},
-    {13, ui_font_t::UI_FONT_INGAMECHAT}};
 
 class inventory_sort_menu : public ui::menu {
   common::asset* m_buttons_img;
@@ -132,9 +113,6 @@ class inventory_sort_menu : public ui::menu {
     DeleteObject(hBrush);
     ReleaseDC(hwnd, hdc);
   }
-
-  int statsFont =
-      GetPrivateProfileIntA("Options", "statsFont", 0, "./d2tweaks.ini");
 
   ULONGLONG lastSendTime = GetTickCount64();
 
@@ -228,249 +206,8 @@ class inventory_sort_menu : public ui::menu {
   }
 
   void draw() override {
-    auto stats = globalStatsVector;
-    int textOffset = 40;  // Initial offset for the first line
-
     const auto player = d2_client::get_local_player();
     auto name = player->player_data->name;
-
-    // Add all items to vector
-    std::vector<unit*> items;
-    for (auto item = player->inventory->first_item; item != nullptr;
-         item = item->item_data->pt_next_item) {
-      const auto record = d2_common::get_item_record(item->data_record_index);
-      if (record->type == 104 || record->type == 123) {
-        items.push_back(item);
-      }
-    }
-
-    // Initialize statValue
-    int32_t statValue = 0;
-
-    // if (d2_client::get_ui_window_state(UI_WINDOW_STASH)) {
-    //   d2_gfx::draw_filled_rect(130, 48, 640, 155, 5, 50);
-    // }
-
-    if (m_stats_enabled) {
-      for (const auto& stat : stats) {
-        int param = stat.param;
-        int op = stat.op;
-        auto statline = d2_common::get_item_stat_cost_record(stat.stat);
-        auto opBase = statline->wOpBase;
-        auto opStat = statline->wOpStat[0];
-        auto opBaseValue = d2_common::get_stat(
-            player, static_cast<unit_stats_t>(opBase), NULL);
-        auto opStatValue = d2_common::get_stat(
-            player, static_cast<unit_stats_t>(opStat), NULL);
-
-        if (stat.is_item_stat == 0) {
-          int32_t statvalue = d2_common::get_stat(
-              player, static_cast<unit_stats_t>(stat.stat), NULL);
-          int basevalue = 1;
-          switch (op) {
-            case 0:
-              statValue = d2_common::get_stat(
-                  player, static_cast<unit_stats_t>(stat.stat), NULL);
-              break;
-            case 1:  // Formula: opstatbasevalue * statvalue / 100
-              statValue = static_cast<int32_t>(opBaseValue) / 100;
-              break;
-            case 2:  // Formula: (statvalue * basevalue) / (2 ^ param)
-              statValue = static_cast<int32_t>((opBaseValue) / pow(op, param));
-              break;
-            case 3:  // Percentage-based version of op #2
-              statValue =
-                  static_cast<int32_t>((opBaseValue) / pow(op, param)) / 100;
-              break;
-            case 4:  // Item-based stat increase
-              statValue = static_cast<int32_t>((opBaseValue) / pow(op, param));
-              break;
-            case 5:  // Percentage-based item increase
-              statValue =
-                  static_cast<int32_t>((opBaseValue) / pow(op, param)) / 100;
-              break;
-            case 11:  // Similar to op #1 and #13
-              statValue =
-                  static_cast<int32_t>((opBaseValue) / pow(op, param)) / 100;
-              break;
-            case 13:
-              statValue =
-                  static_cast<int32_t>((opBaseValue) / pow(op, param)) / 100;
-              break;
-            default:
-              statValue = d2_common::get_stat(
-                  player, static_cast<unit_stats_t>(stat.stat), NULL);
-              break;
-          }
-        } else {
-          for (auto item : items) {
-            const auto record =
-                d2_common::get_item_record(item->data_record_index);
-            if (record->type == stat.item_type_id) {
-              statValue = d2_common::get_stat(
-                  item, static_cast<unit_stats_t>(stat.stat), NULL);
-            }
-          }
-        }
-
-        // write code to get player name and display it using MessageBox
-        const auto player = d2_client::get_local_player();
-        auto name = player->player_data->name;
-
-        auto statValueStr = std::to_wstring(statValue);
-        std::wstring statText = std::wstring(
-            stat.stat_display_string);  // .append(L" " + statValueStr);
-
-        if (!d2_client::get_ui_window_state(UI_WINDOW_STASH) &&
-            !d2_client::get_ui_window_state(UI_WINDOW_CHARACTER) &&
-            !d2_client::get_ui_window_state(UI_WINDOW_CHAT) &&
-            !d2_client::get_ui_window_state(UI_WINDOW_NPCMENU) &&
-            !d2_client::get_ui_window_state(UI_WINDOW_MAINMENU) &&
-            !d2_client::get_ui_window_state(UI_WINDOW_CONFIG) &&
-            !d2_client::get_ui_window_state(UI_WINDOW_NPCSHOP) &&
-            !d2_client::get_ui_window_state(UI_WINDOW_ANVIL) &&
-            !d2_client::get_ui_window_state(UI_WINDOW_QUEST) &&
-            !d2_client::get_ui_window_state(UI_WINDOW_QUESTLOG) &&
-            !d2_client::get_ui_window_state(UI_WINDOW_STATUSAREA) &&
-            !d2_client::get_ui_window_state(UI_WINDOW_WPMENU) &&
-            !d2_client::get_ui_window_state(UI_WINDOW_PARTY) &&
-            !d2_client::get_ui_window_state(UI_WINDOW_TRADE) &&
-            !d2_client::get_ui_window_state(UI_WINDOW_MSGS) &&
-            !d2_client::get_ui_window_state(UI_WINDOW_CUBE) &&
-            !d2_client::get_ui_window_state(UI_WINDOW_BELT) &&
-            !d2_client::get_ui_window_state(UI_WINDOW_HELP) &&
-            !d2_client::get_ui_window_state(UI_WINDOW_MERC) &&
-            !d2_client::get_ui_window_state(UI_WINDOW_SCROLL)) {
-          // Draw stats
-          d2_win::set_current_font(fontMap[statsFont]);  // Set font to FONT16
-          d2_win::draw_text(const_cast<wchar_t*>(statText.c_str()),
-                            stat.x1,
-                            stat.y1 + textOffset,
-                            stat.colorStat,
-                            0);
-
-          d2_win::set_current_font(fontMap[statsFont]);  // Set font to FONT16
-          d2_win::draw_text(const_cast<wchar_t*>(statValueStr.c_str()),
-                            stat.x2,
-                            stat.y2 + textOffset,
-                            stat.colorStatValue,
-                            0);
-
-          // auto runeword = d2_common::get_runes_txt_record(169);
-          //
-          // // Assuming szName is a null-terminated C-string.
-          // // Ensure this buffer is large enough to hold the converted string.
-          // wchar_t wText[1024];
-          // // Buffer for each line size_t convertedChars = 0;
-          // wchar_t wLine[128];
-          //
-          // // Initialize vertical offset
-          // int yOffset = 200;
-          //
-          // // Convert and draw each field
-          // mbstowcs_s(&convertedChars, wText, "szName: ", _TRUNCATE);
-          // mbstowcs_s(&convertedChars, wLine, runeword->szName, _TRUNCATE);
-          // swprintf(wText, L"%s%s", wText, wLine);
-          // d2_win::draw_text(wText, 200, yOffset, UI_COLOR_GOLD, 0);
-          // yOffset += 14;
-          //
-          // mbstowcs_s(&convertedChars, wText, "szRuneName: ", _TRUNCATE);
-          // mbstowcs_s(&convertedChars, wLine, runeword->szRuneName, _TRUNCATE);
-          // swprintf(wText, L"%s%s", wText, wLine);
-          // d2_win::draw_text(wText, 200, yOffset, UI_COLOR_GOLD, 0);
-          // yOffset += 14;
-          //
-          // mbstowcs_s(&convertedChars, wText, "nComplete: ", _TRUNCATE);
-          // swprintf(wText, L"%s%d", wText, runeword->nComplete);
-          // d2_win::draw_text(wText, 200, yOffset, UI_COLOR_GOLD, 0);
-          // yOffset += 14;
-          //
-          // mbstowcs_s(&convertedChars, wText, "nServer: ", _TRUNCATE);
-          // swprintf(wText, L"%s%d", wText, runeword->nServer);
-          // d2_win::draw_text(wText, 200, yOffset, UI_COLOR_GOLD, 0);
-          // yOffset += 14;
-          //
-          // mbstowcs_s(&convertedChars, wText, "wStringId: ", _TRUNCATE);
-          // swprintf(wText, L"%s%d", wText, runeword->wStringId);
-          // d2_win::draw_text(wText, 200, yOffset, UI_COLOR_GOLD, 0);
-          // yOffset += 14;
-          //
-          // mbstowcs_s(&convertedChars, wText, "pad0x84: ", _TRUNCATE);
-          // swprintf(wText, L"%s%d", wText, runeword->pad0x84);
-          // d2_win::draw_text(wText, 200, yOffset, UI_COLOR_GOLD, 0);
-          // yOffset += 14;
-          //
-          // mbstowcs_s(&convertedChars, wText, "wIType: ", _TRUNCATE);
-          // for (int i = 0; i < 6; ++i) {
-          //   swprintf(wLine, L"%d ", runeword->wIType[i]);
-          //   wcscat_s(wText, wLine);
-          // }
-          // d2_win::draw_text(wText, 200, yOffset, UI_COLOR_GOLD, 0);
-          // yOffset += 14;
-          //
-          // mbstowcs_s(&convertedChars, wText, "wEType: ", _TRUNCATE);
-          // for (int i = 0; i < 3; ++i) {
-          //   swprintf(wLine, L"%d ", runeword->wEType[i]);
-          //   wcscat_s(wText, wLine);
-          // }
-          // d2_win::draw_text(wText, 200, yOffset, UI_COLOR_GOLD, 0);
-          // yOffset += 14;
-          //
-          // mbstowcs_s(&convertedChars, wText, "nRune: ", _TRUNCATE);
-          // for (int i = 0; i < 6; ++i) {
-          //   items_line* rItem =
-          //       d2_common::get_items_txt_record(runeword->nRune[i]);
-          //   auto code = rItem->string_code;
-          //
-          //   // Ensure code is not null before attempting to use it
-          //   if (code) {
-          //     // Format code and add to wLine
-          //     // swprintf(wLine, L"%ls ", code);
-          //
-          //     // Concatenate wLine to wText
-          //     wcscat_s(wText, wLine);
-          //   }
-          // }
-          // d2_win::draw_text(wText, 200, yOffset, UI_COLOR_GOLD, 0);
-          // yOffset += 14;
-        }
-
-        // d2_win::draw_boxed_text(const_cast<wchar_t*>(statText.c_str()),
-        //                         stat.x1,
-        //                         stat.y1 + textOffset,
-        //                         1,
-        //                         0,
-        //                         stat.colorStat);
-        // d2_win::draw_boxed_text(const_cast<wchar_t*>(statValueStr.c_str()),
-        //                         stat.x2,
-        //                         stat.y2 + textOffset,
-        //                         1,
-        //                         4,
-        //                         stat.colorStatValue);
-        // d2_win::set_current_font(UI_FONT_16);  // Set font to FONT16
-        // d2_cmp::init_gfx_data(&g_gfxdata);
-        // d2_gfx::draw_image(&g_gfxdata, 200, 200, 1, 5, 0);
-        // // instead try to load direct jpg with gdi
-        // // and insetad of loading jpg file,
-        // // specify it bb64 encoded and decode it.
-      }
-    }
-
-    if (m_help_enabled) {
-      // const int windowWidth = 1280;
-      // const int windowHeight = 768;
-      // const int boxWidth = 1000;
-      // const int boxHeight = 680;
-      // const int boxX = (windowWidth - boxWidth) / 2;
-      // const int boxY = (windowHeight - boxHeight) / 2;
-      // const std::string helpText =
-      //     "This is a sample help screen! You can put help text in here!?";
-      // // Draw filled background box
-      // d2_gfx::draw_filled_rect(
-      //     boxX, boxY, boxX + boxWidth, boxY + boxHeight, 0, 255);
-      // // Draw justified text inside the box with padding
-      // drawJustifiedTextInBox(helpText, boxX, boxY, boxWidth, boxHeight, 0);
-    }
 
     d2_win::set_current_font(UI_FONT_16);  // Set font to FONT16
 

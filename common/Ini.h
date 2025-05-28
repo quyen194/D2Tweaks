@@ -37,13 +37,14 @@
 #ifndef __INI_H__
 #define __INI_H__
 
+#include <atlstr.h>
 #include <tchar.h>
 #include <windows.h>
 
-// If MFC is linked, we will use CStringArray for great convenience
-#ifdef __AFXWIN_H__
-#include <afxtempl.h>
-#endif
+//// If MFC is linked, we will use CStringArray for great convenience
+//#ifdef __AFXWIN_H__
+//#include <afxtempl.h>
+//#endif
 
 // Number bases
 #define BASE_BINARY         2
@@ -76,9 +77,9 @@ class CIni {
   void SetPathName(LPCTSTR lpPathName);  // Specify a new file name
   DWORD GetPathName(LPTSTR lpBuffer,
                     DWORD dwBufSize) const;  // Retrieve current file name
-#ifdef __AFXWIN_H__
+//#ifdef __AFXWIN_H__
   CString GetPathName() const;
-#endif
+//#endif
 
   //------------------------------------------------------------
   //    String Access
@@ -88,11 +89,11 @@ class CIni {
                   LPTSTR lpBuffer,
                   DWORD dwBufSize,
                   LPCTSTR lpDefault = NULL) const;
-#ifdef __AFXWIN_H__
+//#ifdef __AFXWIN_H__
   CString GetString(LPCTSTR lpSection,
                     LPCTSTR lpKey,
                     LPCTSTR lpDefault = NULL) const;
-#endif
+//#endif
   BOOL WriteString(LPCTSTR lpSection, LPCTSTR lpKey, LPCTSTR lpValue) const;
 
   // Read a string from the ini file, append it with another string then write

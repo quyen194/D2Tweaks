@@ -115,9 +115,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="common\asm_code.cpp" />
+    <ClCompile Include="common\bytes.cpp" />
     <ClCompile Include="common\config.cpp" />
     <ClCompile Include="common\hooking.cpp" />
     <ClCompile Include="common\ini.cpp" />
+    <ClCompile Include="common\strings.cpp" />
     <ClCompile Include="common\string_utils.cpp" />
     <ClCompile Include="common\timer.cpp" />
     <ClCompile Include="d2tweaks\client\client.cpp" />
@@ -197,12 +199,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\asm_code.h" />
+    <ClInclude Include="common\bytes.h" />
     <ClInclude Include="common\config.h" />
     <ClInclude Include="common\enum_helper.h" />
+    <ClInclude Include="common\get_default.h" />
     <ClInclude Include="common\hooking.h" />
     <ClInclude Include="common\ini.h" />
     <ClInclude Include="common\autopickup_lootfilter.h" />
     <ClInclude Include="common\ptr_wrapper.h" />
+    <ClInclude Include="common\strings.h" />
     <ClInclude Include="common\string_utils.h" />
     <ClInclude Include="common\timer.h" />
     <ClInclude Include="d2tweaks\client\client.h" />
@@ -294,6 +299,7 @@
     <ClInclude Include="diablo2\utils\screen.h" />
     <ClInclude Include="fw\pool.h" />
     <ClInclude Include="fw\singleton.h" />
+    <ClInclude Include="include\macro.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="vendor\D2Template\D2Template.h" />

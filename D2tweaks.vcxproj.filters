@@ -66,6 +66,8 @@
     <ClCompile Include="vendor\DllNotify\DllNotify.cpp" />
     <ClCompile Include="common\timer.cpp" />
     <ClCompile Include="d2tweaks\client\modules\character_stats_display\character_stats_display.cpp" />
+    <ClCompile Include="common\strings.cpp" />
+    <ClCompile Include="common\bytes.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\asm_code.h" />
@@ -185,6 +187,10 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="common\timer.h" />
     <ClInclude Include="d2tweaks\client\modules\character_stats_display\character_stats_display.h" />
+    <ClInclude Include="common\strings.h" />
+    <ClInclude Include="common\bytes.h" />
+    <ClInclude Include="common\get_default.h" />
+    <ClInclude Include="include\macro.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="vendor\minhook\dll_resources\MinHook.def" />

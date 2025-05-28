@@ -13,8 +13,6 @@
 #include <WinBase.h>
 //debug junk
 //#include <iostream>
-#include <filesystem>
-#include <fstream>
 #include <string>
 #include <Windows.h>
 
@@ -22,7 +20,6 @@
 #include <vector>
 #include <map>
 #include <codecvt>
-#include <iostream>
 #include <regex>
 #include <regex>
 
@@ -46,141 +43,12 @@ using namespace diablo2::structures;
 
 #define STB_IMAGE_IMPLEMENTATION
 
-std::vector<StatEntry> globalStatsVector;
 gfxdata g_gfxdata; // global gfxdata
-
-std::wstring ConvertCharToWString(const std::string& charString) {
-  std::wstring_convert<std::codecvt_utf8<wchar_t>> converter;
-  return converter.from_bytes(charString);
-}
-
-// Function to convert std::wstring to std::string
-std::string WStringToString(const std::wstring& wstr) {
-  // Create a codecvt facet for UTF-8 conversion
-  std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> converter;
-  return converter.to_bytes(wstr);
-}
-
-// Function to convert std::string to std::wstring
-std::wstring StringToWString(const std::string& str) {
-  // Create a codecvt facet for UTF-8 conversion
-  std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> converter;
-  return converter.from_bytes(str);
-}
-
-// Define the mapColorToEnum function
-ui_color_t mapColorToEnum(const std::string& colorName) {
-  static const std::unordered_map<std::string, ui_color_t> colorMap = {
-    {"RED", ui_color_t::UI_COLOR_RED},
-    {"LIGHT_GREEN", ui_color_t::UI_COLOR_LIGHT_GREEN},
-    {"BLUE", ui_color_t::UI_COLOR_BLUE},
-    {"DARK_GOLD", ui_color_t::UI_COLOR_DARK_GOLD},
-    {"GREY", ui_color_t::UI_COLOR_GREY},
-    {"BLACK", ui_color_t::UI_COLOR_BLACK},
-    {"GOLD", ui_color_t::UI_COLOR_GOLD},
-    {"ORANGE", ui_color_t::UI_COLOR_ORANGE},
-    {"YELLOW", ui_color_t::UI_COLOR_YELLOW},
-    {"DARK_GREEN", ui_color_t::UI_COLOR_DARK_GREEN},
-    {"PURPLE", ui_color_t::UI_COLOR_PURPLE},
-    {"GREEN", ui_color_t::UI_COLOR_GREEN},
-    {"WHITE", ui_color_t::UI_COLOR_WHITE},
-    {"BLACK2", ui_color_t::UI_COLOR_BLACK2},
-    {"DARK_WHITE", ui_color_t::UI_COLOR_DARK_WHITE},
-    {"LIGHT_GREY", ui_color_t::UI_COLOR_LIGHT_GREY}
-  };
-
-  auto it = colorMap.find(colorName);
-  if (it != colorMap.end()) {
-    return it->second;
-  }
-  // Default color if not found
-  return ui_color_t::UI_COLOR_WHITE;
-}
 
 // Define a struct to hold key-value pairs within a section
 struct Section {
   std::map<std::string, std::string> assignments;
 };
-
-// Function to parse an INI file and extract sections starting with "Stat"
-void ParseIniFile(const std::string& iniFilePath) {
-  std::ifstream inFile(iniFilePath);
-  if (!inFile) {
-    std::cerr << "Error opening file: " << iniFilePath << std::endl;
-    return;
-  }
-
-  std::string line;
-  std::string currentSection;
-  StatEntry entry;
-
-  while (std::getline(inFile, line)) {
-    // Trim leading and trailing whitespace from the line
-    line.erase(line.find_last_not_of(" \t\r\n") + 1);
-
-    // Check if the line contains a section header
-    if (line.size() > 2 && line.front() == '[' && line.back() == ']') {
-      currentSection = line.substr(1, line.size() - 2); // Extract section name
-      if (currentSection.find("Stat") == 0) {
-        entry = {}; // Reset entry for a new section
-      }
-    }
-    else if (!currentSection.empty() && line.find('=') != std::string::npos) {
-      // Parse key-value pairs within the section
-      std::istringstream iss(line);
-      std::string key, value;
-      if (std::getline(iss, key, '=') && std::getline(iss, value)) {
-        if (currentSection.find("Stat") == 0) {
-          // Process key-value pairs for "Stat" sections
-          if (key == "stat") {
-            entry.stat = std::stoi(value);
-          }
-          else if (key == "stat_display_string") {
-            entry.stat_display_string = ConvertCharToWString(value); // a conversion function
-          }
-          else if (key == "colorStat") {
-            entry.colorStat = mapColorToEnum(value); // a mapping function
-          }
-          else if (key == "colorStatValue") {
-            entry.colorStatValue = mapColorToEnum(value); // a mapping function
-          }
-          else if (key == "x1") {
-            entry.x1 = std::stoi(value);
-          }
-          else if (key == "y1") {
-            entry.y1 = std::stoi(value);
-          }
-          else if (key == "x2") {
-            entry.x2 = std::stoi(value);
-          }
-          else if (key == "y2") {
-            entry.y2 = std::stoi(value);
-          }
-          else if (key == "is_item_stat") {
-            entry.is_item_stat = std::stoi(value);
-          }
-          else if (key == "item_type_id") {
-            entry.item_type_id = std::stoi(value);
-          }
-          // add op and param
-          else if (key == "op") {
-            entry.op = std::stoi(value);
-          }
-          // add op and param
-          else if (key == "param") {
-            entry.param = std::stoi(value);
-          }
-        }
-      }
-    }
-    else if (!currentSection.empty() && currentSection.find("Stat") == 0) {
-      // End of section detected, add entry to global vector
-      globalStatsVector.push_back(entry);
-    }
-  }
-
-  inFile.close();
-}
 
 #include <D2Template.h>
 
@@ -264,14 +132,6 @@ void client::init() {
   hooking::hook(d2_client::get_base() + 0x9640, game_tick_wrapper, reinterpret_cast<void**>(&g_game_tick_original));
   hooking::hook(d2_client::get_base() + 0x5E650, draw_game_ui, reinterpret_cast<void**>(&g_draw_game_ui_original));
   //hooking::hook(d2_client::get_base() + 0x150B0, handle_standart_packet, reinterpret_cast<void**>(&g_handle_packet_standart));
-
-  for (auto& m_module : m_modules) {
-    if (m_module == nullptr)
-      break;
-
-    // Load and parse the INI file
-    ParseIniFile(config_path);
-  }
 
   D2TEMPLATE_ApplyPatch(gpt_handle_cs_packet);
   //D2TEMPLATE_ApplyPatch(gpt_handle_sc_standart_packet);

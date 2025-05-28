@@ -103,9 +103,9 @@ DWORD CIni::GetPathName(LPTSTR lpBuffer, DWORD dwBufSize) const {
   return dwLen;
 }
 
-#ifdef __AFXWIN_H__
+//#ifdef __AFXWIN_H__
 CString CIni::GetPathName() const { return CString(m_pszPathName); }
-#endif
+//#endif
 
 /////////////////////////////////////////////////////////////////////////////////
 // Raw String Access
@@ -133,7 +133,7 @@ DWORD CIni::GetString(LPCTSTR lpSection,
   return dwLen;
 }
 
-#ifdef __AFXWIN_H__
+//#ifdef __AFXWIN_H__
 CString CIni::GetString(LPCTSTR lpSection,
                         LPCTSTR lpKey,
                         LPCTSTR lpDefault) const {
@@ -142,7 +142,7 @@ CString CIni::GetString(LPCTSTR lpSection,
   delete[] psz;
   return str;
 }
-#endif
+//#endif
 
 // Write a string value to the ini file
 BOOL CIni::WriteString(LPCTSTR lpSection,
