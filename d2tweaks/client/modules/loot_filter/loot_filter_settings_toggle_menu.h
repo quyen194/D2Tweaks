@@ -23,6 +23,9 @@ class loot_filter_settings_toggle_menu final
   button* m_btn_toggle_stash;
   button* m_btn_toggle_bag;
 
+  uint32_t shortcut_key = 'E';
+  std::string help_url;
+
  public:
   menu* m_filter_settings_menu;
   menu* m_menu;

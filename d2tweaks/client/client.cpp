@@ -125,8 +125,6 @@ static const DLLPatchStrc gpt_handle_sc_standart_packet[] = {
 };
 
 void client::init() {
-  const char* config_path = common::get_config_path();
-
   // handle packet processes the packet before GamePacketReceivedIntercept
   hooking::hook(d2_client::get_base() + 0x11CB0, handle_packet, reinterpret_cast<void**>(&g_handle_packet));
   hooking::hook(d2_client::get_base() + 0x9640, game_tick_wrapper, reinterpret_cast<void**>(&g_game_tick_original));

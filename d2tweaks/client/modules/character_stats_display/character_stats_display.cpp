@@ -1,6 +1,6 @@
 
-#include "common/Ini.h"
 #include "common/strings.h"
+#include "common/file_ini.h"
 
 #include <d2tweaks/client/client.h>
 #include <d2tweaks/client/modules/character_stats_display/character_stats_display.h>
@@ -132,8 +132,7 @@ class character_stats_menu : public ui::menu {
         m_PlayerBarManaEnable(1),
         m_PlayerBarManaX(BAR_HP_X),
         m_PlayerBarManaY(1) {
-    const char* config_path = common::get_config_path();
-    CIni config(config_path);
+    FileIni config(common::get_config_path());
 
     menu::set_enabled(true);
     menu::set_visible(true);
@@ -146,54 +145,55 @@ class character_stats_menu : public ui::menu {
     // if (DLLBASE_SGD2FREERES == 0 && DLLBASE_D2EXPRES == 0)
     //   load_xml("d2tweaks\\interface_vanilla\\character_stats.xml");
 
-    m_StatsFont = GetPrivateProfileIntA("CharacterStatsDisplay", "StatsFont", 0, config_path);
+    m_StatsFont = config.Int("CharacterStatsDisplay", "StatsFont", 0);
 
     // Define the dimensions for the bars
-    m_PlayerBarsWidth = GetPrivateProfileIntA("CharacterStatsDisplay", "PlayerBarsWidth", 200, config_path);
-    m_PlayerBarsHeight = GetPrivateProfileIntA("CharacterStatsDisplay", "PlayerBarsHeight", 16, config_path);
+    m_PlayerBarsWidth = config.Int("CharacterStatsDisplay", "PlayerBarsWidth", 200);
+    m_PlayerBarsHeight = config.Int("CharacterStatsDisplay", "PlayerBarsHeight", 16);
 
     // Get player_bars_enabled from [Options] in d2tweaks.ini
-    m_PlayerBarHpEnable = GetPrivateProfileIntA("CharacterStatsDisplay", "PlayerBarHpEnable", 1, config_path);
-    m_PlayerBarHpX = GetPrivateProfileIntA("CharacterStatsDisplay", "PlayerBarHpX", BAR_HP_X, config_path);
-    m_PlayerBarHpY = GetPrivateProfileIntA("CharacterStatsDisplay", "PlayerBarHpY", BAR_HP_Y, config_path);
+    m_PlayerBarHpEnable = config.Int("CharacterStatsDisplay", "PlayerBarHpEnable", 1);
+    m_PlayerBarHpX = config.Int("CharacterStatsDisplay", "PlayerBarHpX", BAR_HP_X);
+    m_PlayerBarHpY = config.Int("CharacterStatsDisplay", "PlayerBarHpY", BAR_HP_Y);
 
-    m_PlayerBarManaEnable = GetPrivateProfileIntA("CharacterStatsDisplay", "PlayerBarManaEnable", 1, config_path);
-    m_PlayerBarManaX = GetPrivateProfileIntA("CharacterStatsDisplay", "PlayerBarManaX", BAR_HP_X, config_path);
+    m_PlayerBarManaEnable = config.Int("CharacterStatsDisplay", "PlayerBarManaEnable", 1);
+    m_PlayerBarManaX = config.Int("CharacterStatsDisplay", "PlayerBarManaX", BAR_HP_X);
     int iDefBarManaY = BAR_HP_Y + m_PlayerBarsHeight + 4;
-    m_PlayerBarManaY = GetPrivateProfileIntA("CharacterStatsDisplay", "PlayerBarManaY", iDefBarManaY, config_path);
+    m_PlayerBarManaY = config.Int("CharacterStatsDisplay", "PlayerBarManaY", iDefBarManaY);
 
     // read stats settings
-    int iStatSectionCount = config.GetInt("StatSections", "SectionCount", 0);
+    int iStatSectionCount = config.Int("StatSections", "SectionCount", 0);
 
     StatEntry entry;
-    CString section;
-    CString key;
-    CString text;
+    std::string section;
+    std::wstring section_w;
+    std::string key;
+    std::string text;
 
     for (int i = 0; i < iStatSectionCount; i++) {
-      key.Format("Section%02d", i);
-      section = config.GetString("StatSections", key, "");
+      key = utils::string_format("Section%02d", i);
+      section = config.String("StatSections", key, 255);
+      section_w = utils::ToWString(section);
 
-      int iEnable = config.GetInt(section, "Enable", 0);
+      int iEnable = config.Int(section, "Enable", 0);
       if (!iEnable) {
         continue;
       }
 
-      entry.stat = config.GetInt(section, "Stat", 0);
-      text = config.GetString(section, "StatLabel");
-      entry.stat_label = utils::ToWString(text.GetBuffer());
-      text = config.GetString(section, "StatLabelColor", 0);
-      entry.colorStat = mapColorToEnum(text.GetBuffer());
-      text = config.GetString(section, "StatValueColor", 0);
-      entry.colorStatValue = mapColorToEnum(text.GetBuffer());
-      entry.x1 = config.GetInt(section, "StatLabelX", 0);
-      entry.y1 = config.GetInt(section, "StatLabelY", 0);
-      entry.x2 = config.GetInt(section, "StatValueX", 0);
-      entry.y2 = config.GetInt(section, "StatValueY", 0);
-      entry.is_item_stat = config.GetInt(section, "IsItemStat", 0);
-      entry.item_type_id = config.GetInt(section, "ItemTypeId", 0);
-      entry.op = config.GetInt(section, "op", 0);
-      entry.param = config.GetInt(section, "param", 0);
+      entry.stat = config.Int(section, "Stat", 0);
+      entry.stat_label = config.String(section_w, L"StatLabel", 255);
+      text = config.String(section, "StatLabelColor", 0);
+      entry.colorStat = mapColorToEnum(text.c_str());
+      text = config.String(section, "StatValueColor", 0);
+      entry.colorStatValue = mapColorToEnum(text.c_str());
+      entry.x1 = config.Int(section, "StatLabelX", 0);
+      entry.y1 = config.Int(section, "StatLabelY", 0);
+      entry.x2 = config.Int(section, "StatValueX", 0);
+      entry.y2 = config.Int(section, "StatValueY", 0);
+      entry.is_item_stat = config.Int(section, "IsItemStat", 0);
+      entry.item_type_id = config.Int(section, "ItemTypeId", 0);
+      entry.op = config.Int(section, "op", 0);
+      entry.param = config.Int(section, "param", 0);
 
       globalStatsVector.push_back(entry);
     }
@@ -211,7 +211,6 @@ class character_stats_menu : public ui::menu {
   }
 
   void draw() override {
-    const char* config_path = common::get_config_path();
     const auto player = d2_client::get_local_player();
 
     auto stats = globalStatsVector;
@@ -650,9 +649,9 @@ MODULE_INIT(character_stats_display)
 void character_stats_display::init_early() {}
 
 void character_stats_display::init() {
-  const char* config_path = common::get_config_path();
+  FileIni ini(common::get_config_path());
 
-  if (GetPrivateProfileInt("modules", "CharacterStatsDisplay", 0, config_path)) {
+  if (ini.Int("modules", "CharacterStatsDisplay", 0)) {
     singleton<ui::ui_manager>::instance().add_menu(new character_stats_menu());
   }
 }

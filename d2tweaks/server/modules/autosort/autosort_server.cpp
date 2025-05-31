@@ -1,5 +1,7 @@
 #include <d2tweaks/server/modules/autosort/autosort_server.h>
 
+#include <common/file_ini.h>
+
 #include <d2tweaks/server/server.h>
 
 #include <vector>
@@ -58,19 +60,19 @@ int cminValidY = 0;
 int cmaxValidY = 0;
 
 void autosort::init() {
-  const char* config_path = common::get_config_path();
+  FileIni config(common::get_config_path());
 
-  iminValidX = GetPrivateProfileInt("InventoryZone", "MinValidX", 0, config_path);
-  imaxValidX = GetPrivateProfileInt("InventoryZone", "MaxValidX", 0, config_path);
-  iminValidY = GetPrivateProfileInt("InventoryZone", "MinValidY", 0, config_path);
-  imaxValidY = GetPrivateProfileInt("InventoryZone", "MaxValidY", 0, config_path);
+  iminValidX = config.Int("InventoryZone", "MinValidX", 0);
+  imaxValidX = config.Int("InventoryZone", "MaxValidX", 0);
+  iminValidY = config.Int("InventoryZone", "MinValidY", 0);
+  imaxValidY = config.Int("InventoryZone", "MaxValidY", 0);
  
-  cminValidX = GetPrivateProfileInt("CharmZone", "MinValidX", 0, config_path);
-  cmaxValidX = GetPrivateProfileInt("CharmZone", "MaxValidX", 0, config_path);
-  cminValidY = GetPrivateProfileInt("CharmZone", "MinValidY", 0, config_path);
-  cmaxValidY = GetPrivateProfileInt("CharmZone", "MaxValidY", 0, config_path);
+  cminValidX = config.Int("CharmZone", "MinValidX", 0);
+  cmaxValidX = config.Int("CharmZone", "MaxValidX", 0);
+  cminValidY = config.Int("CharmZone", "MinValidY", 0);
+  cmaxValidY = config.Int("CharmZone", "MaxValidY", 0);
 
-  if (GetPrivateProfileInt("modules", "Autosort", 1, config_path)) {
+  if (config.Int("modules", "Autosort", 1)) {
     singleton<server>::instance().register_packet_handler(
         common::MESSAGE_TYPE_INVENTORY_SORT, this);
   }

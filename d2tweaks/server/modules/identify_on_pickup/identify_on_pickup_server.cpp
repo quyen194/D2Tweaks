@@ -3,6 +3,7 @@
 #include <d2tweaks/server/modules/identify_on_pickup/identify_on_pickup_server.h>
 #include <d2tweaks/server/server.h>
 
+#include <common/file_ini.h>
 #include <common/hooking.h>
 
 #include <diablo2/d2game.h>
@@ -127,20 +128,20 @@ static uint32_t __fastcall pickup_item_cursor(game* game,
 }
 
 void identify_on_pickup::init() {
-  const char* config_path = common::get_config_path();
+  FileIni config(common::get_config_path());
 
-  if (GetPrivateProfileInt("modules", "IdentifyOnPickup", 1, config_path)) {
+  if (config.Int("modules", "IdentifyOnPickup", 1)) {
     hooking::hook(d2_game::get_base() + 0x13340, pickup_item, &g_pickup_item_original);
     hooking::hook(d2_game::get_base() + 0x12B80, pickup_item_cursor, &g_pickup_item_cursor_original);
 
-    g_item_Normal = GetPrivateProfileInt("IdentifyOnPickup", "Normal", 1, config_path);
-    g_item_Superior = GetPrivateProfileInt("IdentifyOnPickup", "Superior", 1, config_path);
-    g_item_Magic = GetPrivateProfileInt("IdentifyOnPickup", "Magic", 1, config_path);
-    g_item_Rare = GetPrivateProfileInt("IdentifyOnPickup", "Rare", 1, config_path);
-    g_item_Set = GetPrivateProfileInt("IdentifyOnPickup", "Set", 1, config_path);
-    g_item_Unique = GetPrivateProfileInt("IdentifyOnPickup", "Unique", 1, config_path);
-    g_item_Crafted = GetPrivateProfileInt("IdentifyOnPickup", "Crafted", 1, config_path);
-    g_item_Tempered = GetPrivateProfileInt("IdentifyOnPickup", "Tempered", 1, config_path);
+    g_item_Normal = config.Int("IdentifyOnPickup", "Normal", 1);
+    g_item_Superior = config.Int("IdentifyOnPickup", "Superior", 1);
+    g_item_Magic = config.Int("IdentifyOnPickup", "Magic", 1);
+    g_item_Rare = config.Int("IdentifyOnPickup", "Rare", 1);
+    g_item_Set = config.Int("IdentifyOnPickup", "Set", 1);
+    g_item_Unique = config.Int("IdentifyOnPickup", "Unique", 1);
+    g_item_Crafted = config.Int("IdentifyOnPickup", "Crafted", 1);
+    g_item_Tempered = config.Int("IdentifyOnPickup", "Tempered", 1);
   }
 }
 

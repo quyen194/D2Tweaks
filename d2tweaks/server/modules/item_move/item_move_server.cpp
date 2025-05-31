@@ -14,6 +14,7 @@
 #include <diablo2/structures/path.h>
 
 #include <spdlog/spdlog.h>
+#include <common/file_ini.h>
 
 #include <fstream>
 #include <iostream>
@@ -44,9 +45,9 @@ namespace modules {
 MODULE_INIT(item_move)
 
 void item_move::init() {
-  const char* config_path = common::get_config_path();
+  FileIni config(common::get_config_path());
 
-  if (GetPrivateProfileInt("modules", "ItemMover", 1, config_path)) {
+  if (config.Int("modules", "ItemMover", 1)) {
     singleton<server>::instance().register_packet_handler(
         common::MESSAGE_TYPE_ITEM_MOVE, this);
   }

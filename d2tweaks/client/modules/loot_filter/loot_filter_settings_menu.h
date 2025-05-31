@@ -19,6 +19,10 @@ namespace modules {
 
 class loot_filter_settings_menu final : public ui::menu,
                                         singleton<loot_filter_settings_menu> {
+  int m_iBagStatsX;
+  int m_iBagStatsY;
+  int m_iBagStatsZ;
+
   checkbox* m_altonly;
   checkbox* m_show_gold;
   checkbox* m_show_runes;
@@ -135,6 +139,7 @@ class loot_filter_settings_menu final : public ui::menu,
   void reload_settings();
 
   void draw() override;
+  void drawStats();
 
  private:
   std::string m_selected_gem;

@@ -14,6 +14,7 @@
 #include <shellapi.h> // For ShellExecute
 #include <Windows.h>
 #include <algorithm>
+#include <common/file_ini.h>
 #include <common/hooking.h>
 #include <d2tweaks/common/protocol.h>
 #include <d2tweaks/ui/menu.h>
@@ -67,10 +68,22 @@ namespace modules {
 #pragma pack(push, 1)
 
 loot_filter_settings_toggle_menu::loot_filter_settings_toggle_menu(token) {
+  FileIni config(common::get_config_path());
+
   m_show = false;
 
   menu::set_enabled(true);
   menu::set_visible(true);
+
+  // Read the key from the ./d2tweaks.ini file from [ExPanel] section, key: key
+  std::string key_buff = config.String("ExPanel", "key", 1, "E");
+  if (!key_buff.empty()) {
+    key_buff = toupper(key_buff[0]);
+    shortcut_key = key_buff[0];
+  }
+
+  // read the url from the ./d2tweaks.ini file
+  help_url = config.String("Options", "help_url", 256);
 
   //load_xml("d2tweaks\\interfaces\\loot_filter_settings_toggle_menu.xml");
   if (DLLBASE_D2EXPRES != 0)
@@ -250,25 +263,12 @@ void loot_filter_settings_toggle_menu::toggle_stash_click() {
 }
 
 void loot_filter_settings_toggle_menu::toggle_help_click() {
-  const char* config_path = common::get_config_path();
-
   //m_help_enabled = !m_help_enabled;
   // Open the default OS browser to the URL
-  // read the url from the ./d2tweaks.ini file
-  char urlBuffer[256];
-  GetPrivateProfileStringA("Options", "help_url", "", urlBuffer, sizeof(urlBuffer), config_path);
-  const std::string url(urlBuffer);
 
-#ifdef _WIN32
-  // For Windows
-  ShellExecute(nullptr, "open", url.c_str(), nullptr, nullptr, SW_SHOWNORMAL);
-#elif defined __linux__ || defined __APPLE__
-  // For Linux and macOS
-  system(("xdg-open " + url).c_str());
-#else
-  // Unsupported platform
-  // You can add handling for other platforms here
-#endif
+  if (!help_url.empty()) {
+    ShellExecute(nullptr, "open", help_url.c_str(), nullptr, nullptr, SW_SHOWNORMAL);
+  }
 }
 
 void loot_filter_settings_toggle_menu::draw() {
@@ -281,16 +281,8 @@ void loot_filter_settings_toggle_menu::draw() {
 }
 
 bool loot_filter_settings_toggle_menu::key_event(uint32_t key, bool up) {
-  const char* config_path = common::get_config_path();
-
-  // Read the key from the ./d2tweaks.ini file from [ExPanel] section, key: key
-  char keyBuffer[3];
-  GetPrivateProfileStringA("ExPanel", "key", "", keyBuffer, sizeof(keyBuffer), config_path);
-
-  // Convert the key character to uppercase for case-insensitive comparison
-  char configKey = toupper(keyBuffer[0]);
-
-  if (key == configKey && up &&
+  if (key == shortcut_key &&
+      up &&
       !d2_client::get_ui_window_state(UI_WINDOW_MSGS) &&
       !d2_client::get_ui_window_state(UI_WINDOW_CHAT)) {
     m_show = !m_show;

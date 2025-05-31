@@ -1,3 +1,4 @@
+#include <common/file_ini.h>
 #include <common/hooking.h>
 #include <common/ptr_wrapper.h>
 #include <d2tweaks/client/client.h>
@@ -145,9 +146,9 @@ void item_move::init_early() {
 }
 
 void item_move::init() {
-  const char* config_path = common::get_config_path();
+  FileIni config(common::get_config_path());
 
-  if (GetPrivateProfileInt("modules", "ItemMover", 1, config_path)) {
+  if (config.Int("modules", "ItemMover", 1)) {
     hooking::hook(d2_client::get_base() + 0x475C0,
                   item_click,
                   reinterpret_cast<void**>(&g_item_click_original));

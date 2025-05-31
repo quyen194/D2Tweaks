@@ -28,7 +28,8 @@
 #include <diablo2/structures/inventory.h>
 #include <common/autopickup_lootfilter.h>
 
-#include <common/ini.h>
+#include <common/strings.h>
+#include <common/file_ini.h>
 #include <DllNotify.h>
 #include <D2Template.h>
 
@@ -58,22 +59,8 @@ static const uint8_t PAGE_CUBE = 3;
 static const uint8_t PAGE_STASH = 4;
 static const uint8_t PAGE_INVENTORY = 0;
 
-static const uint32_t m_nCountKeys = 10;
-
-static uint32_t m_nCountItemListAll = 0;
-static char m_aacItemList[m_nCountKeys][MAX_STRING_LENGHT] = { 0 };
-static char m_acItemListAll[MAX_STRING_LENGHT * m_nCountKeys] = { 0 };
-static char m_acItemListAllTemp[MAX_STRING_LENGHT * m_nCountKeys] = { 0 };
-
-static uint32_t m_nCountItemTypesAll = 0;
-static char m_aacItemTypes[m_nCountKeys][MAX_STRING_LENGHT] = { 0 };
-static char m_acItemTypesAll[MAX_STRING_LENGHT * m_nCountKeys] = { 0 };
-static char m_acItemTypesAllTemp[MAX_STRING_LENGHT * m_nCountKeys] = { 0 };
-
-static char m_acBuffer[1024] = { 0 };
-
-static item_code* m_stItemList;
-static item_type* m_stItemTypes;
+static std::vector<ItemCode> m_stItemList;
+static std::vector<ItemType> m_stItemTypes;
 
 static void(__fastcall* fn_hook_play_sound)(uint32_t soundId, uint32_t* unit, const uint32_t ticks, const BOOL prePick, const uint32_t cache);
 static void(__fastcall* fn_hook_game_end)();
@@ -223,10 +210,7 @@ void transmute::init_early() {
 }
 
 void transmute::init() {
-  const char* config_path = common::get_config_path();
-  CIni config(config_path);
-
-  uint32_t dwLenght = 0;
+  FileIni config(common::get_config_path());
 
   // CIni recipes(config_path);
   // // key enlarging the buffer unless we make sure all section names are loaded.
@@ -242,183 +226,172 @@ void transmute::init() {
   // for (char* pSection = pszBuffer; pSection[0]; pSection = &pSection[strlen(pSection) + 1]) {
   // }
 
-  if (config.GetInt("modules", "AutoTransmute", 1)) {
-    m_nDelayFrames = config.GetUInt("AutoTransmute", "DelayInFrames", 10);
-    m_nTransmuteSound = config.GetUInt("AutoTransmute", "EnableTransmuteSound", 0);
-
-    for (uint32_t i = 0; i < m_nCountKeys; i++) {
-      sprintf_s(m_acBuffer, sizeof(m_acBuffer), "ItemList%d", i + 1);
-      dwLenght = config.GetString("AutoTransmute", m_acBuffer, m_aacItemList[i], MAX_STRING_LENGHT - 1);
-      if (dwLenght != 0) {
-        lstrcat(m_acItemListAll, m_aacItemList[i]);
-        lstrcat(m_acItemListAll, "|");
-      }
-    }
-
-    for (uint32_t i = 0; i < m_nCountKeys; i++) {
-      sprintf_s(m_acBuffer, sizeof(m_acBuffer), "ItemTypeList%d", i + 1);
-      dwLenght = config.GetString("AutoTransmute", m_acBuffer, m_aacItemTypes[i], MAX_STRING_LENGHT - 1);
-      if (dwLenght != 0) {
-        lstrcat(m_acItemTypesAll, m_aacItemTypes[i]);
-        lstrcat(m_acItemTypesAll, "|");
-      }
-    }
-
-    /////// Parse ItemCode
-    dwLenght = lstrlen(m_acItemListAll);
-    memcpy(m_acItemListAllTemp, m_acItemListAll, dwLenght + 1);
-    // Count the total number of all items
-    char* token_string_itemcode = strtok(m_acItemListAllTemp, " ,|");
-    while (token_string_itemcode) {
-      m_nCountItemListAll++;
-      token_string_itemcode = strtok(NULL, " ,|");
-    }
-
-    m_stItemList = (item_code*)malloc(m_nCountItemListAll * sizeof(item_code));
-    memset(m_stItemList, 0, m_nCountItemListAll * sizeof(item_code));
-
-    memcpy(m_acItemListAllTemp, m_acItemListAll, dwLenght + 1);
-    token_string_itemcode = strtok(m_acItemListAllTemp, " ,|");
-
-    for (uint32_t i = 0; token_string_itemcode != 0; i++) {
-      uint32_t cur_string_length = lstrlen(token_string_itemcode);
-      m_stItemList[i].code0 = token_string_itemcode[0];
-      m_stItemList[i].code1 = token_string_itemcode[1];
-      m_stItemList[i].code2 = token_string_itemcode[2];
-
-      if (token_string_itemcode[3] == ':') {
-        // first index quality = 1
-        for (uint32_t q = 1; q <= 9; q++) {
-          m_stItemList[i].qualityinclude[q] = FALSE;
-        }
-
-        if (cur_string_length <= 13) { //for example jew:123456789
-          // p = 4 is first digit after ':'
-          for (uint32_t p = 4; p <= cur_string_length; p++) {
-            if (token_string_itemcode[p] == 0) {
-              break;
-            }
-            if (token_string_itemcode[p] >= '0' && token_string_itemcode[p] <= '9') {
-              m_stItemList[i].qualityinclude[token_string_itemcode[p] - 0x30] = TRUE;
-            }
-          }
-        }
-      }
-
-      if (token_string_itemcode[3] == '-') {
-        // first index quality = 1
-        for (uint32_t q = 1; q <= 9; q++) {
-          m_stItemList[i].qualityinclude[q] = TRUE;
-        }
-
-        if (cur_string_length <= 13) { //for example jew:123456789
-          // p = 4 is first digit after '-'
-          for (uint32_t p = 4; p <= cur_string_length; p++) {
-            if (token_string_itemcode[p] == 0) {
-              break;
-            }
-            if (token_string_itemcode[p] >= '0' && token_string_itemcode[p] <= '9') {
-              m_stItemList[i].qualityinclude[token_string_itemcode[p] - 0x30] = FALSE;
-            }
-          }
-        }
-      }
-
-      if (token_string_itemcode[3] != '-' && token_string_itemcode[3] != ':') {
-        // first index quality = 1
-        for (uint32_t q = 1; q <= 9; q++) {
-          m_stItemList[i].qualityinclude[q] = TRUE;
-        }
-      }
-
-      token_string_itemcode = strtok(NULL, " ,|");
-    }
-
-    /////// Parse ItemType
-    dwLenght = lstrlen(m_acItemTypesAll);
-    memcpy(m_acItemTypesAllTemp, m_acItemTypesAll, dwLenght + 1);
-    char* token_string_itemtype_code = strtok(m_acItemTypesAllTemp, ",|");
-    while (token_string_itemtype_code) {
-      m_nCountItemTypesAll++;
-      token_string_itemtype_code = strtok(NULL, ",|");
-    }
-
-    m_stItemTypes = (item_type*)malloc(m_nCountItemTypesAll * sizeof(item_type));
-    memset(m_stItemTypes, 0, m_nCountItemTypesAll * sizeof(item_type));
-
-    memcpy(m_acItemTypesAllTemp, m_acItemTypesAll, dwLenght + 1);
-    token_string_itemtype_code = strtok(m_acItemTypesAllTemp, ",|");
-    for (uint32_t i = 0; token_string_itemtype_code != 0; i++) {
-      uint32_t cur_itemtypes_string_length = lstrlen(token_string_itemtype_code);
-      //m_stItemTypes[i].type0 = token_string_itemtype_code[0];
-      //m_stItemTypes[i].type1 = token_string_itemtype_code[1];
-      //m_stItemTypes[i].type2 = token_string_itemtype_code[2];
-      //m_stItemTypes[i].type3 = token_string_itemtype_code[3];
-
-      m_stItemTypes[i].dwtype = *(DWORD*)token_string_itemtype_code;
-
-      if (token_string_itemtype_code[4] == ':') {
-        // first index quality = 1
-        for (uint32_t q = 1; q <= 9; q++) {
-          m_stItemTypes[i].qualityinclude[q] = FALSE;
-        }
-
-        if (cur_itemtypes_string_length <= 14) { //for example tors:123456789
-          // p = 5 is first digit after ':'
-          for (uint32_t p = 5; p <= cur_itemtypes_string_length; p++) {
-            if (token_string_itemtype_code[p] == 0) {
-              break;
-            }
-            if (token_string_itemtype_code[p] >= '0' && token_string_itemtype_code[p] <= '9') {
-              m_stItemTypes[i].qualityinclude[token_string_itemtype_code[p] - 0x30] = TRUE;
-            }
-          }
-        }
-      }
-
-      if (token_string_itemtype_code[4] == '-') {
-        // first index quality = 1
-        for (uint32_t q = 1; q <= 9; q++) {
-          m_stItemTypes[i].qualityinclude[q] = TRUE;
-        }
-
-        if (cur_itemtypes_string_length <= 14) { //for example armo:123456789
-          // p = 5 is first digit after '-'
-          for (uint32_t p = 5; p <= cur_itemtypes_string_length; p++) {
-            if (token_string_itemtype_code[p] == 0) {
-              break;
-            }
-            if (token_string_itemtype_code[p] >= '0' && token_string_itemtype_code[p] <= '9') {
-              m_stItemTypes[i].qualityinclude[token_string_itemtype_code[p] - 0x30] = FALSE;
-            }
-          }
-        }
-      }
-
-      if (token_string_itemtype_code[4] != '-' && token_string_itemtype_code[4] != ':') {
-        // first index quality = 1
-        for (uint32_t q = 1; q <= 9; q++) {
-          m_stItemTypes[i].qualityinclude[q] = TRUE;
-        }
-      }
-
-      token_string_itemtype_code = strtok(NULL, ",|");
-    }
-
-    if (m_nTransmuteSound == false) {
-      hooking::hook(d2_client::get_base() + 0xB5820,
-                    hook_play_sound,
-                    reinterpret_cast<void**>(&fn_hook_play_sound));
-    }
-
-    hooking::hook(d2_client::get_base() + 0xB528,
-                  hook_game_end_asm,
-                  reinterpret_cast<void**>(&fn_hook_game_end));
-
-    singleton<ui::ui_manager>::instance().add_menu(new auto_transmute_menu());
-    singleton<client>::instance().register_tick_handler(this);
-    singleton<client>::instance().register_packet_handler(common::message_types_t::MESSAGE_TYPE_TRANSMUTE, this);
+  if (!config.Int("modules", "AutoTransmute", 1)) {
+    return;
   }
+
+  m_nDelayFrames = config.Int("AutoTransmute", "DelayInFrames", 10);
+  m_nTransmuteSound = config.Int("AutoTransmute", "EnableTransmuteSound", 0);
+
+  std::string m_acItemListAll;
+  std::string m_acItemTypesAll;
+
+  std::string key;
+  uint32_t key_count;
+  std::string buffer;
+
+  key_count = config.Int("AutoTransmute", "ItemListCount", 10);
+  for (uint32_t i = 0; i < key_count; i++) {
+    key = utils::string_format("ItemList%d", i + 1);
+    buffer = config.String("AutoTransmute", key, MAX_STRING_LENGHT - 1);
+    if (!buffer.empty()) {
+      if (m_acItemListAll.empty()) {
+        m_acItemListAll += buffer;
+      } else {
+        m_acItemListAll += "|";
+        m_acItemListAll += buffer;
+      }
+    }
+  }
+
+  key_count = config.Int("AutoTransmute", "ItemTypeListCount", 10);
+  for (uint32_t i = 0; i < key_count; i++) {
+    key = utils::string_format("ItemTypeList%d", i + 1);
+    buffer = config.String("AutoTransmute", key, MAX_STRING_LENGHT - 1);
+    if (m_acItemTypesAll.empty()) {
+      m_acItemTypesAll += buffer;
+    } else {
+      m_acItemTypesAll += "|";
+      m_acItemTypesAll += buffer;
+    }
+  }
+
+  const std::string& delimiters = " ,|";  // ' ' or ',' or '|'
+  size_t start, end;
+  std::string input;
+  std::string token;
+
+  /////// Parse ItemCode
+  ItemCode item_code;
+  input = m_acItemListAll;
+  start = input.find_first_not_of(delimiters);
+  while (start != std::string::npos) {
+    end = input.find_first_of(delimiters, start);
+    token = input.substr(start, end - start);
+    start = input.find_first_not_of(delimiters, end);
+
+    if (token.empty() || token.length() < 3) {
+      continue;
+    }
+
+    memset(&item_code, 0, sizeof(item_code));
+
+    item_code.code0 = token[0];
+    item_code.code1 = token[1];
+    item_code.code2 = token[2];
+
+    if (token.length() > 3 && token[3] == ':') {
+      // first index quality = 1
+      memset(item_code.qualityinclude, 0, sizeof(item_code.qualityinclude));
+
+      if (token.length() <= 13) { //for example jew:123456789
+        // p = 4 is first digit after ':'
+        for (uint32_t p = 4; p <= token.length(); p++) {
+          if (token[p] >= '0' && token[p] <= '9') {
+            item_code.qualityinclude[token[p] - '0'] = true;
+          }
+        }
+      }
+    }
+
+    if (token.length() > 3 && token[3] == '-') {
+      // first index quality = 1
+      memset(item_code.qualityinclude, 1, sizeof(item_code.qualityinclude));
+
+      if (token.length() <= 13) { //for example jew:123456789
+        // p = 4 is first digit after '-'
+        for (uint32_t p = 4; p <= token.length(); p++) {
+          if (token[p] >= '0' && token[p] <= '9') {
+            item_code.qualityinclude[token[p] - '0'] = false;
+          }
+        }
+      }
+    }
+
+    if ((token.length() == 3) || (token[3] != '-' && token[3] != ':')) {
+      // first index quality = 1
+      memset(item_code.qualityinclude, 1, sizeof(item_code.qualityinclude));
+    }
+
+    m_stItemList.push_back(item_code);
+  }
+
+  /////// Parse ItemType
+  ItemType item_type;
+  input = m_acItemTypesAll;
+  start = input.find_first_not_of(delimiters);
+  while (start != std::string::npos) {
+    end = input.find_first_of(delimiters, start);
+    token = input.substr(start, end - start);
+    start = input.find_first_not_of(delimiters, end);
+
+    if (token.empty() || token.length() < 4) {
+      continue;
+    }
+
+    memset(&item_type, 0, sizeof(item_type));
+
+    item_type.dwtype = *(uint32_t *) &token[0];
+
+    if (token.length() > 4 && token[4] == ':') {
+      // first index quality = 1
+      memset(item_type.qualityinclude, 0, sizeof(item_type.qualityinclude));
+
+      if (token.length() <= 14) { //for example tors:123456789
+        // p = 5 is first digit after ':'
+        for (uint32_t p = 5; p <= token.length(); p++) {
+          if (token[p] >= '0' && token[p] <= '9') {
+            item_type.qualityinclude[token[p] - '0'] = true;
+          }
+        }
+      }
+    }
+
+    if (token.length() > 4 && token[4] == '-') {
+      // first index quality = 1
+      memset(item_type.qualityinclude, 1, sizeof(item_type.qualityinclude));
+
+      if (token.length() <= 14) { //for example armo:123456789
+        // p = 5 is first digit after '-'
+        for (uint32_t p = 5; p <= token.length(); p++) {
+          if (token[p] >= '0' && token[p] <= '9') {
+            item_type.qualityinclude[token[p] - '0'] = false;
+          }
+        }
+      }
+    }
+
+    if ((token.length() == 4) || (token[4] != '-' && token[4] != ':')) {
+      // first index quality = 1
+      memset(item_type.qualityinclude, 1, sizeof(item_type.qualityinclude));
+    }
+
+    m_stItemTypes.push_back(item_type);
+  }
+
+  if (m_nTransmuteSound == false) {
+    hooking::hook(d2_client::get_base() + 0xB5820,
+                  hook_play_sound,
+                  reinterpret_cast<void**>(&fn_hook_play_sound));
+  }
+
+  hooking::hook(d2_client::get_base() + 0xB528,
+                hook_game_end_asm,
+                reinterpret_cast<void**>(&fn_hook_game_end));
+
+  singleton<ui::ui_manager>::instance().add_menu(new auto_transmute_menu());
+  singleton<client>::instance().register_tick_handler(this);
+  singleton<client>::instance().register_packet_handler(common::message_types_t::MESSAGE_TYPE_TRANSMUTE, this);
 }
 
 void transmute::tick() {
@@ -501,10 +474,10 @@ void transmute::tick() {
           }
         }
 
-        for (uint32_t i = 0; i < m_nCountItemTypesAll; i++) {
+        for (uint32_t i = 0; i < m_stItemTypes.size(); i++) {
           for (uint32_t count = 0; count < index_arr_itemtype; count++) {
             if (*(DWORD*)arr_itemtype_codestr_equivstr[count] == (DWORD)m_stItemTypes[i].dwtype) {
-              if (m_stItemTypes[i].qualityinclude[quality] == TRUE) {
+              if (m_stItemTypes[i].qualityinclude[quality] == true) {
                 static common::transmute_info_cs request_packet_cs;
                 request_packet_cs.command = COMMAND_MOVE_ITEM;
                 request_packet_cs.item_guid = item->guid;
@@ -516,11 +489,11 @@ void transmute::tick() {
           }
         }
 
-        for (uint32_t i = 0; i < m_nCountItemListAll; i++) {
+        for (uint32_t i = 0; i < m_stItemList.size(); i++) {
           if (record->string_code[0] == m_stItemList[i].code0 &&
             record->string_code[1] == m_stItemList[i].code1 &&
             record->string_code[2] == m_stItemList[i].code2) {
-            if (m_stItemList[i].qualityinclude[quality] == TRUE) {
+            if (m_stItemList[i].qualityinclude[quality] == true) {
               static common::transmute_info_cs request_packet_cs;
               request_packet_cs.command = COMMAND_MOVE_ITEM;
               request_packet_cs.item_guid = item->guid;

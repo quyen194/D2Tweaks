@@ -1,5 +1,8 @@
 #include <D2Template.h>
 #include <DllNotify.h>
+
+#include <common/file_ini.h>
+
 #include <d2tweaks/client/client.h>
 #include <d2tweaks/client/modules/autosort/autosort_client.h>
 #include <d2tweaks/common/asset_manager.h>
@@ -9,6 +12,7 @@
 #include <d2tweaks/ui/controls/control.h>
 #include <d2tweaks/ui/menu.h>
 #include <d2tweaks/ui/ui_manager.h>
+
 #include <diablo2/d2client.h>
 #include <diablo2/d2cmp.h>
 #include <diablo2/d2common.h>
@@ -289,9 +293,9 @@ MODULE_INIT(autosort)
 void autosort::init_early() {}
 
 void autosort::init() {
-  const char* config_path = common::get_config_path();
+  FileIni config(common::get_config_path());
 
-  if (GetPrivateProfileInt("modules", "Autosort", 1, config_path)) {
+  if (config.Int("modules", "Autosort", 1)) {
     singleton<ui::ui_manager>::instance().add_menu(new inventory_sort_menu());
     singleton<client>::instance().register_packet_handler(
         common::MESSAGE_TYPE_INVENTORY_SORT, this);

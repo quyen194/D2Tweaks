@@ -9,6 +9,7 @@
 #include <diablo2/structures/player_data.h>
 #include <diablo2/structures/monster_data.h>
 #include <diablo2/structures/net_client.h>
+#include <common/file_ini.h>
 #include <common/hooking.h>
 #include <diablo2/d2common.h>
 #include <spdlog/spdlog.h>
@@ -314,9 +315,9 @@ static char __fastcall apply_attack_results(game* game,
 }
 
 void damage_display::init() {
-  const char* config_path = common::get_config_path();
+  FileIni config(common::get_config_path());
 
-  if (GetPrivateProfileInt("modules", "DamageDisplay", 1, config_path)) {
+  if (config.Int("modules", "DamageDisplay", 1)) {
     hooking::hook(d2_game::get_base() + 0x8FE90,
                   apply_attack_results,
                   reinterpret_cast<void**>(&g_apply_attack_results_origin));

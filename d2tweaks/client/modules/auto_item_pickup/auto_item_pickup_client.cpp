@@ -1,8 +1,9 @@
 #include <D2Template.h>
 #include <DllNotify.h>
 #include <common/autopickup_lootfilter.h>
+#include <common/strings.h>
+#include <common/file_ini.h>
 #include <common/hooking.h>
-#include <common/ini.h>
 #include <d2tweaks/client/client.h>
 #include <d2tweaks/client/modules/auto_item_pickup/auto_item_pickup_client.h>
 #include <d2tweaks/common/asset_manager.h>
@@ -40,236 +41,160 @@ static uint32_t m_nTick = 0;
 static bool m_bToggleAutoItemPickup = false;
 static bool m_bInventoryFull = false;
 
-static item_code* m_stItemList;
-static item_type* m_stItemTypes;
-
-static uint32_t m_nCountItemListAll = 0;
-static uint32_t m_nCountItemTypesAll = 0;
-
-static const uint32_t m_nCountItemListKeys = 30;
-static const uint32_t m_nCountItemTypesKeys = 10;
-
-static char* m_apcItemList[m_nCountItemListKeys] = {0};
-static char* m_apcItemTypes[m_nCountItemTypesKeys] = {0};
-
-static char* m_pcItemListAll;
-static char* m_pcItemListAllTemp;
-
-static char* m_pcItemTypesAll;
-static char* m_pcItemTypesAllTemp;
-
-static char m_acBuffer[1024] = {0};
+static std::vector<ItemCode> m_stItemList;
+static std::vector<ItemType> m_stItemTypes;
 
 void ReloadFilters(const char* szPathToIni) {
-  uint32_t dwLenght = 0;
+  FileIni config(szPathToIni);
 
-  m_nCountItemListAll = 0;
-  m_nCountItemTypesAll = 0;
+  std::string m_acItemListAll;
+  std::string m_acItemTypesAll;
 
-  free(m_stItemList);
-  free(m_stItemTypes);
+  std::string key;
+  uint32_t key_count;
+  std::string buffer;
 
-  free(m_pcItemListAllTemp);
-  free(m_pcItemListAll);
-  free(m_pcItemTypesAll);
-  free(m_pcItemTypesAllTemp);
-
-  m_pcItemListAll = (char*) malloc(MAX_STRING_LENGHT * m_nCountItemListKeys);
-  m_pcItemListAllTemp =
-      (char*) malloc(MAX_STRING_LENGHT * m_nCountItemListKeys);
-  m_pcItemTypesAll = (char*) malloc(MAX_STRING_LENGHT * m_nCountItemTypesKeys);
-  m_pcItemTypesAllTemp =
-      (char*) malloc(MAX_STRING_LENGHT * m_nCountItemTypesKeys);
-
-  memset(m_pcItemListAll, 0, MAX_STRING_LENGHT * m_nCountItemListKeys);
-  memset(m_pcItemListAllTemp, 0, MAX_STRING_LENGHT * m_nCountItemListKeys);
-  memset(m_pcItemTypesAll, 0, MAX_STRING_LENGHT * m_nCountItemTypesKeys);
-  memset(m_pcItemTypesAllTemp, 0, MAX_STRING_LENGHT * m_nCountItemTypesKeys);
-
-  for (uint32_t i = 0; i < m_nCountItemListKeys; i++) {
-    free(m_apcItemList[i]);
-    m_apcItemList[i] = (char*) malloc(MAX_STRING_LENGHT);
-    memset(m_apcItemList[i], 0, MAX_STRING_LENGHT);
-
-    sprintf_s(m_acBuffer, sizeof(m_acBuffer), "ItemList%d", i + 1);
-    dwLenght = GetPrivateProfileString("AutoItemPickup",
-                                       m_acBuffer,
-                                       0,
-                                       m_apcItemList[i],
-                                       MAX_STRING_LENGHT - 1,
-                                       szPathToIni);
-    if (dwLenght != 0) {
-      lstrcat(m_pcItemListAll, m_apcItemList[i]);
-      lstrcat(m_pcItemListAll, "|");
-    }
-  }
-
-  for (uint32_t i = 0; i < m_nCountItemTypesKeys; i++) {
-    free(m_apcItemTypes[i]);
-    m_apcItemTypes[i] = (char*) malloc(MAX_STRING_LENGHT);
-    memset(m_apcItemTypes[i], 0, MAX_STRING_LENGHT);
-
-    sprintf_s(m_acBuffer, sizeof(m_acBuffer), "ItemTypeList%d", i + 1);
-    dwLenght = GetPrivateProfileString("AutoItemPickup",
-                                       m_acBuffer,
-                                       0,
-                                       m_apcItemTypes[i],
-                                       MAX_STRING_LENGHT - 1,
-                                       szPathToIni);
-    if (dwLenght != 0) {
-      lstrcat(m_pcItemTypesAll, m_apcItemTypes[i]);
-      lstrcat(m_pcItemTypesAll, "|");
-    }
-  }
-
-  /// Parse ItemCode
-  dwLenght = lstrlen(m_pcItemListAll);
-  memcpy(m_pcItemListAllTemp, m_pcItemListAll, dwLenght + 1);
-  // Count the total number of all items
-  char* token_string_itemcode = strtok(m_pcItemListAllTemp, " ,|");
-  while (token_string_itemcode) {
-    m_nCountItemListAll++;
-    token_string_itemcode = strtok(NULL, " ,|");
-  }
-
-  // Create an array of structures equal to the number of items
-  m_stItemList = (item_code*) malloc(m_nCountItemListAll * sizeof(item_code));
-  memset(m_stItemList, 0, m_nCountItemListAll * sizeof(item_code));
-
-  // Parse each item
-  memcpy(m_pcItemListAllTemp, m_pcItemListAll, dwLenght + 1);
-  token_string_itemcode = strtok(m_pcItemListAllTemp, " ,|");
-
-  for (uint32_t i = 0; token_string_itemcode != 0; i++) {
-    uint32_t cur_string_length = lstrlen(token_string_itemcode);
-    m_stItemList[i].code0 = token_string_itemcode[0];
-    m_stItemList[i].code1 = token_string_itemcode[1];
-    m_stItemList[i].code2 = token_string_itemcode[2];
-
-    if (token_string_itemcode[3] == ':') {
-      // first index quality = 1
-      for (uint32_t q = 1; q <= 9; q++) {
-        m_stItemList[i].qualityinclude[q] = FALSE;
+  key_count = config.Int("AutoItemPickup", "ItemListCount", 30);
+  for (uint32_t i = 0; i < key_count; i++) {
+    key = utils::string_format("ItemList%d", i + 1);
+    buffer = config.String("AutoItemPickup", key, MAX_STRING_LENGHT - 1);
+    if (!buffer.empty()) {
+      if (m_acItemListAll.empty()) {
+        m_acItemListAll += buffer;
+      } else {
+        m_acItemListAll += "|";
+        m_acItemListAll += buffer;
       }
+    }
+  }
 
-      if (cur_string_length <= 13) {  // for example jew:123456789
-        // p = 4 --> this is first digit after ':'
-        for (uint32_t p = 4; p <= cur_string_length; p++) {
-          if (token_string_itemcode[p] == 0) {
-            break;
-          }
-          if (token_string_itemcode[p] >= '0' &&
-              token_string_itemcode[p] <= '9') {
-            m_stItemList[i].qualityinclude[token_string_itemcode[p] - 0x30] =
-                TRUE;
+  key_count = config.Int("AutoItemPickup", "ItemTypeListCount", 10);
+  for (uint32_t i = 0; i < key_count; i++) {
+    key = utils::string_format("ItemTypeList%d", i + 1);
+    buffer = config.String("AutoItemPickup", key, MAX_STRING_LENGHT - 1);
+    if (m_acItemTypesAll.empty()) {
+      m_acItemTypesAll += buffer;
+    } else {
+      m_acItemTypesAll += "|";
+      m_acItemTypesAll += buffer;
+    }
+  }
+
+  const std::string& delimiters = " ,|";  // ' ' or ',' or '|'
+  size_t start, end;
+  std::string input;
+  std::string token;
+
+  /////// Parse ItemCode
+  m_stItemList.clear();
+
+  ItemCode item_code;
+  input = m_acItemListAll;
+  start = input.find_first_not_of(delimiters);
+  while (start != std::string::npos) {
+    end = input.find_first_of(delimiters, start);
+    token = input.substr(start, end - start);
+    start = input.find_first_not_of(delimiters, end);
+
+    if (token.empty() || token.length() < 3) {
+      continue;
+    }
+
+    memset(&item_code, 0, sizeof(item_code));
+
+    item_code.code0 = token[0];
+    item_code.code1 = token[1];
+    item_code.code2 = token[2];
+
+    if (token.length() > 3 && token[3] == ':') {
+      // first index quality = 1
+      memset(item_code.qualityinclude, 0, sizeof(item_code.qualityinclude));
+
+      if (token.length() <= 13) { //for example jew:123456789
+        // p = 4 is first digit after ':'
+        for (uint32_t p = 4; p <= token.length(); p++) {
+          if (token[p] >= '0' && token[p] <= '9') {
+            item_code.qualityinclude[token[p] - '0'] = true;
           }
         }
       }
     }
 
-    if (token_string_itemcode[3] == '-') {
+    if (token.length() > 3 && token[3] == '-') {
       // first index quality = 1
-      for (uint32_t q = 1; q <= 9; q++) {
-        m_stItemList[i].qualityinclude[q] = TRUE;
-      }
+      memset(item_code.qualityinclude, 1, sizeof(item_code.qualityinclude));
 
-      if (cur_string_length <= 13) {  // for example jew:123456789
-        // p = 4 --> this is first digit after '-'
-        for (uint32_t p = 4; p <= cur_string_length; p++) {
-          if (token_string_itemcode[p] == 0) {
-            break;
-          }
-          if (token_string_itemcode[p] >= '0' &&
-              token_string_itemcode[p] <= '9') {
-            m_stItemList[i].qualityinclude[token_string_itemcode[p] - 0x30] =
-                FALSE;
+      if (token.length() <= 13) { //for example jew:123456789
+        // p = 4 is first digit after '-'
+        for (uint32_t p = 4; p <= token.length(); p++) {
+          if (token[p] >= '0' && token[p] <= '9') {
+            item_code.qualityinclude[token[p] - '0'] = false;
           }
         }
       }
     }
 
-    if (token_string_itemcode[3] != '-' && token_string_itemcode[3] != ':') {
+    if ((token.length() == 3) || (token[3] != '-' && token[3] != ':')) {
       // first index quality = 1
-      for (uint32_t q = 1; q <= 9; q++) {
-        m_stItemList[i].qualityinclude[q] = TRUE;
-      }
+      memset(item_code.qualityinclude, 1, sizeof(item_code.qualityinclude));
     }
 
-    token_string_itemcode = strtok(NULL, " ,|");
+    m_stItemList.push_back(item_code);
   }
 
-  /// Parse ItemType Code
-  dwLenght = lstrlen(m_pcItemTypesAll);
-  memcpy(m_pcItemTypesAllTemp, m_pcItemTypesAll, dwLenght + 1);
-  char* token_string_itemtype_code = strtok(m_pcItemTypesAllTemp, ",|");
-  while (token_string_itemtype_code) {
-    m_nCountItemTypesAll++;
-    token_string_itemtype_code = strtok(NULL, ",|");
-  }
+  /////// Parse ItemType
+  m_stItemTypes.clear();
 
-  m_stItemTypes = (item_type*) malloc(m_nCountItemTypesAll * sizeof(item_type));
-  memset(m_stItemTypes, 0, m_nCountItemTypesAll * sizeof(item_type));
+  ItemType item_type;
+  input = m_acItemTypesAll;
+  start = input.find_first_not_of(delimiters);
+  while (start != std::string::npos) {
+    end = input.find_first_of(delimiters, start);
+    token = input.substr(start, end - start);
+    start = input.find_first_not_of(delimiters, end);
 
-  memcpy(m_pcItemTypesAllTemp, m_pcItemTypesAll, dwLenght + 1);
-  token_string_itemtype_code = strtok(m_pcItemTypesAllTemp, ",|");
-  for (uint32_t i = 0; token_string_itemtype_code != 0; i++) {
-    uint32_t cur_itemtypes_string_length = lstrlen(token_string_itemtype_code);
-    // m_stItemTypes[i].type0 = token_string_itemtype_code[0];
-    // m_stItemTypes[i].type1 = token_string_itemtype_code[1];
-    // m_stItemTypes[i].type2 = token_string_itemtype_code[2];
-    // m_stItemTypes[i].type3 = token_string_itemtype_code[3];
+    if (token.empty() || token.length() < 4) {
+      continue;
+    }
 
-    m_stItemTypes[i].dwtype = *(uint32_t*) token_string_itemtype_code;
+    memset(&item_type, 0, sizeof(item_type));
 
-    if (token_string_itemtype_code[4] == ':') {
+    item_type.dwtype = *(uint32_t *) &token[0];
+
+    if (token.length() > 4 && token[4] == ':') {
       // first index quality = 1
-      for (uint32_t q = 1; q <= 9; q++) {
-        m_stItemTypes[i].qualityinclude[q] = FALSE;
-      }
+      memset(item_type.qualityinclude, 0, sizeof(item_type.qualityinclude));
 
-      if (cur_itemtypes_string_length <= 14) {  // for example tors:123456789
-        // p = 5 --> this is first digit after ':'
-        for (uint32_t p = 5; p <= cur_itemtypes_string_length; p++) {
-          if (token_string_itemtype_code[p] == 0) {
-            break;
-          }
-          if (token_string_itemtype_code[p] >= '0' &&
-              token_string_itemtype_code[p] <= '9') {
-            m_stItemTypes[i].qualityinclude[token_string_itemtype_code[p] - 0x30] = TRUE;
+      if (token.length() <= 14) { //for example tors:123456789
+        // p = 5 is first digit after ':'
+        for (uint32_t p = 5; p <= token.length(); p++) {
+          if (token[p] >= '0' && token[p] <= '9') {
+            item_type.qualityinclude[token[p] - '0'] = true;
           }
         }
       }
     }
 
-    if (token_string_itemtype_code[4] == '-') {
+    if (token.length() > 4 && token[4] == '-') {
       // first index quality = 1
-      for (uint32_t q = 1; q <= 9; q++) {
-        m_stItemTypes[i].qualityinclude[q] = TRUE;
-      }
+      memset(item_type.qualityinclude, 1, sizeof(item_type.qualityinclude));
 
-      if (cur_itemtypes_string_length <= 14) {  // for example armo:123456789
-        // p = 5 --> this is first digit after '-'
-        for (uint32_t p = 5; p <= cur_itemtypes_string_length; p++) {
-          if (token_string_itemtype_code[p] == 0) {
-            break;
-          }
-          if (token_string_itemtype_code[p] >= '0' &&
-              token_string_itemtype_code[p] <= '9') {
-            m_stItemTypes[i].qualityinclude[token_string_itemtype_code[p] - 0x30] = FALSE;
+      if (token.length() <= 14) { //for example armo:123456789
+        // p = 5 is first digit after '-'
+        for (uint32_t p = 5; p <= token.length(); p++) {
+          if (token[p] >= '0' && token[p] <= '9') {
+            item_type.qualityinclude[token[p] - '0'] = false;
           }
         }
       }
     }
 
-    if (token_string_itemtype_code[4] != '-' &&
-        token_string_itemtype_code[4] != ':') {
+    if ((token.length() == 4) || (token[4] != '-' && token[4] != ':')) {
       // first index quality = 1
-      for (uint32_t q = 1; q <= 9; q++) {
-        m_stItemTypes[i].qualityinclude[q] = TRUE;
-      }
+      memset(item_type.qualityinclude, 1, sizeof(item_type.qualityinclude));
     }
 
-    token_string_itemtype_code = strtok(NULL, ",|");
+    m_stItemTypes.push_back(item_type);
   }
 }
 
@@ -352,12 +277,9 @@ class auto_item_pickup_menu : public ui::menu {
   }
 
   void auto_item_pickup_click() {
-    const char* config_path = common::get_config_path();
-
     m_bToggleAutoItemPickup ^= true;
 
     if (m_bToggleAutoItemPickup) {
-      ReloadFilters(config_path);
       d2_client::print_chat(L"AUTO PICKUP ON", 1);
     } else {
       d2_client::print_chat(L"AUTO PICKUP OFF", 2);
@@ -370,13 +292,12 @@ MODULE_INIT(auto_item_pickup)
 void auto_item_pickup::init_early() {}
 
 void auto_item_pickup::init() {
-  const char* config_path = common::get_config_path();
+  FileIni config(common::get_config_path());
 
-  if (GetPrivateProfileInt("modules", "AutoItemPickup", 1, config_path)) {
-    m_iDistance = GetPrivateProfileInt(
-        "AutoItemPickup", "PickupDistance", 4, config_path);
+  if (config.Int("modules", "AutoItemPickup", 1)) {
+    m_iDistance = config.Int("AutoItemPickup", "PickupDistance", 4);
 
-    // ReloadFilters(m_acPathToIni);
+    ReloadFilters(common::get_config_path());
 
     singleton<ui::ui_manager>::instance().add_menu(new auto_item_pickup_menu());
     singleton<client>::instance().register_tick_handler(this);
@@ -528,7 +449,7 @@ void auto_item_pickup::tick() {
     static common::item_pickup_info_cs request_packet_cs;
     request_packet_cs.item_guid = 0;
 
-    for (uint32_t i = 0; i < m_nCountItemTypesAll; i++) {
+    for (uint32_t i = 0; i < m_stItemTypes.size(); i++) {
       for (uint32_t count = 0; count < index_arr_itemtype; count++) {
         if (*(DWORD*) arr_itemtype_codestr_equivstr[count] ==
             (DWORD) m_stItemTypes[i].dwtype) {
@@ -557,7 +478,7 @@ void auto_item_pickup::tick() {
       }
     }
 
-    for (uint32_t i = 0; i < m_nCountItemListAll; i++) {
+    for (uint32_t i = 0; i < m_stItemList.size(); i++) {
       if (record->string_code[0] == m_stItemList[i].code0 &&
           record->string_code[1] == m_stItemList[i].code1 &&
           record->string_code[2] == m_stItemList[i].code2) {

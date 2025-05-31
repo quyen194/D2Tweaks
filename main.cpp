@@ -7,7 +7,7 @@
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <spdlog/sinks/ansicolor_sink.h>
 #include <memory>
-#include <common/ini.h>
+#include <common/file_ini.h>
 #include <d2tweaks/common/common.h>
 #include <d2tweaks/server/server.h>
 #include <d2tweaks/client/client.h>

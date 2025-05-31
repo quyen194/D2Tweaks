@@ -1,5 +1,8 @@
 #include <D2Template.h>
 #include <DllNotify.h>
+
+#include <common/file_ini.h>
+
 #include <d2tweaks/client/client.h>
 #include <d2tweaks/client/modules/auto_gold_pickup/auto_gold_pickup_client.h>
 #include <d2tweaks/common/asset_manager.h>
@@ -7,6 +10,7 @@
 #include <d2tweaks/ui/controls/label.h>
 #include <d2tweaks/ui/menu.h>
 #include <d2tweaks/ui/ui_manager.h>
+
 #include <diablo2/d2client.h>
 #include <diablo2/d2common.h>
 #include <diablo2/d2gfx.h>
@@ -76,13 +80,11 @@ MODULE_INIT(auto_gold_pickup)
 void auto_gold_pickup::init_early() {}
 
 void auto_gold_pickup::init() {
-  const char* config_path = common::get_config_path();
+  FileIni config(common::get_config_path());
 
-  if (GetPrivateProfileInt("modules", "AutoGoldPickup", 1, config_path)) {
-    m_iDistance = GetPrivateProfileInt(
-        "AutoGoldPickup", "PickupDistance", 4, config_path);
-    m_nDisplayTime = GetPrivateProfileInt(
-        "AutoGoldPickup", "DisplayTime", 2500, config_path);
+  if (config.Int("modules", "AutoGoldPickup", 1)) {
+    m_iDistance = config.Int("AutoGoldPickup", "PickupDistance", 4);
+    m_nDisplayTime = config.Int("AutoGoldPickup", "DisplayTime", 2500);
     singleton<client>::instance().register_packet_handler(
         common::message_types_t::MESSAGE_TYPE_GOLD_PICKUP_INFO, this);
     singleton<client>::instance().register_tick_handler(this);
