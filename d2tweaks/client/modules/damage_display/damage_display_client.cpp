@@ -141,10 +141,6 @@ static unsigned int g_font_player = 1;
 static unsigned int g_player_label_posx = 70;
 static unsigned int g_player_label_posy = 500;
 
-HWND findDiabloIIWindow() {
-  return FindWindow(nullptr, TEXT("Diablo II")); // Change "Diablo II" to the exact title of the game window
-}
-
 // Function to draw the health bar using Windows GDI
 void drawHealthBar(HWND hWnd,
                    int x,

@@ -11,6 +11,7 @@
 #include <d2tweaks/common/common.h>
 #include <d2tweaks/server/server.h>
 #include <d2tweaks/client/client.h>
+#include <d2tweaks/ui/ui_utils.h>
 #include <DllNotify.h>
 #include <D2Template.h>
 
@@ -54,7 +55,7 @@ void initialize(uint32_t param) {
   D2TEMPLATE_Init();
 
   if (MH_Initialize() != MH_OK) {
-    MessageBox(nullptr,
+    MessageBox(ui::FindDiabloIIWindow(),
                "Cannot initialize hook system!",
                "Error",
                MB_OK | MB_ICONSTOP);
@@ -62,7 +63,7 @@ void initialize(uint32_t param) {
   }
 
 #ifndef NDEBUG
-  MessageBox(FindWindowA("Diablo II", "Diablo II"),
+  MessageBox(ui::FindDiabloIIWindow(),
              "Wait for debugger",
              "D2TWeaks",
              MB_OK);

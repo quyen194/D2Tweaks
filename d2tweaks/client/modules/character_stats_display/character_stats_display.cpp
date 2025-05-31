@@ -11,6 +11,7 @@
 #include <d2tweaks/ui/controls/control.h>
 #include <d2tweaks/ui/menu.h>
 #include <d2tweaks/ui/ui_manager.h>
+#include <d2tweaks/ui/ui_utils.h>
 
 #include <diablo2/d2client.h>
 #include <diablo2/d2common.h>
@@ -197,9 +198,6 @@ class character_stats_menu : public ui::menu {
       globalStatsVector.push_back(entry);
     }
   }
-
-  // Function to find the Diablo II window handle
-  HWND FindDiabloIIWindow() { return FindWindow(NULL, "Diablo II"); }
 
   // Function to draw a filled rectangle using GDI
   void DrawFilledRect(
@@ -528,7 +526,7 @@ class character_stats_menu : public ui::menu {
         BAR_HP_X + 100 -
         (d2_win::get_text_pixel_width(const_cast<wchar_t*>(mana.c_str())) / 2);
 
-    // HWND diabloIIWnd = FindDiabloIIWindow();
+    // HWND diabloIIWnd = ui::FindDiabloIIWindow();
 
     if (m_PlayerBarHpEnable == 1) {
       // Draw the filled HP bar

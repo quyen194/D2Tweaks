@@ -67,6 +67,7 @@
     <ClCompile Include="d2tweaks\client\modules\character_stats_display\character_stats_display.cpp" />
     <ClCompile Include="common\strings.cpp" />
     <ClCompile Include="common\bytes.cpp" />
+    <ClCompile Include="d2tweaks\ui\ui_utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\asm_code.h" />
@@ -189,6 +190,7 @@
     <ClInclude Include="common\bytes.h" />
     <ClInclude Include="common\get_default.h" />
     <ClInclude Include="include\macro.h" />
+    <ClInclude Include="d2tweaks\ui\ui_utils.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="vendor\minhook\dll_resources\MinHook.def" />

@@ -159,6 +159,7 @@
     <ClCompile Include="d2tweaks\ui\controls\label.cpp" />
     <ClCompile Include="d2tweaks\ui\menu.cpp" />
     <ClCompile Include="d2tweaks\ui\ui_manager.cpp" />
+    <ClCompile Include="d2tweaks\ui\ui_utils.cpp" />
     <ClCompile Include="diablo2\d2client.cpp" />
     <ClCompile Include="diablo2\d2cmp.cpp" />
     <ClCompile Include="diablo2\d2common.cpp" />
@@ -250,6 +251,7 @@
     <ClInclude Include="d2tweaks\ui\menu.h" />
     <ClInclude Include="d2tweaks\ui\rect.h" />
     <ClInclude Include="d2tweaks\ui\ui_manager.h" />
+    <ClInclude Include="d2tweaks\ui\ui_utils.h" />
     <ClInclude Include="diablo2\d2client.h" />
     <ClInclude Include="diablo2\d2cmp.h" />
     <ClInclude Include="diablo2\d2common.h" />

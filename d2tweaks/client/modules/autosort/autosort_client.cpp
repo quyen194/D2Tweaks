@@ -100,9 +100,6 @@ class inventory_sort_menu : public ui::menu {
                    std::bind(&inventory_sort_menu::sort_cube_click, this));
   }
 
-  // Function to find the Diablo II window handle
-  HWND FindDiabloIIWindow() { return FindWindow(NULL, "Diablo II"); }
-
   // Function to draw a filled rectangle using GDI
   void DrawFilledRect(
       HWND hwnd, int left, int top, int right, int bottom, COLORREF color) {
