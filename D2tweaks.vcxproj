@@ -117,8 +117,8 @@
     <ClCompile Include="common\asm_code.cpp" />
     <ClCompile Include="common\bytes.cpp" />
     <ClCompile Include="common\config.cpp" />
+    <ClCompile Include="common\file_ini.cpp" />
     <ClCompile Include="common\hooking.cpp" />
-    <ClCompile Include="common\ini.cpp" />
     <ClCompile Include="common\strings.cpp" />
     <ClCompile Include="common\timer.cpp" />
     <ClCompile Include="d2tweaks\client\client.cpp" />
@@ -202,9 +202,9 @@
     <ClInclude Include="common\bytes.h" />
     <ClInclude Include="common\config.h" />
     <ClInclude Include="common\enum_helper.h" />
+    <ClInclude Include="common\file_ini.h" />
     <ClInclude Include="common\get_default.h" />
     <ClInclude Include="common\hooking.h" />
-    <ClInclude Include="common\ini.h" />
     <ClInclude Include="common\autopickup_lootfilter.h" />
     <ClInclude Include="common\ptr_wrapper.h" />
     <ClInclude Include="common\strings.h" />

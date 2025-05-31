@@ -29,7 +29,7 @@
 #include <diablo2/structures/npc_record.h>
 #include <common/autopickup_lootfilter.h>
 
-#include <common/ini.h>
+#include <common/file_ini.h>
 #include <DllNotify.h>
 #include <D2Template.h>
 
@@ -133,10 +133,9 @@ void trader_update::init_early() {
 }
 
 void trader_update::init() {
-  const char* config_path = common::get_config_path();
-  CIni config(config_path);
+  FileIni ini(common::get_config_path());
 
-  if (config.GetInt("modules", "ReloadTradeGamble", 1)) {
+  if (ini.Int("modules", "ReloadTradeGamble", 1)) {
     singleton<ui::ui_manager>::instance().add_menu(new trader_update_menu());
     singleton<client>::instance().register_packet_handler(
         common::message_types_t::MESSAGE_TYPE_TRADER_UPDATE, this);

@@ -5,6 +5,7 @@
 #include <d2tweaks/common/protocol.h>
 
 #include <common/hooking.h>
+#include <common/file_ini.h>
 #include <d2tweaks/ui/menu.h>
 #include <d2tweaks/ui/ui_manager.h>
 #include <spdlog/spdlog.h>
@@ -71,8 +72,7 @@ static char* m_apcQualityStr[10] = { "", "(Cracked)", "(Normal)", "(Superior)", 
 static uint32_t m_nHookMethod = 1;
 static uint32_t m_anQualityColor[10] = { 0 };
 
-static char m_acSecondString[1024] = { 0 };
-static wchar_t m_awcSecondString[1024] = { 0 };
+static std::wstring m_awcSecondString;
 static wchar_t m_awcCode[4] = { 0 };
 
 static wchar_t m_awcItemtypeCode[8] = { 0 };
@@ -138,25 +138,24 @@ void item_drop_message::init_early() {
 }
 
 void item_drop_message::init() {
-  const char* config_path = common::get_config_path();
+  FileIni config(common::get_config_path());
 
-  if (GetPrivateProfileInt("modules", "ItemDropMessage", 1, config_path) != FALSE) {
-    m_nMsgCount = GetPrivateProfileInt("ItemDropMessage", "MaxNumMessages", 8, config_path);
-    m_nHookMethod = GetPrivateProfileInt("ItemDropMessage", "HookMethod", 1, config_path);
+  if (config.Int("modules", "ItemDropMessage", 1) != FALSE) {
+    m_nMsgCount = config.Int("ItemDropMessage", "MaxNumMessages", 8);
+    m_nHookMethod = config.Int("ItemDropMessage", "HookMethod", 1);
 
-    m_anQualityColor[0] = GetPrivateProfileInt("ItemDropMessage", "DefaultColor", 0, config_path);
-    m_anQualityColor[1] = GetPrivateProfileInt("ItemDropMessage", "Cracked", 0, config_path);
-    m_anQualityColor[2] = GetPrivateProfileInt("ItemDropMessage", "Normal", 0, config_path);
-    m_anQualityColor[3] = GetPrivateProfileInt("ItemDropMessage", "Superior", 0, config_path);
-    m_anQualityColor[4] = GetPrivateProfileInt("ItemDropMessage", "Magic", 3, config_path);
-    m_anQualityColor[5] = GetPrivateProfileInt("ItemDropMessage", "Set", 12, config_path);
-    m_anQualityColor[6] = GetPrivateProfileInt("ItemDropMessage", "Rare", 9, config_path);
-    m_anQualityColor[7] = GetPrivateProfileInt("ItemDropMessage", "Unique", 7, config_path);
-    m_anQualityColor[8] = GetPrivateProfileInt("ItemDropMessage", "Crafted", 8, config_path);
-    m_anQualityColor[9] = GetPrivateProfileInt("ItemDropMessage", "Tempered", 10, config_path);
+    m_anQualityColor[0] = config.Int("ItemDropMessage", "DefaultColor", 0);
+    m_anQualityColor[1] = config.Int("ItemDropMessage", "Cracked", 0);
+    m_anQualityColor[2] = config.Int("ItemDropMessage", "Normal", 0);
+    m_anQualityColor[3] = config.Int("ItemDropMessage", "Superior", 0);
+    m_anQualityColor[4] = config.Int("ItemDropMessage", "Magic", 3);
+    m_anQualityColor[5] = config.Int("ItemDropMessage", "Set", 12);
+    m_anQualityColor[6] = config.Int("ItemDropMessage", "Rare", 9);
+    m_anQualityColor[7] = config.Int("ItemDropMessage", "Unique", 7);
+    m_anQualityColor[8] = config.Int("ItemDropMessage", "Crafted", 8);
+    m_anQualityColor[9] = config.Int("ItemDropMessage", "Tempered", 10);
 
-    GetPrivateProfileString("ItemDropMessage", "SecondString", "", m_acSecondString, 1023, config_path);
-    mbstowcs(m_awcSecondString, m_acSecondString, 1023);
+    m_awcSecondString = config.String(L"ItemDropMessage", L"SecondString", 1023);
 
     // d2hackit hook d2client:$0x15123
     if (m_nHookMethod == 1) {
@@ -206,25 +205,25 @@ void item_drop_message::handle_packet(common::packet_header* packet) {
                item_dropped_packet->arr_itemtype_codestr_equivstr,
                sizeof item_dropped_packet->arr_itemtype_codestr_equivstr);
 
-        //сделать в названии предмета замену всех переносов на пробелы
+        // Replace all line breaks in the item name with spaces
         for (uint32_t c = 0; c <= 128; c++) {
           if (m_stMsg[i].item_text[c] == '\n') {
             m_stMsg[i].item_text[c] = ' ';
           }
         }
 
-        if (lstrlenW(m_awcSecondString) != 0) {
+        if (!m_awcSecondString.empty()) {
           swprintf_s(buffer,
                      L"%s%s%s",
                      m_stMsg[i].item_text,
                      m_apwcColorStr[m_anQualityColor[0]],
-                     m_awcSecondString);
+                     m_awcSecondString.c_str());
         }
         else {
           swprintf_s(buffer, L"%s", m_stMsg[i].item_text);
         }
 
-        // вывести сообщение о любом предмете
+        // Item found: The item name has been successfully processed
         if (GetKeyState(VK_SCROLL) != 0) {
           mbstowcs(m_awcCode, m_stMsg[i].item_code, 3);
           mbstowcs(m_awcItemtypeCode, m_stMsg[i].arr_itemtype_codestr_equivstr[0], 4);

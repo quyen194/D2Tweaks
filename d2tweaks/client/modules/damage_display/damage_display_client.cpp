@@ -17,6 +17,7 @@
 #include <diablo2/structures/gfxcell.h>
 #include <diablo2/d2cmp.h>
 #include <common/hooking.h>
+#include <common/file_ini.h>
 
 #include <diablo2/structures/monster_data.h>
 
@@ -197,7 +198,6 @@ static void onDraw(HWND hWnd,
 }
 
 static void draw_damage_labels() {
-  const char* config_path = common::get_config_path();
   const auto player = d2_client::get_local_player();
 
   if (!player)
@@ -426,15 +426,15 @@ void damage_display::init_early() {
 }
 
 void damage_display::init() {
-  const char* config_path = common::get_config_path();
+  FileIni config(common::get_config_path());
 
-  if (GetPrivateProfileInt("modules", "DamageDisplay", 1, config_path)) {
-    g_bar_height_enemy = GetPrivateProfileInt("DamageDisplay", "EnemyBarHeight", 6, config_path);
-    g_font_enemy = GetPrivateProfileInt("DamageDisplay", "EnemyDamageFont", 0, config_path);
-    g_font_player = GetPrivateProfileInt("DamageDisplay", "PlayerDamageFont", 1, config_path);
-    g_player_label_posx = GetPrivateProfileInt("DamageDisplay", "PlayerDamagePosx", 70, config_path);
-    g_player_label_posy = GetPrivateProfileInt("DamageDisplay", "PlayerDamagePosy", 500, config_path);
-    DISPLAY_TIME = GetPrivateProfileInt("DamageDisplay", "DisplayTime", 1000, config_path);
+  if (config.Int("modules", "DamageDisplay", 1)) {
+    g_bar_height_enemy = config.Int("DamageDisplay", "EnemyBarHeight", 6);
+    g_font_enemy = config.Int("DamageDisplay", "EnemyDamageFont", 0);
+    g_font_player = config.Int("DamageDisplay", "PlayerDamageFont", 1);
+    g_player_label_posx = config.Int("DamageDisplay", "PlayerDamagePosx", 70);
+    g_player_label_posy = config.Int("DamageDisplay", "PlayerDamagePosy", 500);
+    DISPLAY_TIME = config.Int("DamageDisplay", "DisplayTime", 1000);
     singleton<client>::instance().register_packet_handler(common::MESSAGE_TYPE_DAMAGE_INFO, this);
     hooking::hook(d2_client::get_base() + 0x80A30,
                   draw_game_ui,

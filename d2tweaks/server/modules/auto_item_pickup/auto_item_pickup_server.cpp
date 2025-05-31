@@ -3,6 +3,8 @@
 #include <d2tweaks/server/modules/auto_item_pickup/auto_item_pickup_server.h>
 #include <d2tweaks/server/server.h>
 
+#include <common/file_ini.h>
+
 #include <spdlog/spdlog.h>
 #include <diablo2/d2game.h>
 #include <diablo2/d2common.h>
@@ -28,9 +30,9 @@ namespace modules {
 MODULE_INIT(auto_item_pickup)
 
 void auto_item_pickup::init() {
-  const char* config_path = common::get_config_path();
+  FileIni config(common::get_config_path());
 
-  if (GetPrivateProfileInt("modules", "AutoItemPickup", 1, config_path)) {
+  if (config.Int("modules", "AutoItemPickup", 1)) {
     singleton<server>::instance().register_packet_handler(common::MESSAGE_TYPE_ITEM_PICKUP_INFO, this);
     singleton<server>::instance().register_tick_handler(this);
   }

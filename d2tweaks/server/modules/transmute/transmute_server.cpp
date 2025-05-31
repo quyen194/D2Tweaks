@@ -21,6 +21,7 @@
 #include <diablo2/structures/unit.h>
 #include <diablo2/structures/player_data.h>
 #include <common/autopickup_lootfilter.h>
+#include <common/file_ini.h>
 
 using namespace d2_tweaks;
 using namespace diablo2;
@@ -42,9 +43,9 @@ enum transmute_command {
 };
 
 void transmute::init() {
-  const char* config_path = common::get_config_path();
+  FileIni config(common::get_config_path());
 
-  if (GetPrivateProfileInt("modules", "AutoTransmute", 0, config_path)) {
+  if (config.Int("modules", "AutoTransmute", 0)) {
     // singleton<server>::instance().register_tick_handler(this);
     singleton<server>::instance().register_packet_handler(common::MESSAGE_TYPE_TRANSMUTE, this);
   }

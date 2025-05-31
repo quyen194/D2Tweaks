@@ -1,3 +1,4 @@
+#include <common/file_ini.h>
 #include <common/hooking.h>
 #include <d2tweaks/client/modules/loot_filter/loot_filter.h>
 #include <d2tweaks/client/modules/loot_filter/loot_filter_settings.h>
@@ -36,9 +37,9 @@ static HANDLE __fastcall delete_save_file(char* name, char* a2) {
 }
 
 void loot_filter::init_early() {
-  const char* config_path = common::get_config_path();
+  FileIni config(common::get_config_path());
 
-  if (GetPrivateProfileInt("modules", "LootFilter", 1, config_path)) {
+  if (config.Int("modules", "LootFilter", 1)) {
     hooking::hook(d2_client::get_base() + 0xBDE0,
                   set_player_name,
                   &g_set_player_name_original);
@@ -49,13 +50,9 @@ void loot_filter::init_early() {
 }
 
 void loot_filter::init() {
-  char acPathToIni[MAX_PATH] = { 0 };
-  const char* pcIniFile = "\\d2tweaks.ini";
+  FileIni config(common::get_config_path());
 
-  GetCurrentDirectory(MAX_PATH, acPathToIni);
-  lstrcat(acPathToIni, pcIniFile);
-
-  if (GetPrivateProfileInt("modules", "LootFilter", 1, acPathToIni) != FALSE) {
+  if (config.Int("modules", "LootFilter", 1)) {
     singleton<ui::ui_manager>::instance().add_menu(&singleton<loot_filter_settings_menu>::instance());
     singleton<ui::ui_manager>::instance().add_menu(&singleton<loot_filter_settings_toggle_menu>::instance());
   }

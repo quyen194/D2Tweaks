@@ -22,7 +22,7 @@
 #include <diablo2/structures/player_data.h>
 #include <diablo2/structures/npc_record.h>
 #include <common/autopickup_lootfilter.h>
-#include <common/ini.h>
+#include <common/file_ini.h>
 #include <common/hooking.h>
 #include <DllNotify.h>
 #include <D2Template.h>
@@ -139,10 +139,9 @@ static uint32_t m_nParam4 = 1;
 // };
 
 void trader_update::init() {
-  const char* config_path = common::get_config_path();
-  CIni config(config_path);
+  FileIni config(common::get_config_path());
 
-  if (config.GetInt("modules", "ReloadTradeGamble", 1)) {
+  if (config.Int("modules", "ReloadTradeGamble", 1)) {
     singleton<server>::instance().register_packet_handler(
         common::MESSAGE_TYPE_TRADER_UPDATE, this);
     // D2TEMPLATE_ApplyPatch(gpt_click_trade_menu);

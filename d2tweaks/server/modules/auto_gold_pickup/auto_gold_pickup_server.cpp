@@ -1,5 +1,7 @@
 #include <d2tweaks/common/asset_manager.h>
 
+#include <common/file_ini.h>
+
 #include <d2tweaks/server/modules/auto_gold_pickup/auto_gold_pickup_server.h>
 #include <d2tweaks/server/server.h>
 
@@ -23,9 +25,9 @@ namespace modules {
 MODULE_INIT(auto_gold_pickup)
 
 void auto_gold_pickup::init() {
-  const char* config_path = common::get_config_path();
+  FileIni config(common::get_config_path());
 
-  if (GetPrivateProfileInt("modules", "AutoGoldPickup", 1, config_path)) {
+  if (config.Int("modules", "AutoGoldPickup", 1)) {
     singleton<server>::instance().register_packet_handler(
         common::MESSAGE_TYPE_GOLD_PICKUP_INFO, this);
     // singleton<server>::instance().register_tick_handler(this);

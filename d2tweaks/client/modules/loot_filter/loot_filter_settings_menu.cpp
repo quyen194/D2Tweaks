@@ -2,6 +2,7 @@
 #include <d2tweaks/client/modules/loot_filter/loot_filter_settings_menu.h>
 #include <d2tweaks/client/modules/loot_filter/loot_filter_settings.h>
 #include <d2tweaks/client/client.h>
+#include <common/file_ini.h>
 #include <common/hooking.h>
 #include <common/asm_code.h>
 
@@ -95,7 +96,14 @@ common::asset* m_chips_asset;
 gfxdata m_chips_gfxdata;
 
 loot_filter_settings_menu::loot_filter_settings_menu(token)
-  : m_last_packet_sent(std::chrono::steady_clock::now()) {
+    : m_last_packet_sent(std::chrono::steady_clock::now()) {
+  FileIni config(common::get_config_path());
+
+  // get the value of x , y, and z from the d2tweaks.ini file using getprofileint
+  m_iBagStatsX = config.Int("BagStats", "x", 0);
+  m_iBagStatsY = config.Int("BagStats", "y", 0);
+  m_iBagStatsZ = config.Int("BagStats", "spacer", 0);
+
   menu::set_enabled(false);
   menu::set_visible(false);
 
@@ -127,8 +135,20 @@ void displayStat(const std::wstring& label, uint32_t value, int x, int y, int of
   d2_win::draw_text((wchar_t*)((std::to_wstring(value)).c_str()), x + 100, y + offsetY, color, 0);
 }
 
-void displayStat() {
-  const char* config_path = common::get_config_path();
+void loot_filter_settings_menu::reload_settings() {
+  register_misc_checkboxes();
+  register_quality_checkboxes();
+}
+
+void loot_filter_settings_menu::draw() {
+  if (d2_client::get_ui_window_state(UI_WINDOW_MAINMENU))
+    return;
+
+  menu::draw();
+  drawStats();
+}
+
+void loot_filter_settings_menu::drawStats() {
   auto player = d2_client::get_local_player();
   auto inventory = player->inventory;
   unit* bag;
@@ -164,10 +184,9 @@ void displayStat() {
 
   int textOffset = 0;
 
-  // get the value of x , y, and z from the d2tweaks.ini file using getprofileint
-  int x = GetPrivateProfileInt("BagStats", "x", 0, config_path);
-  int y = GetPrivateProfileInt("BagStats", "y", 0, config_path);
-  int z = GetPrivateProfileInt("BagStats", "spacer", 0, config_path);
+  int x = m_iBagStatsX;
+  int y = m_iBagStatsY;
+  int z = m_iBagStatsZ;
 
   for (auto item = inventory->first_item; item != nullptr; item = item->item_data->pt_next_item) {
     const auto record = d2_common::get_item_record(item->data_record_index);
@@ -335,19 +354,6 @@ void displayStat() {
       }
     }
   }
-}
-
-void loot_filter_settings_menu::reload_settings() {
-  register_misc_checkboxes();
-  register_quality_checkboxes();
-}
-
-void loot_filter_settings_menu::draw() {
-  if (d2_client::get_ui_window_state(UI_WINDOW_MAINMENU))
-    return;
-
-  menu::draw();
-  displayStat();
 }
 
 // Define a structure named GemType
