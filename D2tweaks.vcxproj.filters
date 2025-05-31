@@ -4,7 +4,6 @@
     <ClCompile Include="common\asm_code.cpp" />
     <ClCompile Include="common\config.cpp" />
     <ClCompile Include="common\hooking.cpp" />
-    <ClCompile Include="common\string_utils.cpp" />
     <ClCompile Include="d2tweaks\client\client.cpp" />
     <ClCompile Include="d2tweaks\client\modules\autosort\autosort_client.cpp" />
     <ClCompile Include="d2tweaks\client\modules\auto_gold_pickup\auto_gold_pickup_client.cpp" />
@@ -76,7 +75,6 @@
     <ClInclude Include="common\hooking.h" />
     <ClInclude Include="common\ini.h" />
     <ClInclude Include="common\ptr_wrapper.h" />
-    <ClInclude Include="common\string_utils.h" />
     <ClInclude Include="d2tweaks\client\client.h" />
     <ClInclude Include="d2tweaks\client\modules\autosort\autosort_client.h" />
     <ClInclude Include="d2tweaks\client\modules\auto_gold_pickup\auto_gold_pickup_client.h" />

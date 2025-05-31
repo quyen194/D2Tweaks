@@ -7,7 +7,7 @@
 #include <diablo2/d2gfx.h>
 #include <spdlog/spdlog.h>
 #include <d2tweaks/common/asset_manager.h>
-#include <common/string_utils.h>
+#include <common/strings.h>
 
 using namespace diablo2;
 
@@ -119,7 +119,7 @@ button::button(menu* menu, const pugi::xml_node& node)
   control::set_height(ch);
 
   set_name(cname);
-  set_popup(string_utils::string_to_wstring(popup));
+  set_popup(utils::ToWString(popup));
 }
 
 button::~button() {

@@ -1,7 +1,7 @@
 #include <d2tweaks/ui/controls/checkbox.h>
 #include <d2tweaks/ui/controls/image.h>
 #include <d2tweaks/ui/controls/label.h>
-#include <common/string_utils.h>
+#include <common/strings.h>
 #include <d2tweaks/common/asset_manager.h>
 #include <spdlog/spdlog.h>
 #include <diablo2/d2client.h>
@@ -81,14 +81,14 @@ checkbox::checkbox(menu* menu, const pugi::xml_node& node)
   m_frame_checked = frameChecked;
   m_frame_unchecked = frameUnchecked;
   m_click_sound = clickSound;
-  m_popup = string_utils::string_to_wstring(popup);
+  m_popup = utils::ToWString(popup);
 
   m_is_down = false;
   m_state = false;
 
   m_image = new image(menu, cimg, cx, cy, m_frame_unchecked);
   m_label = new label(menu,
-                      string_utils::string_to_wstring(ctext),
+                      utils::ToWString(ctext),
                       cx + m_image->get_width() + PADDING,
                       cy,
                       static_cast<ui_color_t>(ccolor),

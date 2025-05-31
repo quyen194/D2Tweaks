@@ -120,7 +120,6 @@
     <ClCompile Include="common\hooking.cpp" />
     <ClCompile Include="common\ini.cpp" />
     <ClCompile Include="common\strings.cpp" />
-    <ClCompile Include="common\string_utils.cpp" />
     <ClCompile Include="common\timer.cpp" />
     <ClCompile Include="d2tweaks\client\client.cpp" />
     <ClCompile Include="d2tweaks\client\modules\autosort\autosort_client.cpp" />
@@ -208,7 +207,6 @@
     <ClInclude Include="common\autopickup_lootfilter.h" />
     <ClInclude Include="common\ptr_wrapper.h" />
     <ClInclude Include="common\strings.h" />
-    <ClInclude Include="common\string_utils.h" />
     <ClInclude Include="common\timer.h" />
     <ClInclude Include="d2tweaks\client\client.h" />
     <ClInclude Include="d2tweaks\client\modules\autosort\autosort_client.h" />
