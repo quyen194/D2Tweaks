@@ -1,5 +1,5 @@
 #include <d2tweaks/ui/controls/label.h>
-#include <common/string_utils.h>
+#include <common/strings.h>
 #include <diablo2/d2client.h>
 
 using namespace diablo2;
@@ -65,7 +65,7 @@ label::label(menu* menu, const pugi::xml_node& node)
   control::set_visible(true);
 
   m_text_owned = true;
-  m_text = string_utils::string_to_wstring(ctext);
+  m_text = utils::ToWString(ctext);
   m_color = static_cast<ui_color_t>(ccolor);
   m_font = static_cast<ui_font_t>(cfont);
 
