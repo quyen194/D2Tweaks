@@ -22,6 +22,7 @@
 #include <d2tweaks/common/common.h>
 #include <d2tweaks/common/asset_manager.h>
 #include <d2tweaks/ui/controls/control.h>
+#include <d2tweaks/ui/ui_utils.h>
 #include <diablo2/d2win.h>
 #include <diablo2/d2cmp.h>
 #include <diablo2/structures/unit.h>
