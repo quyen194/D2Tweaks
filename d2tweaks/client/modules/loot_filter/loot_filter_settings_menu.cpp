@@ -1279,7 +1279,7 @@ void loot_filter_settings_menu::extract_item(bool value, int prop, uint32_t val,
 void loot_filter_settings_menu::close_window(bool value) {
   auto& toggle_menu = singleton<loot_filter_settings_toggle_menu>::instance();
   toggle_menu.m_show = false;
-  m_stats_enabled = true;
+  // m_stats_enabled = true;
   toggle_menu.m_filter_settings_menu->set_enabled(false);
   toggle_menu.m_filter_settings_menu->set_visible(false);
   toggle_menu.toggle_cube_click();

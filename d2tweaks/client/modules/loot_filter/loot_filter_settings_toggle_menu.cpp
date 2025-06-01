@@ -110,12 +110,22 @@ loot_filter_settings_toggle_menu::loot_filter_settings_toggle_menu(token) {
   m_btn_toggle_stats->set_on_click(std::bind(
       &loot_filter_settings_toggle_menu::toggle_stats_settings_click, this));
 
+  if (!config.Int("LootFilter", "ShowButtonToggleStats", 0)) {
+    m_btn_toggle_stats->set_enabled(false);
+    m_btn_toggle_stats->set_visible(false);
+  }
+
   // help button
   m_btn_toggle_help = static_cast<button*>(get_control("m_toggle_help"));
   m_btn_toggle_help->set_enabled(true);
   m_btn_toggle_help->set_visible(true);
   m_btn_toggle_help->set_on_click(
       std::bind(&loot_filter_settings_toggle_menu::toggle_help_click, this));
+
+  if (!config.Int("LootFilter", "ShowButtonHelp", 0)) {
+    m_btn_toggle_help->set_enabled(false);
+    m_btn_toggle_help->set_visible(false);
+  }
 
   // toggle open/close cube button
   m_btn_toggle_cube = static_cast<button*>(get_control("m_toggle_cube"));
@@ -142,6 +152,11 @@ loot_filter_settings_toggle_menu::loot_filter_settings_toggle_menu(token) {
     }
   }
 
+  if (!config.Int("LootFilter", "ShowButtonToggleCube", 0)) {
+    m_btn_toggle_cube->set_enabled(false);
+    m_btn_toggle_cube->set_visible(false);
+  }
+
   // toggle open/close stash button
   m_btn_toggle_stash = static_cast<button*>(get_control("m_toggle_stash"));
   m_btn_toggle_stash->set_enabled(true);
@@ -164,6 +179,11 @@ loot_filter_settings_toggle_menu::loot_filter_settings_toggle_menu(token) {
       m_btn_toggle_stash->set_visible(false);
     }
   }
+
+  if (!config.Int("LootFilter", "ShowButtonToggleStash", 0)) {
+    m_btn_toggle_stash->set_enabled(false);
+    m_btn_toggle_stash->set_visible(false);
+  }
 }
 
 void loot_filter_settings_toggle_menu::toggle_filter_settings_click() {
@@ -173,10 +193,10 @@ void loot_filter_settings_toggle_menu::toggle_filter_settings_click() {
   m_filter_settings_menu->set_enabled(m_show);
   m_filter_settings_menu->set_visible(m_show);
 
-  m_btn_toggle_stats->set_enabled(true);
-  m_btn_toggle_stats->set_visible(true);
+  // m_btn_toggle_stats->set_enabled(true);
+  // m_btn_toggle_stats->set_visible(true);
 
-  toggle_cube_click();
+  // toggle_cube_click();
 }
 
 void loot_filter_settings_toggle_menu::toggle_stats_settings_click() {
@@ -185,7 +205,7 @@ void loot_filter_settings_toggle_menu::toggle_stats_settings_click() {
 
 void loot_filter_settings_toggle_menu::toggle_cube_click() {
   m_cube_enabled = !m_cube_enabled;
-  if (m_cube_enabled) {
+  if (!d2_client::get_ui_window_state(UI_WINDOW_CUBE)) {
     const auto player = d2_client::get_local_player();
     int32_t boxGuid = 0;
     uint32_t boxX = 0;
@@ -225,7 +245,7 @@ void loot_filter_settings_toggle_menu::toggle_cube_click() {
 
 void loot_filter_settings_toggle_menu::toggle_stash_click() {
   m_stash_enabled = !m_stash_enabled;
-  if (m_stash_enabled) {
+  if (!d2_client::get_ui_window_state(UI_WINDOW_STASH)) {
     const auto player = d2_client::get_local_player();
     int32_t st0Guid = 0;
     uint32_t st0X = 0;
@@ -254,6 +274,20 @@ void loot_filter_settings_toggle_menu::toggle_stash_click() {
     packet.tx = st0X;
     packet.ty = st0Y;
     d2_client::send_to_server(&packet, sizeof packet);
+
+    // SERIALIZED_OBJECT_ON
+    // struct D2GSPacketClt20 {
+    //   uint8_t PacketId;   // 0x01
+    //   uint32_t uk1;       // 0x06
+    //   uint32_t uk2;       // 0x06
+    // };
+    // SERIALIZED_OBJECT_OFF
+    //
+    // D2GSPacketClt20 packet;
+    // packet.PacketId = 0x13;
+    // packet.uk1 = 0x02;
+    // packet.uk2 = 0x15;
+    // d2_client::send_to_server(&packet, sizeof packet);
   }
   else {
     d2_client::set_ui_toggle(0x19, 1, FALSE);
@@ -272,8 +306,8 @@ void loot_filter_settings_toggle_menu::toggle_help_click() {
 }
 
 void loot_filter_settings_toggle_menu::draw() {
-  m_btn_toggle_stats->set_enabled(d2_client::get_ui_window_state(UI_WINDOW_INTERFACE));
-  m_btn_toggle_stats->set_visible(d2_client::get_ui_window_state(UI_WINDOW_INTERFACE));
+  // m_btn_toggle_stats->set_enabled(d2_client::get_ui_window_state(UI_WINDOW_INTERFACE));
+  // m_btn_toggle_stats->set_visible(d2_client::get_ui_window_state(UI_WINDOW_INTERFACE));
   m_toggle_filter_settings_btn->set_enabled(d2_client::get_ui_window_state(UI_WINDOW_INTERFACE));
   m_toggle_filter_settings_btn->set_visible(d2_client::get_ui_window_state(UI_WINDOW_INTERFACE));
 
