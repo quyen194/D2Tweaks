@@ -1,6 +1,7 @@
 #include <d2tweaks/client/client.h>
 
 #include <common/hooking.h>
+#include <common/strings.h>
 
 #include <spdlog/spdlog.h>
 
@@ -149,11 +150,12 @@ void client::handle_cs_packet(common::packet_header* packet, size_t size) {
     push[ebp + 0x2C];
     pop[g_ebp_send_to_client];
   }
-  spdlog::warn("[d2client SEND] Packet {} Message {} Size {} CallFrom {}",
-               (void*) packet->d2_packet_type,
-               (void*) packet->message_type,
+  spdlog::warn("[d2client SEND] Packet {:02X} Message {:02X} Size {} CallFrom {} Dump {}",
+               packet->d2_packet_type,
+               packet->message_type,
                size,
-               (void*) g_ebp_send_to_client);
+               (void*) g_ebp_send_to_client,
+               utils::BytesToHexString(utils::ToBytes(packet, size)));
 #endif
 
   static common::packet_header dummy;
