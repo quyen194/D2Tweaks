@@ -7,7 +7,7 @@ namespace structures {
 
 struct net_client;
 
-struct player_data {
+struct PlayerData {
   char name[0x10];                      // +00  Player Name
   void* pt_quest[3];                    // +10  Quest Pointers for each difficulty
   uint8_t uk1[0x18];                    // +1C    //before : 0x14

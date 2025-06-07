@@ -3456,7 +3456,7 @@
 ////    } *pPos; //+38
 ////    uint32_t _2[13];
 ////    union {
-////        player_data* player_data; //+70
+////        PlayerData* player_data; //+70
 ////        monster_data* monster_data; //+70
 ////        ObjectData* object_data; //+70
 ////        ItemData* item_data; //+70
@@ -3510,7 +3510,7 @@
 //    uint32_t mode;
 //
 //    union {
-//        player_data* player_data;
+//        PlayerData* player_data;
 //        monster_data* monster_data;
 //        ObjectData* object_data;
 //        //missile_data* missile_data;
@@ -3655,7 +3655,7 @@
 ////        monster_data* monster_data;
 ////        ObjectData* object_data;
 ////        ItemData* item_data;
-////        player_data* player_data;
+////        PlayerData* player_data;
 ////    };                                    //+14
 ////    uint8_t        act;                    //+18
 ////    uint8_t        uk12[3];                //+19

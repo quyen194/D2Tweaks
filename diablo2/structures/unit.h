@@ -16,7 +16,7 @@ struct Game;
 struct Inventory;
 struct stats;
 struct Path;
-struct player_data;
+struct PlayerData;
 struct ItemData;
 struct ObjectData;
 struct monster_data;
@@ -150,7 +150,7 @@ struct Unit {
   uint32_t mode;
 
   union {
-    player_data* player_data;
+    PlayerData* player_data;
     monster_data* monster_data;
     ObjectData* object_data;
     // missile_data* missile_data;
