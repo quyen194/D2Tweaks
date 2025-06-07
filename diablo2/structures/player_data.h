@@ -5,7 +5,7 @@
 namespace diablo2 {
 namespace structures {
 
-struct net_client;
+struct NetClient;
 
 struct PlayerData {
   char name[0x10];                      // +00  Player Name
@@ -19,7 +19,7 @@ struct PlayerData {
   uint8_t uk4[0x06];                    // +42
   uint8_t pt_object_un_id;              // +48  Object UniqueID for TownPortals
   uint8_t uk5[0x53];                    // +49
-  net_client* net_client;               // +9C  ptClient
+  NetClient* net_client;               // +9C  ptClient
 };
 
 }  // namespace structures

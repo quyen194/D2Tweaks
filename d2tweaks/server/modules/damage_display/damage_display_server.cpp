@@ -66,7 +66,7 @@ common::damage_type_t get_damage_type(damage* dmg) {
 }
 
 static void send_damage_data(Unit* defender,
-  net_client* client,
+  NetClient* client,
   damage* dmg) {
   static auto& instance = singleton<server>::instance();
   static common::damage_info_sc packet;
@@ -238,7 +238,7 @@ static Unit* get_pet_owner(Game* pGame, Unit* pUnit) {
 static void process_players_damage(Unit* attacker,
                                    Unit* defender,
                                    damage* dmg) {
-  net_client* client = nullptr;
+  NetClient* client = nullptr;
 
   if (attacker->type == unit_type_t::UNIT_TYPE_PLAYER)
     client = attacker->player_data->net_client;

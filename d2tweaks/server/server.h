@@ -12,7 +12,7 @@ enum class unit_type_t;
 struct Game;
 struct Inventory;
 struct Unit;
-struct net_client;
+struct NetClient;
 }  // namespace structures
 }  // namespace diablo2
 
@@ -43,7 +43,7 @@ class server : public singleton<server> {
 
   void init();
 
-  void send_packet(net_client* client,
+  void send_packet(NetClient* client,
                    common::packet_header* packet,
                    size_t size);
   bool handle_packet(Game* game, Unit* player, common::packet_header* packet);

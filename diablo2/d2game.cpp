@@ -20,8 +20,8 @@ char* d2_game::get_base() {
   return base;
 }
 
-void d2_game::enqueue_packet(net_client* client, void* packet, size_t size) {
-  static wrap_func_fast<void(net_client*, void*, size_t)> enqueue_packet(
+void d2_game::enqueue_packet(NetClient* client, void* packet, size_t size) {
+  static wrap_func_fast<void(NetClient*, void*, size_t)> enqueue_packet(
       0xC710, get_base());
   enqueue_packet(client, packet, size);
 }
@@ -79,14 +79,14 @@ Game* d2_game::get_game_from_client_id(int32_t id) {
 }
 
 // __fastcall D2CLIENTS_GetClientByClientNumber(pGame, int nNumber)
-net_client* d2_game::get_net_client_from_id(Game* pGame, int32_t id) {
-  static wrap_func_fast<net_client*(Game*, int32_t)> get_net_client_from_id(
+NetClient* d2_game::get_net_client_from_id(Game* pGame, int32_t id) {
+  static wrap_func_fast<NetClient*(Game*, int32_t)> get_net_client_from_id(
       0x1DE0, get_base());
   return get_net_client_from_id(pGame, id);
 }
 
-net_client* d2_game::get_net_client_from_id_2(Game* pGame, int32_t id) {
-  static wrap_func_fast<net_client*(Game*, int32_t)> get_net_client_from_id_2(
+NetClient* d2_game::get_net_client_from_id_2(Game* pGame, int32_t id) {
+  static wrap_func_fast<NetClient*(Game*, int32_t)> get_net_client_from_id_2(
       0x37B0, get_base());
   return get_net_client_from_id_2(pGame, id);
 }
@@ -343,8 +343,8 @@ void __fastcall d2_game::D2GAME_SetSummonResistance_6FD0C2E0(Unit* pUnit,
 
 // D2Game.0x6FC3E200
 // void __fastcall sub_6FC3E200(D2ClientStrc* pClient, D2UnitStrc* pUnit)
-void __fastcall d2_game::sub_6FC3E200(net_client* pClient, Unit* pUnit) {
-  static wrap_func_fast<void(net_client*, Unit*)> sub_6FC3E200(
+void __fastcall d2_game::sub_6FC3E200(NetClient* pClient, Unit* pUnit) {
+  static wrap_func_fast<void(NetClient*, Unit*)> sub_6FC3E200(
       D2GAME_GetOffset(0x6FC3E200), get_base());
   sub_6FC3E200(pClient, pUnit);
 }

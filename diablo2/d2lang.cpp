@@ -16,8 +16,8 @@ wchar_t* d2_lang::get_string_from_index(short tbl_index_name_str) {
 
 //D2FUNC(D2LANG, GetStringFromIndex, wchar_t*, __fastcall, (short nTblIndex_name_str), -10004)
 
-//void d2_game::enqueue_packet(structures::net_client* client, void* packet, size_t size) {
-//  static wrap_func_fast<void(structures::net_client*, void*, size_t)> enqueue_packet(0xC710, get_base());
+//void d2_game::enqueue_packet(structures::NetClient* client, void* packet, size_t size) {
+//  static wrap_func_fast<void(structures::NetClient*, void*, size_t)> enqueue_packet(0xC710, get_base());
 //  enqueue_packet(client, packet, size);
 //}
 

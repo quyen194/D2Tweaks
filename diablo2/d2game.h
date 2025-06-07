@@ -10,7 +10,7 @@ namespace diablo2 {
 namespace structures {
 
 struct game_server;
-struct net_client;
+struct NetClient;
 struct Game;
 struct Unit;
 
@@ -217,7 +217,7 @@ class d2_game {
  public:
   static char* get_base();
 
-  static void enqueue_packet(net_client* client, void* packet, size_t size);
+  static void enqueue_packet(NetClient* client, void* packet, size_t size);
 
   static uint32_t* get_game_id_array_begin();
   static uint32_t* get_game_id_array_end();
@@ -226,8 +226,8 @@ class d2_game {
   static Game* get_game(game_server* gs, uint32_t gameId);
 
   static Game* get_game_from_client_id(int32_t id);
-  static net_client* get_net_client_from_id(Game* pGame, int32_t id);
-  static net_client* d2_game::get_net_client_from_id_2(Game* pGame, int32_t id);
+  static NetClient* get_net_client_from_id(Game* pGame, int32_t id);
+  static NetClient* d2_game::get_net_client_from_id_2(Game* pGame, int32_t id);
 
   static Unit* get_player_pet(Game* pGame,
                               Unit* pUnit,
@@ -363,7 +363,7 @@ class d2_game {
 
   // D2Game.0x6FC3E200
   // void __fastcall sub_6FC3E200(D2ClientStrc* pClient, D2UnitStrc* pUnit)
-  static void __fastcall d2_game::sub_6FC3E200(net_client* pClient,
+  static void __fastcall d2_game::sub_6FC3E200(NetClient* pClient,
                                                Unit* pUnit);
 
   // D2Game.0x6FC69F10

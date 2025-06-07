@@ -176,7 +176,7 @@ void server::init() {
   }
 }
 
-void server::send_packet(net_client* client,
+void server::send_packet(NetClient* client,
                          common::packet_header* packet,
                          size_t size) {
   d2_game::enqueue_packet(client, packet, size);

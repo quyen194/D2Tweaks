@@ -7,7 +7,7 @@ namespace structures {
 
 struct Game;
 
-struct net_client {
+struct NetClient {
   uint32_t client_id;     // +00
   uint8_t uk1[0x06];      // +04
   union {                 // +0A

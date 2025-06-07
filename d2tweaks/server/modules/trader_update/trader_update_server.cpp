@@ -156,7 +156,7 @@ void trader_update::tick(Game* game, Unit* unit) {
 
 struct ClientFromNumber {
   uint8_t padding[0x174];
-  net_client* net_cleint;
+  NetClient* net_cleint;
 };
 
 bool trader_update::handle_packet(Game* game,
@@ -180,7 +180,7 @@ bool trader_update::handle_packet(Game* game,
     // send update packet to all connected clients
     // net client id - 1 is always the host, then every odd number: 3, 5, 7, 9, 11, 13, 15
     for (uint32_t i = 0; i < 16; i++) {
-      net_client* netclient = d2_game::get_net_client_from_id(game, i);
+      NetClient* netclient = d2_game::get_net_client_from_id(game, i);
       if (netclient != 0) {
         response_packet_sc.command = COMMAND_FREE_NPC_INVENTORY;
         response_packet_sc.npc_id = income_packet_cs->npc_id;
@@ -212,7 +212,7 @@ bool trader_update::handle_packet(Game* game,
     // send an update packet to all connected clients
     // net client id - 1 is always the host, then every odd number: 3, 5, 7, 9, 11, 13, 15
     for (uint32_t i = 0; i < 16; i++) {
-      net_client* netclient = d2_game::get_net_client_from_id(game, i);
+      NetClient* netclient = d2_game::get_net_client_from_id(game, i);
       if (netclient != 0) {
         response_packet_sc.command = COMMAND_FILL_NPC_INVENTORY;
         response_packet_sc.npc_id = income_packet_cs->npc_id;
