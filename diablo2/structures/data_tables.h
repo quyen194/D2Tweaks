@@ -4,7 +4,7 @@
 
 namespace diablo2 {
 namespace structures {
-struct linkage;
+struct Linkage;
 
 struct playerclass_line;
 struct bodylocs_line;
@@ -33,27 +33,27 @@ struct unique_items {  // size=0x14C (332)
 
 struct data_tables {
       playerclass_line* player_class;                     // +00000000   01415B48      playerclass.txt
-      linkage* player_class_info;                         // +00000004   01410524      playerclass info
+      Linkage* player_class_info;                         // +00000004   01410524      playerclass info
 
       bodylocs_line* body_locs;                           // +00000008   01415578      bodylocs.txt
-      linkage* body_locs_info;                            // +0000000C   01410504      bodylocs info
+      Linkage* body_locs_info;                            // +0000000C   01410504      bodylocs info
 
       storepage_line* store_page;                         // +00000010   01414CC8      storepage.txt
-      linkage* store_page_info;                           // +00000014   01415B24      storepage info
+      Linkage* store_page_info;                           // +00000014   01415B24      storepage info
 
       elemtypes_line* elemtypes;                          // +00000018   01414958      elemtypes.txt
-      linkage* elemtypes_info;                            // +0000001C   01415B04      elemtypes info
+      Linkage* elemtypes_info;                            // +0000001C   01415B04      elemtypes info
 
       hitclass_line* hit_class;                           // +00000020   01414148      hitclass.txt
-      linkage* hit_class_info;                            // +00000024   01415AE4      hitclass info
+      Linkage* hit_class_info;                            // +00000024   01415AE4      hitclass info
 
       monmode_line* mon_mode;                             // +00000028   01416878      monmode.txt
-      linkage* mon_mode_info;                             // +0000002C   01415514      monmode info
+      Linkage* mon_mode_info;                             // +0000002C   01415514      monmode info
 
       void* pPlayerModeStub;                              // +00000030   014162E8      plrmode.txt
-      linkage* iPlayerMode;                               // +00000034   01414934      plrmode info
+      Linkage* iPlayerMode;                               // +00000034   01414934      plrmode info
       void* pSkillCalc;                                   // +00000038   05279860      skillcalc.txt
-      linkage* iSkillCalc;                                // +0000003C   01410014      skillcalc info
+      Linkage* iSkillCalc;                                // +0000003C   01410014      skillcalc info
       uint8_t* pSkillsCode;                               // +00000040   0537A514      skillscode formulae
       uint32_t dwSkillsCodeSize;                          // +00000044   00001768      size of skillscode block
       uint32_t dwSkillsCodeSizeEx;                        // +00000048   00001768      size of skillscode block
@@ -61,32 +61,32 @@ struct data_tables {
       uint32_t dwSkillDescCodeSize;                       // +00000050   0000107F      size of skilldesccode block
       uint32_t dwSkillDescCodeSizeEx;                     // +00000054   0000107F      size of skilldesccode block
       const char* pMissileCalc;                           // +00000058   01419C28      misscalc.txt
-      linkage* iMissileCalc;                              // +0000005C   01417024      misscalc info
+      Linkage* iMissileCalc;                              // +0000005C   01417024      misscalc info
       uint8_t* pMissCode;                                 // +00000060   014A4944      misscode formulae
       uint32_t dwMissCodeSize;                            // +00000064   000000D4      size of misscode block
       uint32_t dwMissCodeSizeEx;                          // +00000068   000000D4      size of misscode block
       const char* pSkillCode;                             // +0000006C   052C445C      skillcode.txt (Id from skills.txt)
-      linkage* iSkillCode;                                // +00000070   0141F084      skillcode info
+      Linkage* iSkillCode;                                // +00000070   0141F084      skillcode info
       void* pEvents;                                      // +00000074   0141ACA8      events.txt
-      linkage* iEvents;                                   // +00000078   0141F064      events info
+      Linkage* iEvents;                                   // +00000078   0141F064      events info
       uint32_t* pCompCodes;                               // +0000007C   06C4FAFC      compcode.txt
-      linkage* iCompCodes;                                // +00000080   01410544      compcode info
+      Linkage* iCompCodes;                                // +00000080   01410544      compcode info
       int nCompCodes;                                     // +00000084   00000073      # of compcode records
       void* pMonAI;                                       // +00000088   0564351C      monai.txt
-      linkage* iMonAI;                                    // +0000008C   01414914      monai info
+      Linkage* iMonAI;                                    // +0000008C   01414914      monai info
       int nMonAI;                                         // +00000090   00000098      # of monai records
-      linkage* iItems;                                    // +00000094   014BA014      items info
+      Linkage* iItems;                                    // +00000094   014BA014      items info
       uint8_t* pItemsCode;                                // +00000098   013FDED8      itemscode formulae
       uint32_t dwItemsCodeSize;                           // +0000009C   000010E0      size of itemscode block
       uint32_t dwItemsCodeSizeEx;                         // +000000A0   000010E0      size of itemscode block
       uint32_t* pProperties;                              // +000000A4   0579E218      properties.txt
-      linkage* iProperties;                               // +000000A8   01489464      properties info
+      Linkage* iProperties;                               // +000000A8   01489464      properties info
       int nProperties;                                    // +000000AC   00000110      # of properties records
-      linkage* iRunes;                                    // +000000B0   014C4774      runes info
+      Linkage* iRunes;                                    // +000000B0   014C4774      runes info
       uint32_t* pMercDesc;                                // +000000B4   01417208      hiredesc.txt
-      linkage* iMercDesc;                                 // +000000B8   01415534      hiredesc info
+      Linkage* iMercDesc;                                 // +000000B8   01415534      hiredesc info
       uint32_t* pStates;                                  // +000000BC   05767EA0      states.txt (limit = 255)
-      linkage* iStates;                                   // +000000C0   014A16C4      states info
+      Linkage* iStates;                                   // +000000C0   014A16C4      states info
       int nStates;                                        // +000000C4   000000BD      # of states records
       void* pStateMasks;                                  // +000000C8   014A2574      statemasks.txt
       uint32_t* fStateMasks[40];                          // +000000CC   014A2574      statemasks[40] (statemasks.txt segment array)
@@ -101,7 +101,7 @@ struct data_tables {
       short* pColourStates;                               // +0000018C   014A3CE4      color-state list
       int nColourStates;                                  // +00000190   00000002      # of color states
       void* pSoundCodes;                                  // +00000194   057656BC      soundcode.txt (sound column from sounds.txt)
-      linkage* iSoundCodes;                               // +00000198   0141F0E4      soundcode info
+      Linkage* iSoundCodes;                               // +00000198   0141F0E4      soundcode info
       int nSoundCodes;                                    // +0000019C   00000000      # of soundcode records (blanked out later)
       uint32_t* pHirelings;                               // +000001A0   055D8CD8      hirelings.txt (limit = 256)
       int nHirelings;                                     // +000001A4   00000078      # of hirelings records
@@ -110,78 +110,78 @@ struct data_tables {
       void* pNPCs;                                        // +000009A8   05724F74      npcs.txt
       int nNPCs;                                          // +000009AC   00000011      # of npcs records
       void* pColours;                                     // +000009B0   01417568      colors.txt
-      linkage* iColours;                                  // +000009B4   01415554      colors info
-      linkage* iTreasureClassEx;                          // +000009B8   014C4714      treasureclassex info
+      Linkage* iColours;                                  // +000009B4   01415554      colors info
+      Linkage* iTreasureClassEx;                          // +000009B8   014C4714      treasureclassex info
       uint32_t* pTreasureClassEx;                         // +000009BC   05718D98      treasureclassex.txt (limit = 65534 - autotcs#)
       int nTreasureClassEx;                               // +000009C0   0000043C      # of treasureclassex records
       uint32_t* aTreasureClass[45];                       // +000009C4   0571D074      chest treasureclassex list (an array of 45 pointers)
       uint32_t* pMonstats;                                // +00000A78   04FE0014      monstats.txt (limit = 32766)
-      linkage* iMonstats;                                 // +00000A7C   0143C024      monstats info
+      Linkage* iMonstats;                                 // +00000A7C   0143C024      monstats info
       int nMonstats;                                      // +00000A80   000002E1      # of monstats records
       void* pMonSounds;                                   // +00000A84   013EBC9C      monsounds.txt
-      linkage* iMonSounds;                                // +00000A88   01438024      monsounds info
+      Linkage* iMonSounds;                                // +00000A88   01438024      monsounds info
       int nMonSounds;                                     // +00000A8C   0000008D      # of monsounds records
       uint32_t* pMonstats2;                               // +00000A90   05287408      monstats2.txt (no sign of that 1023 record limit)
-      linkage* iMonstats2;                                // +00000A94   01502014      monstats2 info
+      Linkage* iMonstats2;                                // +00000A94   01502014      monstats2 info
       int nMonstats2;                                     // +00000A98   00000245      # of monstats2 records
       void* pMonPlace;                                    // +00000A9C   01412648      monplace.txt
-      linkage* iMonPlace;                                 // +00000AA0   01417BA4      monplace info
+      Linkage* iMonPlace;                                 // +00000AA0   01417BA4      monplace info
       int nMonPlace;                                      // +00000AA4   00000025      # of monplace records
       void* pMonPreset;                                   // +00000AA8   057248B0      monpreset.txt
       void* aMonPresetI[5];                               // +00000AAC   057248B0      array of 5 pointers to the monpreset sections for each of the 5 acts
       void* aMonPresetII[5];                              // +00000AC0   0000002F      array of 5 integers (# of records for monpreset in each of the 5 acts)
       uint32_t* pSuperUniques;                            // +00000AD4   05364928      superuniques.txt (limit = 512)
-      linkage* iSuperUniques;                             // +00000AD8   0145A1F4      superuniques info
+      Linkage* iSuperUniques;                             // +00000AD8   0145A1F4      superuniques info
       int nSuperUniques;                                  // +00000ADC   00000042      # of superunique records
       uint16_t aSuperUniques[66];                         // +00000AE0   00010000      array of 66 uint16_ts (the IdNos of the default superuniques, new ones are not added here [thankfully])
       uint32_t* pMissiles;                                // +00000B64   05590014      missiles.txt (does some fixing for collidetype > 8)
-      linkage* iMissiles;                                 // +00000B68   01492014      missiles info
+      Linkage* iMissiles;                                 // +00000B68   01492014      missiles info
       int nMissiles;                                      // +00000B6C   000002C4      # of missiles records
       uint32_t* pMonLvl;                                  // +00000B70   013B0064      monlvl.txt
       int nMonLvl;                                        // +00000B74   0000006F      # of monlvl records
       void* pMonSeq;                                      // +00000B78   05375900      monseq.txt
-      linkage* iMonSeq;                                   // +00000B7C   0143A024      monseq info
+      Linkage* iMonSeq;                                   // +00000B7C   0143A024      monseq info
       int nMonSeq;                                        // +00000B80   000003F2      # of monseq records
       uint32_t* pMonSeqTable;                             // +00000B84   0143E7E4      sequences table (created from monseq.txt)
       int nMonSeqTable;                                   // +00000B88   0000003C      # of sequences
       uint32_t* pSkillDesc;                               // +00000B8C   05741104      skilldesc.txt (limit = 32766) [JL and not JLE]
-      linkage* iSkillDesc;                                // +00000B90   014B8024      skilldesc info
+      Linkage* iSkillDesc;                                // +00000B90   014B8024      skilldesc info
       int nSkillDesc;                                     // +00000B94   000000DD      # of skilldesc records
       uint32_t* pSkills;                                  // +00000B98   056E4D78      skills.txt (limit = 32766) [JL and not JLE]
-      linkage* iSkills;                                   // +00000B9C   014B50E4      skills info
+      Linkage* iSkills;                                   // +00000B9C   014B50E4      skills info
       int nSkills;                                        // +00000BA0   00000173      # of skills records
       int* nClassSkillCount;                              // +00000BA4   014B9014      class skill count list
       int nHighestClassSkillCount;                        // +00000BA8   0000001E      # highest class skill count
       short* nClassSkillList;                             // +00000BAC   014BCB54      class skill list
       int nPassiveSkills;                                 // +00000BB0   0000001C      # of passive skills
       uint16_t* pPassiveSkills;                           // +00000BB4   014BCB04      passiveskill list
-      linkage* iOverlay;                                  // +00000BB8   01484024      overlay info
+      Linkage* iOverlay;                                  // +00000BB8   01484024      overlay info
       uint32_t* pOverlay;                                 // +00000BBC   05352F54      overlay.txt
       int nOverlay;                                       // +00000BC0   00000125      # of overlay records
       uint32_t* pCharStats;                               // +00000BC4   057AD178      charstats.txt
       int nCharStats;                                     // +00000BC8   00000007      # of charstats records
       uint32_t* pItemStatCost;                            // +00000BCC   05219760      itemstatcost.txt (limit = 510) [511 used as END_OF_STATS in 'GF/JM' files]
-      linkage* iItemStatCost;                             // +00000BD0   0148C024      itemstatcost info
+      Linkage* iItemStatCost;                             // +00000BD0   0148C024      itemstatcost info
       int nItemStatCost;                                  // +00000BD4   0000016E      # of itemstatcost records
       void* pOPStats;                                     // +00000BD8   014882A4      opstats nesting table
       int nOPStats;                                       // +00000BDC   000000D3      # of nested opstats
       uint32_t* pMonEquip;                                // +00000BE0   013B3798      monequip.txt (limit = 32766)
       int nMonEquip;                                      // +00000BE4   0000002D      # of monequip records
       uint32_t* pPetType;                                 // +00000BE8   05774138      pettype.txt (limit = 511)
-      linkage* iPetType;                                  // +00000BEC   01486024      pettype info
+      Linkage* iPetType;                                  // +00000BEC   01486024      pettype info
       int nPetType;                                       // +00000BF0   00000014      # of pettype records
-      linkage* iItemTypes;                                // +00000BF4   0141E024      itemtypes info
+      Linkage* iItemTypes;                                // +00000BF4   0141E024      itemtypes info
       uint32_t* pItemTypes;                               // +00000BF8   050D14AC      itemtypes.txt
       int nItemTypes;                                     // +00000BFC   00000069      # of itemtypes records
       int nItemTypesIndex;                                // +00000C00   00000004      (itemtypes#+31)/32
       uint32_t* pItemTypesNest;                           // +00000C04   0537C41C      itemtypes nesting table
-      linkage* iSets;                                     // +00000C08   014B3CE4      sets info
+      Linkage* iSets;                                     // +00000C08   014B3CE4      sets info
       void* pSets;                                        // +00000C0C   057A162C      sets.txt (limit = 32766)
       int nSets;                                          // +00000C10   00000020      # of sets records
-      linkage* iSetItems;                                 // +00000C14   014B1024      setitems info
+      Linkage* iSetItems;                                 // +00000C14   014B1024      setitems info
       uint32_t* pSetItems;                                // +00000C18   056BBAC0      setitems.txt (limit = 32766)
       int nSetItems;                                      // +00000C1C   0000007F      # of setitems records
-      linkage* iUniqueItems;                              // +00000C20   014AA044      uniqueitems info
+      Linkage* iUniqueItems;                              // +00000C20   014AA044      uniqueitems info
       unique_items* pUniqueItems;                         // +00000C24   0510E8B4      uniqueitems.txt (limit = 32766)
       int nUniqueItems;                                   // +00000C28   00000191      # of uniqueitems records
       //linkage* iMonProp;                                  // +00000C2C   01439024      monprop info
