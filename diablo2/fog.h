@@ -6,7 +6,7 @@
 
 namespace diablo2 {
 namespace structures {
-struct file_handle;
+struct FileHandle;
 }
 
 class fog {
@@ -15,13 +15,13 @@ class fog {
 
   static void get_save_path(char* buffer, size_t bufferSize);
 
-  static bool mpq_open_file(char* path, structures::file_handle** outHandle);
-  static bool mpq_close_file(structures::file_handle* handle);
-  static bool mpq_read_file(structures::file_handle* handle,
+  static bool mpq_open_file(char* path, structures::FileHandle** outHandle);
+  static bool mpq_close_file(structures::FileHandle* handle);
+  static bool mpq_read_file(structures::FileHandle* handle,
                             void* buffer,
                             size_t size,
                             size_t* bytesToRead);
-  static size_t mpq_get_file_size(structures::file_handle* handle,
+  static size_t mpq_get_file_size(structures::FileHandle* handle,
                                   size_t* compressedSize);
 };
 

@@ -4,14 +4,14 @@
 
 namespace diablo2 {
 namespace structures {
-struct file_handle;
+struct FileHandle;
 }
 
 namespace utils {
 
 class mpq_ifstream : public std::istream {
   class mpq_streambuf : public std::streambuf {
-    structures::file_handle* m_handle;
+    structures::FileHandle* m_handle;
     char m_data;
 
    public:
