@@ -20,12 +20,7 @@ extern HMODULE g_hModule;
 namespace d2_tweaks {
 namespace common {
 
-static std::string config_path;
-const char* get_config_path() {
-  if (!config_path.empty()) {
-    return config_path.c_str();
-  }
-
+std::string get_current_dir() {
   char path[MAX_PATH];
   DWORD length = GetModuleFileNameA(g_hModule, path, MAX_PATH);
   if (length == 0 || length == MAX_PATH)
@@ -37,8 +32,17 @@ const char* get_config_path() {
   if (pos == std::string::npos)
       return "";
 
-  config_path = fullPath.substr(0, pos) + "\\d2tweaks.ini";
-  return config_path.c_str();
+  return fullPath.substr(0, pos).c_str();
+}
+
+static std::string config_path;
+std::string get_config_path() {
+  if (!config_path.empty()) {
+    return config_path.c_str();
+  }
+
+  config_path = get_current_dir() + "\\d2tweaks.ini";
+  return config_path;
 }
 
 static void* g_d2_tweaks_mpq = nullptr;

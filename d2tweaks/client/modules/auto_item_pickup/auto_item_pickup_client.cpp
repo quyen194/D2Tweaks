@@ -44,7 +44,7 @@ static bool m_bInventoryFull = false;
 static std::vector<ItemCode> m_stItemList;
 static std::vector<ItemType> m_stItemTypes;
 
-void ReloadFilters(const char* szPathToIni) {
+void ReloadFilters(std::string szPathToIni) {
   FileIni config(szPathToIni);
 
   std::string m_acItemListAll;

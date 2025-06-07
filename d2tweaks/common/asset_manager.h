@@ -9,7 +9,8 @@
 namespace d2_tweaks {
 namespace common {
 
-const char* get_config_path();
+std::string get_current_dir();
+std::string get_config_path();
 
 class asset;
 
