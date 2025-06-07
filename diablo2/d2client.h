@@ -7,7 +7,7 @@ namespace diablo2 {
 namespace structures {
 struct GfxData;
 struct Unit;
-struct client_unit_list;
+struct ClientUnitList;
 struct cellfile;
 }  // namespace structures
 
@@ -51,7 +51,7 @@ class d2_client {
 
   static Unit* get_local_player();
   static const char* get_local_player_name();
-  static client_unit_list* get_client_unit_list();
+  static ClientUnitList* get_client_unit_list();
 
   static int32_t get_view_offset_x();
   static int32_t get_view_offset_y();

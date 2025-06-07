@@ -29,9 +29,9 @@ const char* d2_client::get_local_player_name() {
   return get_local_player_name;
 }
 
-client_unit_list* d2_client::get_client_unit_list() {
+ClientUnitList* d2_client::get_client_unit_list() {
   static auto unit_list =
-      reinterpret_cast<client_unit_list*>(get_base() + 0x11AA00);
+      reinterpret_cast<ClientUnitList*>(get_base() + 0x11AA00);
   return unit_list;
 }
 
