@@ -18,7 +18,7 @@ struct stats;
 struct Path;
 struct player_data;
 struct ItemData;
-struct object_data;
+struct ObjectData;
 struct monster_data;
 struct drlg_act;
 struct skill_sequence;
@@ -152,7 +152,7 @@ struct Unit {
   union {
     player_data* player_data;
     monster_data* monster_data;
-    object_data* object_data;
+    ObjectData* object_data;
     // missile_data* missile_data;
     ItemData* item_data;
   };

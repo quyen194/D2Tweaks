@@ -6,7 +6,7 @@ namespace diablo2 {
 namespace structures {
 struct objects_bin;
 
-struct object_data {
+struct ObjectData {
   objects_bin* pt_objects_bin;
   uint8_t level_id;
 };
