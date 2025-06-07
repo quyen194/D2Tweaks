@@ -4,7 +4,7 @@
 
 namespace diablo2 {
 namespace structures {
-struct elemtypes_line {
+struct ElemTypesLine {
   union {
     uint32_t code;
     char str[4];
