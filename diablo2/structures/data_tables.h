@@ -8,7 +8,7 @@ struct Linkage;
 
 struct playerclass_line;
 struct bodylocs_line;
-struct storepage_line;
+struct StorePageLine;
 struct elemtypes_line;
 struct hitclass_line;
 struct monmode_line;
@@ -38,7 +38,7 @@ struct DataTables {
       bodylocs_line* body_locs;                           // +00000008   01415578      bodylocs.txt
       Linkage* body_locs_info;                            // +0000000C   01410504      bodylocs info
 
-      storepage_line* store_page;                         // +00000010   01414CC8      storepage.txt
+      StorePageLine* store_page;                         // +00000010   01414CC8      storepage.txt
       Linkage* store_page_info;                           // +00000014   01415B24      storepage info
 
       elemtypes_line* elemtypes;                          // +00000018   01414958      elemtypes.txt

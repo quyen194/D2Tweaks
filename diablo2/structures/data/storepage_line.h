@@ -4,7 +4,7 @@
 
 namespace diablo2 {
 namespace structures {
-struct storepage_line {
+struct StorePageLine {
   union {
     uint32_t code;
     char str[4];
