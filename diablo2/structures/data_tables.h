@@ -12,7 +12,7 @@ struct StorePageLine;
 struct elemtypes_line;
 struct hitclass_line;
 struct monmode_line;
-struct properties_line;
+struct PropertiesLine;
 
 struct UniqueItems {  // size=0x14C (332)
 

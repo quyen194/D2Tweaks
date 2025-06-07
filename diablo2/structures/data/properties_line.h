@@ -4,7 +4,7 @@
 
 namespace diablo2 {
 namespace structures {
-struct properties_line {
+struct PropertiesLine {
   uint16_t prop;
   uint8_t set[8];
   uint16_t val[7];
