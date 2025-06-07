@@ -78,7 +78,7 @@ int32_t asset_manager::reload() {
 
     if (it.second->get()) {
       const auto ures = d2_client::unload_gfx_resource(
-          static_cast<cellfile*>(it.second->get()));
+          static_cast<CellFile*>(it.second->get()));
       spdlog::info("Unloaded: {0}", ures);
     }
 

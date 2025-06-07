@@ -6,7 +6,7 @@ namespace diablo2 {
 namespace structures {
 struct GfxCell;
 
-struct cellfile {
+struct CellFile {
   int32_t version;  // 0x00
   struct {
     int16_t flags;

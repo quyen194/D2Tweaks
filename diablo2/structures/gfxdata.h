@@ -4,12 +4,12 @@
 
 namespace diablo2 {
 namespace structures {
-struct cellfile;
+struct CellFile;
 struct GfxCell;
 
 struct GfxData {
   GfxCell* cell_init;       // +00
-  cellfile* cell_file;      // +04
+  CellFile* cell_file;      // +04
   int32_t frame;            // +08
   int32_t direction;        // +0C
   int max_directions;       // +10

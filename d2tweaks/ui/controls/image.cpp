@@ -27,7 +27,7 @@ image::image(
   control::set_enabled(true);
   control::set_visible(true);
 
-  auto cellFile = static_cast<cellfile*>(m_image->get());
+  auto cellFile = static_cast<CellFile*>(m_image->get());
   const auto cell = cellFile->cells[m_frame];
   m_rect =
       rect(x, y, cell->width + cell->offset_x, cell->height - cell->offset_y);
@@ -59,7 +59,7 @@ image::image(menu* menu, const pugi::xml_node& node)
 
   m_image = cimg;
   m_frame = frame;
-  auto cellFile = static_cast<cellfile*>(m_image->get());
+  auto cellFile = static_cast<CellFile*>(m_image->get());
   const auto cell = cellFile->cells[m_frame];
   m_rect =
       rect(cx, cy, cell->width + cell->offset_x, cell->height - cell->offset_y);
@@ -112,7 +112,7 @@ void image::draw(int32_t offsetX, int32_t offsetY) {
 
   //I don't like to call memset for each draw_info every frame, but if we wouldn't clear it - we'll get access violation inside draw_image
   memset(&m_draw_info, 0x00, sizeof m_draw_info);
-  m_draw_info.cell_file = static_cast<cellfile*>(m_image->get());
+  m_draw_info.cell_file = static_cast<CellFile*>(m_image->get());
   m_draw_info.frame = m_frame;
 
   d2_gfx::draw_image(

@@ -8,7 +8,7 @@ namespace structures {
 struct GfxData;
 struct Unit;
 struct ClientUnitList;
-struct cellfile;
+struct CellFile;
 }  // namespace structures
 
 using namespace structures;
@@ -71,15 +71,15 @@ class d2_client {
 
   static bool cache_gfx_data(GfxData* gfxData,
                              Unit* unit,
-                             cellfile* cellfFile,
+                             CellFile* cellfFile,
                              int32_t direction,
                              int32_t frame,
                              int32_t* outIndex,
                              int8_t flags,
                              int32_t colorTint);
 
-  static cellfile* load_gfx_resource(char* path);
-  static int32_t unload_gfx_resource(cellfile* handle);
+  static CellFile* load_gfx_resource(char* path);
+  static int32_t unload_gfx_resource(CellFile* handle);
   static int32_t send_to_server_7(BYTE type, DWORD num, DWORD unk1, DWORD unk2);
   static uint32_t screen_height();
   static uint32_t screen_width();

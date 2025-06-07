@@ -99,27 +99,27 @@ void d2_client::send_to_server(void* data, const size_t size) {
 }
 
 bool d2_client::cache_gfx_data(GfxData* pGfxdata, Unit* pUnit,
-                               cellfile* cellfFile,
+                               CellFile* cellfFile,
                                int32_t direction,
                                int32_t frame,
                                int32_t* outIndex,
                                int8_t flags,
                                int32_t colorTint) {
   static wrap_func_fast<int32_t(
-      GfxData*, Unit*, cellfile*, int32_t, int32_t, int32_t*, int8_t, int32_t)>
+      GfxData*, Unit*, CellFile*, int32_t, int32_t, int32_t*, int8_t, int32_t)>
       cache_gfx_data(0xBEC80, get_base());
   return cache_gfx_data(
       pGfxdata, pUnit, cellfFile, direction, frame, outIndex, flags, colorTint);
 }
 
-cellfile* d2_client::load_gfx_resource(char* path) {
-  static wrap_func_fast<cellfile*(char*, int32_t)> load_gfx_resource(
+CellFile* d2_client::load_gfx_resource(char* path) {
+  static wrap_func_fast<CellFile*(char*, int32_t)> load_gfx_resource(
       0x1000, get_base());
   return load_gfx_resource(path, 0);
 }
 
-int32_t d2_client::unload_gfx_resource(cellfile* handle) {
-  static wrap_func_fast<int32_t(cellfile*)> unload_gfx_resource(0x1140,
+int32_t d2_client::unload_gfx_resource(CellFile* handle) {
+  static wrap_func_fast<int32_t(CellFile*)> unload_gfx_resource(0x1140,
                                                                 get_base());
   return unload_gfx_resource(handle);
 }
