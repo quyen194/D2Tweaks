@@ -35,33 +35,33 @@ int32_t d2_common::get_previous_interact_guid(Unit* player) {
 
 //__stdcall INV_EmptyInventory(D2InventoryStrc* pInventory)
 // deletes items one by one
-void d2_common::empty_inventory_1(inventory* inv) {
-  static wrap_func_std_import<void(inventory*)> empty_inventory_1(10279,
+void d2_common::empty_inventory_1(Inventory* inv) {
+  static wrap_func_std_import<void(Inventory*)> empty_inventory_1(10279,
                                                                   get_base());
   return empty_inventory_1(inv);
 }
 
-void d2_common::empty_inventory_2(inventory* inv) {
-  static wrap_func_std_import<void(inventory*)> empty_inventory_2(10300,
+void d2_common::empty_inventory_2(Inventory* inv) {
+  static wrap_func_std_import<void(Inventory*)> empty_inventory_2(10300,
                                                                   get_base());
   return empty_inventory_2(inv);
 }
 
 //__stdcall INV_FreeTradeInventory(D2InventoryStrc* pInventory)
-void d2_common::free_trade_inventory(inventory* inv) {
-  static wrap_func_std_import<void(inventory*)> free_trade_inventory(
+void d2_common::free_trade_inventory(Inventory* inv) {
+  static wrap_func_std_import<void(Inventory*)> free_trade_inventory(
       10281, get_base());
   return free_trade_inventory(inv);
 }
 
-Unit* d2_common::get_first_inventory_item(inventory* inv) {
-  static wrap_func_std_import<Unit*(inventory*)> get_first_inventory_item(
+Unit* d2_common::get_first_inventory_item(Inventory* inv) {
+  static wrap_func_std_import<Unit*(Inventory*)> get_first_inventory_item(
       10277, get_base());
   return get_first_inventory_item(inv);
 }
 
-Unit* d2_common::get_last_inventory_item(inventory* inv) {
-  static wrap_func_std_import<Unit*(inventory*)> get_last_inventory_item(
+Unit* d2_common::get_last_inventory_item(Inventory* inv) {
+  static wrap_func_std_import<Unit*(Inventory*)> get_last_inventory_item(
       10278, get_base());
   return get_last_inventory_item(inv);
 }
@@ -84,7 +84,7 @@ void* d2_common::get_inventory_data(int32_t index, int32_t zero, char* data) {
   return get_inventory_data(index, zero, data);
 }
 
-Unit* d2_common::get_item_at_cell(inventory* inv,
+Unit* d2_common::get_item_at_cell(Inventory* inv,
                                   uint32_t cellx,
                                   uint32_t celly,
                                   uint32_t* pcellx,
@@ -92,12 +92,12 @@ Unit* d2_common::get_item_at_cell(inventory* inv,
                                   int32_t invIndex,
                                   uint8_t page) {
   static wrap_func_std_import<Unit*(
-      inventory*, uint32_t, uint32_t, uint32_t*, uint32_t*, int32_t, uint8_t)>
+      Inventory*, uint32_t, uint32_t, uint32_t*, uint32_t*, int32_t, uint8_t)>
       get_item_at_cell(10252, get_base());
   return get_item_at_cell(inv, cellx, celly, pcellx, pcelly, invIndex, page);
 }
 
-uint32_t d2_common::can_put_into_slot(inventory* inv,
+uint32_t d2_common::can_put_into_slot(Inventory* inv,
                                       Unit* item,
                                       uint32_t x,
                                       uint32_t y,
@@ -105,7 +105,7 @@ uint32_t d2_common::can_put_into_slot(inventory* inv,
                                       Unit** lastBlockingUnit,
                                       uint32_t* lastBlockingUnitIndex,
                                       uint8_t page) {
-  static wrap_func_std_import<uint32_t(inventory*,
+  static wrap_func_std_import<uint32_t(Inventory*,
                                        Unit*,
                                        uint32_t,
                                        uint32_t,
@@ -141,13 +141,13 @@ uint32_t d2_common::set_unit_mode(Unit* item, uint32_t mode) {
   return set_unit_mode(item, mode);
 }
 
-Unit* d2_common::inv_remove_item(inventory* inv, Unit* item) {
-  static wrap_func_std_import<Unit*(inventory*, Unit*)> inv_remove_item(
+Unit* d2_common::inv_remove_item(Inventory* inv, Unit* item) {
+  static wrap_func_std_import<Unit*(Inventory*, Unit*)> inv_remove_item(
       10243, get_base());
   return inv_remove_item(inv, item);
 }
 
-BOOL d2_common::inv_add_item(inventory* inv,
+BOOL d2_common::inv_add_item(Inventory* inv,
                              Unit* item,
                              uint32_t x,
                              uint32_t y,
@@ -155,14 +155,14 @@ BOOL d2_common::inv_add_item(inventory* inv,
                              BOOL isClient,
                              uint8_t page) {
   static wrap_func_std_import<BOOL(
-      inventory*, Unit*, uint32_t, uint32_t, uint32_t, BOOL, uint8_t)>
+      Inventory*, Unit*, uint32_t, uint32_t, uint32_t, BOOL, uint8_t)>
       inv_add_item(10249, get_base());
 
   return inv_add_item(inv, item, x, y, invIndex, isClient, page);
 }
 
-BOOL d2_common::inv_update_item(inventory* inv, Unit* item, BOOL isClient) {
-  static wrap_func_std_import<BOOL(inventory*, Unit*, BOOL)> inv_update_item(
+BOOL d2_common::inv_update_item(Inventory* inv, Unit* item, BOOL isClient) {
+  static wrap_func_std_import<BOOL(Inventory*, Unit*, BOOL)> inv_update_item(
       10242, get_base());
   return inv_update_item(inv, item, isClient);
 }
@@ -291,8 +291,8 @@ Unit* d2_common::get_target_from_path(path* pPath) {
   return get_target_from_path(pPath);
 }
 
-void d2_common::free_inventory(inventory* inv) {
-  static wrap_func_std_import<void(inventory*)> free_inventory(10241,
+void d2_common::free_inventory(Inventory* inv) {
+  static wrap_func_std_import<void(Inventory*)> free_inventory(10241,
                                                                get_base());
   free_inventory(inv);
 }
@@ -303,8 +303,8 @@ void d2_common::refresh_unit_inventory(Unit* pUnit, bool set_update_flags) {
   refresh_unit_inventory(pUnit, set_update_flags);
 }
 
-void d2_common::update_trade(inventory* inv, Unit* item) {
-  static wrap_func_std_import<void(inventory*, Unit*)> update_trade(10283,
+void d2_common::update_trade(Inventory* inv, Unit* item) {
+  static wrap_func_std_import<void(Inventory*, Unit*)> update_trade(10283,
                                                                     get_base());
   update_trade(inv, item);
 }

@@ -306,7 +306,7 @@ void auto_item_pickup::init() {
   }
 }
 
-bool find_free_space(inventory* inv,
+bool find_free_space(Inventory* inv,
                      Unit* item,
                      int32_t inventoryIndex,
                      char page,

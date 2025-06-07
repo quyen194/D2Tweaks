@@ -27,7 +27,7 @@ namespace modules {
 MODULE_INIT(item_move)
 
 int32_t(__fastcall* g_item_click_original)(Unit* playerUnit,
-                                           inventory* inventory,
+                                           Inventory* inventory,
                                            int mouse_x,
                                            int mouse_y,
                                            uint8_t flag,
@@ -56,7 +56,7 @@ void request_item_move(Unit* item, char targetPage) {
 }
 
 int32_t __fastcall item_click(Unit* owner,
-                              inventory* inventory,
+                              Inventory* inventory,
                               int mouse_x,
                               int mouse_y,
                               uint8_t flag,

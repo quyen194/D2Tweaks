@@ -161,7 +161,7 @@ bool item_move::handle_packet(Game* game,
   return false;
 }
 
-bool item_move::find_free_space(inventory* inv,
+bool item_move::find_free_space(Inventory* inv,
                                 Unit* item,
                                 int32_t inventoryIndex,
                                 char page,

@@ -77,7 +77,7 @@ namespace diablo2 {
 namespace structures {
 struct Unit;
 struct path;
-struct inventory;
+struct Inventory;
 struct room;
 
 struct items_line;
@@ -987,21 +987,21 @@ class d2_common {
  public:
   static char* get_base();
   static int8_t d2_common::get_item_page(Unit* item);
-  static void d2_common::empty_inventory_1(inventory* inv);
-  static void d2_common::empty_inventory_2(inventory* inv);
-  static void d2_common::free_trade_inventory(inventory* inv);
+  static void d2_common::empty_inventory_1(Inventory* inv);
+  static void d2_common::empty_inventory_2(Inventory* inv);
+  static void d2_common::free_trade_inventory(Inventory* inv);
   static int32_t get_item_type_from_unit(Unit* item);
   static int32_t d2_common::get_previous_interact_guid(Unit* player);
   static int32_t get_inventory_index(Unit* item, char page, BOOL lod);
   static void* get_inventory_data(int32_t index, int32_t zero, char* data);
-  static Unit* get_item_at_cell(inventory* inv,
+  static Unit* get_item_at_cell(Inventory* inv,
                                 uint32_t cellx,
                                 uint32_t celly,
                                 uint32_t* pcellx,
                                 uint32_t* pcelly,
                                 int32_t invIndex,
                                 uint8_t page);
-  static uint32_t can_put_into_slot(inventory* inv,
+  static uint32_t can_put_into_slot(Inventory* inv,
                                     Unit* item,
                                     uint32_t x,
                                     uint32_t y,
@@ -1016,15 +1016,15 @@ class d2_common {
   static uint32_t d2_common::check_item_type_equiv(uint32_t itemtype,
                                                    uint32_t itemtype_equiv);
 
-  static Unit* inv_remove_item(inventory* inventory, Unit* item);
-  static BOOL inv_add_item(inventory* inv,
+  static Unit* inv_remove_item(Inventory* inventory, Unit* item);
+  static BOOL inv_add_item(Inventory* inv,
                            Unit* item,
                            uint32_t x,
                            uint32_t y,
                            uint32_t invIndex,
                            BOOL isClient,
                            uint8_t page);
-  static BOOL inv_update_item(inventory* inv, Unit* item, BOOL isClient);
+  static BOOL inv_update_item(Inventory* inv, Unit* item, BOOL isClient);
 
   static items_line* get_item_record(uint32_t guid);
   static item_types_line* get_item_type_record(uint32_t typeId);
@@ -1057,14 +1057,14 @@ class d2_common {
   static uint32_t d2_common::set_unit_mode(Unit* item, uint32_t mode);
 
   static Unit* get_target_from_path(path* path);
-  static Unit* d2_common::get_first_inventory_item(inventory* inv);
-  static Unit* d2_common::get_last_inventory_item(inventory* inv);
+  static Unit* d2_common::get_first_inventory_item(Inventory* inv);
+  static Unit* d2_common::get_last_inventory_item(Inventory* inv);
   static Unit* d2_common::get_next_inventory_item(Unit* prev_item);
   static uint32_t d2_common::get_max_cube_recipes();
-  static void d2_common::free_inventory(inventory* inventory);
+  static void d2_common::free_inventory(Inventory* inventory);
   static void d2_common::refresh_unit_inventory(Unit* unit,
                                                 bool set_update_flags);
-  static void d2_common::update_trade(inventory* inventory, Unit* item);
+  static void d2_common::update_trade(Inventory* inventory, Unit* item);
   // static void d2_common::set_item_flags(Unit* item,
   // itemflags_t dwFlag, bool bSet);
 

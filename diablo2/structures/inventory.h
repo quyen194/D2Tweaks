@@ -7,7 +7,7 @@ namespace structures {
 
 struct Unit;
 
-struct inventory {
+struct Inventory {
   // Offset from Code. Size: 30 or 40
   int32_t tag;                   // 0x0000
   void* memory_pool;             // 0x0004

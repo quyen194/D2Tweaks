@@ -8,7 +8,7 @@
 
 namespace diablo2 {
 namespace structures {
-struct inventory;
+struct Inventory;
 struct Game;
 struct Unit;
 }  // namespace structures

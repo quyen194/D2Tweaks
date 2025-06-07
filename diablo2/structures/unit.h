@@ -13,7 +13,7 @@ namespace structures {
 
 struct skills;
 struct Game;
-struct inventory;
+struct Inventory;
 struct stats;
 struct path;
 struct player_data;
@@ -189,7 +189,7 @@ struct Unit {
   unit_gfxdata* gfxdata_copy;
 
   statslistex* statslistex;
-  inventory* inventory;
+  Inventory* inventory;
 
   union {
     struct {

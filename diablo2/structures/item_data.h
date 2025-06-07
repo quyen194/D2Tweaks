@@ -4,7 +4,7 @@
 
 namespace diablo2 {
 namespace structures {
-struct inventory;
+struct Inventory;
 struct Unit;
 
 enum class item_quality_t : uint32_t {
@@ -106,7 +106,7 @@ struct item_data {
   uint8_t p_ear_level;      // +48
   uint8_t var_gfx;          // +49
   char i_name[0x12];        // +4A //inscribed/ear get_name
-  inventory* inventory;     // +5C
+  Inventory* inventory;     // +5C
   Unit* pt_prev_item;       // +60
   Unit* pt_next_item;       // +64
   uint8_t uk8[0x01];        // +68

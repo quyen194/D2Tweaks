@@ -10,7 +10,7 @@ namespace diablo2 {
 namespace structures {
 enum class unit_type_t;
 struct Game;
-struct inventory;
+struct Inventory;
 struct Unit;
 struct net_client;
 }  // namespace structures

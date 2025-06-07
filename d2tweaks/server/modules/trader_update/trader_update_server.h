@@ -6,7 +6,7 @@
 
 namespace diablo2 {
 namespace structures {
-struct inventory;
+struct Inventory;
 struct Game;
 struct Unit;
 }  // namespace structures
@@ -27,7 +27,7 @@ class trader_update final : public server_module {
                      common::packet_header* packet) override;
 
  // private:
- //  bool find_free_space(inventory* inv,
+ //  bool find_free_space(Inventory* inv,
  //                       Unit* item,
  //                       int32_t inventoryIndex,
  //                       char page,

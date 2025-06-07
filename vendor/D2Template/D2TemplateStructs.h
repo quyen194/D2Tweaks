@@ -3462,7 +3462,7 @@
 ////        item_data* item_data; //+70
 ////    };
 ////    uint32_t _4a[4];
-////    inventory* inventory; //+84
+////    Inventory* inventory; //+84
 ////    uint32_t _4b[12];
 ////    uint32_t nOwnerType; //+b8
 ////    uint32_t nOwnerId; //+bc
@@ -3549,7 +3549,7 @@
 //    void* gfxdata_copy; // unit_gfxdata*
 //
 //    void* statslistex; //statslistex*
-//    inventory* inventory;
+//    Inventory* inventory;
 //
 //    union {
 //        struct {
@@ -3677,7 +3677,7 @@
 ////    uint8_t        uk4[0x08];                //+54
 ////    stats* stats;                //+5C
 ////    uint8_t        pad1[0x24];
-////    inventory* inventory;         //+84  //+60
+////    Inventory* inventory;         //+84  //+60
 ////    uint8_t        uk5[0x1C];                //+64
 ////    Game* game;                    //+80
 ////    uint8_t        uk6[0x24];                //+84
@@ -3846,7 +3846,7 @@
 ////    uint8_t    p_ear_level;                    //+48
 ////    uint8_t    var_gfx;                        //+49
 ////    char    i_name[0x12];                //+4A //inscribed/ear name
-////    inventory* inventory;            //+5C
+////    Inventory* inventory;            //+5C
 ////    Unit* pt_prev_item;                    //+60
 ////    Unit* pt_next_item;                    //+64
 ////    uint8_t    uk8[0x01];                    //+68

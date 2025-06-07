@@ -156,7 +156,7 @@ bool transmute::move_item_to(Game* game,
   return true;
 }
 
-bool transmute::find_free_space(inventory* inv,
+bool transmute::find_free_space(Inventory* inv,
                                 Unit* item,
                                 int32_t inventoryIndex,
                                 char page,

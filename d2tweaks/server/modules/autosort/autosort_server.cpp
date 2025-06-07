@@ -367,7 +367,7 @@ bool autosort::sort(Game* game, Unit* player, uint8_t page) {
   return false;
 }
 
-bool autosort::find_free_space(inventory* inv,
+bool autosort::find_free_space(Inventory* inv,
                                Unit* item,
                                int32_t inventoryIndex,
                                char page,

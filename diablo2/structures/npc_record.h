@@ -4,17 +4,17 @@
 
 namespace diablo2 {
 namespace structures {
-struct inventory;
+struct Inventory;
 
 struct npc_gamble {       // sizeof 0xC
-  inventory* pInventory;  // +00
+  Inventory* pInventory;  // +00
   uint32_t dwGUID;        // +04
   // npc_gamble*  pNext;     // +08
 };
 
 struct npc_record {                 // sizeof 0x44
   int nNPC;                         // +00
-  inventory* pInventory;            // +04
+  Inventory* pInventory;            // +04
   npc_gamble* pGamble;              // +08
   bool bGambleInit;                 // +0C
   uint32_t* pMercData;              // +10 //D2MercDataStrc*
