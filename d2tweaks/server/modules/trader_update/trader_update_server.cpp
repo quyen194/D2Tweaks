@@ -167,7 +167,7 @@ bool trader_update::handle_packet(Game* game,
 
   Unit* temp_ptNPC = d2_game::get_server_unit(
       game, unit_type_t::UNIT_TYPE_MONSTER, income_packet_cs->npc_id);
-  npc_record* npcrecord =
+  NpcRecord* npcrecord =
       d2_game::get_npc_record(game, temp_ptNPC, &temp_ptNPC);
   Unit* ptNPC = d2_game::get_server_unit(
       game, unit_type_t::UNIT_TYPE_MONSTER, income_packet_cs->npc_id);

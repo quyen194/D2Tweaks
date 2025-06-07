@@ -237,17 +237,17 @@ class d2_game {
   static Unit* get_server_unit(Game* pGame,
                                unit_type_t type,
                                uint32_t uniqueid);
-  static npc_record* d2_game::get_npc_record(Game* pGame,
+  static NpcRecord* d2_game::get_npc_record(Game* pGame,
                                              Unit* pNpc,
                                              Unit** ptNpc);
   static void d2_game::free_gamble(Game* pGame,
                                    Unit* pPlayer,
                                    Unit* pNpc,
-                                   npc_record* npcrecord);
+                                   NpcRecord* npcrecord);
   static void d2_game::fill_gamble(Game* pGame,
                                    Unit* pPlayer,
                                    Unit* pNpc,
-                                   npc_record* npcrecord);
+                                   NpcRecord* npcrecord);
   static void d2_game::create_vendor_cache1(
       Game* pGame, Unit* pPlayer, Unit* pNpc, uint32_t param, bool bGamble);
   static void d2_game::create_vendor_cache2(

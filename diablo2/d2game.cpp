@@ -26,8 +26,8 @@ void d2_game::enqueue_packet(net_client* client, void* packet, size_t size) {
   enqueue_packet(client, packet, size);
 }
 
-npc_record* d2_game::get_npc_record(Game* pGame, Unit* npc, Unit** ptnpc) {
-  static wrap_func_fast<npc_record*(Game*, Unit*, Unit**)> get_npc_record(
+NpcRecord* d2_game::get_npc_record(Game* pGame, Unit* npc, Unit** ptnpc) {
+  static wrap_func_fast<NpcRecord*(Game*, Unit*, Unit**)> get_npc_record(
       0x9B910, get_base());
   return get_npc_record(pGame, npc, ptnpc);
 }
@@ -35,8 +35,8 @@ npc_record* d2_game::get_npc_record(Game* pGame, Unit* npc, Unit** ptnpc) {
 void d2_game::free_gamble(Game* pGame,
                           Unit* player,
                           Unit* npc,
-                          npc_record* npcrecord) {
-  static wrap_func_fast<void(Game*, Unit*, Unit*, npc_record*)> free_gamble(
+                          NpcRecord* npcrecord) {
+  static wrap_func_fast<void(Game*, Unit*, Unit*, NpcRecord*)> free_gamble(
       0x9D190, get_base());
   free_gamble(pGame, player, npc, npcrecord);
 }
@@ -44,8 +44,8 @@ void d2_game::free_gamble(Game* pGame,
 void d2_game::fill_gamble(Game* pGame,
                           Unit* player,
                           Unit* npc,
-                          npc_record* npcrecord) {
-  static wrap_func_fast<void(Game*, Unit*, Unit*, npc_record*)> fill_gamble(
+                          NpcRecord* npcrecord) {
+  static wrap_func_fast<void(Game*, Unit*, Unit*, NpcRecord*)> fill_gamble(
       0x9A9F0, get_base());
   fill_gamble(pGame, player, npc, npcrecord);
 }

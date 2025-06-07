@@ -26,7 +26,7 @@ struct anim_data;
 struct unit_gfxdata;
 struct statslistex;
 struct quest_record;
-struct npc_record;
+struct NpcRecord;
 
 enum D2C_ItemQualities {
   ITEMQUAL_INFERIOR = 0x01,  // 0x01 Inferior
