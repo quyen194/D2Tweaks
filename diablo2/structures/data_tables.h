@@ -14,7 +14,7 @@ struct hitclass_line;
 struct monmode_line;
 struct properties_line;
 
-struct unique_items {  // size=0x14C (332)
+struct UniqueItems {  // size=0x14C (332)
 
   WORD uniqueId;      // +00
   BYTE uk1[0x20];     // +02
@@ -182,7 +182,7 @@ struct data_tables {
       uint32_t* pSetItems;                                // +00000C18   056BBAC0      setitems.txt (limit = 32766)
       int nSetItems;                                      // +00000C1C   0000007F      # of setitems records
       Linkage* iUniqueItems;                              // +00000C20   014AA044      uniqueitems info
-      unique_items* pUniqueItems;                         // +00000C24   0510E8B4      uniqueitems.txt (limit = 32766)
+      UniqueItems* pUniqueItems;                         // +00000C24   0510E8B4      uniqueitems.txt (limit = 32766)
       int nUniqueItems;                                   // +00000C28   00000191      # of uniqueitems records
       //linkage* iMonProp;                                  // +00000C2C   01439024      monprop info
       //FileMonpropTable* pMonProp;                         // +00000C30   05132A2C      monprop.txt
