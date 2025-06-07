@@ -2,6 +2,6 @@
 
 namespace diablo2 {
 namespace structures {
-struct game_server {};
+struct GameServer {};
 }  // namespace structures
 }  // namespace diablo2

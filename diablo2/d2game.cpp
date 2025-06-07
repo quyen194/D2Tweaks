@@ -136,15 +136,15 @@ uint32_t* d2_game::get_game_id_array_end() {
   return game_id_array_end;
 }
 
-game_server* d2_game::get_game_server() {
-  static wrap_value<game_server*> game_server(0x115818, get_base());
+GameServer* d2_game::get_game_server() {
+  static wrap_value<GameServer*> game_server(0x115818, get_base());
   return *game_server;
 }
 
-static Game*(__thiscall* g_get_game)(game_server* gs, uint32_t gameId, void*) =
+static Game*(__thiscall* g_get_game)(GameServer* gs, uint32_t gameId, void*) =
     decltype(g_get_game)(0xB6A0 + d2_game::get_base());
 
-Game* d2_game::get_game(game_server* gs, uint32_t gameId) {
+Game* d2_game::get_game(GameServer* gs, uint32_t gameId) {
   static wrap_func_std<Game*(uint32_t, void*)> get_game(0xB6A0, get_base());
   return g_get_game(gs, gameId, reinterpret_cast<char*>(gs) + 0x44);
 }

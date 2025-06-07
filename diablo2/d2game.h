@@ -9,7 +9,7 @@
 namespace diablo2 {
 namespace structures {
 
-struct game_server;
+struct GameServer;
 struct NetClient;
 struct Game;
 struct Unit;
@@ -222,8 +222,8 @@ class d2_game {
   static uint32_t* get_game_id_array_begin();
   static uint32_t* get_game_id_array_end();
 
-  static game_server* get_game_server();
-  static Game* get_game(game_server* gs, uint32_t gameId);
+  static GameServer* get_game_server();
+  static Game* get_game(GameServer* gs, uint32_t gameId);
 
   static Game* get_game_from_client_id(int32_t id);
   static NetClient* get_net_client_from_id(Game* pGame, int32_t id);

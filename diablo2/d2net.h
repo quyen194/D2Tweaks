@@ -7,7 +7,7 @@
 namespace diablo2 {
 
 namespace structures {
-struct game_server;
+struct GameServer;
 }
 
 class d2_net {
