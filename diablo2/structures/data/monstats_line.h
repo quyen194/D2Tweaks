@@ -4,7 +4,7 @@
 
 namespace diablo2 {
 namespace structures {
-struct monstats_line {
+struct MonStatsLine {
   uint16_t id;                 // 0x00
   uint16_t base_id;            // 0x02
   uint16_t next_in_class;      // 0x04
