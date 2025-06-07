@@ -41,7 +41,7 @@ class test_menu : public ui::menu {
   }
 
   void draw() override {
-    static wrap_value<data_tables*> dataTables(0x96A20, d2_common::get_base());
+    static wrap_value<DataTables*> dataTables(0x96A20, d2_common::get_base());
     const auto player = d2_client::get_local_player();
 
     if (!player)

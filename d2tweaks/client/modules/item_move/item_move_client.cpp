@@ -109,7 +109,7 @@ int32_t __fastcall item_click(Unit* owner,
     }
   }
 
-  static wrap_value<data_tables*> dataTables(0x96A20, d2_common::get_base());
+  static wrap_value<DataTables*> dataTables(0x96A20, d2_common::get_base());
   auto sgptdataTables = *dataTables;
 
   if (clickedItem != nullptr) {

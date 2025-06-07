@@ -31,7 +31,7 @@ struct UniqueItems {  // size=0x14C (332)
   BYTE uk3[0x11F];    // +2D
 };
 
-struct data_tables {
+struct DataTables {
       playerclass_line* player_class;                     // +00000000   01415B48      playerclass.txt
       Linkage* player_class_info;                         // +00000004   01410524      playerclass info
 
