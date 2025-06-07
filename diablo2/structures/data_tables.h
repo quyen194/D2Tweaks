@@ -6,7 +6,7 @@ namespace diablo2 {
 namespace structures {
 struct Linkage;
 
-struct playerclass_line;
+struct PlayerClassLine;
 struct bodylocs_line;
 struct StorePageLine;
 struct elemtypes_line;
@@ -32,7 +32,7 @@ struct UniqueItems {  // size=0x14C (332)
 };
 
 struct DataTables {
-      playerclass_line* player_class;                     // +00000000   01415B48      playerclass.txt
+      PlayerClassLine* player_class;                     // +00000000   01415B48      playerclass.txt
       Linkage* player_class_info;                         // +00000004   01410524      playerclass info
 
       bodylocs_line* body_locs;                           // +00000008   01415578      bodylocs.txt
