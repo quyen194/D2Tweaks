@@ -11,7 +11,7 @@ namespace diablo2 {
 namespace structures {
 struct inventory;
 struct Game;
-struct unit;
+struct Unit;
 }  // namespace structures
 }  // namespace diablo2
 
@@ -25,12 +25,12 @@ class item_move final : public server_module {
   void init() override;
 
   bool handle_packet(Game* game,
-                     unit* player,
+                     Unit* player,
                      common::packet_header* packet) override;
 
  private:
   bool find_free_space(inventory* inv,
-                       unit* item,
+                       Unit* item,
                        int32_t inventoryIndex,
                        char page,
                        uint32_t& x,

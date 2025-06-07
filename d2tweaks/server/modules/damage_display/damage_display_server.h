@@ -10,7 +10,7 @@ namespace diablo2 {
 namespace structures {
 struct inventory;
 struct Game;
-struct unit;
+struct Unit;
 }  // namespace structures
 }  // namespace diablo2
 
@@ -24,9 +24,9 @@ class damage_display final : public server_module {
   void init() override;
 
   bool handle_packet(Game* game,
-                     unit* player,
+                     Unit* player,
                      common::packet_header* packet) override;
-  void tick(Game* game, unit* unit) override;
+  void tick(Game* game, Unit* unit) override;
 };
 }  // namespace modules
 }  // namespace server

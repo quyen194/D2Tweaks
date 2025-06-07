@@ -55,7 +55,7 @@ void transmute::init() {
 // topfunc d2game:$62130 int __fastcall CRAFT_Transmogrify(D2GameStrc* pGame, D2UnitStrc* pPlayer)
 // subfunc d2game:$0x60010 int __fastcall CRAFT_Transmogrify(D2GameStrc* pGame, D2UnitStrc* pPlayer, D2CubemainTXT* pCubeTxt, void* pUnknown)
 
-void transmute::tick(Game* game, unit* unit) {
+void transmute::tick(Game* game, Unit* unit) {
   return;
 }
 
@@ -73,7 +73,7 @@ inline uint64_t TimeEnd() {
 }
 
 bool transmute::handle_packet(Game* game,
-                              unit* player,
+                              Unit* player,
                               common::packet_header* packet) {
   const auto income_packet_cs = static_cast<common::transmute_info_cs*>(packet);
   static common::transmute_info_sc response_packet_sc;
@@ -106,7 +106,7 @@ bool transmute::handle_packet(Game* game,
 }
 
 bool transmute::move_item_to(Game* game,
-                             unit* player,
+                             Unit* player,
                              common::packet_header* packet) {
   static common::transmute_info_sc resp;
   static auto& instance = singleton<server>::instance();
@@ -157,7 +157,7 @@ bool transmute::move_item_to(Game* game,
 }
 
 bool transmute::find_free_space(inventory* inv,
-                                unit* item,
+                                Unit* item,
                                 int32_t inventoryIndex,
                                 char page,
                                 uint32_t& x,
@@ -171,7 +171,7 @@ bool transmute::find_free_space(inventory* inv,
 
   for (x = 0; x < mx; x++) {
     for (y = 0; y < my; y++) {
-      unit* blockingUnit = nullptr;
+      Unit* blockingUnit = nullptr;
       uint32_t blockingUnitIndex = 0;
 
       if (d2_common::can_put_into_slot(inv,

@@ -279,7 +279,7 @@ void client::register_packet_handler(common::message_types_t type,
   m_packet_handlers[type] = module;
 }
 
-unit* client::get_client_unit(uint32_t type, uint32_t guid) {
+Unit* client::get_client_unit(uint32_t type, uint32_t guid) {
   static auto units = d2_client::get_client_unit_list();
 
   const auto index = guid & 127;

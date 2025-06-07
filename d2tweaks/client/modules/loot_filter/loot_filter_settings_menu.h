@@ -265,17 +265,17 @@ class loot_filter_settings_menu final : public ui::menu,
   void setup_hooks();
   void setup_alt_hook() const;
 
-  static bool is_gold(unit* item);
-  static bool is_rune(unit* item);
-  static bool is_gem(unit* item);
+  static bool is_gold(Unit* item);
+  static bool is_rune(Unit* item);
+  static bool is_gem(Unit* item);
 
-  static bool __fastcall check_alt_item(unit* unit);
+  static bool __fastcall check_alt_item(Unit* unit);
 
   // draw labels over dropped items
-  static void __fastcall draw_dropped_items_names(unit* unit, void* edx);
+  static void __fastcall draw_dropped_items_names(Unit* unit, void* edx);
 
   // handle hovering over item and actual click
-  static void __fastcall handle_dropped_items(unit* unit, void* edx);
+  static void __fastcall handle_dropped_items(Unit* unit, void* edx);
 };
 
 }  // namespace modules

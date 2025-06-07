@@ -34,8 +34,8 @@ static int32_t(__fastcall* g_get_incoming_packet_info_original)(
     int a8);
 
 static int32_t(__fastcall* g_handle_packet_original)(
-    Game* game, unit* player, common::packet_header* data, size_t size);
-static int32_t(__fastcall* g_net_tick_original)(Game*, unit*, int32_t, int32_t);
+    Game* game, Unit* player, common::packet_header* data, size_t size);
+static int32_t(__fastcall* g_net_tick_original)(Game*, Unit*, int32_t, int32_t);
 
 //returns some kind of processing type (i.e. resultGroup == 0x04 means drop packet)
 static int32_t __fastcall get_incoming_packet_info(common::packet_header* data,
@@ -69,7 +69,7 @@ static int32_t __fastcall get_incoming_packet_info(common::packet_header* data,
 }
 
 static int32_t __fastcall handle_packet(Game* game,
-                                        unit* player,
+                                        Unit* player,
                                         common::packet_header* data,
                                         size_t size) {
   static common::packet_header dummy;
@@ -183,7 +183,7 @@ void server::send_packet(net_client* client,
 }
 
 bool server::handle_packet(Game* game,
-                           unit *player,
+                           Unit *player,
                            common::packet_header *packet) {
   auto handler = m_packet_handlers[packet->message_type];
 
@@ -211,7 +211,7 @@ void server::register_packet_handler(common::message_types_t type,
   m_packet_handlers[type] = module;
 }
 
-unit* server::get_server_unit(Game* game, uint32_t guid, unit_type_t type) {
+Unit* server::get_server_unit(Game* game, uint32_t guid, unit_type_t type) {
   if (game == nullptr)
     return nullptr;
 
@@ -235,7 +235,7 @@ unit* server::get_server_unit(Game* game, uint32_t guid, unit_type_t type) {
 }
 
 void server::iterate_server_units(Game* game, unit_type_t type,
-                                  const std::function<bool(unit*)>& cb) {
+                                  const std::function<bool(Unit*)>& cb) {
   if (!cb)
     return;
 
@@ -262,7 +262,7 @@ void server::iterate_server_units(Game* game, unit_type_t type,
   }
 }
 
-int32_t server::net_tick(Game* game, unit* unit, int32_t a3, int32_t a4) {
+int32_t server::net_tick(Game* game, Unit* unit, int32_t a3, int32_t a4) {
   static auto& instance = singleton<server>::instance();
 
   for (size_t i = 0; i < sizeof instance.m_modules / sizeof(void*); i++) {

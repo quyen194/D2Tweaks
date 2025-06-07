@@ -5,7 +5,7 @@
 namespace diablo2 {
 namespace structures {
 struct inventory;
-struct unit;
+struct Unit;
 
 enum class item_quality_t : uint32_t {
   ITEM_QUALITY_INFERIOR = 0x01,
@@ -107,8 +107,8 @@ struct item_data {
   uint8_t var_gfx;          // +49
   char i_name[0x12];        // +4A //inscribed/ear get_name
   inventory* inventory;     // +5C
-  unit* pt_prev_item;       // +60
-  unit* pt_next_item;       // +64
+  Unit* pt_prev_item;       // +60
+  Unit* pt_next_item;       // +64
   uint8_t uk8[0x01];        // +68
   uint8_t item_data2;       // +69
   uint8_t uk9[0x0A];        // +6A

@@ -151,7 +151,7 @@ void loot_filter_settings_menu::draw() {
 void loot_filter_settings_menu::drawStats() {
   auto player = d2_client::get_local_player();
   auto inventory = player->inventory;
-  unit* bag;
+  Unit* bag;
   uint32_t bagGuid = -1;
   uint32_t statValue = 0;
 
@@ -1235,7 +1235,7 @@ void loot_filter_settings_menu::update_alt_only(bool value) {
 void loot_filter_settings_menu::extract_item(bool value, int prop, uint32_t val, uint32_t itemCode, unit_stats_t stat) {
   auto player = d2_client::get_local_player();
   auto inventory = player->inventory;
-  unit* bag;
+  Unit* bag;
   uint32_t bagGuid = -1;
   uint32_t statValue = 0;
 
@@ -2689,7 +2689,7 @@ void loot_filter_settings_menu::setup_alt_hook() const {
   VirtualProtect(addr, 5, old_protect, &old_protect);
 }
 
-bool loot_filter_settings_menu::is_gold(unit* item) {
+bool loot_filter_settings_menu::is_gold(Unit* item) {
   static auto goldRecordIndex = -1;
 
   if (item == nullptr)
@@ -2714,7 +2714,7 @@ bool loot_filter_settings_menu::is_gold(unit* item) {
   return item->data_record_index == goldRecordIndex;
 }
 
-bool loot_filter_settings_menu::is_rune(unit* item) {
+bool loot_filter_settings_menu::is_rune(Unit* item) {
   static auto runeTypeId = -1;
 
   if (item == nullptr)
@@ -2744,7 +2744,7 @@ bool loot_filter_settings_menu::is_rune(unit* item) {
   return record->type == runeTypeId;
 }
 
-bool loot_filter_settings_menu::is_gem(unit* item) {
+bool loot_filter_settings_menu::is_gem(Unit* item) {
   static auto gemTypeId = -1;
 
   if (item == nullptr)
@@ -2773,7 +2773,7 @@ bool loot_filter_settings_menu::is_gem(unit* item) {
   return record->type == gemTypeId;
 }
 
-bool loot_filter_settings_menu::check_alt_item(unit* unit) {
+bool loot_filter_settings_menu::check_alt_item(Unit* unit) {
   static auto& instance = singleton<loot_filter_settings_menu>::instance();
 
   if (!unit || unit->type != unit_type_t::UNIT_TYPE_ITEM) {
@@ -2796,7 +2796,7 @@ bool loot_filter_settings_menu::check_alt_item(unit* unit) {
   return loot_filter_settings::get().quality_settings[static_cast<int32_t>(unit->item_data->quality)];
 }
 
-void loot_filter_settings_menu::draw_dropped_items_names(unit* unit,
+void loot_filter_settings_menu::draw_dropped_items_names(Unit* unit,
   void* edx) {
   static auto& instance = singleton<loot_filter_settings_menu>::instance();
 
@@ -2828,7 +2828,7 @@ void loot_filter_settings_menu::draw_dropped_items_names(unit* unit,
   instance.m_draw_dropped_items_names_original(unit, edx);
 }
 
-void loot_filter_settings_menu::handle_dropped_items(unit* unit,
+void loot_filter_settings_menu::handle_dropped_items(Unit* unit,
   void* edx) {
   static auto& instance = singleton<loot_filter_settings_menu>::instance();
 

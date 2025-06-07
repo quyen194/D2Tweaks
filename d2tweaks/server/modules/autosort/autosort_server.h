@@ -10,7 +10,7 @@ namespace diablo2 {
 namespace structures {
 struct Game;
 struct inventory;
-struct unit;
+struct Unit;
 }  // namespace structures
 }  // namespace diablo2
 
@@ -27,13 +27,13 @@ class autosort final : public server_module {
   void init() override;
 
   bool handle_packet(Game* game,
-                     unit* player,
+                     Unit* player,
                      common::packet_header* packet) override;
 
  private:
-  bool sort(Game* game, unit* player, uint8_t page);
+  bool sort(Game* game, Unit* player, uint8_t page);
   bool find_free_space(inventory* inv,
-                       unit* item,
+                       Unit* item,
                        int32_t inventoryIndex,
                        char page,
                        uint32_t& x,

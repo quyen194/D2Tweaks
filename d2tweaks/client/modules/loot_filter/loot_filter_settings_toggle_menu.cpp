@@ -210,7 +210,7 @@ void loot_filter_settings_toggle_menu::toggle_cube_click() {
     int32_t boxGuid = 0;
     uint32_t boxX = 0;
     uint32_t boxY = 0;
-    unit* box{};
+    Unit* box{};
     for (auto item = player->inventory->first_item; item != nullptr;
          item = item->item_data->pt_next_item) {
       const auto record = d2_common::get_item_record(item->data_record_index);
@@ -250,7 +250,7 @@ void loot_filter_settings_toggle_menu::toggle_stash_click() {
     int32_t st0Guid = 0;
     uint32_t st0X = 0;
     uint32_t st0Y = 0;
-    unit* box{};
+    Unit* box{};
     for (auto item = player->inventory->first_item; item != nullptr;
          item = item->item_data->pt_next_item) {
       const auto record = d2_common::get_item_record(item->data_record_index);

@@ -28,8 +28,8 @@ namespace modules {
 MODULE_INIT(damage_display)
 
 static char(__fastcall* g_apply_attack_results_origin)(Game* game,
-                                                       unit* attacker,
-                                                       unit* defender,
+                                                       Unit* attacker,
+                                                       Unit* defender,
                                                        BOOL recalculateDamage,
                                                        damage* dmg);
 
@@ -65,7 +65,7 @@ common::damage_type_t get_damage_type(damage* dmg) {
   return result;
 }
 
-static void send_damage_data(unit* defender,
+static void send_damage_data(Unit* defender,
   net_client* client,
   damage* dmg) {
   static auto& instance = singleton<server>::instance();
@@ -159,21 +159,21 @@ static void send_damage_data(unit* defender,
   instance.send_packet(client, &packet, sizeof packet);
 }
 
-static bool has_players(unit* attacker, unit* defender) {
+static bool has_players(Unit* attacker, Unit* defender) {
   return attacker->type == unit_type_t::UNIT_TYPE_PLAYER ||
          defender->type == unit_type_t::UNIT_TYPE_PLAYER;
 }
 
-static bool has_hirelings(unit* attacker, unit* defender) {
+static bool has_hirelings(Unit* attacker, Unit* defender) {
   return attacker && attacker->is_hireling() ||
          defender && defender->is_hireling();
 }
 
-static bool has_pets(unit* attacker, unit* defender) {
+static bool has_pets(Unit* attacker, Unit* defender) {
   return attacker && attacker->is_pet() || defender && defender->is_pet();
 }
 
-static unit* get_hireling_owner(Game* game, unit* pUnit) {
+static Unit* get_hireling_owner(Game* game, Unit* pUnit) {
   static auto& instance = singleton<server>::instance();
 
   if (!pUnit)
@@ -185,7 +185,7 @@ static unit* get_hireling_owner(Game* game, unit* pUnit) {
     return instance.get_server_unit(game, guid, unit_type_t::UNIT_TYPE_PLAYER);
 
   instance.iterate_server_units(
-      game, unit_type_t::UNIT_TYPE_PLAYER, [&](unit* player) {
+      game, unit_type_t::UNIT_TYPE_PLAYER, [&](Unit* player) {
         const auto pet = d2_game::get_player_pet(game, player, 7, 0);
 
         if (pet == pUnit) {
@@ -204,7 +204,7 @@ static unit* get_hireling_owner(Game* game, unit* pUnit) {
   return instance.get_server_unit(game, guid, unit_type_t::UNIT_TYPE_PLAYER);
 }
 
-static unit* get_pet_owner(Game* pGame, unit* pUnit) {
+static Unit* get_pet_owner(Game* pGame, Unit* pUnit) {
   static auto& instance = singleton<server>::instance();
 
   if (!pUnit)
@@ -216,8 +216,8 @@ static unit* get_pet_owner(Game* pGame, unit* pUnit) {
     return instance.get_server_unit(pGame, guid, unit_type_t::UNIT_TYPE_PLAYER);
 
   instance.iterate_server_units(
-      pGame, unit_type_t::UNIT_TYPE_PLAYER, [&](unit* player) {
-        d2_game::iterate_unit_pets(pGame, player, [&](Game*, unit*, unit* u) {
+      pGame, unit_type_t::UNIT_TYPE_PLAYER, [&](Unit* player) {
+        d2_game::iterate_unit_pets(pGame, player, [&](Game*, Unit*, Unit* u) {
           if (u != pUnit)
             return;
 
@@ -235,8 +235,8 @@ static unit* get_pet_owner(Game* pGame, unit* pUnit) {
   return instance.get_server_unit(pGame, guid, unit_type_t::UNIT_TYPE_PLAYER);
 }
 
-static void process_players_damage(unit* attacker,
-                                   unit* defender,
+static void process_players_damage(Unit* attacker,
+                                   Unit* defender,
                                    damage* dmg) {
   net_client* client = nullptr;
 
@@ -249,10 +249,10 @@ static void process_players_damage(unit* attacker,
 }
 
 static void process_hireling_damage(Game* game,
-                                    unit* attacker,
-                                    unit* defender,
+                                    Unit* attacker,
+                                    Unit* defender,
                                     damage* dmg) {
-  unit* owner = nullptr;
+  Unit* owner = nullptr;
 
   if (attacker->is_hireling()) {
     owner = get_hireling_owner(game, attacker);
@@ -267,10 +267,10 @@ static void process_hireling_damage(Game* game,
 }
 
 static void process_pet_damage(Game* game,
-                               unit* attacker,
-                               unit* defender,
+                               Unit* attacker,
+                               Unit* defender,
                                damage* dmg) {
-  unit* owner = nullptr;
+  Unit* owner = nullptr;
 
   if (attacker->is_pet()) {
     owner = get_pet_owner(game, attacker);
@@ -285,8 +285,8 @@ static void process_pet_damage(Game* game,
 }
 
 static char __fastcall apply_attack_results(Game* game,
-                                            unit* attacker,
-                                            unit* defender,
+                                            Unit* attacker,
+                                            Unit* defender,
                                             BOOL recalculateDamage,
                                             damage* dmg) {
   static auto& instance = singleton<server>::instance();
@@ -327,11 +327,11 @@ void damage_display::init() {
 }
 
 bool damage_display::handle_packet(Game* game,
-  unit* player, common::packet_header* packet) {
+  Unit* player, common::packet_header* packet) {
   return true;
 }
 
-void damage_display::tick(Game* game, unit* unit) {}
+void damage_display::tick(Game* game, Unit* unit) {}
 
 }  // namespace modules
 }  // namespace server

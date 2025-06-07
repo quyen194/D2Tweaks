@@ -55,7 +55,7 @@ void item_move::init() {
 
 // handle packet coming from the client
 bool item_move::handle_packet(Game* game,
-  unit* player, common::packet_header* packet) {
+  Unit* player, common::packet_header* packet) {
   static common::item_move_sc resp;
   static auto& instance = singleton<server>::instance();
 
@@ -162,7 +162,7 @@ bool item_move::handle_packet(Game* game,
 }
 
 bool item_move::find_free_space(inventory* inv,
-                                unit* item,
+                                Unit* item,
                                 int32_t inventoryIndex,
                                 char page,
                                 uint32_t& x,
@@ -176,7 +176,7 @@ bool item_move::find_free_space(inventory* inv,
 
   for (x = 0; x < mx; x++) {
     for (y = 0; y < my; y++) {
-      unit* blockingUnit = nullptr;
+      Unit* blockingUnit = nullptr;
       uint32_t blockingUnitIndex = 0;
 
       if (d2_common::can_put_into_slot(inv,

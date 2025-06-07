@@ -75,7 +75,7 @@
 
 namespace diablo2 {
 namespace structures {
-struct unit;
+struct Unit;
 struct path;
 struct inventory;
 struct room;
@@ -986,15 +986,15 @@ enum unit_stats_t {
 class d2_common {
  public:
   static char* get_base();
-  static int8_t d2_common::get_item_page(unit* item);
+  static int8_t d2_common::get_item_page(Unit* item);
   static void d2_common::empty_inventory_1(inventory* inv);
   static void d2_common::empty_inventory_2(inventory* inv);
   static void d2_common::free_trade_inventory(inventory* inv);
-  static int32_t get_item_type_from_unit(unit* item);
-  static int32_t d2_common::get_previous_interact_guid(unit* player);
-  static int32_t get_inventory_index(unit* item, char page, BOOL lod);
+  static int32_t get_item_type_from_unit(Unit* item);
+  static int32_t d2_common::get_previous_interact_guid(Unit* player);
+  static int32_t get_inventory_index(Unit* item, char page, BOOL lod);
   static void* get_inventory_data(int32_t index, int32_t zero, char* data);
-  static unit* get_item_at_cell(inventory* inv,
+  static Unit* get_item_at_cell(inventory* inv,
                                 uint32_t cellx,
                                 uint32_t celly,
                                 uint32_t* pcellx,
@@ -1002,76 +1002,76 @@ class d2_common {
                                 int32_t invIndex,
                                 uint8_t page);
   static uint32_t can_put_into_slot(inventory* inv,
-                                    unit* item,
+                                    Unit* item,
                                     uint32_t x,
                                     uint32_t y,
                                     uint32_t invIndex,
-                                    unit** lastBlockingUnit,
+                                    Unit** lastBlockingUnit,
                                     uint32_t* lastBlockingUnitIndex,
                                     uint8_t page);
 
-  static uint32_t get_item_type(unit* item);
-  static uint32_t get_item_type_class(unit* item);
-  static uint32_t d2_common::get_item_primary_weapon_class(unit* item);
+  static uint32_t get_item_type(Unit* item);
+  static uint32_t get_item_type_class(Unit* item);
+  static uint32_t d2_common::get_item_primary_weapon_class(Unit* item);
   static uint32_t d2_common::check_item_type_equiv(uint32_t itemtype,
                                                    uint32_t itemtype_equiv);
 
-  static unit* inv_remove_item(inventory* inventory, unit* item);
+  static Unit* inv_remove_item(inventory* inventory, Unit* item);
   static BOOL inv_add_item(inventory* inv,
-                           unit* item,
+                           Unit* item,
                            uint32_t x,
                            uint32_t y,
                            uint32_t invIndex,
                            BOOL isClient,
                            uint8_t page);
-  static BOOL inv_update_item(inventory* inv, unit* item, BOOL isClient);
+  static BOOL inv_update_item(inventory* inv, Unit* item, BOOL isClient);
 
   static items_line* get_item_record(uint32_t guid);
   static item_types_line* get_item_type_record(uint32_t typeId);
 
-  static uint32_t get_maximum_character_gold(unit* player);
-  static uint32_t get_item_unique_index(unit* item);
-  static int32_t set_stat(unit* unit,
+  static uint32_t get_maximum_character_gold(Unit* player);
+  static uint32_t get_item_unique_index(Unit* item);
+  static int32_t set_stat(Unit* unit,
                           unit_stats_t stat,
                           uint32_t value,
                           int16_t param);
-  static int32_t get_stat(unit* unit, unit_stats_t stat, int16_t param);
-  static int32_t get_stat_signed(unit* unit, unit_stats_t stat, int16_t param);
+  static int32_t get_stat(Unit* unit, unit_stats_t stat, int16_t param);
+  static int32_t get_stat_signed(Unit* unit, unit_stats_t stat, int16_t param);
 
   static int32_t _10111(int32_t* x, int32_t* y);
   static int32_t _10116(int32_t x1, int32_t y1, int32_t* x, int32_t* y);
 
-  static room* get_room_from_unit(unit* unit);
+  static room* get_room_from_unit(Unit* unit);
 
-  static int32_t get_unit_size_x(unit* unit);
-  static int32_t get_unit_size_y(unit* unit);
+  static int32_t get_unit_size_x(Unit* unit);
+  static int32_t get_unit_size_y(Unit* unit);
 
-  static int32_t get_distance_between_units(unit* unit1, unit* unit2);
+  static int32_t get_distance_between_units(Unit* unit1, Unit* unit2);
 
   static int32_t get_unit_x(path* path);
   static int32_t get_unit_y(path* path);
-  static int32_t get_unit_precise_x(unit* unit);
-  static int32_t get_unit_precise_y(unit* unit);
+  static int32_t get_unit_precise_x(Unit* unit);
+  static int32_t get_unit_precise_y(Unit* unit);
 
-  static int32_t get_item_quality(unit* item);
-  static uint32_t d2_common::set_unit_mode(unit* item, uint32_t mode);
+  static int32_t get_item_quality(Unit* item);
+  static uint32_t d2_common::set_unit_mode(Unit* item, uint32_t mode);
 
-  static unit* get_target_from_path(path* path);
-  static unit* d2_common::get_first_inventory_item(inventory* inv);
-  static unit* d2_common::get_last_inventory_item(inventory* inv);
-  static unit* d2_common::get_next_inventory_item(unit* prev_item);
+  static Unit* get_target_from_path(path* path);
+  static Unit* d2_common::get_first_inventory_item(inventory* inv);
+  static Unit* d2_common::get_last_inventory_item(inventory* inv);
+  static Unit* d2_common::get_next_inventory_item(Unit* prev_item);
   static uint32_t d2_common::get_max_cube_recipes();
   static void d2_common::free_inventory(inventory* inventory);
-  static void d2_common::refresh_unit_inventory(unit* unit,
+  static void d2_common::refresh_unit_inventory(Unit* unit,
                                                 bool set_update_flags);
-  static void d2_common::update_trade(inventory* inventory, unit* item);
-  // static void d2_common::set_item_flags(unit* item,
+  static void d2_common::update_trade(inventory* inventory, Unit* item);
+  // static void d2_common::set_item_flags(Unit* item,
   // itemflags_t dwFlag, bool bSet);
 
-  static void d2_common::add_property(unit* item,
+  static void d2_common::add_property(Unit* item,
                                       D2PropertyStrc* pProperty,
                                       int nUnused);
-  static void d2_common::ITEMS_SetItemFlag(unit* item,
+  static void d2_common::ITEMS_SetItemFlag(Unit* item,
                                            uint32_t dwFlag,
                                            BOOL bSet);
 

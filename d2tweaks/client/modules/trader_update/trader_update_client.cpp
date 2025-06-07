@@ -176,7 +176,7 @@ void trader_update::handle_packet(common::packet_header* packet) {
 
   m_nNpcId = d2_client::current_vendor_guid();
 
-  unit* ptNPC = d2_client::get_unit_by_guid(
+  Unit* ptNPC = d2_client::get_unit_by_guid(
       m_nNpcId, (int32_t) unit_type_t::UNIT_TYPE_MONSTER);
 
   if (ptNPC == 0)

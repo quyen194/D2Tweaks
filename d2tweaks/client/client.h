@@ -47,7 +47,7 @@ class client : public singleton<client> {
   void register_packet_cs_handler(common::packet_types_cs_t packet,
                                   common::message_types_t type,
                                   client_module* module);
-  static unit* get_client_unit(uint32_t type, uint32_t guid);
+  static Unit* get_client_unit(uint32_t type, uint32_t guid);
 
  private:
   // static void __fastcall game_loop_start();

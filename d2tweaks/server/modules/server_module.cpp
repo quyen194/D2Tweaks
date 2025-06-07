@@ -11,12 +11,12 @@ server_module::server_module() {
 }
 
 bool server_module::handle_packet(Game* game,
-                                  unit* player,
+                                  Unit* player,
                                   common::packet_header* packet) {
   return false;
 }
 
-void server_module::tick(Game* game, unit* unit) {}
+void server_module::tick(Game* game, Unit* unit) {}
 
 }  // namespace modules
 }  // namespace server

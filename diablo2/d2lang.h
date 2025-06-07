@@ -8,7 +8,7 @@
 namespace diablo2 {
 
 namespace structures {
-struct unit;
+struct Unit;
 }
 
 class d2_lang {

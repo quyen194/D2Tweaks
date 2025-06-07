@@ -3433,7 +3433,7 @@
 //};
 //
 //struct client_unit_list {
-//    unit* unit_list[5][128]; //0x1120
+//    Unit* unit_list[5][128]; //0x1120
 //};
 //
 ////struct unit {
@@ -3452,7 +3452,7 @@
 ////        uint32_t _1[2];
 ////        uint32_t* pRoom1; //+1c
 ////        uint32_t _2[14];
-////        unit* pTargetUnit; //+58
+////        Unit* pTargetUnit; //+58
 ////    } *pPos; //+38
 ////    uint32_t _2[13];
 ////    union {
@@ -3470,11 +3470,11 @@
 ////    uint32_t fFlags; //+e8
 ////    uint32_t fFlags2; //+ec
 ////    uint32_t _6[7];
-////    unit* pNext; //+10c
+////    Unit* pNext; //+10c
 ////
-////    unit* pt_first_monster;            //+E0
-////    unit* unit1;                    //+E4
-////    unit* unit2;                    //+E8
+////    Unit* pt_first_monster;            //+E0
+////    Unit* unit1;                    //+E4
+////    Unit* unit2;                    //+E8
 ////};
 //
 //
@@ -3566,7 +3566,7 @@
 //    };
 //
 //    uint16_t update_type;
-//    unit* update_unit;
+//    Unit* update_unit;
 //
 //    void* quest_record; //quest_record*
 //    uint32_t sparky_chest;
@@ -3619,9 +3619,9 @@
 //
 //    void* timer;
 //
-//    unit* change_next_unit; //?
-//    unit* prev_unit;
-//    unit* prev_unit_in_room;
+//    Unit* change_next_unit; //?
+//    Unit* prev_unit;
+//    Unit* prev_unit_in_room;
 //
 //    void* msg_first;
 //    void* msg_last;
@@ -3697,9 +3697,9 @@
 ////    uint8_t        uk9[0x04];                //+CC
 ////    uint32_t        client_id;                //+D0
 ////    uint8_t        uk10[0x0C];                //+D4
-////    unit* pt_first_monster;            //+E0
-////    unit* unit1;                    //+E4
-////    unit* unit2;                    //+E8
+////    Unit* pt_first_monster;            //+E0
+////    Unit* unit1;                    //+E4
+////    Unit* unit2;                    //+E8
 ////    uint8_t        uk11[0x08];                //+EC
 ////    union {
 ////        cb_player_data* pt_cb_player_data;
@@ -3847,8 +3847,8 @@
 ////    uint8_t    var_gfx;                        //+49
 ////    char    i_name[0x12];                //+4A //inscribed/ear name
 ////    inventory* inventory;            //+5C
-////    unit* pt_prev_item;                    //+60
-////    unit* pt_next_item;                    //+64
+////    Unit* pt_prev_item;                    //+60
+////    Unit* pt_next_item;                    //+64
 ////    uint8_t    uk8[0x01];                    //+68
 ////    uint8_t    item_data2;                    //+69
 ////    uint8_t    uk9[0x0A];                    //+6A
@@ -3913,7 +3913,7 @@
 //    uint8_t    uk8[0x1C];                    //+08
 //    room* pt_near_rooms;                //+24
 //    uint32_t    nb_near_rooms;                //+28
-//    unit* unit;                        //+2C
+//    Unit* unit;                        //+2C
 //    uint8_t    uk5[0x44];                    //+30
 //    room* pt_next_room;                    //+74
 //    union {
@@ -3959,12 +3959,12 @@
 //    char pad_00d8[20]; //0x00D8
 //    int32_t monster_seed; //0x00EC
 //    char pad_244[244];
-//    unit* unit_list[5][128];//0x330
+//    Unit* unit_list[5][128];//0x330
 //    //void* monster_region[1024]; //0x00F0
 //    //void* object_controller; //0x10F0
 //    //void* quest_controller; //0x10F4
 //    //void* unit_nodes[10]; //0x10F8
-//    //unit* unit_list[5][128]; //0x1120
+//    //Unit* unit_list[5][128]; //0x1120
 //    //void* tile_list; //0x1B20
 //    //int32_t unique_flags[128]; //0x1B24
 //    //void* npc_control; //0x1D24
@@ -3998,13 +3998,13 @@
 //struct inventory {                                       //Offset from Code.        Size: 30 à 40
 //    uint32_t    tag;                        //+00    = 0x01020304
 //    uint8_t    uk1[0x04];                    //+04    =? 0
-//    unit* pt_char;                        //+08
-//    unit* pt_first_item;                        //+0C
-//    unit* pt_last_item; //+10
+//    Unit* pt_char;                        //+08
+//    Unit* pt_first_item;                        //+0C
+//    Unit* pt_last_item; //+10
 //    void* inv_info_ptr; //+14
 //    uint32_t inv_info; //+18
 //    uint32_t weapon_guid; //+1C
-//    unit* inv_owner_item;                    //+20
+//    Unit* inv_owner_item;                    //+20
 //    uint8_t    owner_guid;                    //+24
 //    uint32_t    current_used_socket;            //+28 //Kingpin : a variable to know how many sockets that have added to item
 //    uint32_t    inventory2_c;                //+2C //one value

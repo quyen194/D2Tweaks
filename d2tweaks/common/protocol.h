@@ -276,7 +276,7 @@ struct item_move_sc : packet_header {
 
 struct inventory_sort_cs : packet_header {
   uint8_t page;
-  unit* item_to_remove;
+  Unit* item_to_remove;
   bool remItem;
 
   inventory_sort_cs() : page(0) { message_type = MESSAGE_TYPE_INVENTORY_SORT; }

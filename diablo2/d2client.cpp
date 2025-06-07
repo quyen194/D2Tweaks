@@ -19,8 +19,8 @@ bool d2_client::is_lod() {
   return *reinterpret_cast<int*>(get_base() + 0x1077C4) > 0;
 }
 
-unit* d2_client::get_local_player() {
-  static wrap_func_std<unit* ()> get_local_player(0x883D0, get_base());
+Unit* d2_client::get_local_player() {
+  static wrap_func_std<Unit* ()> get_local_player(0x883D0, get_base());
   return get_local_player();
 }
 
@@ -71,24 +71,24 @@ void* d2_client::get_buysellbtn() {
   return get_buysellbtn();
 }
 
-void d2_client::resync_vendor_inventory(unit* ptNPC) {
-  static wrap_func_fast<void(unit * ptNPC)> resync_vendor_inventory(0x578E0,
+void d2_client::resync_vendor_inventory(Unit* ptNPC) {
+  static wrap_func_fast<void(Unit * ptNPC)> resync_vendor_inventory(0x578E0,
                                                                     get_base());
   resync_vendor_inventory(ptNPC);
 }
 
 void d2_client::play_sound(const uint32_t soundId,
-                           unit* pUnit,
+                           Unit* pUnit,
                            const uint32_t ticks,
                            const BOOL prePick,
                            const uint32_t cache) {
-  static wrap_func_fast<void(uint32_t, unit*, uint32_t, BOOL, uint32_t)>
+  static wrap_func_fast<void(uint32_t, Unit*, uint32_t, BOOL, uint32_t)>
       play_sound(0xB5820, get_base());
   play_sound(soundId, pUnit, ticks, prePick, cache);
 }
 
-unit* d2_client::get_unit_by_guid(const int32_t guid, const int32_t type) {
-  static wrap_func_fast<unit*(int32_t, int32_t)> get_unit_by_guid(0x869F0,
+Unit* d2_client::get_unit_by_guid(const int32_t guid, const int32_t type) {
+  static wrap_func_fast<Unit*(int32_t, int32_t)> get_unit_by_guid(0x869F0,
                                                                   get_base());
   return get_unit_by_guid(guid, type);
 }
@@ -98,7 +98,7 @@ void d2_client::send_to_server(void* data, const size_t size) {
   send_to_server(data, size);
 }
 
-bool d2_client::cache_gfx_data(gfxdata* pGfxdata, unit* pUnit,
+bool d2_client::cache_gfx_data(gfxdata* pGfxdata, Unit* pUnit,
                                cellfile* cellfFile,
                                int32_t direction,
                                int32_t frame,
@@ -106,7 +106,7 @@ bool d2_client::cache_gfx_data(gfxdata* pGfxdata, unit* pUnit,
                                int8_t flags,
                                int32_t colorTint) {
   static wrap_func_fast<int32_t(
-      gfxdata*, unit*, cellfile*, int32_t, int32_t, int32_t*, int8_t, int32_t)>
+      gfxdata*, Unit*, cellfile*, int32_t, int32_t, int32_t*, int8_t, int32_t)>
       cache_gfx_data(0xBEC80, get_base());
   return cache_gfx_data(
       pGfxdata, pUnit, cellfFile, direction, frame, outIndex, flags, colorTint);

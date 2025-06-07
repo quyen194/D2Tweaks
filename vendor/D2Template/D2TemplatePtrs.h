@@ -69,7 +69,7 @@ extern DWORD __fastcall GetDllOffset(char* ModuleName, DWORD BaseAddress, int Of
 //D2FUNC(D2COMMON, GetItemRecord, items_line*, __stdcall, (uint32_t guid), -10600)
 //D2FUNC(D2COMMON, GetItemUniqueIndex, uint32_t, __stdcall, (unit3* item), -10732)
 //D2FUNC(D2CLIENT, GetUnit, UnitAny *, __fastcall, (DWORD id, DWORD type), 0x869F0);
-//D2FUNC(D2GAME, GetUnit, unit*, __fastcall, (Game* pGame, DWORD type, DWORD uniqueid), 0x8BB00);
+//D2FUNC(D2GAME, GetUnit, Unit*, __fastcall, (Game* pGame, DWORD type, DWORD uniqueid), 0x8BB00);
 //
 //D2FUNC(D2GAME, GetGameFromClientId, Game*, __fastcall, (int32_t id), 0x94E0); //id 0 - current single player
 //

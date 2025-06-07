@@ -272,7 +272,7 @@ class inventory_sort_menu : public ui::menu {
 
     const auto player = d2_client::get_local_player();
 
-    std::vector<unit*> items;
+    std::vector<Unit*> items;
 
     for (auto item = player->inventory->first_item; item != nullptr;
          item = item->item_data->pt_next_item) {

@@ -4,7 +4,7 @@
 
 namespace diablo2 {
 namespace structures {
-struct unit;
+struct Unit;
 
 struct Game {
   char pad_0000[24];                // 0x0000
@@ -36,7 +36,7 @@ struct Game {
   void* object_controller;          // 0x10F0
   void* quest_controller;           // 0x10F4
   void* unit_nodes[10];             // 0x10F8
-  unit* unit_list[5][128];          // 0x1120
+  Unit* unit_list[5][128];          // 0x1120
   void* tile_list;                  // 0x1B20
   int32_t unique_flags[128];        // 0x1B24
   void* npc_control;                // 0x1D24

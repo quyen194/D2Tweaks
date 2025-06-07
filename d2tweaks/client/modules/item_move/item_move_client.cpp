@@ -26,7 +26,7 @@ namespace modules {
 
 MODULE_INIT(item_move)
 
-int32_t(__fastcall* g_item_click_original)(unit* playerUnit,
+int32_t(__fastcall* g_item_click_original)(Unit* playerUnit,
                                            inventory* inventory,
                                            int mouse_x,
                                            int mouse_y,
@@ -46,7 +46,7 @@ char get_target_page(char currentPage) {
   return 0;
 }
 
-void request_item_move(unit* item, char targetPage) {
+void request_item_move(Unit* item, char targetPage) {
   static common::item_move_cs packet;
 
   packet.item_guid = item->guid;
@@ -55,7 +55,7 @@ void request_item_move(unit* item, char targetPage) {
   d2_client::send_to_server(&packet, sizeof packet);
 }
 
-int32_t __fastcall item_click(unit* owner,
+int32_t __fastcall item_click(Unit* owner,
                               inventory* inventory,
                               int mouse_x,
                               int mouse_y,
@@ -85,7 +85,7 @@ int32_t __fastcall item_click(unit* owner,
   const auto itemx = (mouse_x - coefx1) / coefx2;
   const auto itemy = (mouse_y - coefy1) / coefy2;
 
-  unit* cubeItem = nullptr;
+  Unit* cubeItem = nullptr;
 
   uint32_t px, py;
 

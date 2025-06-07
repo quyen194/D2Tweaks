@@ -5,7 +5,7 @@
 namespace diablo2 {
 namespace structures {
 
-struct unit;
+struct Unit;
 
 struct room {               // size=0x80
   // ptRoom +48
@@ -16,7 +16,7 @@ struct room {               // size=0x80
   uint8_t uk8[0x1C];        // +08
   room* pt_near_rooms;      // +24
   uint32_t nb_near_rooms;   // +28
-  unit* unit;               // +2C
+  Unit* unit;               // +2C
   uint8_t uk5[0x44];        // +30
   room* pt_next_room;       // +74
   union {

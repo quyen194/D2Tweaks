@@ -307,7 +307,7 @@ void auto_item_pickup::init() {
 }
 
 bool find_free_space(inventory* inv,
-                     unit* item,
+                     Unit* item,
                      int32_t inventoryIndex,
                      char page,
                      uint32_t& x,
@@ -321,7 +321,7 @@ bool find_free_space(inventory* inv,
 
   for (x = 0; x < mx; x++) {
     for (y = 0; y < my; y++) {
-      unit* blockingUnit = nullptr;
+      Unit* blockingUnit = nullptr;
       uint32_t blockingUnitIndex = 0;
 
       if (d2_common::can_put_into_slot(inv,

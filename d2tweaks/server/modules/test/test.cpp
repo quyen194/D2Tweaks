@@ -17,11 +17,11 @@ namespace modules {
 
 MODULE_INIT(test)
 
-static int(__stdcall* g_set_stat_original)(unit* unit,
+static int(__stdcall* g_set_stat_original)(Unit* unit,
                                            unit_stats_t stat,
                                            uint32_t value,
                                            int16_t param);
-static int __stdcall set_stat(unit* unit,
+static int __stdcall set_stat(Unit* unit,
                               unit_stats_t stat,
                               uint32_t value,
                               int16_t param) {
@@ -47,9 +47,9 @@ static int32_t __stdcall set_stat_in_list(void* a1,
   return g_set_stat_in_list_original(a1, stat, value, param);
 }
 
-static int(__fastcall* g_regen_tick_original)(Game*, unit*, int32_t, int32_t);
+static int(__fastcall* g_regen_tick_original)(Game*, Unit*, int32_t, int32_t);
 static int __fastcall regen_tick(Game* game,
-                                 unit* unit,
+                                 Unit* unit,
                                  int32_t a3,
                                  int32_t a4) {
   return g_regen_tick_original(game, unit, a3, a4);

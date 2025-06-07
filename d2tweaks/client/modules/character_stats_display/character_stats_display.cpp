@@ -217,7 +217,7 @@ class character_stats_menu : public ui::menu {
     int textOffset = 40;  // Initial offset for the first line
 
     // Add all items to vector
-    std::vector<unit*> items;
+    std::vector<Unit*> items;
     for (auto item = player->inventory->first_item; item != nullptr;
          item = item->item_data->pt_next_item) {
       const auto record = d2_common::get_item_record(item->data_record_index);

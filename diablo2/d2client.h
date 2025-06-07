@@ -6,7 +6,7 @@
 namespace diablo2 {
 namespace structures {
 struct gfxdata;
-struct unit;
+struct Unit;
 struct client_unit_list;
 struct cellfile;
 }  // namespace structures
@@ -49,7 +49,7 @@ class d2_client {
 
   static bool is_lod();
 
-  static unit* get_local_player();
+  static Unit* get_local_player();
   static const char* get_local_player_name();
   static client_unit_list* get_client_unit_list();
 
@@ -62,15 +62,15 @@ class d2_client {
   static void* get_buysellbtn();
 
   static void play_sound(
-      uint32_t soundId, unit* u, uint32_t ticks, BOOL prePick, uint32_t cache);
+      uint32_t soundId, Unit* u, uint32_t ticks, BOOL prePick, uint32_t cache);
 
-  static unit* get_unit_by_guid(int32_t type, int32_t guid);
+  static Unit* get_unit_by_guid(int32_t type, int32_t guid);
 
   static void send_to_server(void* data, size_t size);
   static void print_chat(wchar_t* string, uint32_t color);
 
   static bool cache_gfx_data(gfxdata* gfxData,
-                             unit* unit,
+                             Unit* unit,
                              cellfile* cellfFile,
                              int32_t direction,
                              int32_t frame,
@@ -87,7 +87,7 @@ class d2_client {
   static uint32_t current_vendor_guid();
   static bool is_gamble_open();
   static uint8_t current_interact_menu();
-  static void resync_vendor_inventory(unit* ptNPC);
+  static void resync_vendor_inventory(Unit* ptNPC);
 
   static int32_t send_to_server_9(BYTE type, DWORD num, DWORD unk1);
 

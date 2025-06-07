@@ -9,8 +9,8 @@ char* d2_common::get_base() {
   return base;
 }
 
-int8_t d2_common::get_item_page(unit* item) {
-  static wrap_func_std_import<int32_t(unit*)> get_item_page(10719, get_base());
+int8_t d2_common::get_item_page(Unit* item) {
+  static wrap_func_std_import<int32_t(Unit*)> get_item_page(10719, get_base());
   return get_item_page(item);
 }
 
@@ -20,15 +20,15 @@ uint32_t d2_common::get_max_cube_recipes() {
   return get_max_cube_recipes();
 }
 
-int32_t d2_common::get_item_type_from_unit(unit* item) {
-  static wrap_func_std_import<int32_t(unit*)> get_item_type_from_unit(
+int32_t d2_common::get_item_type_from_unit(Unit* item) {
+  static wrap_func_std_import<int32_t(Unit*)> get_item_type_from_unit(
       10751, get_base());
   return get_item_type_from_unit(item);
 }
 
 //__stdcall UNITS_GetPreviousInteractGUID(D2UnitStrc* pUnit)
-int32_t d2_common::get_previous_interact_guid(unit* player) {
-  static wrap_func_std_import<int32_t(unit*)> get_previous_interact_guid(
+int32_t d2_common::get_previous_interact_guid(Unit* player) {
+  static wrap_func_std_import<int32_t(Unit*)> get_previous_interact_guid(
       10383, get_base());
   return get_previous_interact_guid(player);
 }
@@ -54,26 +54,26 @@ void d2_common::free_trade_inventory(inventory* inv) {
   return free_trade_inventory(inv);
 }
 
-unit* d2_common::get_first_inventory_item(inventory* inv) {
-  static wrap_func_std_import<unit*(inventory*)> get_first_inventory_item(
+Unit* d2_common::get_first_inventory_item(inventory* inv) {
+  static wrap_func_std_import<Unit*(inventory*)> get_first_inventory_item(
       10277, get_base());
   return get_first_inventory_item(inv);
 }
 
-unit* d2_common::get_last_inventory_item(inventory* inv) {
-  static wrap_func_std_import<unit*(inventory*)> get_last_inventory_item(
+Unit* d2_common::get_last_inventory_item(inventory* inv) {
+  static wrap_func_std_import<Unit*(inventory*)> get_last_inventory_item(
       10278, get_base());
   return get_last_inventory_item(inv);
 }
 
-unit* d2_common::get_next_inventory_item(unit* prev_item) {
-  static wrap_func_std_import<unit*(unit*)> get_next_inventory_item(10304,
+Unit* d2_common::get_next_inventory_item(Unit* prev_item) {
+  static wrap_func_std_import<Unit*(Unit*)> get_next_inventory_item(10304,
                                                                     get_base());
   return get_next_inventory_item(prev_item);
 }
 
-int32_t d2_common::get_inventory_index(unit* item, char page, BOOL lod) {
-  static wrap_func_std_import<int32_t(unit*, char, BOOL)> get_inventory_index(
+int32_t d2_common::get_inventory_index(Unit* item, char page, BOOL lod) {
+  static wrap_func_std_import<int32_t(Unit*, char, BOOL)> get_inventory_index(
       10409, get_base());
   return get_inventory_index(item, page, lod);
 }
@@ -84,33 +84,33 @@ void* d2_common::get_inventory_data(int32_t index, int32_t zero, char* data) {
   return get_inventory_data(index, zero, data);
 }
 
-unit* d2_common::get_item_at_cell(inventory* inv,
+Unit* d2_common::get_item_at_cell(inventory* inv,
                                   uint32_t cellx,
                                   uint32_t celly,
                                   uint32_t* pcellx,
                                   uint32_t* pcelly,
                                   int32_t invIndex,
                                   uint8_t page) {
-  static wrap_func_std_import<unit*(
+  static wrap_func_std_import<Unit*(
       inventory*, uint32_t, uint32_t, uint32_t*, uint32_t*, int32_t, uint8_t)>
       get_item_at_cell(10252, get_base());
   return get_item_at_cell(inv, cellx, celly, pcellx, pcelly, invIndex, page);
 }
 
 uint32_t d2_common::can_put_into_slot(inventory* inv,
-                                      unit* item,
+                                      Unit* item,
                                       uint32_t x,
                                       uint32_t y,
                                       uint32_t invIndex,
-                                      unit** lastBlockingUnit,
+                                      Unit** lastBlockingUnit,
                                       uint32_t* lastBlockingUnitIndex,
                                       uint8_t page) {
   static wrap_func_std_import<uint32_t(inventory*,
-                                       unit*,
+                                       Unit*,
                                        uint32_t,
                                        uint32_t,
                                        uint32_t,
-                                       unit**,
+                                       Unit**,
                                        uint32_t*,
                                        uint8_t)>
       can_put_into_slot(10247, get_base());
@@ -118,51 +118,51 @@ uint32_t d2_common::can_put_into_slot(inventory* inv,
       inv, item, x, y, invIndex, lastBlockingUnit, lastBlockingUnitIndex, page);
 }
 
-uint32_t d2_common::get_item_type(unit* item) {
-  static wrap_func_std_import<uint32_t(unit*)> get_item_type(10751, get_base());
+uint32_t d2_common::get_item_type(Unit* item) {
+  static wrap_func_std_import<uint32_t(Unit*)> get_item_type(10751, get_base());
   return get_item_type(item);
 }
 
-uint32_t d2_common::get_item_type_class(unit* item) {
-  static wrap_func_std_import<uint32_t(unit*)> get_item_type_class(10739,
+uint32_t d2_common::get_item_type_class(Unit* item) {
+  static wrap_func_std_import<uint32_t(Unit*)> get_item_type_class(10739,
                                                                    get_base());
   return get_item_type_class(item);
 }
 
-uint32_t d2_common::get_item_primary_weapon_class(unit* item) {
-  static wrap_func_std_import<uint32_t(unit*)> get_item_type_class(10744,
+uint32_t d2_common::get_item_primary_weapon_class(Unit* item) {
+  static wrap_func_std_import<uint32_t(Unit*)> get_item_type_class(10744,
                                                                    get_base());
   return get_item_type_class(item);
 }
 
-uint32_t d2_common::set_unit_mode(unit* item, uint32_t mode) {
-  static wrap_func_std_import<uint32_t(unit*, uint32_t mode)> set_unit_mode(
+uint32_t d2_common::set_unit_mode(Unit* item, uint32_t mode) {
+  static wrap_func_std_import<uint32_t(Unit*, uint32_t mode)> set_unit_mode(
       10348, get_base());
   return set_unit_mode(item, mode);
 }
 
-unit* d2_common::inv_remove_item(inventory* inv, unit* item) {
-  static wrap_func_std_import<unit*(inventory*, unit*)> inv_remove_item(
+Unit* d2_common::inv_remove_item(inventory* inv, Unit* item) {
+  static wrap_func_std_import<Unit*(inventory*, Unit*)> inv_remove_item(
       10243, get_base());
   return inv_remove_item(inv, item);
 }
 
 BOOL d2_common::inv_add_item(inventory* inv,
-                             unit* item,
+                             Unit* item,
                              uint32_t x,
                              uint32_t y,
                              uint32_t invIndex,
                              BOOL isClient,
                              uint8_t page) {
   static wrap_func_std_import<BOOL(
-      inventory*, unit*, uint32_t, uint32_t, uint32_t, BOOL, uint8_t)>
+      inventory*, Unit*, uint32_t, uint32_t, uint32_t, BOOL, uint8_t)>
       inv_add_item(10249, get_base());
 
   return inv_add_item(inv, item, x, y, invIndex, isClient, page);
 }
 
-BOOL d2_common::inv_update_item(inventory* inv, unit* item, BOOL isClient) {
-  static wrap_func_std_import<BOOL(inventory*, unit*, BOOL)> inv_update_item(
+BOOL d2_common::inv_update_item(inventory* inv, Unit* item, BOOL isClient) {
+  static wrap_func_std_import<BOOL(inventory*, Unit*, BOOL)> inv_update_item(
       10242, get_base());
   return inv_update_item(inv, item, isClient);
 }
@@ -186,37 +186,37 @@ uint32_t d2_common::check_item_type_equiv(uint32_t itemtype,
   return check_item_type_equiv(itemtype, itemtype_equiv);
 }
 
-uint32_t d2_common::get_item_unique_index(unit* item) {
-  static wrap_func_std_import<uint32_t(unit*)> get_item_unique_index(
+uint32_t d2_common::get_item_unique_index(Unit* item) {
+  static wrap_func_std_import<uint32_t(Unit*)> get_item_unique_index(
       10732, get_base());
   return get_item_unique_index(item);
 }
 
-uint32_t d2_common::get_maximum_character_gold(unit* player) {
-  static wrap_func_std_import<uint32_t(unit*)> get_maximum_character_gold(
+uint32_t d2_common::get_maximum_character_gold(Unit* player) {
+  static wrap_func_std_import<uint32_t(Unit*)> get_maximum_character_gold(
       10439, get_base());
   return get_maximum_character_gold(player);
 }
 
-int32_t d2_common::set_stat(unit* pUnit,
+int32_t d2_common::set_stat(Unit* pUnit,
                             unit_stats_t stat,
                             uint32_t value,
                             int16_t param) {
-  static wrap_func_std_import<int32_t(unit*, int32_t, int32_t, int32_t)>
+  static wrap_func_std_import<int32_t(Unit*, int32_t, int32_t, int32_t)>
       set_stat(10517, get_base());
   return set_stat(pUnit, stat, value, param);
 }
 
-int32_t d2_common::get_stat(unit* pUnit, unit_stats_t stat, int16_t param) {
-  static wrap_func_std_import<int32_t(unit*, int32_t, int32_t)> get_stat(
+int32_t d2_common::get_stat(Unit* pUnit, unit_stats_t stat, int16_t param) {
+  static wrap_func_std_import<int32_t(Unit*, int32_t, int32_t)> get_stat(
       10519, get_base());
   return get_stat(pUnit, stat, param);
 }
 
-int32_t d2_common::get_stat_signed(unit* pUnit,
+int32_t d2_common::get_stat_signed(Unit* pUnit,
                                    unit_stats_t stat,
                                    int16_t param) {
-  static wrap_func_std_import<int32_t(unit*, int32_t, int32_t)> get_stat_signed(
+  static wrap_func_std_import<int32_t(Unit*, int32_t, int32_t)> get_stat_signed(
       10520, get_base());
   return get_stat_signed(pUnit, stat, param);
 }
@@ -233,26 +233,26 @@ int32_t d2_common::_10116(int32_t x1, int32_t y1, int32_t* x, int32_t* y) {
   return get_unk_coords2(x1, y1, x, y);
 }
 
-room* d2_common::get_room_from_unit(unit* pUnit) {
-  static wrap_func_std_import<room*(unit*)> get_room_from_unit(10342,
+room* d2_common::get_room_from_unit(Unit* pUnit) {
+  static wrap_func_std_import<room*(Unit*)> get_room_from_unit(10342,
                                                                get_base());
   return get_room_from_unit(pUnit);
 }
 
-int32_t d2_common::get_unit_size_x(unit* pUnit) {
-  static wrap_func_std_import<int32_t(unit*)> get_unit_size_x(10336,
+int32_t d2_common::get_unit_size_x(Unit* pUnit) {
+  static wrap_func_std_import<int32_t(Unit*)> get_unit_size_x(10336,
                                                               get_base());
   return get_unit_size_x(pUnit);
 }
 
-int32_t d2_common::get_unit_size_y(unit* pUnit) {
-  static wrap_func_std_import<int32_t(unit*)> get_unit_size_y(10337,
+int32_t d2_common::get_unit_size_y(Unit* pUnit) {
+  static wrap_func_std_import<int32_t(Unit*)> get_unit_size_y(10337,
                                                               get_base());
   return get_unit_size_y(pUnit);
 }
 
-int32_t d2_common::get_distance_between_units(unit* unit1, unit* unit2) {
-  static wrap_func_std_import<int32_t(unit*, unit*)> get_distance_between_units(
+int32_t d2_common::get_distance_between_units(Unit* unit1, Unit* unit2) {
+  static wrap_func_std_import<int32_t(Unit*, Unit*)> get_distance_between_units(
       10397, get_base());
   return get_distance_between_units(unit1, unit2);
 }
@@ -267,26 +267,26 @@ int32_t d2_common::get_unit_y(path* pPath) {
   return get_unit_y(pPath);
 }
 
-int32_t d2_common::get_unit_precise_x(unit* pUnit) {
-  static wrap_func_std_import<int32_t(unit*)> get_unit_precise_x(10327,
+int32_t d2_common::get_unit_precise_x(Unit* pUnit) {
+  static wrap_func_std_import<int32_t(Unit*)> get_unit_precise_x(10327,
                                                                  get_base());
   return get_unit_precise_x(pUnit);
 }
 
-int32_t d2_common::get_unit_precise_y(unit* pUnit) {
-  static wrap_func_std_import<int32_t(unit*)> get_unit_precise_y(10330,
+int32_t d2_common::get_unit_precise_y(Unit* pUnit) {
+  static wrap_func_std_import<int32_t(Unit*)> get_unit_precise_y(10330,
                                                                  get_base());
   return get_unit_precise_y(pUnit);
 }
 
-int32_t d2_common::get_item_quality(unit* item) {
-  static wrap_func_std_import<int32_t(unit*)> get_item_quality(10695,
+int32_t d2_common::get_item_quality(Unit* item) {
+  static wrap_func_std_import<int32_t(Unit*)> get_item_quality(10695,
                                                                get_base());
   return get_item_quality(item);
 }
 
-unit* d2_common::get_target_from_path(path* pPath) {
-  static wrap_func_std_import<unit*(path*)> get_target_from_path(10180,
+Unit* d2_common::get_target_from_path(path* pPath) {
+  static wrap_func_std_import<Unit*(path*)> get_target_from_path(10180,
                                                                  get_base());
   return get_target_from_path(pPath);
 }
@@ -297,32 +297,32 @@ void d2_common::free_inventory(inventory* inv) {
   free_inventory(inv);
 }
 
-void d2_common::refresh_unit_inventory(unit* pUnit, bool set_update_flags) {
-  static wrap_func_std_import<void(unit * unit, bool)>
+void d2_common::refresh_unit_inventory(Unit* pUnit, bool set_update_flags) {
+  static wrap_func_std_import<void(Unit * Unit, bool)>
       refresh_unit_inventory(10357, get_base());
   refresh_unit_inventory(pUnit, set_update_flags);
 }
 
-void d2_common::update_trade(inventory* inv, unit* item) {
-  static wrap_func_std_import<void(inventory*, unit*)> update_trade(10283,
+void d2_common::update_trade(inventory* inv, Unit* item) {
+  static wrap_func_std_import<void(inventory*, Unit*)> update_trade(10283,
                                                                     get_base());
   update_trade(inv, item);
 }
 
-// void d2_common::set_item_flags(unit* item, itemflags_t dwFlag, bool bSet) {
-//   static wrap_func_std_import<void(unit*, itemflags_t, bool)> set_item_flags(
+// void d2_common::set_item_flags(Unit* item, itemflags_t dwFlag, bool bSet) {
+//   static wrap_func_std_import<void(Unit*, itemflags_t, bool)> set_item_flags(
 //       10708, get_base());
 //   set_item_flags(item, dwFlag, bSet);
 // }
 
-void d2_common::add_property(unit* item, D2PropertyStrc* prop, int nUnused) {
-  static wrap_func_std_import<void(unit*, D2PropertyStrc*, int)> add_property(
+void d2_common::add_property(Unit* item, D2PropertyStrc* prop, int nUnused) {
+  static wrap_func_std_import<void(Unit*, D2PropertyStrc*, int)> add_property(
       10868, get_base());
   add_property(item, prop, nUnused);
 }
 
-void d2_common::ITEMS_SetItemFlag(unit* item, uint32_t dwFlag, BOOL bSet) {
-  static wrap_func_std_import<void(unit*, uint32_t, BOOL)> ITEMS_SetItemFlag(
+void d2_common::ITEMS_SetItemFlag(Unit* item, uint32_t dwFlag, BOOL bSet) {
+  static wrap_func_std_import<void(Unit*, uint32_t, BOOL)> ITEMS_SetItemFlag(
       10708, get_base());
   ITEMS_SetItemFlag(item, dwFlag, bSet);
 }

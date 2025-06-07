@@ -150,7 +150,7 @@ void trader_update::init() {
   }
 }
 
-void trader_update::tick(Game* game, unit* unit) {
+void trader_update::tick(Game* game, Unit* unit) {
   return;
 }
 
@@ -160,16 +160,16 @@ struct ClientFromNumber {
 };
 
 bool trader_update::handle_packet(Game* game,
-                                  unit* player,
+                                  Unit* player,
                                   common::packet_header* packet) {
   const auto income_packet_cs = static_cast<common::trader_update_cs*>(packet);
   static common::trader_update_sc response_packet_sc;
 
-  unit* temp_ptNPC = d2_game::get_server_unit(
+  Unit* temp_ptNPC = d2_game::get_server_unit(
       game, unit_type_t::UNIT_TYPE_MONSTER, income_packet_cs->npc_id);
   npc_record* npcrecord =
       d2_game::get_npc_record(game, temp_ptNPC, &temp_ptNPC);
-  unit* ptNPC = d2_game::get_server_unit(
+  Unit* ptNPC = d2_game::get_server_unit(
       game, unit_type_t::UNIT_TYPE_MONSTER, income_packet_cs->npc_id);
 
   if (!ptNPC)

@@ -57,7 +57,7 @@ namespace ui {
 
 #pragma pack(push, 1)
 
-unit* g_item1;
+Unit* g_item1;
 
 static LRESULT(__stdcall* g_wnd_proc_original)(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
@@ -531,7 +531,7 @@ void sendPacketAndUpdateProperty(int gemBagGuid,
                                  int prop,
                                  int val,
                                  int item_guid,
-                                 unit* gemBag) {
+                                 Unit* gemBag) {
   // get item using item guid
 
   if (250 < GetTickCount() - D2CLIENT_StoredTickCount1) {
@@ -594,7 +594,7 @@ LRESULT ui_manager::wnd_proc(HWND hWnd,
         int32_t st0Guid = 0;
         uint32_t st0X = 0;
         uint32_t st0Y = 0;
-        unit* box{};
+        Unit* box{};
         for (auto item = player->inventory->first_item; item != nullptr;
              item = item->item_data->pt_next_item) {
           const auto record = d2_common::get_item_record(item->data_record_index);
@@ -638,7 +638,7 @@ LRESULT ui_manager::wnd_proc(HWND hWnd,
   if (wParam == 'Z' || wParam == 'G') {
     // Call the item_click function using the function pointer
     const auto g_hoverItem =
-        (*reinterpret_cast<unit**>(d2_client::get_base() + 0x1158F4));
+        (*reinterpret_cast<Unit**>(d2_client::get_base() + 0x1158F4));
 
     if (g_hoverItem != 0) {
       char currentPage = d2_common::get_item_page(g_hoverItem);
@@ -659,7 +659,7 @@ LRESULT ui_manager::wnd_proc(HWND hWnd,
       }
 
       d2_client::send_to_server(&packet, sizeof packet);
-      (*reinterpret_cast<unit**>(d2_client::get_base() + 0x1158F4)) = nullptr;
+      (*reinterpret_cast<Unit**>(d2_client::get_base() + 0x1158F4)) = nullptr;
     }
 
     if (g_hoverItem != 0) {
@@ -695,7 +695,7 @@ LRESULT ui_manager::wnd_proc(HWND hWnd,
         }
 
         d2_client::send_to_server(&packet, sizeof packet);
-        (*reinterpret_cast<unit**>(d2_client::get_base() + 0x1158F4)) = nullptr;
+        (*reinterpret_cast<Unit**>(d2_client::get_base() + 0x1158F4)) = nullptr;
         if (d2_client::get_ui_window_state(UI_WINDOW_CUBE))
           d2_client::send_to_server_7(0x4F, 0x18, 0, 0);
       }
@@ -731,7 +731,7 @@ LRESULT ui_manager::wnd_proc(HWND hWnd,
 
       // Calculate the memory address of the hover item in the game
       // by adding an offset to the base address of the client
-      const auto g_hoverItem = *reinterpret_cast<unit**>(d2_client::get_base() + 0x1158F4);
+      const auto g_hoverItem = *reinterpret_cast<Unit**>(d2_client::get_base() + 0x1158F4);
 
       if (g_hoverItem != nullptr) {
         // Obtain the item record associated with the hovered item
@@ -748,10 +748,10 @@ LRESULT ui_manager::wnd_proc(HWND hWnd,
         auto itemtype_record_equiv2 = d2_common::get_item_type_record(itemtype_record->equiv2);
 
         // Initialize a vector to store items and pointers to specific items
-        std::vector<unit*> items;
-        unit* gemBag{};
-        unit* box{};
-        unit* harvester{};
+        std::vector<Unit*> items;
+        Unit* gemBag{};
+        Unit* box{};
+        Unit* harvester{};
 
         // Loop through the items in the player's inventory to find specific items
         for (auto item = player->inventory->first_item; item != nullptr;
@@ -837,7 +837,7 @@ LRESULT ui_manager::wnd_proc(HWND hWnd,
                 d2_common::inv_remove_item(player->inventory, g_hoverItem);
 
                 // Clear the hovered item after processing
-                (*reinterpret_cast<unit**>(d2_client::get_base() + 0x1158F4)) = nullptr;
+                (*reinterpret_cast<Unit**>(d2_client::get_base() + 0x1158F4)) = nullptr;
               }
             }
           }
@@ -864,7 +864,7 @@ LRESULT ui_manager::wnd_proc(HWND hWnd,
                 d2_client::send_to_server(&packet, sizeof packet);
 
                 // Clear the hovered item after processing
-                (*reinterpret_cast<unit**>(d2_client::get_base() + 0x1158F4)) = nullptr;
+                (*reinterpret_cast<Unit**>(d2_client::get_base() + 0x1158F4)) = nullptr;
               }
             }
           }
@@ -908,7 +908,7 @@ LRESULT ui_manager::wnd_proc(HWND hWnd,
                 d2_common::inv_remove_item(player->inventory, g_hoverItem);
 
                 // Clear the hovered item after processing
-                (*reinterpret_cast<unit**>(d2_client::get_base() + 0x1158F4)) = nullptr;
+                (*reinterpret_cast<Unit**>(d2_client::get_base() + 0x1158F4)) = nullptr;
               }
             }
           }
@@ -967,7 +967,7 @@ LRESULT ui_manager::wnd_proc(HWND hWnd,
                 d2_client::send_to_server_7(0x4F, 0x18, 0, 0);
 
                 // Clear the hovered item after processing
-                (*reinterpret_cast<unit**>(d2_client::get_base() + 0x1158F4)) = nullptr;
+                (*reinterpret_cast<Unit**>(d2_client::get_base() + 0x1158F4)) = nullptr;
               }
             }
           }
@@ -1061,7 +1061,7 @@ LRESULT ui_manager::wnd_proc(HWND hWnd,
           // d2_client::send_to_server_7(0x4F, 0x18, 0, 0);
 
           // Clear the hovered item after processing
-          (*reinterpret_cast<unit**>(d2_client::get_base() + 0x1158F4)) = nullptr;
+          (*reinterpret_cast<Unit**>(d2_client::get_base() + 0x1158F4)) = nullptr;
         }
 
         if (strncmp(normCode, "ib1", 3) == 0) {
@@ -1113,7 +1113,7 @@ LRESULT ui_manager::wnd_proc(HWND hWnd,
           // d2_common::inv_remove_item(player->inventory, g_hoverItem);
 
           // // Clear the hovered item after processing
-          // (*reinterpret_cast<unit**>(d2_client::get_base() + 0x1158F4)) = nullptr;
+          // (*reinterpret_cast<Unit**>(d2_client::get_base() + 0x1158F4)) = nullptr;
 
         }
       }
@@ -1138,7 +1138,7 @@ LRESULT ui_manager::wnd_proc(HWND hWnd,
 
         // Calculate the memory address of the hover item in the game
         // by adding an offset to the base address of the client
-        const auto g_hoverItem = *reinterpret_cast<unit**>(d2_client::get_base() + 0x1158F4);
+        const auto g_hoverItem = *reinterpret_cast<Unit**>(d2_client::get_base() + 0x1158F4);
 
         // Get the local player object from the Diablo 2 client
         const auto player = d2_client::get_local_player();
@@ -1169,7 +1169,7 @@ LRESULT ui_manager::wnd_proc(HWND hWnd,
 
         // Calculate the memory address of the hover item in the game
         // by adding an offset to the base address of the client
-        const auto g_hoverItem = *reinterpret_cast<unit**>(d2_client::get_base() + 0x1158F4);
+        const auto g_hoverItem = *reinterpret_cast<Unit**>(d2_client::get_base() + 0x1158F4);
 
         // Get the local player object from the Diablo 2 client
         const auto player = d2_client::get_local_player();
@@ -1227,7 +1227,7 @@ LRESULT ui_manager::wnd_proc(HWND hWnd,
 
       // Calculate the memory address of the hover item in the game
       // by adding an offset to the base address of the client
-      const auto g_hoverItem = *reinterpret_cast<unit**>(d2_client::get_base() + 0x1158F4);
+      const auto g_hoverItem = *reinterpret_cast<Unit**>(d2_client::get_base() + 0x1158F4);
 
       if (g_hoverItem != nullptr) {
         // Obtain the item record associated with the hovered item
@@ -1244,10 +1244,10 @@ LRESULT ui_manager::wnd_proc(HWND hWnd,
         auto itemtype_record_equiv2 = d2_common::get_item_type_record(itemtype_record->equiv2);
 
         // Initialize a vector to store items and pointers to specific items
-        std::vector<unit*> items;
-        unit* gemBag{};
-        unit* box{};
-        unit* harvester{};
+        std::vector<Unit*> items;
+        Unit* gemBag{};
+        Unit* box{};
+        Unit* harvester{};
 
         // get the gembag item
         for (auto item = player->inventory->first_item; item != nullptr;
@@ -1410,7 +1410,7 @@ LRESULT ui_manager::wnd_proc(HWND hWnd,
             d2_common::inv_remove_item(player->inventory, g_hoverItem);
 
             // Clear the hovered item after processing
-            (*reinterpret_cast<unit**>(d2_client::get_base() + 0x1158F4)) = nullptr;
+            (*reinterpret_cast<Unit**>(d2_client::get_base() + 0x1158F4)) = nullptr;
           }
         }
 
@@ -1494,7 +1494,7 @@ LRESULT ui_manager::wnd_proc(HWND hWnd,
             //h1packet.target_page = 0;
             //d2_client::send_to_server(&h1packet, sizeof h1packet);
 
-            (*reinterpret_cast<unit**>(d2_client::get_base() + 0x1158F4)) = nullptr;
+            (*reinterpret_cast<Unit**>(d2_client::get_base() + 0x1158F4)) = nullptr;
           }
         }
       }

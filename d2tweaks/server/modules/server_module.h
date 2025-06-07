@@ -4,7 +4,7 @@
 namespace diablo2 {
 namespace structures {
 struct Game;
-struct unit;
+struct Unit;
 }  // namespace structures
 }  // namespace diablo2
 
@@ -35,10 +35,10 @@ class server_module {
    * \return true - block further packet processing, false - pass packet to game
    */
   virtual bool handle_packet(Game* game,
-                             unit* player,
+                             Unit* player,
                              common::packet_header* packet);
   virtual void tick(Game* game,
-                    unit* unit);
+                    Unit* unit);
 };
 
 }  // namespace modules

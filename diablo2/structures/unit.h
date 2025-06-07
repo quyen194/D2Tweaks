@@ -108,7 +108,7 @@ struct D2CoordStrc  // sizeof 0x08
 };
 
 struct D2ItemDropStrc {
-  unit* pUnit;              // 0x00
+  Unit* pUnit;              // 0x00
   D2SeedStrc* pSeed;        // 0x04
   Game* pGame;              // 0x08
   int32_t nItemLvl;         // 0x0C
@@ -137,7 +137,7 @@ struct D2ItemDropStrc {
   uint32_t dwFlags2;        // 0x80
 };
 
-struct unit {
+struct Unit {
   unit_type_t type;
 
   union {
@@ -206,7 +206,7 @@ struct unit {
   };
 
   uint16_t update_type;
-  unit* update_unit;
+  Unit* update_unit;
 
   quest_record* quest_record;
   uint32_t sparky_chest;
@@ -259,9 +259,9 @@ struct unit {
 
   void* timer;
 
-  unit* change_next_unit;  //?
-  unit* prev_unit;
-  unit* prev_unit_in_room;
+  Unit* change_next_unit;  //?
+  Unit* prev_unit;
+  Unit* prev_unit_in_room;
 
   void* msg_first;
   void* msg_last;

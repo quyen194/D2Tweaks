@@ -33,7 +33,7 @@ namespace modules {
 MODULE_INIT(autosort)
 
 struct backup_item {
-  unit* item;
+  Unit* item;
   uint8_t x;
   uint8_t y;
 
@@ -79,7 +79,7 @@ void autosort::init() {
 }
 
 bool autosort::handle_packet(Game* game,
-  unit* player, common::packet_header* packet) {
+  Unit* player, common::packet_header* packet) {
   if (static_cast<common::inventory_sort_cs*>(packet)->remItem == 1) {
     d2_common::inv_remove_item(
         player->inventory,
@@ -105,7 +105,7 @@ bool autosort::handle_packet(Game* game,
   return true;
 }
 
-bool autosort::sort(Game* game, unit* player, uint8_t page) {
+bool autosort::sort(Game* game, Unit* player, uint8_t page) {
   static common::inventory_sort_sc packet;
   static auto& instance = singleton<server>::instance();
 
@@ -124,11 +124,11 @@ bool autosort::sort(Game* game, unit* player, uint8_t page) {
                                   0,
                                   static_cast<uint8_t>(inventoryWidth),
                                   static_cast<uint8_t>(inventoryHeight)}};
-  std::vector<unit*> items;
-  std::vector<unit*> charms;
+  std::vector<Unit*> items;
+  std::vector<Unit*> charms;
   std::vector<backup_item> backup_items;
-  std::unordered_map<uint32_t, std::vector<unit*>> items_typed;
-  std::unordered_map<uint32_t, std::vector<unit*>> charms_typed;
+  std::unordered_map<uint32_t, std::vector<Unit*>> items_typed;
+  std::unordered_map<uint32_t, std::vector<Unit*>> charms_typed;
   uint32_t occupied_cells = 0;
 
   for (auto item = player->inventory->first_item; item != nullptr;
@@ -368,7 +368,7 @@ bool autosort::sort(Game* game, unit* player, uint8_t page) {
 }
 
 bool autosort::find_free_space(inventory* inv,
-                               unit* item,
+                               Unit* item,
                                int32_t inventoryIndex,
                                char page,
                                uint32_t& x,
@@ -395,7 +395,7 @@ bool autosort::find_free_space(inventory* inv,
   if (page == 0x03 || page == 0x04) {
     for (x = 0; x < mx; x++) {
       for (y = 0; y < my; y++) {
-        unit* blockingUnit = nullptr;
+        Unit* blockingUnit = nullptr;
         uint32_t blockingUnitIndex = 0;
 
         if (d2_common::can_put_into_slot(inv,
@@ -414,7 +414,7 @@ bool autosort::find_free_space(inventory* inv,
     for (x = minValidX; x <= maxValidX - record->inv_width + 1; x++) {
       for (y = minValidY; y <= inventoryMaxValidY - record->inv_height + 1;
            y++) {
-        unit* blockingUnit = nullptr;
+        Unit* blockingUnit = nullptr;
         uint32_t blockingUnitIndex = 0;
 
         // Check if the item can be placed at the current position without
