@@ -14,7 +14,7 @@
 using namespace diablo2;
 using namespace diablo2::structures;
 
-extern gfxdata g_gfxdata;  // global gfxdata
+extern GfxData g_gfxdata;  // global gfxdata
 
 extern bool m_stats_enabled;
 extern bool m_help_enabled;

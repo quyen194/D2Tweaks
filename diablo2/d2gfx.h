@@ -7,7 +7,7 @@
 namespace diablo2 {
 
 namespace structures {
-struct gfxdata;
+struct GfxData;
 }
 
 class d2_gfx {
@@ -21,7 +21,7 @@ class d2_gfx {
                                            int32_t* adjustX,
                                            int32_t* adjustY);
   static int32_t get_resolution_mode();
-  static void draw_image(structures::gfxdata* data,
+  static void draw_image(structures::GfxData* data,
                          uint32_t x,
                          uint32_t y,
                          int32_t gamma,

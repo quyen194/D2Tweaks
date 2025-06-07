@@ -34,14 +34,14 @@ int32_t d2_gfx::get_resolution_mode() {
   return fn_get_resolution_mode();
 }
 
-void d2_gfx::draw_image(structures::gfxdata* data,
+void d2_gfx::draw_image(structures::GfxData* data,
                         uint32_t x,
                         uint32_t y,
                         int32_t gamma,
                         int32_t drawType,
                         void* palette) {
   static wrap_func_std_import<void(
-      structures::gfxdata*, uint32_t, uint32_t, int32_t, int32_t, void*)>
+      structures::GfxData*, uint32_t, uint32_t, int32_t, int32_t, void*)>
       fn_draw_image(10072, get_base());
   fn_draw_image(data, x, y, gamma, drawType, palette);
 }

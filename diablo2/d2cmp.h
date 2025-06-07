@@ -2,13 +2,13 @@
 
 namespace diablo2 {
 namespace structures {
-struct gfxdata;
+struct GfxData;
 
 class d2_cmp {
  public:
   static char* get_base();
 
-  static bool init_gfx_data(gfxdata* gfxdata);
+  static bool init_gfx_data(GfxData* gfxdata);
 };
 
 }  // namespace structures

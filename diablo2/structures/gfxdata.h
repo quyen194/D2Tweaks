@@ -7,7 +7,7 @@ namespace structures {
 struct cellfile;
 struct gfxcell;
 
-struct gfxdata {
+struct GfxData {
   gfxcell* cell_init;       // +00
   cellfile* cell_file;      // +04
   int32_t frame;            // +08
@@ -40,6 +40,6 @@ struct gfxdata {
   const char* name;         // +44
 };
 
-static_assert(sizeof(gfxdata) == 0x48);
+static_assert(sizeof(GfxData) == 0x48);
 }  // namespace structures
 }  // namespace diablo2

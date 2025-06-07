@@ -44,7 +44,7 @@ using namespace diablo2::structures;
 
 #define STB_IMAGE_IMPLEMENTATION
 
-gfxdata g_gfxdata; // global gfxdata
+GfxData g_gfxdata; // global gfxdata
 
 // Define a struct to hold key-value pairs within a section
 struct Section {

@@ -93,7 +93,7 @@ namespace client {
 namespace modules {
 
 common::asset* m_chips_asset;
-gfxdata m_chips_gfxdata;
+GfxData m_chips_gfxdata;
 
 loot_filter_settings_menu::loot_filter_settings_menu(token)
     : m_last_packet_sent(std::chrono::steady_clock::now()) {

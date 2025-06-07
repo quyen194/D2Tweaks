@@ -444,7 +444,7 @@ void damage_display::init() {
 
 void damage_display::handle_packet(common::packet_header* packet) {
   static auto& instance = singleton<client>::instance();
-  static gfxdata gfxdata;
+  static GfxData gfxdata;
   const auto player = d2_client::get_local_player();
   const auto info = static_cast<common::damage_info_sc*>(packet);
 

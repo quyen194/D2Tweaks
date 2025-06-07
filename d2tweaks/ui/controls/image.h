@@ -24,7 +24,7 @@ class image : public control {
   bool m_block_click;
 
   // object state
-  gfxdata m_draw_info;
+  GfxData m_draw_info;
 
  public:
   explicit image(menu* menu,

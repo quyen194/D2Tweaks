@@ -12,10 +12,10 @@ char* d2_cmp::get_base() {
   return base;
 }
 
-bool d2_cmp::init_gfx_data(gfxdata* pGfxdata) {
-  static wrap_func_std_import<BOOL(gfxdata*, int32_t, int32_t)> init_gfx_data(
+bool d2_cmp::init_gfx_data(GfxData* gfx_data) {
+  static wrap_func_std_import<BOOL(GfxData*, int32_t, int32_t)> init_gfx_data(
       10055, get_base());
-  return init_gfx_data(pGfxdata, 0, 1) > 0;
+  return init_gfx_data(gfx_data, 0, 1) > 0;
 }
 
 }  // namespace structures

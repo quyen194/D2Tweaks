@@ -5,7 +5,7 @@
 
 namespace diablo2 {
 namespace structures {
-struct gfxdata;
+struct GfxData;
 struct Unit;
 struct client_unit_list;
 struct cellfile;
@@ -69,7 +69,7 @@ class d2_client {
   static void send_to_server(void* data, size_t size);
   static void print_chat(wchar_t* string, uint32_t color);
 
-  static bool cache_gfx_data(gfxdata* gfxData,
+  static bool cache_gfx_data(GfxData* gfxData,
                              Unit* unit,
                              cellfile* cellfFile,
                              int32_t direction,
