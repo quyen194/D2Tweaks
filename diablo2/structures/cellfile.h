@@ -4,7 +4,7 @@
 
 namespace diablo2 {
 namespace structures {
-struct gfxcell;
+struct GfxCell;
 
 struct cellfile {
   int32_t version;  // 0x00
@@ -17,7 +17,7 @@ struct cellfile {
   int32_t termination;  // 0x0C
   int32_t numdirs;      // 0x10
   int32_t numcells;     // 0x14
-  gfxcell* cells[255];  // 0x18
+  GfxCell* cells[255];  // 0x18
 };
 }  // namespace structures
 }  // namespace diablo2

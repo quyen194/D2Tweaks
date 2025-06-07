@@ -4,7 +4,7 @@
 
 namespace diablo2 {
 namespace structures {
-struct gfxcell {
+struct GfxCell {
   int32_t version;
   int32_t width;
   int32_t height;
