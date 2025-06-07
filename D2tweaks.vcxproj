@@ -117,6 +117,7 @@
     <ClCompile Include="common\asm_code.cpp" />
     <ClCompile Include="common\bytes.cpp" />
     <ClCompile Include="common\config.cpp" />
+    <ClCompile Include="common\debug.cpp" />
     <ClCompile Include="common\file_ini.cpp" />
     <ClCompile Include="common\hooking.cpp" />
     <ClCompile Include="common\strings.cpp" />
@@ -186,6 +187,7 @@
     <None Include=".gitignore" />
     <None Include="build\!resources\d2tweaks.ini" />
     <None Include="build\!resources\d2tweaks\assets\buttons.dc6" />
+    <None Include="build\!resources\d2tweaks_debugger.ini" />
     <None Include="build\!resources\d2tweaks_tfwa_a2p17a.ini" />
     <None Include="build\D2tweaks_17.04.2024.rar" />
     <None Include="build\D2tweaks_18.04.2023.zip" />
@@ -201,6 +203,7 @@
     <ClInclude Include="common\asm_code.h" />
     <ClInclude Include="common\bytes.h" />
     <ClInclude Include="common\config.h" />
+    <ClInclude Include="common\debug.h" />
     <ClInclude Include="common\enum_helper.h" />
     <ClInclude Include="common\file_ini.h" />
     <ClInclude Include="common\get_default.h" />

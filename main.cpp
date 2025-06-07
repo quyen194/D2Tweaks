@@ -14,6 +14,7 @@
 #include <d2tweaks/ui/ui_utils.h>
 #include <DllNotify.h>
 #include <D2Template.h>
+#include "common/debug.h"
 
 using namespace d2_tweaks;
 
@@ -62,12 +63,7 @@ void initialize(uint32_t param) {
     exit(0);
   }
 
-#ifndef NDEBUG
-  MessageBox(ui::FindDiabloIIWindow(),
-             "Wait for debugger",
-             "D2TWeaks",
-             MB_OK);
-#endif
+  Debugger("Main").WaitForDebugger();
 
   singleton<common::common>::instance().init();
   singleton<server::server>::instance().init();

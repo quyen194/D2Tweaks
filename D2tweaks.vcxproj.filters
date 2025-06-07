@@ -68,6 +68,7 @@
     <ClCompile Include="common\bytes.cpp" />
     <ClCompile Include="d2tweaks\ui\ui_utils.cpp" />
     <ClCompile Include="common\file_ini.cpp" />
+    <ClCompile Include="common\debug.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\asm_code.h" />
@@ -191,6 +192,7 @@
     <ClInclude Include="include\macro.h" />
     <ClInclude Include="d2tweaks\ui\ui_utils.h" />
     <ClInclude Include="common\file_ini.h" />
+    <ClInclude Include="common\debug.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="vendor\minhook\dll_resources\MinHook.def" />
@@ -206,6 +208,7 @@
     <None Include="build\D2tweaks_17.04.2024.rar" />
     <None Include="build\D2tweaks_18.04.2023.zip" />
     <None Include="build\D2tweaks_27.04.2023.zip" />
+    <None Include="build\!resources\d2tweaks_debugger.ini" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resources.rc" />
