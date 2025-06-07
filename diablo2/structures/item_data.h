@@ -21,7 +21,7 @@ enum class item_quality_t : uint32_t {
   ITEM_QUALITY_COUNT
 };
 
-struct item_data {
+struct ItemData {
   // Offset from Code.
   item_quality_t quality;   // +00
   uint32_t seed_low;        // +04

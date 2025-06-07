@@ -3459,7 +3459,7 @@
 ////        player_data* player_data; //+70
 ////        monster_data* monster_data; //+70
 ////        object_data* object_data; //+70
-////        item_data* item_data; //+70
+////        ItemData* item_data; //+70
 ////    };
 ////    uint32_t _4a[4];
 ////    Inventory* inventory; //+84
@@ -3514,7 +3514,7 @@
 //        monster_data* monster_data;
 //        object_data* object_data;
 //        //missile_data* missile_data;
-//        item_data* item_data;
+//        ItemData* item_data;
 //    };
 //
 //    int8_t act;
@@ -3654,7 +3654,7 @@
 ////    union {
 ////        monster_data* monster_data;
 ////        object_data* object_data;
-////        item_data* item_data;
+////        ItemData* item_data;
 ////        player_data* player_data;
 ////    };                                    //+14
 ////    uint8_t        act;                    //+18

@@ -17,7 +17,7 @@ struct Inventory;
 struct stats;
 struct path;
 struct player_data;
-struct item_data;
+struct ItemData;
 struct object_data;
 struct monster_data;
 struct drlg_act;
@@ -154,7 +154,7 @@ struct Unit {
     monster_data* monster_data;
     object_data* object_data;
     // missile_data* missile_data;
-    item_data* item_data;
+    ItemData* item_data;
   };
 
   int8_t act;
