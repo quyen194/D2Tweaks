@@ -4,7 +4,7 @@
 
 namespace diablo2 {
 namespace structures {
-struct damage {
+struct Damage {
   int32_t hit_flags;            // 0x00
   int16_t result_flags;         // 0x04
   int16_t extra;                // 0x06

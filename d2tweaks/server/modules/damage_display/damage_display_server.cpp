@@ -31,14 +31,14 @@ static char(__fastcall* g_apply_attack_results_origin)(Game* game,
                                                        Unit* attacker,
                                                        Unit* defender,
                                                        BOOL recalculateDamage,
-                                                       damage* dmg);
+                                                       Damage* dmg);
 
 #define PRINT_DMG_DELIMITER(name, delimiter) \
   if (dmg->name > 0)                         \
   spdlog::debug(#name ": {0}", dmg->name / delimiter)
 #define PRINT_DMG(name) PRINT_DMG_DELIMITER(name, 256)
 
-common::damage_type_t get_damage_type(damage* dmg) {
+common::damage_type_t get_damage_type(Damage* dmg) {
   uint32_t damage[common::DAMAGE_TYPE_COUNT]{0};
 
   if (dmg == nullptr || dmg->dmg_total == 0)
@@ -67,7 +67,7 @@ common::damage_type_t get_damage_type(damage* dmg) {
 
 static void send_damage_data(Unit* defender,
   NetClient* client,
-  damage* dmg) {
+  Damage* dmg) {
   static auto& instance = singleton<server>::instance();
   static common::damage_info_sc packet;
 
@@ -237,7 +237,7 @@ static Unit* get_pet_owner(Game* pGame, Unit* pUnit) {
 
 static void process_players_damage(Unit* attacker,
                                    Unit* defender,
-                                   damage* dmg) {
+                                   Damage* dmg) {
   NetClient* client = nullptr;
 
   if (attacker->type == unit_type_t::UNIT_TYPE_PLAYER)
@@ -251,7 +251,7 @@ static void process_players_damage(Unit* attacker,
 static void process_hireling_damage(Game* game,
                                     Unit* attacker,
                                     Unit* defender,
-                                    damage* dmg) {
+                                    Damage* dmg) {
   Unit* owner = nullptr;
 
   if (attacker->is_hireling()) {
@@ -269,7 +269,7 @@ static void process_hireling_damage(Game* game,
 static void process_pet_damage(Game* game,
                                Unit* attacker,
                                Unit* defender,
-                               damage* dmg) {
+                               Damage* dmg) {
   Unit* owner = nullptr;
 
   if (attacker->is_pet()) {
@@ -288,7 +288,7 @@ static char __fastcall apply_attack_results(Game* game,
                                             Unit* attacker,
                                             Unit* defender,
                                             BOOL recalculateDamage,
-                                            damage* dmg) {
+                                            Damage* dmg) {
   static auto& instance = singleton<server>::instance();
 
   static char result = 0;
