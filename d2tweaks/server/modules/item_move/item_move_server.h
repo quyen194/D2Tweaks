@@ -10,7 +10,7 @@
 namespace diablo2 {
 namespace structures {
 struct inventory;
-struct game;
+struct Game;
 struct unit;
 }  // namespace structures
 }  // namespace diablo2
@@ -24,7 +24,7 @@ class item_move final : public server_module {
  public:
   void init() override;
 
-  bool handle_packet(game* game,
+  bool handle_packet(Game* game,
                      unit* player,
                      common::packet_header* packet) override;
 

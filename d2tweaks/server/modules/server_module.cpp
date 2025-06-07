@@ -10,13 +10,13 @@ server_module::server_module() {
   singleton<server>::instance().register_module(this);
 }
 
-bool server_module::handle_packet(game* game,
+bool server_module::handle_packet(Game* game,
                                   unit* player,
                                   common::packet_header* packet) {
   return false;
 }
 
-void server_module::tick(game* game, unit* unit) {}
+void server_module::tick(Game* game, unit* unit) {}
 
 }  // namespace modules
 }  // namespace server

@@ -55,7 +55,7 @@ void transmute::init() {
 // topfunc d2game:$62130 int __fastcall CRAFT_Transmogrify(D2GameStrc* pGame, D2UnitStrc* pPlayer)
 // subfunc d2game:$0x60010 int __fastcall CRAFT_Transmogrify(D2GameStrc* pGame, D2UnitStrc* pPlayer, D2CubemainTXT* pCubeTxt, void* pUnknown)
 
-void transmute::tick(game* game, unit* unit) {
+void transmute::tick(Game* game, unit* unit) {
   return;
 }
 
@@ -72,7 +72,7 @@ inline uint64_t TimeEnd() {
   }
 }
 
-bool transmute::handle_packet(game* game,
+bool transmute::handle_packet(Game* game,
                               unit* player,
                               common::packet_header* packet) {
   const auto income_packet_cs = static_cast<common::transmute_info_cs*>(packet);
@@ -105,7 +105,7 @@ bool transmute::handle_packet(game* game,
   return true;
 }
 
-bool transmute::move_item_to(game* game,
+bool transmute::move_item_to(Game* game,
                              unit* player,
                              common::packet_header* packet) {
   static common::transmute_info_sc resp;

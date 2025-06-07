@@ -150,7 +150,7 @@ void trader_update::init() {
   }
 }
 
-void trader_update::tick(game* game, unit* unit) {
+void trader_update::tick(Game* game, unit* unit) {
   return;
 }
 
@@ -159,7 +159,7 @@ struct ClientFromNumber {
   net_client* net_cleint;
 };
 
-bool trader_update::handle_packet(game* game,
+bool trader_update::handle_packet(Game* game,
                                   unit* player,
                                   common::packet_header* packet) {
   const auto income_packet_cs = static_cast<common::trader_update_cs*>(packet);

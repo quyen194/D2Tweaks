@@ -29,11 +29,11 @@ static unsigned int g_item_Unique = 0;
 static unsigned int g_item_Crafted = 0;
 static unsigned int g_item_Tempered = 0;
 
-static uint32_t(__fastcall* g_pickup_item_original)(game*,
+static uint32_t(__fastcall* g_pickup_item_original)(Game*,
                                                     unit*,
                                                     uint32_t,
                                                     uint32_t);
-static uint32_t __fastcall pickup_item(game* game,
+static uint32_t __fastcall pickup_item(Game* game,
                                        unit* player,
                                        uint32_t guid,
                                        uint32_t a4) {
@@ -78,11 +78,11 @@ static uint32_t __fastcall pickup_item(game* game,
   return g_pickup_item_original(game, player, guid, a4);
 }
 
-static uint32_t(__fastcall* g_pickup_item_cursor_original)(game*,
+static uint32_t(__fastcall* g_pickup_item_cursor_original)(Game*,
                                                            unit*,
                                                            uint32_t,
                                                            uint32_t);
-static uint32_t __fastcall pickup_item_cursor(game* game,
+static uint32_t __fastcall pickup_item_cursor(Game* game,
                                               unit* player,
                                               uint32_t guid,
                                               uint32_t a4) {

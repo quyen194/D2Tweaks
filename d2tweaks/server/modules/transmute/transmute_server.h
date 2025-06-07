@@ -7,7 +7,7 @@
 namespace diablo2 {
 namespace structures {
 struct inventory;
-struct game;
+struct Game;
 struct unit;
 }  // namespace structures
 }  // namespace diablo2
@@ -20,8 +20,8 @@ namespace modules {
 class transmute final : public server_module {
  public:
   void init() override;
-  void tick(game* game, unit* unit) override;
-  bool handle_packet(game* game,
+  void tick(Game* game, unit* unit) override;
+  bool handle_packet(Game* game,
                      unit* player,
                      common::packet_header* packet) override;
 
@@ -32,8 +32,8 @@ class transmute final : public server_module {
                        char page,
                        uint32_t& x,
                        uint32_t& y);
-  bool send_to_cube(game* game, unit* player, unit* item);
-  bool move_item_to(game* game, unit* player, common::packet_header* packet);
+  bool send_to_cube(Game* game, unit* player, unit* item);
+  bool move_item_to(Game* game, unit* player, common::packet_header* packet);
 };
 }  // namespace modules
 }  // namespace server

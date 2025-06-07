@@ -11,7 +11,7 @@ namespace structures {
 
 struct game_server;
 struct net_client;
-struct game;
+struct Game;
 struct unit;
 
 struct D2MonPropTxt {
@@ -223,62 +223,62 @@ class d2_game {
   static uint32_t* get_game_id_array_end();
 
   static game_server* get_game_server();
-  static game* get_game(game_server* gs, uint32_t gameId);
+  static Game* get_game(game_server* gs, uint32_t gameId);
 
-  static game* get_game_from_client_id(int32_t id);
-  static net_client* get_net_client_from_id(game* pGame, int32_t id);
-  static net_client* d2_game::get_net_client_from_id_2(game* pGame, int32_t id);
+  static Game* get_game_from_client_id(int32_t id);
+  static net_client* get_net_client_from_id(Game* pGame, int32_t id);
+  static net_client* d2_game::get_net_client_from_id_2(Game* pGame, int32_t id);
 
-  static unit* get_player_pet(game* pGame,
+  static unit* get_player_pet(Game* pGame,
                               unit* pUnit,
                               uint32_t type,
                               uint32_t index);
 
-  static unit* get_server_unit(game* pGame,
+  static unit* get_server_unit(Game* pGame,
                                unit_type_t type,
                                uint32_t uniqueid);
-  static npc_record* d2_game::get_npc_record(game* pGame,
+  static npc_record* d2_game::get_npc_record(Game* pGame,
                                              unit* pNpc,
                                              unit** ptNpc);
-  static void d2_game::free_gamble(game* pGame,
+  static void d2_game::free_gamble(Game* pGame,
                                    unit* pPlayer,
                                    unit* pNpc,
                                    npc_record* npcrecord);
-  static void d2_game::fill_gamble(game* pGame,
+  static void d2_game::fill_gamble(Game* pGame,
                                    unit* pPlayer,
                                    unit* pNpc,
                                    npc_record* npcrecord);
   static void d2_game::create_vendor_cache1(
-      game* pGame, unit* pPlayer, unit* pNpc, uint32_t param, bool bGamble);
+      Game* pGame, unit* pPlayer, unit* pNpc, uint32_t param, bool bGamble);
   static void d2_game::create_vendor_cache2(
-      game* pGame, unit* pPlayer, unit* pNpc, uint32_t param, bool bGamble);
+      Game* pGame, unit* pPlayer, unit* pNpc, uint32_t param, bool bGamble);
 
-  static int32_t identify_item(game* pGame, unit* pPlayer, unit* item);
-  static int32_t pickup_gold_pile(game* pGame, unit* pUnit, unit* pItem);
-  //static int32_t pickup_item(game* pGame, unit* pUnit, unit* item);
-  static bool __fastcall pickup_item(game* pGame,
+  static int32_t identify_item(Game* pGame, unit* pPlayer, unit* item);
+  static int32_t pickup_gold_pile(Game* pGame, unit* pUnit, unit* pItem);
+  //static int32_t pickup_item(Game* pGame, unit* pUnit, unit* item);
+  static bool __fastcall pickup_item(Game* pGame,
                                      unit* pPlayer,
                                      uint32_t guid,
                                      uint32_t* ptrItemCarried);
-  static unit* get_unit_owner(game* pGame, unit* pUnit);
+  static unit* get_unit_owner(Game* pGame, unit* pUnit);
   static void* iterate_unit_pets(
-      game* pGame,
+      Game* pGame,
       unit* pUnit,
-      const std::function<void(game*, unit*, unit*)>& cb);
+      const std::function<void(Game*, unit*, unit*)>& cb);
 
-  static void update_inventory_items(game* pGame, unit* pPlayer);
-  static uint32_t __fastcall d2_game::transmogrify(game* pGame, unit* pPlayer);
+  static void update_inventory_items(Game* pGame, unit* pPlayer);
+  static uint32_t __fastcall d2_game::transmogrify(Game* pGame, unit* pPlayer);
 
   //D2Game.0x6FC4ED80
   static unit* __fastcall D2GAME_CreateItemEx_6FC4ED80(
-      game* pGame, D2ItemDropStrc* pItemDrop, int32_t a3);
+      Game* pGame, D2ItemDropStrc* pItemDrop, int32_t a3);
 
   //D2Game.0x6FC4A660
-  static int32_t __fastcall d2_game::D2GAME_Transmogrify_6FC4A660(game* pGame,
+  static int32_t __fastcall d2_game::D2GAME_Transmogrify_6FC4A660(Game* pGame,
                                                                   unit* pPlayer,
                                                                   unit* pItem);
 
-  static unit* __fastcall d2_game::QUESTS_CreateItem(game* pGame,
+  static unit* __fastcall d2_game::QUESTS_CreateItem(Game* pGame,
                                                      unit* pPlayer,
                                                      uint32_t dwCode,
                                                      int32_t nLevel,
@@ -293,7 +293,7 @@ class d2_game {
   // add wrapper for //D2Game.0x6FCBC900
   // D2UnitStrc* __stdcall SUNIT_GetTargetUnit(
   //     D2GameStrc* pGame, D2UnitStrc* pUnit)
-  static unit* __stdcall d2_game::SUNIT_GetTargetUnit(game* pGame, unit* pUnit);
+  static unit* __stdcall d2_game::SUNIT_GetTargetUnit(Game* pGame, unit* pUnit);
 
   // D2Game.0x6FCF5B90
   // D2SkillsTxt* __fastcall SKILLS_GetSkillsTxtRecord(int32_t nSkillId)
@@ -323,7 +323,7 @@ class d2_game {
   //     D2GameStrc* pGame,
   //     D2SummonArgStrc* pSummonArg)
   static unit* __fastcall d2_game::D2GAME_SummonPet_6FD14430(
-      game* pGame, D2SummonArgStrc* pSummonArg);
+      Game* pGame, D2SummonArgStrc* pSummonArg);
 
   // D2Game.0x6FD0CB10
   // int32_t __fastcall D2GAME_SKILLS_SetSummonBaseStats_6FD0CB10(
@@ -333,7 +333,7 @@ class d2_game {
   //     int32_t nPetLevelArg,
   //     int32_t nSkillLevel)
   static int32_t __fastcall d2_game::D2GAME_SKILLS_SetSummonBaseStats_6FD0CB10(
-      game* pGame,
+      Game* pGame,
       unit* pUnit,
       unit* pPet,
       int32_t nPetLevelArg,
@@ -348,7 +348,7 @@ class d2_game {
   //     int32_t nSkillLevel,
   //     int32_t nItemLevel)
   static int32_t __fastcall d2_game::D2GAME_SetSummonPassiveStats_6FD0C530(
-      game* pGame,
+      Game* pGame,
       unit* pUnit,
       unit* pPet,
       int32_t nSkillId,
@@ -377,7 +377,7 @@ class d2_game {
   //     int32_t a7,
   //     int16_t nFlags)
   static unit* __fastcall d2_game::D2GAME_SpawnMonster_6FC69F10(
-      game* pGame,
+      Game* pGame,
       room* pRoom,
       int32_t nX,
       int32_t nY,

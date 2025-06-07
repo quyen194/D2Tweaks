@@ -26,102 +26,102 @@ void d2_game::enqueue_packet(net_client* client, void* packet, size_t size) {
   enqueue_packet(client, packet, size);
 }
 
-npc_record* d2_game::get_npc_record(game* pGame, unit* npc, unit** ptnpc) {
-  static wrap_func_fast<npc_record*(game*, unit*, unit**)> get_npc_record(
+npc_record* d2_game::get_npc_record(Game* pGame, unit* npc, unit** ptnpc) {
+  static wrap_func_fast<npc_record*(Game*, unit*, unit**)> get_npc_record(
       0x9B910, get_base());
   return get_npc_record(pGame, npc, ptnpc);
 }
 
-void d2_game::free_gamble(game* pGame,
+void d2_game::free_gamble(Game* pGame,
                           unit* player,
                           unit* npc,
                           npc_record* npcrecord) {
-  static wrap_func_fast<void(game*, unit*, unit*, npc_record*)> free_gamble(
+  static wrap_func_fast<void(Game*, unit*, unit*, npc_record*)> free_gamble(
       0x9D190, get_base());
   free_gamble(pGame, player, npc, npcrecord);
 }
 
-void d2_game::fill_gamble(game* pGame,
+void d2_game::fill_gamble(Game* pGame,
                           unit* player,
                           unit* npc,
                           npc_record* npcrecord) {
-  static wrap_func_fast<void(game*, unit*, unit*, npc_record*)> fill_gamble(
+  static wrap_func_fast<void(Game*, unit*, unit*, npc_record*)> fill_gamble(
       0x9A9F0, get_base());
   fill_gamble(pGame, player, npc, npcrecord);
 }
 
 void d2_game::create_vendor_cache1(
-    game* pGame, unit* player, unit* npc, uint32_t param, bool bGamble) {
-  static wrap_func_fast<void(game*, unit*, unit*, uint32_t, bool)>
+    Game* pGame, unit* player, unit* npc, uint32_t param, bool bGamble) {
+  static wrap_func_fast<void(Game*, unit*, unit*, uint32_t, bool)>
       create_vendor_cache1(0x974F0, get_base());
   create_vendor_cache1(pGame, player, npc, param, bGamble);
 }
 
 void d2_game::create_vendor_cache2(
-    game* pGame, unit* pPlayer, unit* pNpc, uint32_t param, bool bGamble) {
-  static wrap_func_fast<void(game*, unit*, unit*, uint32_t, bool)>
+    Game* pGame, unit* pPlayer, unit* pNpc, uint32_t param, bool bGamble) {
+  static wrap_func_fast<void(Game*, unit*, unit*, uint32_t, bool)>
       create_vendor_cache2(0x9AE20, get_base());
   create_vendor_cache2(pGame, pPlayer, pNpc, param, bGamble);
 }
 
-unit* d2_game::get_server_unit(game* pGame,
+unit* d2_game::get_server_unit(Game* pGame,
                                unit_type_t type,
                                uint32_t uniqueid) {
-  static wrap_func_fast<unit*(game*, unit_type_t, uint32_t)> get_server_unit(
+  static wrap_func_fast<unit*(Game*, unit_type_t, uint32_t)> get_server_unit(
       0x8BB00, get_base());
   return get_server_unit(pGame, type, uniqueid);
 }
 
-game* d2_game::get_game_from_client_id(int32_t id) {
-  static wrap_func_fast<game*(int32_t)> get_game_from_client_id(0x94E0,
+Game* d2_game::get_game_from_client_id(int32_t id) {
+  static wrap_func_fast<Game*(int32_t)> get_game_from_client_id(0x94E0,
                                                                 get_base());
   return get_game_from_client_id(id);
 }
 
 // __fastcall D2CLIENTS_GetClientByClientNumber(pGame, int nNumber)
-net_client* d2_game::get_net_client_from_id(game* pGame, int32_t id) {
-  static wrap_func_fast<net_client*(game*, int32_t)> get_net_client_from_id(
+net_client* d2_game::get_net_client_from_id(Game* pGame, int32_t id) {
+  static wrap_func_fast<net_client*(Game*, int32_t)> get_net_client_from_id(
       0x1DE0, get_base());
   return get_net_client_from_id(pGame, id);
 }
 
-net_client* d2_game::get_net_client_from_id_2(game* pGame, int32_t id) {
-  static wrap_func_fast<net_client*(game*, int32_t)> get_net_client_from_id_2(
+net_client* d2_game::get_net_client_from_id_2(Game* pGame, int32_t id) {
+  static wrap_func_fast<net_client*(Game*, int32_t)> get_net_client_from_id_2(
       0x37B0, get_base());
   return get_net_client_from_id_2(pGame, id);
 }
 
-unit* d2_game::get_player_pet(game* pGame,
+unit* d2_game::get_player_pet(Game* pGame,
                               unit* pUnit,
   uint32_t type, uint32_t index) {
-  static wrap_func_fast<unit*(game*, unit*, uint32_t, uint32_t)> get_player_pet(
+  static wrap_func_fast<unit*(Game*, unit*, uint32_t, uint32_t)> get_player_pet(
       0x4E8B0, get_base());
   return get_player_pet(pGame, pUnit, type, index);
 }
 
-int32_t d2_game::identify_item(game* pGame, unit* player, unit* item) {
-  static wrap_func_fast<int32_t(game*, unit*, unit*)> identify_item(0x19670,
+int32_t d2_game::identify_item(Game* pGame, unit* player, unit* item) {
+  static wrap_func_fast<int32_t(Game*, unit*, unit*)> identify_item(0x19670,
                                                                     get_base());
   return identify_item(pGame, player, item);
 }
 
-int32_t d2_game::pickup_gold_pile(game* pGame, unit* pUnit, unit* pItem) {
-  static wrap_func_fast<int32_t(game*, unit*, unit*)> pickup_gold_pile(
+int32_t d2_game::pickup_gold_pile(Game* pGame, unit* pUnit, unit* pItem) {
+  static wrap_func_fast<int32_t(Game*, unit*, unit*)> pickup_gold_pile(
       0x12DD0, get_base());
   return pickup_gold_pile(pGame, pUnit, pItem);
 }
 
-bool __fastcall d2_game::pickup_item(game* pGame,
+bool __fastcall d2_game::pickup_item(Game* pGame,
                                      unit* pPlayer,
                                      uint32_t guid,
                                      uint32_t* ptrNull) {
-  static wrap_func_fast<bool(game*, unit*, uint32_t, uint32_t*)> pickup_item(
+  static wrap_func_fast<bool(Game*, unit*, uint32_t, uint32_t*)> pickup_item(
       0x13340, get_base());
   return pickup_item(pGame, pPlayer, guid, ptrNull);
 }
 
-void d2_game::update_inventory_items(game* pGame, unit* player) {
-  static wrap_func_fast<void(game*, unit*, uint32_t)> update_inventory_items(
+void d2_game::update_inventory_items(Game* pGame, unit* player) {
+  static wrap_func_fast<void(Game*, unit*, uint32_t)> update_inventory_items(
       0x14A90, get_base());
   update_inventory_items(pGame, player, 0);
 }
@@ -141,43 +141,43 @@ game_server* d2_game::get_game_server() {
   return *game_server;
 }
 
-static game*(__thiscall* g_get_game)(game_server* gs, uint32_t gameId, void*) =
+static Game*(__thiscall* g_get_game)(game_server* gs, uint32_t gameId, void*) =
     decltype(g_get_game)(0xB6A0 + d2_game::get_base());
 
-game* d2_game::get_game(game_server* gs, uint32_t gameId) {
-  static wrap_func_std<game*(uint32_t, void*)> get_game(0xB6A0, get_base());
+Game* d2_game::get_game(game_server* gs, uint32_t gameId) {
+  static wrap_func_std<Game*(uint32_t, void*)> get_game(0xB6A0, get_base());
   return g_get_game(gs, gameId, reinterpret_cast<char*>(gs) + 0x44);
 }
 
-unit* d2_game::get_unit_owner(game* pGame, unit* pUnit) {
-  static wrap_func_fast<unit*(game*, unit*)> get_unit_owner(0x8BB70,
+unit* d2_game::get_unit_owner(Game* pGame, unit* pUnit) {
+  static wrap_func_fast<unit*(Game*, unit*)> get_unit_owner(0x8BB70,
                                                             get_base());
   return get_unit_owner(pGame, pUnit);
 }
 
-static void __fastcall unit_pet_iterator(game* pGame,
+static void __fastcall unit_pet_iterator(Game* pGame,
                                          unit* owner,
                                          unit* pUnit,
                                          void* arg) {
-  const std::function<void(game*, unit*, unit*)>* cb =
+  const std::function<void(Game*, unit*, unit*)>* cb =
       reinterpret_cast<decltype(cb)>(arg);
   cb->operator()(pGame, owner, pUnit);
 }
 
 void* d2_game::iterate_unit_pets(
-    game* pGame,
+    Game* pGame,
     unit* pUnit,
-    const std::function<void(game*, unit*, unit*)>& cb) {
+    const std::function<void(Game*, unit*, unit*)>& cb) {
   static wrap_func_fast<void*(
-      game*, unit*, void(__fastcall*)(game*, unit*, unit*, void*), void*)>
+      Game*, unit*, void(__fastcall*)(Game*, unit*, unit*, void*), void*)>
       iterate_unit_pets(0x4E7C0, get_base());
   const auto cbref = &cb;
   // ReSharper disable once CppCStyleCast
   return iterate_unit_pets(pGame, pUnit, unit_pet_iterator, (void*) cbref);
 }
 
-uint32_t __fastcall d2_game::transmogrify(game* pGame, unit* pPlayer) {
-  static wrap_func_fast<uint32_t(game*, unit*)> transmogrify(0x62130,
+uint32_t __fastcall d2_game::transmogrify(Game* pGame, unit* pPlayer) {
+  static wrap_func_fast<uint32_t(Game*, unit*)> transmogrify(0x62130,
                                                              get_base());
   return transmogrify(pGame, pPlayer);
 }
@@ -189,12 +189,12 @@ uint32_t __fastcall d2_game::transmogrify(game* pGame, unit* pPlayer) {
 //                                  void* pUnknown)
 
 // Add a wrapper for the following function:
-// unit* __fastcall D2GAME_CreateItemEx_6FC4ED80(game* pGame,
+// unit* __fastcall D2GAME_CreateItemEx_6FC4ED80(Game* pGame,
 //                                               D2ItemDropStrc* pItemDrop,
 //                                               int32_t a3);
 unit* __fastcall d2_game::D2GAME_CreateItemEx_6FC4ED80(
-    game* pGame, D2ItemDropStrc* pItemDrop, int32_t a3) {
-  static wrap_func_fast<unit*(game*, D2ItemDropStrc*, int32_t)>
+    Game* pGame, D2ItemDropStrc* pItemDrop, int32_t a3) {
+  static wrap_func_fast<unit*(Game*, D2ItemDropStrc*, int32_t)>
       D2GAME_CreateItemEx_6FC4ED80(0x1ed80, get_base());
   return D2GAME_CreateItemEx_6FC4ED80(pGame, pItemDrop, a3);
 }
@@ -204,10 +204,10 @@ unit* __fastcall d2_game::D2GAME_CreateItemEx_6FC4ED80(
 // int32_t __fastcall D2GAME_Transmogrify_6FC4A660(D2GameStrc* pGame,
 //                                                 D2UnitStrc* pUnit,
 //                                                 D2UnitStrc* pItem);
-int32_t __fastcall d2_game::D2GAME_Transmogrify_6FC4A660(game* pGame,
+int32_t __fastcall d2_game::D2GAME_Transmogrify_6FC4A660(Game* pGame,
                                                          unit* pPlayer,
                                                          unit* pItem) {
-  static wrap_func_fast<int32_t(game*, unit*, unit*)>
+  static wrap_func_fast<int32_t(Game*, unit*, unit*)>
       D2GAME_Transmogrify_6FC4A660(0x1a660, get_base());
   return D2GAME_Transmogrify_6FC4A660(pGame, pPlayer, pItem);
 }
@@ -219,14 +219,14 @@ int32_t __fastcall d2_game::D2GAME_Transmogrify_6FC4A660(game* pGame,
 //                                          int32_t nLevel,
 //                                          uint8_t nQuality,
 //                                          int32_t bDroppable);
-unit* __fastcall d2_game::QUESTS_CreateItem(game* pGame,
+unit* __fastcall d2_game::QUESTS_CreateItem(Game* pGame,
                                             unit* pPlayer,
                                             uint32_t dwCode,
                                             int32_t nLevel,
                                             uint8_t nQuality,
                                             int32_t bDroppable) {
   static wrap_func_fast<unit*(
-      game*, unit*, uint32_t, int32_t, uint8_t, int32_t)>
+      Game*, unit*, uint32_t, int32_t, uint8_t, int32_t)>
       QUESTS_CreateItem(0x65DF0, get_base());
   return QUESTS_CreateItem(
       pGame, pPlayer, dwCode, nLevel, nQuality, bDroppable);
@@ -242,8 +242,8 @@ D2MonPropTxt* __fastcall d2_game::MONSTER_GetMonPropTxtRecord(int32_t nId) {
 
 // add wrapper for //D2Game.0x6FCBC900
 // D2UnitStrc* __stdcall SUNIT_GetTargetUnit(D2GameStrc* pGame, D2UnitStrc* pUnit);
-unit* __stdcall d2_game::SUNIT_GetTargetUnit(game* pGame, unit* pUnit) {
-  static wrap_func_std<unit*(game*, unit*)> SUNIT_GetTargetUnit(0x8C900,
+unit* __stdcall d2_game::SUNIT_GetTargetUnit(Game* pGame, unit* pUnit) {
+  static wrap_func_std<unit*(Game*, unit*)> SUNIT_GetTargetUnit(0x8C900,
                                                                 get_base());
   return SUNIT_GetTargetUnit(pGame, pUnit);
 }
@@ -283,8 +283,8 @@ int32_t __fastcall d2_game::D2GAME_GetSummonIdFromSkill_6FD15580(
 // D2UnitStrc* __fastcall D2GAME_SummonPet_6FD14430(D2GameStrc* pGame,
 //                                                  D2SummonArgStrc* pSummonArg);
 unit* __fastcall d2_game::D2GAME_SummonPet_6FD14430(
-    game* pGame, D2SummonArgStrc* pSummonArg) {
-  static wrap_func_fast<unit*(game*, D2SummonArgStrc*)>
+    Game* pGame, D2SummonArgStrc* pSummonArg) {
+  static wrap_func_fast<unit*(Game*, D2SummonArgStrc*)>
       D2GAME_SummonPet_6FD14430(0xE4430, get_base());
   return D2GAME_SummonPet_6FD14430(pGame, pSummonArg);
 }
@@ -297,12 +297,12 @@ unit* __fastcall d2_game::D2GAME_SummonPet_6FD14430(
 //     int32_t nPetLevelArg,
 //     int32_t nSkillLevel);
 int32_t __fastcall d2_game::D2GAME_SKILLS_SetSummonBaseStats_6FD0CB10(
-    game* pGame,
+    Game* pGame,
     unit* pUnit,
     unit* pPet,
     int32_t nPetLevelArg,
     int32_t nSkillLevel) {
-  static wrap_func_fast<int32_t(game*, unit*, unit*, int32_t, int32_t)>
+  static wrap_func_fast<int32_t(Game*, unit*, unit*, int32_t, int32_t)>
       D2GAME_SKILLS_SetSummonBaseStats_6FD0CB10(D2GAME_GetOffset(0x6FD0CB10),
                                                 get_base());
   return D2GAME_SKILLS_SetSummonBaseStats_6FD0CB10(
@@ -318,13 +318,13 @@ int32_t __fastcall d2_game::D2GAME_SKILLS_SetSummonBaseStats_6FD0CB10(
 //                                                          int32_t nItemLevel);
 // use D2GAME_GetOffset(0x6FD0C530)
 int32_t __fastcall d2_game::D2GAME_SetSummonPassiveStats_6FD0C530(
-    game* pGame,
+    Game* pGame,
     unit* pUnit,
     unit* pPet,
     int32_t nSkillId,
     int32_t nSkillLevel,
     int32_t nItemLevel) {
-  static wrap_func_fast<int32_t(game*, unit*, unit*, int32_t, int32_t, int32_t)>
+  static wrap_func_fast<int32_t(Game*, unit*, unit*, int32_t, int32_t, int32_t)>
       D2GAME_SetSummonPassiveStats_6FD0C530(D2GAME_GetOffset(0x6FD0C530),
                                             get_base());
   return D2GAME_SetSummonPassiveStats_6FD0C530(
@@ -358,7 +358,7 @@ void __fastcall d2_game::sub_6FC3E200(net_client* pClient, unit* pUnit) {
 //                                                     int32_t nAnimMode,
 //                                                     int32_t a7,
 //                                                     int16_t nFlags);
-unit* __fastcall d2_game::D2GAME_SpawnMonster_6FC69F10(game* pGame,
+unit* __fastcall d2_game::D2GAME_SpawnMonster_6FC69F10(Game* pGame,
                                                        room* pRoom,
                                                        int32_t nX,
                                                        int32_t nY,
@@ -367,7 +367,7 @@ unit* __fastcall d2_game::D2GAME_SpawnMonster_6FC69F10(game* pGame,
                                                        int32_t a7,
                                                        int16_t nFlags) {
   static wrap_func_fast<unit*(
-      game*, room*, int32_t, int32_t, int32_t, int32_t, int32_t, int16_t)>
+      Game*, room*, int32_t, int32_t, int32_t, int32_t, int32_t, int16_t)>
       D2GAME_SpawnMonster_6FC69F10(D2GAME_GetOffset(0x6FC69F10), get_base());
   return D2GAME_SpawnMonster_6FC69F10(
       pGame, pRoom, nX, nY, nMonsterId, nAnimMode, a7, nFlags);

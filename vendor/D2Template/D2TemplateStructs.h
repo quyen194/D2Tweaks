@@ -3573,7 +3573,7 @@
 //    void* timer_args;
 //
 //    union {
-//        game* game;
+//        Game* game;
 //        uint32_t sound_sync;
 //    };
 //
@@ -3679,7 +3679,7 @@
 ////    uint8_t        pad1[0x24];
 ////    inventory* inventory;         //+84  //+60
 ////    uint8_t        uk5[0x1C];                //+64
-////    game* game;                    //+80
+////    Game* game;                    //+80
 ////    uint8_t        uk6[0x24];                //+84
 ////    skills* skills;                //+A8
 ////    void* pt_combat_data;            //+AC
@@ -3873,7 +3873,7 @@
 //    uint32_t    counter;                    //+184
 //    uint32_t    current_size;                //+188
 //    uint8_t    uk4[0x1C];                    //+18C
-//    game* game;                        //+1A8
+//    Game* game;                        //+1A8
 //    //+1A8 is ptGame
 //    //+4A8 ptNextClient
 ///*

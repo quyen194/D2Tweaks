@@ -11,11 +11,11 @@ namespace modules {
 class auto_gold_pickup final : public server_module {
  public:
   void init() override;
-  void tick(game* game, unit* unit) override;
-  bool handle_packet(game* game,
+  void tick(Game* game, unit* unit) override;
+  bool handle_packet(Game* game,
                      unit* player,
                      common::packet_header* packet) override;
-  bool au_pickup_gold(game* game, unit* pUnit, unit* item);
+  bool au_pickup_gold(Game* game, unit* pUnit, unit* item);
 };
 
 }  // namespace modules

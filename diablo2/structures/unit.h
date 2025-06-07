@@ -12,7 +12,7 @@ namespace structures {
 #pragma pack(push, 1)
 
 struct skills;
-struct game;
+struct Game;
 struct inventory;
 struct stats;
 struct path;
@@ -110,7 +110,7 @@ struct D2CoordStrc  // sizeof 0x08
 struct D2ItemDropStrc {
   unit* pUnit;              // 0x00
   D2SeedStrc* pSeed;        // 0x04
-  game* pGame;              // 0x08
+  Game* pGame;              // 0x08
   int32_t nItemLvl;         // 0x0C
   uint32_t unk0x10;         // 0x10
   int32_t nId;              // 0x14
@@ -213,7 +213,7 @@ struct unit {
   void* timer_args;
 
   union {
-    game* game;
+    Game* game;
     uint32_t sound_sync;
   };
 

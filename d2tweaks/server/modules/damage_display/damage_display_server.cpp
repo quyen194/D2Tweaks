@@ -27,7 +27,7 @@ namespace modules {
 
 MODULE_INIT(damage_display)
 
-static char(__fastcall* g_apply_attack_results_origin)(game* game,
+static char(__fastcall* g_apply_attack_results_origin)(Game* game,
                                                        unit* attacker,
                                                        unit* defender,
                                                        BOOL recalculateDamage,
@@ -173,7 +173,7 @@ static bool has_pets(unit* attacker, unit* defender) {
   return attacker && attacker->is_pet() || defender && defender->is_pet();
 }
 
-static unit* get_hireling_owner(game* game, unit* pUnit) {
+static unit* get_hireling_owner(Game* game, unit* pUnit) {
   static auto& instance = singleton<server>::instance();
 
   if (!pUnit)
@@ -204,7 +204,7 @@ static unit* get_hireling_owner(game* game, unit* pUnit) {
   return instance.get_server_unit(game, guid, unit_type_t::UNIT_TYPE_PLAYER);
 }
 
-static unit* get_pet_owner(game* pGame, unit* pUnit) {
+static unit* get_pet_owner(Game* pGame, unit* pUnit) {
   static auto& instance = singleton<server>::instance();
 
   if (!pUnit)
@@ -217,7 +217,7 @@ static unit* get_pet_owner(game* pGame, unit* pUnit) {
 
   instance.iterate_server_units(
       pGame, unit_type_t::UNIT_TYPE_PLAYER, [&](unit* player) {
-        d2_game::iterate_unit_pets(pGame, player, [&](game*, unit*, unit* u) {
+        d2_game::iterate_unit_pets(pGame, player, [&](Game*, unit*, unit* u) {
           if (u != pUnit)
             return;
 
@@ -248,7 +248,7 @@ static void process_players_damage(unit* attacker,
   send_damage_data(defender, client, dmg);
 }
 
-static void process_hireling_damage(game* game,
+static void process_hireling_damage(Game* game,
                                     unit* attacker,
                                     unit* defender,
                                     damage* dmg) {
@@ -266,7 +266,7 @@ static void process_hireling_damage(game* game,
   send_damage_data(defender, owner->player_data->net_client, dmg);
 }
 
-static void process_pet_damage(game* game,
+static void process_pet_damage(Game* game,
                                unit* attacker,
                                unit* defender,
                                damage* dmg) {
@@ -284,7 +284,7 @@ static void process_pet_damage(game* game,
   send_damage_data(defender, owner->player_data->net_client, dmg);
 }
 
-static char __fastcall apply_attack_results(game* game,
+static char __fastcall apply_attack_results(Game* game,
                                             unit* attacker,
                                             unit* defender,
                                             BOOL recalculateDamage,
@@ -326,12 +326,12 @@ void damage_display::init() {
   }
 }
 
-bool damage_display::handle_packet(game* game,
+bool damage_display::handle_packet(Game* game,
   unit* player, common::packet_header* packet) {
   return true;
 }
 
-void damage_display::tick(game* game, unit* unit) {}
+void damage_display::tick(Game* game, unit* unit) {}
 
 }  // namespace modules
 }  // namespace server

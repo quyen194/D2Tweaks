@@ -47,8 +47,8 @@ static int32_t __stdcall set_stat_in_list(void* a1,
   return g_set_stat_in_list_original(a1, stat, value, param);
 }
 
-static int(__fastcall* g_regen_tick_original)(game*, unit*, int32_t, int32_t);
-static int __fastcall regen_tick(game* game,
+static int(__fastcall* g_regen_tick_original)(Game*, unit*, int32_t, int32_t);
+static int __fastcall regen_tick(Game* game,
                                  unit* unit,
                                  int32_t a3,
                                  int32_t a4) {

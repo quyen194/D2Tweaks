@@ -38,7 +38,7 @@ void auto_item_pickup::init() {
   }
 }
 
-void auto_item_pickup::tick(game* game, unit* unit) {
+void auto_item_pickup::tick(Game* game, unit* unit) {
   // static common::item_pickup_info_sc packet;
   // static auto& instance = singleton<server>::instance();
   // if (!game || !unit)
@@ -145,7 +145,7 @@ void auto_item_pickup::tick(game* game, unit* unit) {
   // //spdlog::info("current {0}", g_tick_between_item_pickup);
 }
 
-bool auto_item_pickup::au_pickup_item(game* game, unit* unit, uint32_t guid)
+bool auto_item_pickup::au_pickup_item(Game* game, unit* unit, uint32_t guid)
 {
   static common::item_pickup_info_sc packet;
 
@@ -162,7 +162,7 @@ bool auto_item_pickup::au_pickup_item(game* game, unit* unit, uint32_t guid)
   return true;
 }
 
-bool auto_item_pickup::handle_packet(game* game,
+bool auto_item_pickup::handle_packet(Game* game,
                                      unit* player,
                                      common::packet_header* packet) {
   const auto income_packet_cs =

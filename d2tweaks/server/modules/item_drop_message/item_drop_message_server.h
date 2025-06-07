@@ -10,8 +10,8 @@ namespace modules {
 class item_drop_message final : public server_module {
  public:
   void init() override;
-  void tick(game* game, unit* unit) override;
-  bool handle_packet(game* game,
+  void tick(Game* game, unit* unit) override;
+  bool handle_packet(Game* game,
                      unit* player,
                      common::packet_header* packet) override;
 };

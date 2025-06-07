@@ -10,11 +10,11 @@ namespace modules {
 class auto_item_pickup final : public server_module {
  public:
   void init() override;
-  void tick(game* game, unit* unit) override;
-  bool handle_packet(game* game,
+  void tick(Game* game, unit* unit) override;
+  bool handle_packet(Game* game,
                      unit* player,
                      common::packet_header* packet) override;
-  bool au_pickup_item(game* game, unit* unit, uint32_t guid);
+  bool au_pickup_item(Game* game, unit* unit, uint32_t guid);
 };
 }  // namespace modules
 }  // namespace server

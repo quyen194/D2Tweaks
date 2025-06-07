@@ -190,7 +190,7 @@ void item_drop_message::init() {
   singleton<server>::instance().register_packet_handler(common::MESSAGE_TYPE_ITEM_DROPPED_INFO, this);
 }
 
-void item_drop_message::tick(game* game, unit* unit) {
+void item_drop_message::tick(Game* game, unit* unit) {
   static common::item_pickup_info_sc packet;
   static auto& instance = singleton<server>::instance();
   if (!game || !unit)
@@ -200,7 +200,7 @@ void item_drop_message::tick(game* game, unit* unit) {
     return;
 }
 
-bool item_drop_message::handle_packet(game* game,
+bool item_drop_message::handle_packet(Game* game,
                                       unit* player,
                                       common::packet_header* packet) {
   const auto income_item_dropped_packet =

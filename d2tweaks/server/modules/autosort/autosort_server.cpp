@@ -78,7 +78,7 @@ void autosort::init() {
   }
 }
 
-bool autosort::handle_packet(game* game,
+bool autosort::handle_packet(Game* game,
   unit* player, common::packet_header* packet) {
   if (static_cast<common::inventory_sort_cs*>(packet)->remItem == 1) {
     d2_common::inv_remove_item(
@@ -105,7 +105,7 @@ bool autosort::handle_packet(game* game,
   return true;
 }
 
-bool autosort::sort(game* game, unit* player, uint8_t page) {
+bool autosort::sort(Game* game, unit* player, uint8_t page) {
   static common::inventory_sort_sc packet;
   static auto& instance = singleton<server>::instance();
 

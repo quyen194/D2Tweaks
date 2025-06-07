@@ -9,7 +9,7 @@
 namespace diablo2 {
 namespace structures {
 enum class unit_type_t;
-struct game;
+struct Game;
 struct inventory;
 struct unit;
 struct net_client;
@@ -46,7 +46,7 @@ class server : public singleton<server> {
   void send_packet(net_client* client,
                    common::packet_header* packet,
                    size_t size);
-  bool handle_packet(game* game, unit* player, common::packet_header* packet);
+  bool handle_packet(Game* game, unit* player, common::packet_header* packet);
 
   void register_module(server_module* module);
 
@@ -54,13 +54,13 @@ class server : public singleton<server> {
   void register_packet_handler(common::message_types_t type,
                                server_module* module);
 
-  unit* get_server_unit(game* game, uint32_t guid, unit_type_t type);
-  void iterate_server_units(game* game,
+  unit* get_server_unit(Game* game, uint32_t guid, unit_type_t type);
+  void iterate_server_units(Game* game,
                             unit_type_t type,
                             const std::function<bool(unit*)>& cb);
 
  private:
-  static int32_t __fastcall net_tick(game* game,
+  static int32_t __fastcall net_tick(Game* game,
                                      unit* unit,
                                      int32_t a3,
                                      int32_t a4);

@@ -6,7 +6,7 @@ namespace diablo2 {
 namespace structures {
 struct unit;
 
-struct game {
+struct Game {
   char pad_0000[24];                // 0x0000
   void* critical_section;           // 0x0018
   void* memory_pool;                // 0x001C
@@ -52,6 +52,6 @@ struct game {
   int32_t uber_diablo;              // 0x1DEC
   int32_t uber_mephisto;            // 0x1DF0
 };  // Size: 0x1DF4
-static_assert(sizeof(game) == 0x1DF4);
+static_assert(sizeof(Game) == 0x1DF4);
 }  // namespace structures
 }  // namespace diablo2
