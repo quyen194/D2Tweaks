@@ -378,7 +378,7 @@ class d2_game {
   //     int16_t nFlags)
   static Unit* __fastcall d2_game::D2GAME_SpawnMonster_6FC69F10(
       Game* pGame,
-      room* pRoom,
+      Room* pRoom,
       int32_t nX,
       int32_t nY,
       int32_t nMonsterId,

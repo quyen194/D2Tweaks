@@ -78,7 +78,7 @@ namespace structures {
 struct Unit;
 struct path;
 struct Inventory;
-struct room;
+struct Room;
 
 struct items_line;
 struct item_types_line;
@@ -1041,7 +1041,7 @@ class d2_common {
   static int32_t _10111(int32_t* x, int32_t* y);
   static int32_t _10116(int32_t x1, int32_t y1, int32_t* x, int32_t* y);
 
-  static room* get_room_from_unit(Unit* unit);
+  static Room* get_room_from_unit(Unit* unit);
 
   static int32_t get_unit_size_x(Unit* unit);
   static int32_t get_unit_size_y(Unit* unit);

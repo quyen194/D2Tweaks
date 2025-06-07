@@ -1081,11 +1081,11 @@ LRESULT ui_manager::wnd_proc(HWND hWnd,
         if (strncmp(normCode, "r01", 3) == 0) {
           auto localPlayer = d2_client::get_local_player();
           path* playerPath = localPlayer->path;
-          // room* pRoom = playerPath->pt_room;
+          // Room* pRoom = playerPath->pt_room;
           // Game* pGame = player->game;
           // struct D2UnkMonCreateStrc {
           //   Game* pGame;           // 0x00
-          //   room* pRoom;           // 0x04
+          //   Room* pRoom;           // 0x04
           //   DWORD pRoomCoordList;  // 0x08
           //   int32_t nMonsterId;    // 0x0C
           //   int32_t nAnimMode;     // 0x10

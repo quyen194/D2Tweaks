@@ -117,7 +117,7 @@ struct D2ItemDropStrc {
   int32_t nSpawnType;       // 0x18 [3 for ground spawn, 4 for inv spawn]
   int32_t nX;               // 0x1C
   int32_t nY;               // 0x20
-  room* pRoom;              // 0x24
+  Room* pRoom;              // 0x24
   uint16_t wUnitInitFlags;  // 0x28
   uint16_t wItemFormat;     // 0x2A [ptGame0x0x78]
   BOOL bForce;              // 0x2C

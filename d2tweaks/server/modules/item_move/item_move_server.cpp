@@ -69,7 +69,7 @@ bool item_move::handle_packet(Game* game,
       game, itemMove->item_guid, unit_type_t::UNIT_TYPE_ITEM);  // 0x4 = item
 
   // Get player room
-  room* room = d2_common::get_room_from_unit(player);
+  Room* room = d2_common::get_room_from_unit(player);
 
 
   const auto record = d2_common::get_item_record(item->data_record_index);

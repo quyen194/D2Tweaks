@@ -3911,11 +3911,11 @@
 //    uint32_t    seed1;                        //+00
 //    uint32_t    seed2;                        //+04
 //    uint8_t    uk8[0x1C];                    //+08
-//    room* pt_near_rooms;                //+24
+//    Room* pt_near_rooms;                //+24
 //    uint32_t    nb_near_rooms;                //+28
 //    Unit* unit;                        //+2C
 //    uint8_t    uk5[0x44];                    //+30
-//    room* pt_next_room;                    //+74
+//    Room* pt_next_room;                    //+74
 //    union {
 //        uint8_t    flags;                    //+78
 //        struct {
@@ -3929,7 +3929,7 @@
 //    uint32_t    is_not_managed;
 //    uint32_t    uk4;
 //    uint32_t    uk8;//size = 0x488
-//    room* pt_first_room;
+//    Room* pt_first_room;
 //};
 //
 //struct game {
@@ -3992,7 +3992,7 @@
 //    uint32_t    y;                            //+10
 //    uint32_t    uk6;                        //+14
 //    uint32_t    uk7;                        //+18
-//    room* pt_room;                        //+1C
+//    Room* pt_room;                        //+1C
 //};
 //
 //struct inventory {                                       //Offset from Code.        Size: 30 à 40

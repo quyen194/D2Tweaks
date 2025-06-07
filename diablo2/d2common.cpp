@@ -233,8 +233,8 @@ int32_t d2_common::_10116(int32_t x1, int32_t y1, int32_t* x, int32_t* y) {
   return get_unk_coords2(x1, y1, x, y);
 }
 
-room* d2_common::get_room_from_unit(Unit* pUnit) {
-  static wrap_func_std_import<room*(Unit*)> get_room_from_unit(10342,
+Room* d2_common::get_room_from_unit(Unit* pUnit) {
+  static wrap_func_std_import<Room*(Unit*)> get_room_from_unit(10342,
                                                                get_base());
   return get_room_from_unit(pUnit);
 }

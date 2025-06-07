@@ -359,7 +359,7 @@ void __fastcall d2_game::sub_6FC3E200(net_client* pClient, Unit* pUnit) {
 //                                                     int32_t a7,
 //                                                     int16_t nFlags);
 Unit* __fastcall d2_game::D2GAME_SpawnMonster_6FC69F10(Game* pGame,
-                                                       room* pRoom,
+                                                       Room* pRoom,
                                                        int32_t nX,
                                                        int32_t nY,
                                                        int32_t nMonsterId,
@@ -367,7 +367,7 @@ Unit* __fastcall d2_game::D2GAME_SpawnMonster_6FC69F10(Game* pGame,
                                                        int32_t a7,
                                                        int16_t nFlags) {
   static wrap_func_fast<Unit*(
-      Game*, room*, int32_t, int32_t, int32_t, int32_t, int32_t, int16_t)>
+      Game*, Room*, int32_t, int32_t, int32_t, int32_t, int32_t, int16_t)>
       D2GAME_SpawnMonster_6FC69F10(D2GAME_GetOffset(0x6FC69F10), get_base());
   return D2GAME_SpawnMonster_6FC69F10(
       pGame, pRoom, nX, nY, nMonsterId, nAnimMode, a7, nFlags);
