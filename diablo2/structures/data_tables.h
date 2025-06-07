@@ -7,7 +7,7 @@ namespace structures {
 struct Linkage;
 
 struct PlayerClassLine;
-struct bodylocs_line;
+struct BodyLocsLine;
 struct StorePageLine;
 struct ElemTypesLine;
 struct HitClassLine;
@@ -35,7 +35,7 @@ struct DataTables {
       PlayerClassLine* player_class;                     // +00000000   01415B48      playerclass.txt
       Linkage* player_class_info;                         // +00000004   01410524      playerclass info
 
-      bodylocs_line* body_locs;                           // +00000008   01415578      bodylocs.txt
+      BodyLocsLine* body_locs;                           // +00000008   01415578      bodylocs.txt
       Linkage* body_locs_info;                            // +0000000C   01410504      bodylocs info
 
       StorePageLine* store_page;                         // +00000010   01414CC8      storepage.txt

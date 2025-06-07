@@ -4,7 +4,7 @@
 
 namespace diablo2 {
 namespace structures {
-struct bodylocs_line {
+struct BodyLocsLine {
   union {
     uint32_t code;
     char str[4];
