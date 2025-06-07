@@ -10,7 +10,7 @@ struct PlayerClassLine;
 struct bodylocs_line;
 struct StorePageLine;
 struct elemtypes_line;
-struct hitclass_line;
+struct HitClassLine;
 struct MonModeLine;
 struct PropertiesLine;
 
@@ -44,7 +44,7 @@ struct DataTables {
       elemtypes_line* elemtypes;                          // +00000018   01414958      elemtypes.txt
       Linkage* elemtypes_info;                            // +0000001C   01415B04      elemtypes info
 
-      hitclass_line* hit_class;                           // +00000020   01414148      hitclass.txt
+      HitClassLine* hit_class;                           // +00000020   01414148      hitclass.txt
       Linkage* hit_class_info;                            // +00000024   01415AE4      hitclass info
 
       MonModeLine* mon_mode;                             // +00000028   01416878      monmode.txt

@@ -4,7 +4,7 @@
 
 namespace diablo2 {
 namespace structures {
-struct hitclass_line {
+struct HitClassLine {
   union {
     uint32_t code;
     char str[4];
