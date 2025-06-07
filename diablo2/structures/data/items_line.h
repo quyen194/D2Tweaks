@@ -5,7 +5,7 @@
 namespace diablo2 {
 namespace structures {
 // https://phrozen-library.fandom.com/wiki/Items_line
-struct items_line {
+struct ItemsLine {
   char flippy_file[32];               // 0x00
   char inv_file[32];                  // 0x20
   char unique_inv_file[32];           // 0x40

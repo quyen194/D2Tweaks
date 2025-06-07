@@ -167,8 +167,8 @@ BOOL d2_common::inv_update_item(Inventory* inv, Unit* item, BOOL isClient) {
   return inv_update_item(inv, item, isClient);
 }
 
-items_line* d2_common::get_item_record(uint32_t guid) {
-  static wrap_func_std_import<items_line*(uint32_t)> get_item_record(
+ItemsLine* d2_common::get_item_record(uint32_t guid) {
+  static wrap_func_std_import<ItemsLine*(uint32_t)> get_item_record(
       10600, get_base());
   return get_item_record(guid);
 }
@@ -346,9 +346,9 @@ int32_t d2_common::get_item_id_from_item_code(uint32_t dwCode) {
 // D2Common.0x6FD576D0 (#10601)
 // D2ItemsTxt* __stdcall DATATBLS_GetItemRecordFromItemCode(uint32_t dwCode,
 //                                                          int* pItemId);
-items_line* d2_common::get_item_record_from_item_code(uint32_t dwCode,
+ItemsLine* d2_common::get_item_record_from_item_code(uint32_t dwCode,
                                                       int* pItemId) {
-  static wrap_func_std_import<items_line*(uint32_t, int*)>
+  static wrap_func_std_import<ItemsLine*(uint32_t, int*)>
       get_item_record_from_item_code(10601, get_base());
   return get_item_record_from_item_code(dwCode, pItemId);
 }
@@ -364,8 +364,8 @@ D2RunesTxt* d2_common::get_runes_txt_record(int nRunewordId) {
 
 //D2Common.0x6FD57680 (#10600)
 // D2ItemsTxt* __stdcall DATATBLS_GetItemsTxtRecord(int nItemId)
-items_line* d2_common::get_items_txt_record(int nItemId) {
-  static wrap_func_std_import<items_line*(int)> get_items_txt_record(
+ItemsLine* d2_common::get_items_txt_record(int nItemId) {
+  static wrap_func_std_import<ItemsLine*(int)> get_items_txt_record(
       10600, get_base());
   return get_items_txt_record(nItemId);
 }

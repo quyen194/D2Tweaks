@@ -80,7 +80,7 @@ struct Path;
 struct Inventory;
 struct Room;
 
-struct items_line;
+struct ItemsLine;
 struct item_types_line;
 
 struct D2PropertyStrc {
@@ -1026,7 +1026,7 @@ class d2_common {
                            uint8_t page);
   static BOOL inv_update_item(Inventory* inv, Unit* item, BOOL isClient);
 
-  static items_line* get_item_record(uint32_t guid);
+  static ItemsLine* get_item_record(uint32_t guid);
   static item_types_line* get_item_type_record(uint32_t typeId);
 
   static uint32_t get_maximum_character_gold(Unit* player);
@@ -1087,7 +1087,7 @@ class d2_common {
   // D2Common.0x6FD576D0 (#10601)
   // D2ItemsTxt* __stdcall DATATBLS_GetItemRecordFromItemCode(uint32_t dwCode,
   //                                                          int* pItemId);
-  static items_line* get_item_record_from_item_code(uint32_t dwCode,
+  static ItemsLine* get_item_record_from_item_code(uint32_t dwCode,
                                                     int* pItemId);
 
   // D2Common.0x6FD5EAA0 (#10620)
@@ -1097,7 +1097,7 @@ class d2_common {
 
   // D2Common.0x6FD57680 (#10600)
   // D2ItemsTxt* __stdcall DATATBLS_GetItemsTxtRecord(int nItemId)
-  static items_line* get_items_txt_record(int nItemId);
+  static ItemsLine* get_items_txt_record(int nItemId);
 };
 
 }  // namespace diablo2
