@@ -1080,7 +1080,7 @@ LRESULT ui_manager::wnd_proc(HWND hWnd,
 
         if (strncmp(normCode, "r01", 3) == 0) {
           auto localPlayer = d2_client::get_local_player();
-          path* playerPath = localPlayer->path;
+          Path* playerPath = localPlayer->path;
           // Room* pRoom = playerPath->pt_room;
           // Game* pGame = player->game;
           // struct D2UnkMonCreateStrc {

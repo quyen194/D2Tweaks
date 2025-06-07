@@ -76,7 +76,7 @@
 namespace diablo2 {
 namespace structures {
 struct Unit;
-struct path;
+struct Path;
 struct Inventory;
 struct Room;
 
@@ -1048,15 +1048,15 @@ class d2_common {
 
   static int32_t get_distance_between_units(Unit* unit1, Unit* unit2);
 
-  static int32_t get_unit_x(path* path);
-  static int32_t get_unit_y(path* path);
+  static int32_t get_unit_x(Path* path);
+  static int32_t get_unit_y(Path* path);
   static int32_t get_unit_precise_x(Unit* unit);
   static int32_t get_unit_precise_y(Unit* unit);
 
   static int32_t get_item_quality(Unit* item);
   static uint32_t d2_common::set_unit_mode(Unit* item, uint32_t mode);
 
-  static Unit* get_target_from_path(path* path);
+  static Unit* get_target_from_path(Path* path);
   static Unit* d2_common::get_first_inventory_item(Inventory* inv);
   static Unit* d2_common::get_last_inventory_item(Inventory* inv);
   static Unit* d2_common::get_next_inventory_item(Unit* prev_item);

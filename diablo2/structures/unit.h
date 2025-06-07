@@ -15,7 +15,7 @@ struct skills;
 struct Game;
 struct Inventory;
 struct stats;
-struct path;
+struct Path;
 struct player_data;
 struct ItemData;
 struct object_data;
@@ -167,7 +167,7 @@ struct Unit {
   } seed;
   uint32_t init_seed;
 
-  path* path;
+  Path* path;
 
   skill_sequence* skill_sequence;
   uint32_t skill_sequence_frame_count;

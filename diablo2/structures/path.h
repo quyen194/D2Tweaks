@@ -6,7 +6,7 @@ namespace diablo2 {
 namespace structures {
 struct Room;
 
-struct path {  // (8 dword)
+struct Path {  // (8 dword)
   // Offset from Code.  Size: 20
   uint16_t uk1;   // +00
   uint16_t mapx;  // +02

@@ -3527,7 +3527,7 @@
 //    } seed;
 //    uint32_t init_seed;
 //
-//    void* path; //path*
+//    void* path; //Path*
 //
 //    void* skill_sequence; //skill_sequence*
 //    uint32_t skill_sequence_frame_count;

@@ -257,13 +257,13 @@ int32_t d2_common::get_distance_between_units(Unit* unit1, Unit* unit2) {
   return get_distance_between_units(unit1, unit2);
 }
 
-int32_t d2_common::get_unit_x(path* pPath) {
-  static wrap_func_std_import<int32_t(path*)> get_unit_x(10162, get_base());
+int32_t d2_common::get_unit_x(Path* pPath) {
+  static wrap_func_std_import<int32_t(Path*)> get_unit_x(10162, get_base());
   return get_unit_x(pPath);
 }
 
-int32_t d2_common::get_unit_y(path* pPath) {
-  static wrap_func_std_import<int32_t(path*)> get_unit_y(10163, get_base());
+int32_t d2_common::get_unit_y(Path* pPath) {
+  static wrap_func_std_import<int32_t(Path*)> get_unit_y(10163, get_base());
   return get_unit_y(pPath);
 }
 
@@ -285,8 +285,8 @@ int32_t d2_common::get_item_quality(Unit* item) {
   return get_item_quality(item);
 }
 
-Unit* d2_common::get_target_from_path(path* pPath) {
-  static wrap_func_std_import<Unit*(path*)> get_target_from_path(10180,
+Unit* d2_common::get_target_from_path(Path* pPath) {
+  static wrap_func_std_import<Unit*(Path*)> get_target_from_path(10180,
                                                                  get_base());
   return get_target_from_path(pPath);
 }
