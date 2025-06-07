@@ -11,7 +11,7 @@ struct bodylocs_line;
 struct StorePageLine;
 struct elemtypes_line;
 struct hitclass_line;
-struct monmode_line;
+struct MonModeLine;
 struct PropertiesLine;
 
 struct UniqueItems {  // size=0x14C (332)
@@ -47,7 +47,7 @@ struct DataTables {
       hitclass_line* hit_class;                           // +00000020   01414148      hitclass.txt
       Linkage* hit_class_info;                            // +00000024   01415AE4      hitclass info
 
-      monmode_line* mon_mode;                             // +00000028   01416878      monmode.txt
+      MonModeLine* mon_mode;                             // +00000028   01416878      monmode.txt
       Linkage* mon_mode_info;                             // +0000002C   01415514      monmode info
 
       void* pPlayerModeStub;                              // +00000030   014162E8      plrmode.txt

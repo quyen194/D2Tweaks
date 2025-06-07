@@ -4,7 +4,7 @@
 
 namespace diablo2 {
 namespace structures {
-struct monmode_line {
+struct MonModeLine {
   union {
     uint32_t code;
     char str[4];
