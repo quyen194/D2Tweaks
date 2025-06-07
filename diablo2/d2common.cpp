@@ -173,8 +173,8 @@ ItemsLine* d2_common::get_item_record(uint32_t guid) {
   return get_item_record(guid);
 }
 
-item_types_line* d2_common::get_item_type_record(uint32_t typeId) {
-  static wrap_func_fast<item_types_line*(uint32_t)> get_item_type_record(
+ItemTypesLine* d2_common::get_item_type_record(uint32_t typeId) {
+  static wrap_func_fast<ItemTypesLine*(uint32_t)> get_item_type_record(
       0x2B1A0, get_base());
   return get_item_type_record(typeId);
 }

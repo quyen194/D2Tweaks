@@ -4,7 +4,7 @@
 
 namespace diablo2 {
 namespace structures {
-struct item_types_line {
+struct ItemTypesLine {
   char code[4];           // 0x00
   int16_t equiv1;         // 0x04
   int16_t equiv2;         // 0x06

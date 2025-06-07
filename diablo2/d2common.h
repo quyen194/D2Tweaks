@@ -81,7 +81,7 @@ struct Inventory;
 struct Room;
 
 struct ItemsLine;
-struct item_types_line;
+struct ItemTypesLine;
 
 struct D2PropertyStrc {
   int32_t nProperty;  // 0x00
@@ -1027,7 +1027,7 @@ class d2_common {
   static BOOL inv_update_item(Inventory* inv, Unit* item, BOOL isClient);
 
   static ItemsLine* get_item_record(uint32_t guid);
-  static item_types_line* get_item_type_record(uint32_t typeId);
+  static ItemTypesLine* get_item_type_record(uint32_t typeId);
 
   static uint32_t get_maximum_character_gold(Unit* player);
   static uint32_t get_item_unique_index(Unit* item);
