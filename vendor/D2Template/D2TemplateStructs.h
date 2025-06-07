@@ -3457,7 +3457,7 @@
 ////    uint32_t _2[13];
 ////    union {
 ////        PlayerData* player_data; //+70
-////        monster_data* monster_data; //+70
+////        MonsterData* monster_data; //+70
 ////        ObjectData* object_data; //+70
 ////        ItemData* item_data; //+70
 ////    };
@@ -3511,7 +3511,7 @@
 //
 //    union {
 //        PlayerData* player_data;
-//        monster_data* monster_data;
+//        MonsterData* monster_data;
 //        ObjectData* object_data;
 //        //missile_data* missile_data;
 //        ItemData* item_data;
@@ -3652,7 +3652,7 @@
 ////    uint32_t        item_num;                //+0C
 ////    uint32_t        current_anim;            //+10
 ////    union {
-////        monster_data* monster_data;
+////        MonsterData* monster_data;
 ////        ObjectData* object_data;
 ////        ItemData* item_data;
 ////        PlayerData* player_data;

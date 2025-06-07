@@ -6,7 +6,7 @@ namespace diablo2 {
 namespace structures {
 struct monstats_line;
 
-struct monster_data {  // sizeof(MonsterData)=0x60
+struct MonsterData {  // sizeof(MonsterData)=0x60
   monstats_line* monstats;
   uint8_t components[16];     // +04
   union {
