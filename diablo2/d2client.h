@@ -61,8 +61,11 @@ class d2_client {
   static bool get_ui_window_state(ui_window_t window);
   static void* get_buysellbtn();
 
-  static void play_sound(
-      uint32_t soundId, Unit* u, uint32_t ticks, BOOL prePick, uint32_t cache);
+  static void play_sound(uint32_t soundId,
+                         Unit* u,
+                         uint32_t ticks,
+                         BOOL prePick,
+                         uint32_t cache);
 
   static Unit* get_unit_by_guid(int32_t type, int32_t guid);
 

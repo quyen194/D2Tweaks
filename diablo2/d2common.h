@@ -986,12 +986,12 @@ enum unit_stats_t {
 class d2_common {
  public:
   static char* get_base();
-  static int8_t d2_common::get_item_page(Unit* item);
-  static void d2_common::empty_inventory_1(Inventory* inv);
-  static void d2_common::empty_inventory_2(Inventory* inv);
-  static void d2_common::free_trade_inventory(Inventory* inv);
+  static int8_t get_item_page(Unit* item);
+  static void empty_inventory_1(Inventory* inv);
+  static void empty_inventory_2(Inventory* inv);
+  static void free_trade_inventory(Inventory* inv);
   static int32_t get_item_type_from_unit(Unit* item);
-  static int32_t d2_common::get_previous_interact_guid(Unit* player);
+  static int32_t get_previous_interact_guid(Unit* player);
   static int32_t get_inventory_index(Unit* item, char page, BOOL lod);
   static void* get_inventory_data(int32_t index, int32_t zero, char* data);
   static Unit* get_item_at_cell(Inventory* inv,
@@ -1012,9 +1012,9 @@ class d2_common {
 
   static uint32_t get_item_type(Unit* item);
   static uint32_t get_item_type_class(Unit* item);
-  static uint32_t d2_common::get_item_primary_weapon_class(Unit* item);
-  static uint32_t d2_common::check_item_type_equiv(uint32_t itemtype,
-                                                   uint32_t itemtype_equiv);
+  static uint32_t get_item_primary_weapon_class(Unit* item);
+  static uint32_t check_item_type_equiv(uint32_t itemtype,
+                                        uint32_t itemtype_equiv);
 
   static Unit* inv_remove_item(Inventory* inventory, Unit* item);
   static BOOL inv_add_item(Inventory* inv,
@@ -1054,26 +1054,21 @@ class d2_common {
   static int32_t get_unit_precise_y(Unit* unit);
 
   static int32_t get_item_quality(Unit* item);
-  static uint32_t d2_common::set_unit_mode(Unit* item, uint32_t mode);
+  static uint32_t set_unit_mode(Unit* item, uint32_t mode);
 
   static Unit* get_target_from_path(Path* path);
-  static Unit* d2_common::get_first_inventory_item(Inventory* inv);
-  static Unit* d2_common::get_last_inventory_item(Inventory* inv);
-  static Unit* d2_common::get_next_inventory_item(Unit* prev_item);
-  static uint32_t d2_common::get_max_cube_recipes();
-  static void d2_common::free_inventory(Inventory* inventory);
-  static void d2_common::refresh_unit_inventory(Unit* unit,
-                                                bool set_update_flags);
-  static void d2_common::update_trade(Inventory* inventory, Unit* item);
-  // static void d2_common::set_item_flags(Unit* item,
+  static Unit* get_first_inventory_item(Inventory* inv);
+  static Unit* get_last_inventory_item(Inventory* inv);
+  static Unit* get_next_inventory_item(Unit* prev_item);
+  static uint32_t get_max_cube_recipes();
+  static void free_inventory(Inventory* inventory);
+  static void refresh_unit_inventory(Unit* unit, bool set_update_flags);
+  static void update_trade(Inventory* inventory, Unit* item);
+  // static void set_item_flags(Unit* item,
   // itemflags_t dwFlag, bool bSet);
 
-  static void d2_common::add_property(Unit* item,
-                                      D2PropertyStrc* pProperty,
-                                      int nUnused);
-  static void d2_common::ITEMS_SetItemFlag(Unit* item,
-                                           uint32_t dwFlag,
-                                           BOOL bSet);
+  static void add_property(Unit* item, D2PropertyStrc *pProperty, int nUnused);
+  static void ITEMS_SetItemFlag(Unit* item, uint32_t dwFlag, BOOL bSet);
 
   // D2Common.0x6FDA42B0
   // D2ItemStatCostTxt* __fastcall ITEMS_GetItemStatCostTxtRecord(int nStatId)

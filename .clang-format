@@ -1,6 +1,8 @@
 # Format Style Options - Created with Clang Power Tools
 ---
+AlignOperands: Align
 AllowAllConstructorInitializersOnNextLine: true
+AllowAllParametersOfDeclarationOnNextLine: false
 AllowShortIfStatementsOnASingleLine: Never
 AllowShortLoopsOnASingleLine: false
 BasedOnStyle: Google
@@ -31,5 +33,7 @@ BreakConstructorInitializers: BeforeColon
 BreakStringLiterals: false
 ConstructorInitializerAllOnOneLineOrOnePerLine: true
 IndentCaseLabels: true
+PenaltyBreakBeforeFirstCallParameter: 1
+ReflowComments: false
 SpaceAfterCStyleCast: true
 ...

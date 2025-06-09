@@ -209,6 +209,7 @@
     <None Include="build\D2tweaks_18.04.2023.zip" />
     <None Include="build\D2tweaks_27.04.2023.zip" />
     <None Include="build\!resources\d2tweaks_debugger.ini" />
+    <None Include=".clang-format" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resources.rc" />

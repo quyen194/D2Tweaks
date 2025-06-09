@@ -184,6 +184,7 @@
     <ClCompile Include="vendor\minhook\src\trampoline.c" />
   </ItemGroup>
   <ItemGroup>
+    <None Include=".clang-format" />
     <None Include=".gitignore" />
     <None Include="build\!resources\d2tweaks.ini" />
     <None Include="build\!resources\d2tweaks\assets\buttons.dc6" />

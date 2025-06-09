@@ -20,7 +20,7 @@ bool d2_client::is_lod() {
 }
 
 Unit* d2_client::get_local_player() {
-  static wrap_func_std<Unit* ()> get_local_player(0x883D0, get_base());
+  static wrap_func_std<Unit*()> get_local_player(0x883D0, get_base());
   return get_local_player();
 }
 
@@ -67,7 +67,7 @@ bool d2_client::get_ui_window_state(const ui_window_t window) {
 }
 
 void* d2_client::get_buysellbtn() {
-  static wrap_func_cdecl<void* ()> get_buysellbtn(0x84110, get_base());
+  static wrap_func_cdecl<void*()> get_buysellbtn(0x84110, get_base());
   return get_buysellbtn();
 }
 
@@ -98,29 +98,42 @@ void d2_client::send_to_server(void* data, const size_t size) {
   send_to_server(data, size);
 }
 
-bool d2_client::cache_gfx_data(GfxData* pGfxdata, Unit* pUnit,
+bool d2_client::cache_gfx_data(GfxData* pGfxdata,
+                               Unit* pUnit,
                                CellFile* cellfFile,
                                int32_t direction,
                                int32_t frame,
                                int32_t* outIndex,
                                int8_t flags,
                                int32_t colorTint) {
-  static wrap_func_fast<int32_t(
-      GfxData*, Unit*, CellFile*, int32_t, int32_t, int32_t*, int8_t, int32_t)>
+  static wrap_func_fast<int32_t(GfxData*,
+                                Unit*,
+                                CellFile*,
+                                int32_t,
+                                int32_t,
+                                int32_t*,
+                                int8_t,
+                                int32_t)>
       cache_gfx_data(0xBEC80, get_base());
-  return cache_gfx_data(
-      pGfxdata, pUnit, cellfFile, direction, frame, outIndex, flags, colorTint);
+  return cache_gfx_data(pGfxdata,
+                        pUnit,
+                        cellfFile,
+                        direction,
+                        frame,
+                        outIndex,
+                        flags,
+                        colorTint);
 }
 
 CellFile* d2_client::load_gfx_resource(char* path) {
-  static wrap_func_fast<CellFile*(char*, int32_t)> load_gfx_resource(
-      0x1000, get_base());
+  static wrap_func_fast<CellFile*(char*, int32_t)>
+      load_gfx_resource(0x1000, get_base());
   return load_gfx_resource(path, 0);
 }
 
 int32_t d2_client::unload_gfx_resource(CellFile* handle) {
-  static wrap_func_fast<int32_t(CellFile*)> unload_gfx_resource(0x1140,
-                                                                get_base());
+  static wrap_func_fast<int32_t(CellFile*)>
+      unload_gfx_resource(0x1140, get_base());
   return unload_gfx_resource(handle);
 }
 
@@ -133,7 +146,7 @@ int32_t d2_client::send_to_server_7(BYTE type,
   return send_to_server_7(type, num, unk1, unk2);
 }
 
-//D2FUNC(D2CLIENT, SendToServer9, void, __fastcall, (BYTE type, DWORD num, DWORD unk1), 0xDA40) // Interact
+ // D2FUNC(D2CLIENT, SendToServer9, void, __fastcall, (BYTE type, DWORD num, DWORD unk1), 0xDA40) // Interact
 
 int32_t d2_client::send_to_server_9(BYTE type, DWORD num, DWORD unk1) {
   static wrap_func_fast<int32_t(BYTE type, DWORD num, DWORD unk1)>
