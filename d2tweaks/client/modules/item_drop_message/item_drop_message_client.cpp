@@ -159,15 +159,15 @@ void item_drop_message::init() {
 
     // d2hackit hook d2client:$0x15123
     if (m_nHookMethod == 1) {
-      hooking::hook(d2_client::get_base() + 0x15116,
-                    GamePacketReceivedInterceptASM,
-                    reinterpret_cast<void**>(&fn_GamePacketReceivedIntercept));
+      detour::hook(d2_client::get_base() + 0x15116,
+                   GamePacketReceivedInterceptASM,
+                   reinterpret_cast<void **>(&fn_GamePacketReceivedIntercept));
     }
 
     if (m_nHookMethod == 2) {
-      hooking::hook(d2_client::get_base() + 0x1511A,
-                    GamePacketReceivedInterceptASM,
-                    reinterpret_cast<void**>(&fn_GamePacketReceivedIntercept));
+      detour::hook(d2_client::get_base() + 0x1511A,
+                   GamePacketReceivedInterceptASM,
+                   reinterpret_cast<void **>(&fn_GamePacketReceivedIntercept));
     }
 
     singleton<client>::instance().register_packet_handler(

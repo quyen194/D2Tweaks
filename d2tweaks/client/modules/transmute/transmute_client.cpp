@@ -380,14 +380,14 @@ void transmute::init() {
   }
 
   if (m_nTransmuteSound == false) {
-    hooking::hook(d2_client::get_base() + 0xB5820,
-                  hook_play_sound,
-                  reinterpret_cast<void**>(&fn_hook_play_sound));
+    detour::hook(d2_client::get_base() + 0xB5820,
+                 hook_play_sound,
+                 reinterpret_cast<void**>(&fn_hook_play_sound));
   }
 
-  hooking::hook(d2_client::get_base() + 0xB528,
-                hook_game_end_asm,
-                reinterpret_cast<void**>(&fn_hook_game_end));
+  detour::hook(d2_client::get_base() + 0xB528,
+               hook_game_end_asm,
+               reinterpret_cast<void**>(&fn_hook_game_end));
 
   singleton<ui::ui_manager>::instance().add_menu(new auto_transmute_menu());
   singleton<client>::instance().register_tick_handler(this);

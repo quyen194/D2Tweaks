@@ -149,9 +149,9 @@ void item_move::init() {
   FileIni config(common::get_config_path());
 
   if (config.Int("modules", "ItemMover", 1)) {
-    hooking::hook(d2_client::get_base() + 0x475C0,
-                  item_click,
-                  reinterpret_cast<void**>(&g_item_click_original));
+    detour::hook(d2_client::get_base() + 0x475C0,
+                 item_click,
+                 reinterpret_cast<void **>(&g_item_click_original));
     singleton<client>::instance().register_packet_handler(
         common::MESSAGE_TYPE_ITEM_MOVE, this);
   }

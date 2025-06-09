@@ -58,12 +58,10 @@ static int __fastcall regen_tick(Game* game,
 void test::init() {
   return;
 
-  hooking::hook<10463>(
-      d2_common::get_base(), set_stat_in_list, &g_set_stat_in_list_original);
-  hooking::hook<10517>(d2_common::get_base(), set_stat, &g_set_stat_original);
+  detour::hook<10463>(d2_common::get_base(), set_stat_in_list, &g_set_stat_in_list_original);
+  detour::hook<10517>(d2_common::get_base(), set_stat, &g_set_stat_original);
 
-  hooking::hook(
-      d2_game::get_base() + 0x50F80, regen_tick, &g_regen_tick_original);
+  detour::hook(d2_game::get_base() + 0x50F80, regen_tick, &g_regen_tick_original);
 }
 
 }  // namespace modules

@@ -318,9 +318,9 @@ void damage_display::init() {
   FileIni config(common::get_config_path());
 
   if (config.Int("modules", "DamageDisplay", 1)) {
-    hooking::hook(d2_game::get_base() + 0x8FE90,
-                  apply_attack_results,
-                  reinterpret_cast<void**>(&g_apply_attack_results_origin));
+    detour::hook(d2_game::get_base() + 0x8FE90,
+                 apply_attack_results,
+                 reinterpret_cast<void **>(&g_apply_attack_results_origin));
     singleton<server>::instance().register_packet_handler(
         common::MESSAGE_TYPE_DAMAGE_INFO, this);
   }

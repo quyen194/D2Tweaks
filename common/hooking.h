@@ -4,7 +4,7 @@
 
 #include <cstdint>
 
-namespace hooking {
+namespace detour {
 
 enum mh_status_t {
   // Unknown error. Should not be returned.
@@ -74,4 +74,4 @@ void* set_call(void* address, void* function, size_t stubSize = 7);
 void* set_jmp(void* address, void* function, size_t stubSize = 7);
 void* get_call(void* address);
 
-}  // namespace hooking
+}  // namespace detour

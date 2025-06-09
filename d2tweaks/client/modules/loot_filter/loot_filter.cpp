@@ -40,12 +40,12 @@ void loot_filter::init_early() {
   FileIni config(common::get_config_path());
 
   if (config.Int("modules", "LootFilter", 1)) {
-    hooking::hook(d2_client::get_base() + 0xBDE0,
-                  set_player_name,
-                  &g_set_player_name_original);
-    hooking::hook(d2_launch::get_base() + 0x17C00,
-                  delete_save_file,
-                  &g_delete_save_file_original);
+    detour::hook(d2_client::get_base() + 0xBDE0,
+                 set_player_name,
+                 &g_set_player_name_original);
+    detour::hook(d2_launch::get_base() + 0x17C00,
+                 delete_save_file,
+                 &g_delete_save_file_original);
   }
 }
 

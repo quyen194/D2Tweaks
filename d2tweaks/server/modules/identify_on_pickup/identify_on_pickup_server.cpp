@@ -131,8 +131,8 @@ void identify_on_pickup::init() {
   FileIni config(common::get_config_path());
 
   if (config.Int("modules", "IdentifyOnPickup", 1)) {
-    hooking::hook(d2_game::get_base() + 0x13340, pickup_item, &g_pickup_item_original);
-    hooking::hook(d2_game::get_base() + 0x12B80, pickup_item_cursor, &g_pickup_item_cursor_original);
+    detour::hook(d2_game::get_base() + 0x13340, pickup_item, &g_pickup_item_original);
+    detour::hook(d2_game::get_base() + 0x12B80, pickup_item_cursor, &g_pickup_item_cursor_original);
 
     g_item_Normal = config.Int("IdentifyOnPickup", "Normal", 1);
     g_item_Superior = config.Int("IdentifyOnPickup", "Superior", 1);

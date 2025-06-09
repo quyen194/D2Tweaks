@@ -127,10 +127,10 @@ static const DLLPatchStrc gpt_handle_sc_standart_packet[] = {
 
 void client::init() {
   // handle packet processes the packet before GamePacketReceivedIntercept
-  hooking::hook(d2_client::get_base() + 0x11CB0, handle_packet, reinterpret_cast<void**>(&g_handle_packet));
-  hooking::hook(d2_client::get_base() + 0x9640, game_tick_wrapper, reinterpret_cast<void**>(&g_game_tick_original));
-  hooking::hook(d2_client::get_base() + 0x5E650, draw_game_ui, reinterpret_cast<void**>(&g_draw_game_ui_original));
-  //hooking::hook(d2_client::get_base() + 0x150B0, handle_standart_packet, reinterpret_cast<void**>(&g_handle_packet_standart));
+  detour::hook(d2_client::get_base() + 0x11CB0, handle_packet, reinterpret_cast<void**>(&g_handle_packet));
+  detour::hook(d2_client::get_base() + 0x9640, game_tick_wrapper, reinterpret_cast<void**>(&g_game_tick_original));
+  detour::hook(d2_client::get_base() + 0x5E650, draw_game_ui, reinterpret_cast<void**>(&g_draw_game_ui_original));
+  //detour::hook(d2_client::get_base() + 0x150B0, handle_standart_packet, reinterpret_cast<void**>(&g_handle_packet_standart));
 
   D2TEMPLATE_ApplyPatch(gpt_handle_cs_packet);
   //D2TEMPLATE_ApplyPatch(gpt_handle_sc_standart_packet);

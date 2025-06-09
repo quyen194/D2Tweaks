@@ -2646,14 +2646,14 @@ void loot_filter_settings_menu::register_quality_checkbox(const std::string& nam
 
 void loot_filter_settings_menu::setup_hooks() {
   m_handle_dropped_items_original =
-    static_cast<decltype(m_handle_dropped_items_original)>(hooking::get_call(
+      static_cast<decltype(m_handle_dropped_items_original)>(detour::get_call(
       d2_client::get_base() + 0x1641B));
   m_draw_dropped_items_names_original =
-    static_cast<decltype(m_draw_dropped_items_names_original)>(hooking::get_call(
+      static_cast<decltype(m_draw_dropped_items_names_original)>(detour::get_call(
       d2_client::get_base() + 0x81BF5));
 
-  hooking::set_call(d2_client::get_base() + 0x81BF5, draw_dropped_items_names);
-  hooking::set_call(d2_client::get_base() + 0x1641B, handle_dropped_items);
+  detour::set_call(d2_client::get_base() + 0x81BF5, draw_dropped_items_names);
+  detour::set_call(d2_client::get_base() + 0x1641B, handle_dropped_items);
 
   setup_alt_hook();
 }

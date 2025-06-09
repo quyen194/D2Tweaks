@@ -111,20 +111,20 @@ common::common(token) {}
 void common::init() {
   singleton<asset_manager>::instance().init();
 
-  hooking::hook(reinterpret_cast<void*>(d2_net::get_base() + 0x1B60),
-                get_packet_size_server_to_client,
-                reinterpret_cast<void**>(&g_get_packet_size_server_to_client));
-  hooking::hook(reinterpret_cast<void*>(d2_net::get_base() + 0x1E60),
-                get_packet_size_client_to_server,
-                reinterpret_cast<void**>(&g_get_packet_size_client_to_server));
+  detour::hook(reinterpret_cast<void*>(d2_net::get_base() + 0x1B60),
+               get_packet_size_server_to_client,
+               reinterpret_cast<void **>(&g_get_packet_size_server_to_client));
+  detour::hook(reinterpret_cast<void *>(d2_net::get_base() + 0x1E60),
+               get_packet_size_client_to_server,
+               reinterpret_cast<void **>(&g_get_packet_size_client_to_server));
 
 #ifndef NDEBUG
-  // hooking::hook(reinterpret_cast<void*>(d2_net::get_base() + 0x1760),
-  //               net_send_to_server,
-  //               reinterpret_cast<void**>(&g_net_send_to_server));
-  // hooking::hook(reinterpret_cast<void*>(d2_net::get_base() + 0x22B0),
-  //               net_send_to_client,
-  //               reinterpret_cast<void**>(&g_net_send_to_client));
+  // detour::hook(reinterpret_cast<void*>(d2_net::get_base() + 0x1760),
+  //              net_send_to_server,
+  //              reinterpret_cast<void**>(&g_net_send_to_server));
+  // detour::hook(reinterpret_cast<void*>(d2_net::get_base() + 0x22B0),
+  //              net_send_to_client,
+  //              reinterpret_cast<void**>(&g_net_send_to_client));
 #endif
 }
 

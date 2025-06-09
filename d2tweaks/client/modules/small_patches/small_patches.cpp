@@ -48,7 +48,7 @@ void small_patches::init() {
   //   return;
   // 
   //   // Window auto-hiding on focus loss
-  //   hooking::hook<10026>(
+  //   detour::hook<10026>(
   //       d2_gfx::get_base(), is_iconic, &g_is_iconic_original);
   // }
 }

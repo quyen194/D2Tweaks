@@ -62,9 +62,9 @@ Unit* g_item1;
 static LRESULT(__stdcall* g_wnd_proc_original)(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 ui_manager::ui_manager(token) {
-  hooking::hook(d2_win::get_base() + 0xD9B0,
-                wnd_proc,
-                reinterpret_cast<void**>(&g_wnd_proc_original));
+  detour::hook(d2_win::get_base() + 0xD9B0,
+               wnd_proc,
+               reinterpret_cast<void **>(&g_wnd_proc_original));
 }
 
 void ui_manager::add_menu(menu* m) {

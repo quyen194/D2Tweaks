@@ -142,15 +142,15 @@ static const DLLPatchStrc gpt_hook_sc_packet_before_sent[] =
 };
 
 void server::init() {
-  hooking::hook(reinterpret_cast<void*>(d2_game::get_base() + 0x59320),
-                ::handle_packet,
-                &g_handle_packet_original);
-  hooking::hook(reinterpret_cast<void*>(d2_game::get_base() + 0x50F80),
-                net_tick,
-                &g_net_tick_original);
-  hooking::hook(reinterpret_cast<void*>(d2_net::get_base() + 0x1FE0),
-                get_incoming_packet_info,
-                &g_get_incoming_packet_info_original);
+  detour::hook(reinterpret_cast<void*>(d2_game::get_base() + 0x59320),
+               ::handle_packet,
+               &g_handle_packet_original);
+  detour::hook(reinterpret_cast<void *>(d2_game::get_base() + 0x50F80),
+               net_tick,
+               &g_net_tick_original);
+  detour::hook(reinterpret_cast<void *>(d2_net::get_base() + 0x1FE0),
+               get_incoming_packet_info,
+               &g_get_incoming_packet_info_original);
 
   // D2TEMPLATE_ApplyPatch(gpt_hook_sc_packet_before_sent);
 

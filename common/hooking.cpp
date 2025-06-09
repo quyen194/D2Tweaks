@@ -4,6 +4,8 @@
 
 #include <cstdint>
 
+namespace detour {
+
 // Size of each memory block. (= page size of VirtualAlloc)
 const size_t MEMORY_BLOCK_SIZE = 0x1000;
 
@@ -38,7 +40,7 @@ static void* allocate_function_stub(void* origin, void* ptr, size_t size) {
   return code;
 }
 
-hooking::mh_status_t hooking::details::hook(void* target,
+mh_status_t details::hook(void* target,
                                             void* detour,
                                             void** original) {
   mh_status_t result =
@@ -47,14 +49,14 @@ hooking::mh_status_t hooking::details::hook(void* target,
   return result;
 }
 
-intptr_t hooking::get_executable_memory(void* origin, size_t size) {
+intptr_t get_executable_memory(void* origin, size_t size) {
   const auto stub =
       reinterpret_cast<intptr_t>(allocate_function_stub(origin, nullptr, size));
   memset(reinterpret_cast<void*>(stub), 0, size);
   return stub;
 }
 
-void* hooking::set_call(void* address, void* function, size_t stubSize) {
+void* set_call(void* address, void* function, size_t stubSize) {
   const auto stub = reinterpret_cast<int32_t>(
       allocate_function_stub(address, function, stubSize));
 
@@ -72,7 +74,7 @@ void* hooking::set_call(void* address, void* function, size_t stubSize) {
   return reinterpret_cast<void*>(stub);
 }
 
-void* hooking::set_jmp(void* address, void* function, size_t stubSize) {
+void* set_jmp(void* address, void* function, size_t stubSize) {
   const auto stub = reinterpret_cast<int32_t>(
       allocate_function_stub(address, function, stubSize));
 
@@ -90,9 +92,11 @@ void* hooking::set_jmp(void* address, void* function, size_t stubSize) {
   return reinterpret_cast<void*>(stub);
 }
 
-void* hooking::get_call(void* address) {
+void* get_call(void* address) {
   auto target = *reinterpret_cast<int32_t*>(static_cast<char*>(address) + 1);
   target += reinterpret_cast<intptr_t>(address) + 5;
 
   return reinterpret_cast<void*>(target);
 }
+
+}  // namespace detour

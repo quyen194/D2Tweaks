@@ -52,9 +52,9 @@ static int32_t(__stdcall* g_reload_original)();
 asset_manager::asset_manager(token) {}
 
 void asset_manager::init() {
-  hooking::hook(d2_client::get_base() + 0x5E370,
-                reload,
-                reinterpret_cast<void**>(&g_reload_original));
+  detour::hook(d2_client::get_base() + 0x5E370,
+               reload,
+               reinterpret_cast<void **>(&g_reload_original));
 
   g_d2_tweaks_mpq = d2_win::load_mpq(
       "d2tweaks.dll", "d2tweaks.mpq", "D2TWEAKS", 6000);

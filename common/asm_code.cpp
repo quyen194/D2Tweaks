@@ -4,7 +4,7 @@
 
 void asm_code::build() {
   m_code = reinterpret_cast<decltype(m_code)>(
-      hooking::get_executable_memory(GetModuleHandle(nullptr), m_offset));
+      detour::get_executable_memory(GetModuleHandle(nullptr), m_offset));
   memcpy(m_code, m_buffer, m_offset);
 
   for (auto addr : m_addresses) {
