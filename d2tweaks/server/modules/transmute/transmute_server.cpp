@@ -51,8 +51,8 @@ void transmute::init() {
   FileIni config(common::get_config_path());
 
   if (config.Int("modules", "AutoTransmute", 0)) {
-    // singleton<server>::instance().register_tick_handler(this);
-    singleton<server>::instance().register_packet_handler(common::MESSAGE_TYPE_TRANSMUTE, this);
+    // server::instance().register_tick_handler(this);
+    server::instance().register_packet_handler(common::MESSAGE_TYPE_TRANSMUTE, this);
   }
 }
 
@@ -155,8 +155,8 @@ bool transmute::move_item_to(Game* game,
   resp.ty = ty;
 
   const auto client = player->player_data->net_client;
-  //d2_net::send_to_client(1, client->client_id, &resp, sizeof resp);
-  singleton<server>::instance().send_packet(
+  // d2_net::send_to_client(1, client->client_id, &resp, sizeof resp);
+  server::instance().send_packet(
       player->player_data->net_client, &resp, sizeof resp);
   return true;
 }

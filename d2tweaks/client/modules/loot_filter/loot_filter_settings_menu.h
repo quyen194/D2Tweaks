@@ -21,7 +21,7 @@ namespace client {
 namespace modules {
 
 class loot_filter_settings_menu final : public ui::menu,
-                                        singleton<loot_filter_settings_menu> {
+                                        public singleton<loot_filter_settings_menu> {
   int m_iBagStatsX;
   int m_iBagStatsY;
   int m_iBagStatsZ;

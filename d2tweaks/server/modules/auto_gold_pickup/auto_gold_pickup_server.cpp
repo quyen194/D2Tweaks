@@ -32,9 +32,9 @@ void auto_gold_pickup::init() {
   FileIni config(common::get_config_path());
 
   if (config.Int("modules", "AutoGoldPickup", 1)) {
-    singleton<server>::instance().register_packet_handler(
+    server::instance().register_packet_handler(
         common::MESSAGE_TYPE_GOLD_PICKUP_INFO, this);
-    // singleton<server>::instance().register_tick_handler(this);
+    // server::instance().register_tick_handler(this);
   }
 }
 
@@ -43,7 +43,7 @@ bool auto_gold_pickup::handle_packet(Game* game,
                                      common::packet_header* packet) {
   const auto income_packet_cs =
       static_cast<common::gold_pickup_info_cs*>(packet);
-  static auto& instance = singleton<server>::instance();
+  static auto& instance = server::instance();
   const auto item =
       instance.get_server_unit(game,
                                income_packet_cs->item_guid,
@@ -70,14 +70,14 @@ bool auto_gold_pickup::au_pickup_gold(Game* game, Unit* pUnit, Unit* item) {
   d2_game::pickup_gold_pile(game, pUnit, item);
   packet.gold = goldToPickup;
 
-  singleton<server>::instance().send_packet(
+  server::instance().send_packet(
       pUnit->player_data->net_client, &packet, sizeof packet);
   return true;
 }
 
 void auto_gold_pickup::tick(Game* game, Unit* unit) {
   // static common::gold_pickup_info_sc packet;
-  // static auto& instance = singleton<server>::instance();
+  // static auto& instance = server::instance();
   // if (!game || !unit)
   //   return;
   //

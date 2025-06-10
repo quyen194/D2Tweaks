@@ -16,7 +16,7 @@ namespace modules {
 
 class loot_filter_settings_toggle_menu final
     : public ui::menu,
-      singleton<loot_filter_settings_toggle_menu> {
+      public singleton<loot_filter_settings_toggle_menu> {
   button* m_toggle_filter_settings_btn;
   button* m_btn_toggle_stats;
   button* m_btn_toggle_help;

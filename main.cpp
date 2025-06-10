@@ -71,9 +71,9 @@ void initialize(uint32_t param) {
 
   Debugger("Main").WaitForDebugger();
 
-  singleton<common::common>::instance().init();
-  singleton<server::server>::instance().init();
-  singleton<client::client>::instance().init();
+  common::common::instance().init();
+  server::server::instance().init();
+  client::client::instance().init();
 
   MH_EnableHook(nullptr);
 }

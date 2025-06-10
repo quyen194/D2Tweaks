@@ -112,7 +112,7 @@ static char __fastcall get_packet_size_server_to_client(packet_header* data,
 common::common(token) {}
 
 void common::init() {
-  singleton<asset_manager>::instance().init();
+  asset_manager::instance().init();
 
   detour::hook(reinterpret_cast<void*>(d2_net::get_base() + 0x1B60),
                get_packet_size_server_to_client,

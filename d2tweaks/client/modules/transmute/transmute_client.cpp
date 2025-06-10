@@ -91,7 +91,7 @@ class auto_transmute_menu : public ui::menu {
 
     load_settings();
 
-    m_buttons_img = singleton<common::asset_manager>::instance().get_mpq_file("d2tweaks\\assets\\buttons", common::MPQ_FILE_TYPE_DC6);
+    m_buttons_img = common::asset_manager::instance().get_mpq_file("d2tweaks\\assets\\buttons", common::MPQ_FILE_TYPE_DC6);
     m_auto_transmute_btn = get_button("m_auto_transmute_btn", std::bind(&auto_transmute_menu::auto_transmute_click, this));
 
 #ifndef NDEBUG
@@ -392,9 +392,9 @@ void transmute::init() {
                hook_game_end_asm,
                reinterpret_cast<void**>(&fn_hook_game_end));
 
-  singleton<ui::ui_manager>::instance().add_menu(new auto_transmute_menu());
-  singleton<client>::instance().register_tick_handler(this);
-  singleton<client>::instance().register_packet_handler(common::message_types_t::MESSAGE_TYPE_TRANSMUTE, this);
+  ui::ui_manager::instance().add_menu(new auto_transmute_menu());
+  client::instance().register_tick_handler(this);
+  client::instance().register_packet_handler(common::message_types_t::MESSAGE_TYPE_TRANSMUTE, this);
 }
 
 void transmute::tick() {
@@ -515,7 +515,7 @@ L1:;
 }
 
 void transmute::handle_packet(common::packet_header* packet) {
-  static auto& instance = singleton<client>::instance();
+  static auto& instance = client::instance();
   const auto income_packet_sc = static_cast<common::transmute_info_sc*>(packet);
   static common::transmute_info_cs request_packet_cs;
 

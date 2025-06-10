@@ -41,7 +41,7 @@ static uint32_t __fastcall pickup_item(Game* game,
                                        Unit* player,
                                        uint32_t guid,
                                        uint32_t a4) {
-  static auto& instance = singleton<server>::instance();
+  static auto& instance = server::instance();
 
   if (!game || !player || player->type != unit_type_t::UNIT_TYPE_PLAYER)
     return g_pickup_item_original(game, player, guid, a4);
@@ -90,7 +90,7 @@ static uint32_t __fastcall pickup_item_cursor(Game* game,
                                               Unit* player,
                                               uint32_t guid,
                                               uint32_t a4) {
-  static auto& instance = singleton<server>::instance();
+  static auto& instance = server::instance();
 
   if (!game || !player || player->type != unit_type_t::UNIT_TYPE_PLAYER)
     return g_pickup_item_cursor_original(game, player, guid, a4);

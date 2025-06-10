@@ -32,7 +32,7 @@ static char* __fastcall set_player_name(void* player, void* edx) {
   const auto result = g_set_player_name_original(player, edx);
 
   loot_filter_settings::load(d2_client::get_local_player_name());
-  singleton<loot_filter_settings_menu>::instance().reload_settings();
+  loot_filter_settings_menu::instance().reload_settings();
 
   return result;
 }
@@ -60,8 +60,8 @@ void loot_filter::init() {
   FileIni config(common::get_config_path());
 
   if (config.Int("modules", "LootFilter", 1)) {
-    singleton<ui::ui_manager>::instance().add_menu(&singleton<loot_filter_settings_menu>::instance());
-    singleton<ui::ui_manager>::instance().add_menu(&singleton<loot_filter_settings_toggle_menu>::instance());
+    ui::ui_manager::instance().add_menu(&loot_filter_settings_menu::instance());
+    ui::ui_manager::instance().add_menu(&loot_filter_settings_toggle_menu::instance());
   }
 }
 

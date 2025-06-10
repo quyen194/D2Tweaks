@@ -36,14 +36,14 @@ void auto_item_pickup::init() {
   FileIni config(common::get_config_path());
 
   if (config.Int("modules", "AutoItemPickup", 1)) {
-    singleton<server>::instance().register_packet_handler(common::MESSAGE_TYPE_ITEM_PICKUP_INFO, this);
-    singleton<server>::instance().register_tick_handler(this);
+    server::instance().register_packet_handler(common::MESSAGE_TYPE_ITEM_PICKUP_INFO, this);
+    server::instance().register_tick_handler(this);
   }
 }
 
 void auto_item_pickup::tick(Game* game, Unit* unit) {
   // static common::item_pickup_info_sc packet;
-  // static auto& instance = singleton<server>::instance();
+  // static auto& instance = server::instance();
   // if (!game || !unit)
   //   return;
   //
@@ -158,7 +158,7 @@ bool auto_item_pickup::au_pickup_item(Game* game, Unit* unit, uint32_t guid)
   //if (g_tick_between_item_pickup >= 25) {
   if (d2_game::pickup_item(game, unit, guid, &ptrNull) != true) {
     //packet.inventory_full = true;
-    //singleton<server>::instance().send_packet(unit->player_data->net_client, &packet, sizeof packet);
+    //server::instance().send_packet(unit->player_data->net_client, &packet, sizeof packet);
   }
   //}
 
@@ -170,7 +170,7 @@ bool auto_item_pickup::handle_packet(Game* game,
                                      common::packet_header* packet) {
   const auto income_packet_cs =
       static_cast<common::item_pickup_info_cs*>(packet);
-  static auto& instance = singleton<server>::instance();
+  static auto& instance = server::instance();
 
   // const auto item =
   //     instance.get_server_unit(game,

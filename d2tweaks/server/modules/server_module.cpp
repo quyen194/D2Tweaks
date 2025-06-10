@@ -9,7 +9,7 @@ namespace server {
 namespace modules {
 
 server_module::server_module() {
-  singleton<server>::instance().register_module(this);
+  server::instance().register_module(this);
 }
 
 bool server_module::handle_packet(Game* game,

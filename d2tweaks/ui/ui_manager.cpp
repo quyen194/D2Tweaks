@@ -1075,8 +1075,7 @@ LRESULT ui_manager::wnd_proc(HWND hWnd,
 
         if (strncmp(normCode, "ib1", 3) == 0) {
           // we need to get instance of loot_filter_settings_menu class singleton
-          auto& toggle_menu =
-              singleton<loot_filter_settings_toggle_menu>::instance();
+          auto& toggle_menu = loot_filter_settings_toggle_menu::instance();
 
           toggle_menu.m_show = !toggle_menu.m_show;
 

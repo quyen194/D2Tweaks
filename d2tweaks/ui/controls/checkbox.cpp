@@ -77,7 +77,7 @@ checkbox::checkbox(menu* menu, const pugi::xml_node& node)
   const auto cfont = node.attribute("font").as_int(1);
 
   const auto cImgPath = node.attribute("image").as_string(nullptr);
-  const auto cimg = singleton<common::asset_manager>::instance().get_mpq_file(
+  const auto cimg = common::asset_manager::instance().get_mpq_file(
       const_cast<char*>(cImgPath), common::MPQ_FILE_TYPE_DC6);
 
   if (!cimg) {

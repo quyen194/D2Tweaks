@@ -50,7 +50,7 @@ static int32_t __fastcall get_incoming_packet_info(common::packet_header* data,
                                                    int a7,
                                                    int a8) {
   static common::packet_header dummy;
-  static auto& instance = singleton<common::common>::instance();
+  static auto& instance = common::common::instance();
 
   const auto resultGroup = g_get_incoming_packet_info_original(
       data, dataSize, packetSizeOut, someOffset, packetGroup, a6, a7, a8);

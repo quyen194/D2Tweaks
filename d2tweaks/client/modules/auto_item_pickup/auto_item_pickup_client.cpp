@@ -228,7 +228,7 @@ class auto_item_pickup_menu : public ui::menu {
     if (DLLBASE_SGD2FREERES == 0 && DLLBASE_D2EXPRES == 0)
       load_xml("d2tweaks\\interface_vanilla\\autopickup.xml");
 
-    m_buttons_img = singleton<common::asset_manager>::instance().get_mpq_file(
+    m_buttons_img = common::asset_manager::instance().get_mpq_file(
         "d2tweaks\\assets\\buttons", common::MPQ_FILE_TYPE_DC6);
     m_auto_pickup_btn = get_button(
         "m_auto_pickup_btn",
@@ -308,9 +308,9 @@ void auto_item_pickup::init() {
 
     ReloadFilters(common::get_config_path());
 
-    singleton<ui::ui_manager>::instance().add_menu(new auto_item_pickup_menu());
-    singleton<client>::instance().register_tick_handler(this);
-    singleton<client>::instance().register_packet_handler(
+    ui::ui_manager::instance().add_menu(new auto_item_pickup_menu());
+    client::instance().register_tick_handler(this);
+    client::instance().register_packet_handler(
         common::message_types_t::MESSAGE_TYPE_ITEM_PICKUP_INFO, this);
   }
 }

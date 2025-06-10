@@ -76,7 +76,7 @@ void autosort::init() {
   cmaxValidY = config.Int("CharmZone", "MaxValidY", 0);
 
   if (config.Int("modules", "Autosort", 1)) {
-    singleton<server>::instance().register_packet_handler(
+    server::instance().register_packet_handler(
         common::MESSAGE_TYPE_INVENTORY_SORT, this);
   }
 }
@@ -110,7 +110,7 @@ bool autosort::handle_packet(Game* game,
 
 bool autosort::sort(Game* game, Unit* player, uint8_t page) {
   static common::inventory_sort_sc packet;
-  static auto& instance = singleton<server>::instance();
+  static auto& instance = server::instance();
 
   if (player == nullptr)
     return false;

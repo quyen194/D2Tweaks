@@ -177,9 +177,9 @@ void item_drop_message::init() {
                    reinterpret_cast<void **>(&fn_GamePacketReceivedIntercept));
     }
 
-    singleton<client>::instance().register_packet_handler(
+    client::instance().register_packet_handler(
         common::message_types_t::MESSAGE_TYPE_ITEM_DROPPED_INFO, this);
-    singleton<ui::ui_manager>::instance().add_menu(new draw_item_menu());
+    ui::ui_manager::instance().add_menu(new draw_item_menu());
   }
 }
 

@@ -77,7 +77,7 @@ class trader_update_menu : public ui::menu {
     if (DLLBASE_SGD2FREERES == 0 && DLLBASE_D2EXPRES == 0)
       load_xml("d2tweaks\\interface_vanilla\\reloaditems.xml");
 
-    m_buttons_img = singleton<common::asset_manager>::instance().get_mpq_file(
+    m_buttons_img = common::asset_manager::instance().get_mpq_file(
         "d2tweaks\\assets\\buttons", common::MPQ_FILE_TYPE_DC6);
     m_trader_update_btn =
         get_button("m_reload_items_btn",
@@ -138,11 +138,11 @@ void trader_update::init() {
   FileIni ini(common::get_config_path());
 
   if (ini.Int("modules", "ReloadTradeGamble", 1)) {
-    singleton<ui::ui_manager>::instance().add_menu(new trader_update_menu());
-    singleton<client>::instance().register_packet_handler(
+    ui::ui_manager::instance().add_menu(new trader_update_menu());
+    client::instance().register_packet_handler(
         common::message_types_t::MESSAGE_TYPE_TRADER_UPDATE, this);
-    // singleton<client>::instance().register_tick_handler(this);
-    // singleton<client>::instance().register_packet_cs_handler(
+    // client::instance().register_tick_handler(this);
+    // client::instance().register_packet_cs_handler(
     //     common::packet_types_cs_t::PACKET_0x38,
     //     common::message_types_t::MESSAGE_TYPE_TRADER_UPDATE,
     //     this);
@@ -154,7 +154,7 @@ void trader_update::tick() {
 }
 
 void trader_update::handle_cs_packet(common::packet_header* packet) {
-  static auto& instance = singleton<client>::instance();
+  static auto& instance = client::instance();
   const auto income_packet_cs = static_cast<common::d2_entity_action_cs*>(packet);
 
 #ifndef NDEBUG
@@ -170,7 +170,7 @@ void trader_update::handle_cs_packet(common::packet_header* packet) {
 }
 
 void trader_update::handle_packet(common::packet_header* packet) {
-  static auto& instance = singleton<client>::instance();
+  static auto& instance = client::instance();
   const auto income_packet_sc = static_cast<common::trader_update_sc*>(packet);
 
   if (!d2_client::get_ui_window_state(UI_WINDOW_NPCSHOP))

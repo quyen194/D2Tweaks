@@ -77,7 +77,7 @@ void test::init_early() {
 void test::init() {
 #ifndef NDEBUG
   g_test_menu = new test_menu();
-  singleton<ui::ui_manager>::instance().add_menu(g_test_menu);
+  ui::ui_manager::instance().add_menu(g_test_menu);
 #endif
 }
 

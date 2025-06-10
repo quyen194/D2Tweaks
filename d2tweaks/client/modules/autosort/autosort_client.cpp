@@ -94,7 +94,7 @@ class inventory_sort_menu : public ui::menu {
     if (DLLBASE_SGD2FREERES == 0 && DLLBASE_D2EXPRES == 0)
       load_xml("d2tweaks\\interface_vanilla\\autosort.xml");
 
-    m_buttons_img = singleton<common::asset_manager>::instance().get_mpq_file(
+    m_buttons_img = common::asset_manager::instance().get_mpq_file(
         "d2tweaks\\assets\\buttons", common::MPQ_FILE_TYPE_DC6);
 
     m_sort_inventory_btn =
@@ -300,14 +300,14 @@ void autosort::init() {
   FileIni config(common::get_config_path());
 
   if (config.Int("modules", "Autosort", 1)) {
-    singleton<ui::ui_manager>::instance().add_menu(new inventory_sort_menu());
-    singleton<client>::instance().register_packet_handler(
+    ui::ui_manager::instance().add_menu(new inventory_sort_menu());
+    client::instance().register_packet_handler(
         common::MESSAGE_TYPE_INVENTORY_SORT, this);
   }
 }
 
 void autosort::handle_packet(common::packet_header* packet) {
-  static auto& instance = singleton<client>::instance();
+  static auto& instance = client::instance();
   const auto inventorySort = static_cast<common::inventory_sort_sc*>(packet);
 
   const auto item = instance.get_client_unit(

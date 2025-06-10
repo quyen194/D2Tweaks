@@ -655,7 +655,7 @@ void character_stats_display::init() {
   FileIni ini(common::get_config_path());
 
   if (ini.Int("modules", "CharacterStatsDisplay", 0)) {
-    singleton<ui::ui_manager>::instance().add_menu(new character_stats_menu());
+    ui::ui_manager::instance().add_menu(new character_stats_menu());
   }
 }
 
