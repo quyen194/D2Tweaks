@@ -1,39 +1,42 @@
-#include <d2tweaks/client/modules/transmute/transmute_client.h>
-#include <d2tweaks/client/client.h>
 
-#include <common/hooking.h>
-#include <d2tweaks/common/common.h>
-#include <d2tweaks/common/protocol.h>
-#include <d2tweaks/common/asset_manager.h>
+#include <Windows.h>
 
-#include <d2tweaks/ui/menu.h>
-#include <d2tweaks/ui/ui_manager.h>
-#include <d2tweaks/ui/controls/control.h>
-#include <d2tweaks/ui/controls/button.h>
-
-#include <spdlog/spdlog.h>
-
-#include <diablo2/d2common.h>
-#include <diablo2/d2lang.h>
-#include <diablo2/d2client.h>
-#include <diablo2/d2win.h>
-#include <diablo2/d2gfx.h>
-#include <diablo2/d2common.h>
-
-//#include <diablo2/structures/data_tables.h>
-#include <diablo2/structures/unit.h>
-#include <diablo2/structures/item_data.h>
-#include <diablo2/structures/data/items_line.h>
-#include <diablo2/structures/data/item_types_line.h>
-#include <diablo2/structures/inventory.h>
-#include <common/autopickup_lootfilter.h>
-
-#include <common/strings.h>
-#include <common/file_ini.h>
 #include <DllNotify.h>
 #include <D2Template.h>
 
-#include <common/timer.h>
+#include <spdlog/spdlog.h>
+
+#include "common/autopickup_lootfilter.h"
+#include "common/debug.h"
+#include "common/file_ini.h"
+#include "common/hooking.h"
+#include "common/strings.h"
+#include "common/timer.h"
+
+#include "diablo2/structures/data/item_types_line.h"
+#include "diablo2/structures/data/items_line.h"
+#include "diablo2/structures/inventory.h"
+#include "diablo2/structures/item_data.h"
+#include "diablo2/structures/unit.h"
+
+#include "diablo2/d2client.h"
+#include "diablo2/d2common.h"
+#include "diablo2/d2common.h"
+#include "diablo2/d2gfx.h"
+#include "diablo2/d2lang.h"
+#include "diablo2/d2win.h"
+
+#include "d2tweaks/common/asset_manager.h"
+#include "d2tweaks/common/common.h"
+#include "d2tweaks/common/protocol.h"
+
+#include "d2tweaks/ui/controls/button.h"
+#include "d2tweaks/ui/menu.h"
+#include "d2tweaks/ui/ui_manager.h"
+#include "d2tweaks/ui/ui_utils.h"
+
+#include "d2tweaks/client/client.h"
+#include "d2tweaks/client/modules/transmute/transmute_client.h"
 
 using namespace d2_tweaks;
 using namespace diablo2;

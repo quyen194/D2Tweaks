@@ -1,9 +1,10 @@
 #pragma once
 
-#include <d2tweaks/ui/controls/control.h>
+#include <vector>
 
 #include <pugixml.hpp>
-#include <vector>
+
+#include "d2tweaks/ui/controls/control.h"
 
 namespace d2_tweaks {
 namespace ui {

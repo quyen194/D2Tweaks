@@ -1,9 +1,11 @@
-#include <d2tweaks/ui/controls/group.h>
-#include <d2tweaks/ui/controls/button.h>
-#include <d2tweaks/ui/controls/label.h>
-#include <d2tweaks/ui/controls/checkbox.h>
-#include <d2tweaks/ui/controls/image.h>
-#include <d2tweaks/ui/menu.h>
+
+#include "d2tweaks/ui/menu.h"
+
+#include "d2tweaks/ui/controls/button.h"
+#include "d2tweaks/ui/controls/checkbox.h"
+#include "d2tweaks/ui/controls/image.h"
+#include "d2tweaks/ui/controls/label.h"
+#include "d2tweaks/ui/controls/group.h"
 
 namespace d2_tweaks {
 namespace ui {

@@ -1,27 +1,32 @@
-#include <d2tweaks/server/modules/transmute/transmute_server.h>
-#include <d2tweaks/server/server.h>
-#include <d2tweaks/common/asset_manager.h>
-#include <d2tweaks/common/protocol.h>
+
+#include <Windows.h>
+
 #include <spdlog/spdlog.h>
-#include <diablo2/d2game.h>
-#include <diablo2/d2common.h>
-#include <diablo2/d2lang.h>
-#include <diablo2/d2net.h>
-#include <diablo2/structures/unit.h>
-#include <diablo2/structures/room.h>
-#include <diablo2/structures/data/items_line.h>
-#include <diablo2/structures/data/item_types_line.h>
-#include <diablo2/structures/player_data.h>
-#include <diablo2/structures/unit.h>
-#include <diablo2/structures/inventory.h>
-#include <diablo2/structures/item_data.h>
-#include <diablo2/structures/net_client.h>
-#include <diablo2/structures/path.h>
-#include <diablo2/structures/game.h>
-#include <diablo2/structures/unit.h>
-#include <diablo2/structures/player_data.h>
-#include <common/autopickup_lootfilter.h>
-#include <common/file_ini.h>
+
+#include "common/autopickup_lootfilter.h"
+#include "common/file_ini.h"
+
+#include "diablo2/structures/data/item_types_line.h"
+#include "diablo2/structures/data/items_line.h"
+#include "diablo2/structures/game.h"
+#include "diablo2/structures/inventory.h"
+#include "diablo2/structures/item_data.h"
+#include "diablo2/structures/net_client.h"
+#include "diablo2/structures/path.h"
+#include "diablo2/structures/player_data.h"
+#include "diablo2/structures/room.h"
+#include "diablo2/structures/unit.h"
+
+#include "diablo2/d2common.h"
+#include "diablo2/d2game.h"
+#include "diablo2/d2lang.h"
+#include "diablo2/d2net.h"
+
+#include "d2tweaks/common/asset_manager.h"
+#include "d2tweaks/common/protocol.h"
+
+#include "d2tweaks/server/server.h"
+#include "d2tweaks/server/modules/transmute/transmute_server.h"
 
 using namespace d2_tweaks;
 using namespace diablo2;

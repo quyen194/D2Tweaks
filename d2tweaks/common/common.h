@@ -1,6 +1,6 @@
 #pragma once
 
-#include <fw/singleton.h>
+#include "fw/singleton.h"
 
 namespace d2_tweaks {
 namespace common {

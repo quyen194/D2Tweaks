@@ -1,87 +1,60 @@
-#include <d2tweaks/client/modules/loot_filter/loot_filter_settings_toggle_menu.h>
-#include <d2tweaks/client/modules/loot_filter/loot_filter_settings_menu.h>
-#include <d2tweaks/client/modules/loot_filter/loot_filter_settings.h>
-#include <d2tweaks/client/client.h>
-#include <common/file_ini.h>
-#include <common/hooking.h>
-#include <common/asm_code.h>
 
 #include <Windows.h>
 
-#include <diablo2/d2client.h>
-#include <diablo2/d2common.h>
-#include <diablo2/structures/item_data.h>
-#include <diablo2/structures/unit.h>
-#include <diablo2/structures/data/items_line.h>
-#include <diablo2/structures/data/item_types_line.h>
+#include <algorithm>
+#include <chrono>
+#include <cmath>
+#include <codecvt>
+#include <filesystem>
+#include <fstream>
+#include <functional>
+#include <iostream>
+#include <locale>
+#include <map>
+#include <random>
+#include <sstream>
+#include <string>
+#include <time.h>
+#include <unordered_map>
+#include <vector>
 
-#include <d2tweaks/ui/controls/checkbox.h>
 #include <DllNotify.h>
 #include <D2Template.h>
-#include <d2tweaks/common/protocol.h>
-
-#include <d2tweaks/client/modules/autosort/autosort_client.h>
-
-#include <d2tweaks/client/client.h>
 
 #include <spdlog/spdlog.h>
 
-#include <d2tweaks/common/common.h>
-#include <d2tweaks/common/protocol.h>
-#include <d2tweaks/common/asset_manager.h>
+#include "common/file_ini.h"
+#include "common/hooking.h"
+#include "common/asm_code.h"
 
-#include <d2tweaks/ui/menu.h>
-#include <d2tweaks/ui/ui_manager.h>
-#include <d2tweaks/ui/controls/control.h>
-#include <d2tweaks/ui/controls/button.h>
+#include "diablo2/structures/data/item_types_line.h"
+#include "diablo2/structures/data/items_line.h"
+#include "diablo2/structures/game.h"
+#include "diablo2/structures/inventory.h"
+#include "diablo2/structures/item_data.h"
+#include "diablo2/structures/path.h"
+#include "diablo2/structures/player_data.h"
+#include "diablo2/structures/unit.h"
 
-#include <diablo2/d2common.h>
-#include <diablo2/d2client.h>
-#include <diablo2/d2win.h>
-#include <diablo2/d2gfx.h>
-#include <diablo2/d2cmp.h>
+#include "diablo2/d2client.h"
+#include "diablo2/d2cmp.h"
+#include "diablo2/d2common.h"
+#include "diablo2/d2gfx.h"
+#include "diablo2/d2win.h"
 
-#include <diablo2/structures/unit.h>
-#include <diablo2/structures/inventory.h>
-#include <diablo2/structures/item_data.h>
-#include <diablo2/structures/player_data.h>
+#include "d2tweaks/common/asset_manager.h"
+#include "d2tweaks/common/common.h"
+#include "d2tweaks/common/protocol.h"
 
-// include d2common.h
-#include <diablo2/d2common.h>
+#include "d2tweaks/ui/controls/checkbox.h"
+#include "d2tweaks/ui/controls/button.h"
+#include "d2tweaks/ui/menu.h"
+#include "d2tweaks/ui/ui_manager.h"
 
-#include <diablo2/structures/path.h>
-#include <diablo2/structures/game.h>
-#include <diablo2/structures/data/items_line.h>
-#include <diablo2/structures/data/item_types_line.h>
-
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <filesystem>
-#include <unordered_map>
-#include <time.h>
-#include <cmath>
-#include <random>
-#include <algorithm>
-#include <functional>
-#include <vector>
-#include <string>
-#include <map>
-
-#include <DllNotify.h>
-#include <D2Template.h>
-
-#include <diablo2/d2gfx.h>
-
-#include <string>
-#include <vector>
-#include <sstream>
-
-#include <string>
-#include <locale>
-#include <codecvt>
-#include <chrono>
-#include <windows.h> // Include for GetTickCount()
+#include "d2tweaks/client/client.h"
+#include "d2tweaks/client/modules/loot_filter/loot_filter_settings_toggle_menu.h"
+#include "d2tweaks/client/modules/loot_filter/loot_filter_settings_menu.h"
+#include "d2tweaks/client/modules/loot_filter/loot_filter_settings.h"
 
 using namespace d2_tweaks;
 using namespace diablo2;

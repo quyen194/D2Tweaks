@@ -16,8 +16,9 @@
 // -----------------------------------------------------------------------------
 #include <Windows.h>
 
-#include "strings.h"
-#include "file_ini.h"
+#include "common/strings.h"
+
+#include "common/file_ini.h"
 // -----------------------------------------------------------------------------
 
 

@@ -1,45 +1,54 @@
+
 #include <Windows.h>
+
+#include <CommCtrl.h> // Include for edit control
+#include <time.h>
+
 #include <algorithm>
 #include <chrono>
-#include <common/hooking.h>
-#include <d2tweaks/client/client.h>
-#include <d2tweaks/client/modules/autosort/autosort_client.h>
-#include <d2tweaks/common/asset_manager.h>
-#include <d2tweaks/common/common.h>
-#include <d2tweaks/common/protocol.h>
-#include <d2tweaks/ui/controls/button.h>
-#include <d2tweaks/ui/controls/control.h>
-#include <d2tweaks/ui/menu.h>
-#include <d2tweaks/ui/ui_manager.h>
-#include <diablo2/d2client.h>
-#include <diablo2/d2cmp.h>
-#include <diablo2/d2common.h>
-#include <diablo2/d2game.h>
-#include <diablo2/d2gfx.h>
-#include <diablo2/d2win.h>
-#include <diablo2/structures/data/item_types_line.h>
-#include <diablo2/structures/data/items_line.h>
-#include <diablo2/structures/game.h>
-#include <diablo2/structures/inventory.h>
-#include <diablo2/structures/item_data.h>
-#include <diablo2/structures/path.h>
-#include <diablo2/structures/player_data.h>
-#include <diablo2/structures/unit.h>
 #include <fstream>
 #include <functional>
 #include <iomanip>
 #include <iostream>
 #include <map>
 #include <random>
-#include <spdlog/spdlog.h>
-#include <string>
 #include <sstream>
 #include <stdexcept>
-#include <time.h>
+#include <string>
 #include <unordered_map>
 #include <vector>
-#include <CommCtrl.h> // Include for edit control
-#include <d2tweaks/client/modules/loot_filter/loot_filter_settings_toggle_menu.h>
+
+#include <spdlog/spdlog.h>
+
+#include "common/hooking.h"
+
+#include "diablo2/structures/data/item_types_line.h"
+#include "diablo2/structures/data/items_line.h"
+#include "diablo2/structures/game.h"
+#include "diablo2/structures/inventory.h"
+#include "diablo2/structures/item_data.h"
+#include "diablo2/structures/path.h"
+#include "diablo2/structures/player_data.h"
+#include "diablo2/structures/unit.h"
+
+#include "diablo2/d2client.h"
+#include "diablo2/d2cmp.h"
+#include "diablo2/d2common.h"
+#include "diablo2/d2game.h"
+#include "diablo2/d2gfx.h"
+#include "diablo2/d2win.h"
+
+#include "d2tweaks/common/asset_manager.h"
+#include "d2tweaks/common/common.h"
+#include "d2tweaks/common/protocol.h"
+
+#include "d2tweaks/ui/controls/button.h"
+#include "d2tweaks/ui/menu.h"
+#include "d2tweaks/ui/ui_manager.h"
+
+#include "d2tweaks/client/client.h"
+#include "d2tweaks/client/modules/autosort/autosort_client.h"
+#include "d2tweaks/client/modules/loot_filter/loot_filter_settings_toggle_menu.h"
 
 using namespace std::chrono;
 

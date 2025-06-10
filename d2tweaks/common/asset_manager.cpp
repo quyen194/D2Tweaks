@@ -1,15 +1,15 @@
 #include <Windows.h>
 
-#include <d2tweaks/common/asset_manager.h>
+#include "d2tweaks/common/asset_manager.h"
 
 #include <spdlog/spdlog.h>
 
-#include <d2tweaks/common/asset.h>
+#include "d2tweaks/common/asset.h"
 
-#include <diablo2/d2client.h>
-#include <diablo2/d2win.h>
+#include "diablo2/d2client.h"
+#include "diablo2/d2win.h"
 
-#include <common/hooking.h>
+#include "common/hooking.h"
 
 using namespace d2_tweaks;
 using namespace diablo2;

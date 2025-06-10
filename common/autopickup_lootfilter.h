@@ -1,4 +1,5 @@
 #pragma once
+
 #include <cstdint>
 
 #define MAX_STRING_LENGHT 65536

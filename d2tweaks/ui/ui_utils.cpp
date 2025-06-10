@@ -1,7 +1,6 @@
 
 #include <windows.h>
 
-
 namespace d2_tweaks {
 namespace ui {
 

@@ -1,5 +1,9 @@
-#include <diablo2/fog.h>
-#include <common/ptr_wrapper.h>
+
+#include <Windows.h>
+
+#include "common/ptr_wrapper.h"
+
+#include "diablo2/fog.h"
 
 namespace diablo2 {
 

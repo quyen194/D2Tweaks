@@ -1,5 +1,9 @@
-#include <diablo2/d2net.h>
-#include <common/ptr_wrapper.h>
+
+#include <Windows.h>
+
+#include "common/ptr_wrapper.h"
+
+#include "diablo2/d2net.h"
 
 namespace diablo2 {
 

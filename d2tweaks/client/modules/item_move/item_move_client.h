@@ -1,6 +1,6 @@
 #pragma once
 
-#include <d2tweaks/client/modules/client_module.h>
+#include "d2tweaks/client/modules/client_module.h"
 
 // Item moving between inventory pages (cube, inventory and stash) by ctrl+click
 // client side

@@ -1,12 +1,15 @@
 #pragma once
 
-#include <d2tweaks/ui/controls/checkbox.h>
-#include <d2tweaks/ui/menu.h>
-#include <diablo2/d2common.h>
-#include <diablo2/structures/item_data.h>
-#include <fw/singleton.h>
-
 #include <chrono>  // Add this line
+
+#include "fw/singleton.h"
+
+#include "diablo2/structures/item_data.h"
+
+#include "diablo2/d2common.h"
+
+#include "d2tweaks/ui/controls/checkbox.h"
+#include "d2tweaks/ui/menu.h"
 
 using namespace d2_tweaks;
 using namespace diablo2;

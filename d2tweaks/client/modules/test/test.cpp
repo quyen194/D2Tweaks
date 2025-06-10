@@ -1,26 +1,29 @@
-#include <d2tweaks/client/modules/test/test.h>
+
+#include <Windows.h>
 
 #include <spdlog/spdlog.h>
 
-#include <common/ptr_wrapper.h>
+#include "common/ptr_wrapper.h"
 
-#include <d2tweaks/ui/menu.h>
-#include <d2tweaks/ui/ui_manager.h>
+#include "diablo2/structures/data/bodylocs_line.h"
+#include "diablo2/structures/data/elemtypes_line.h"
+#include "diablo2/structures/data/hitclass_line.h"
+#include "diablo2/structures/data/item_types_line.h"
+#include "diablo2/structures/data/items_line.h"
+#include "diablo2/structures/data/monmode_line.h"
+#include "diablo2/structures/data/playerclass_line.h"
+#include "diablo2/structures/data/storepage_line.h"
+#include "diablo2/structures/data_tables.h"
+#include "diablo2/structures/unit.h"
 
-#include <diablo2/structures/data_tables.h>
-#include <diablo2/structures/unit.h>
-#include <diablo2/d2common.h>
-#include <diablo2/d2client.h>
-#include <diablo2/d2win.h>
+#include "diablo2/d2client.h"
+#include "diablo2/d2common.h"
+#include "diablo2/d2win.h"
 
-#include <diablo2/structures/data/bodylocs_line.h>
-#include <diablo2/structures/data/elemtypes_line.h>
-#include <diablo2/structures/data/hitclass_line.h>
-#include <diablo2/structures/data/item_types_line.h>
-#include <diablo2/structures/data/items_line.h>
-#include <diablo2/structures/data/monmode_line.h>
-#include <diablo2/structures/data/playerclass_line.h>
-#include <diablo2/structures/data/storepage_line.h>
+#include "d2tweaks/ui/menu.h"
+#include "d2tweaks/ui/ui_manager.h"
+
+#include "d2tweaks/client/modules/test/test.h"
 
 using namespace d2_tweaks;
 using namespace diablo2;

@@ -1,8 +1,9 @@
 #pragma once
 
-#include <d2tweaks/ui/menu.h>
-#include <d2tweaks/ui/controls/button.h>
-#include <fw/singleton.h>
+#include "fw/singleton.h"
+
+#include "d2tweaks/ui/controls/button.h"
+#include "d2tweaks/ui/menu.h"
 
 using namespace d2_tweaks;
 using namespace diablo2;

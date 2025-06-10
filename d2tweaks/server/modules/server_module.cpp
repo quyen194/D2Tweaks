@@ -1,6 +1,8 @@
-#include <d2tweaks/server/modules/server_module.h>
 
-#include <d2tweaks/server/server.h>
+#include <Windows.h>
+
+#include "d2tweaks/server/server.h"
+#include "d2tweaks/server/modules/server_module.h"
 
 namespace d2_tweaks {
 namespace server {

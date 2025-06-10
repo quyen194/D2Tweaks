@@ -1,10 +1,17 @@
-#include <d2tweaks/ui/controls/checkbox.h>
-#include <d2tweaks/ui/controls/image.h>
-#include <d2tweaks/ui/controls/label.h>
-#include <common/strings.h>
-#include <d2tweaks/common/asset_manager.h>
+
+#include <Windows.h>
+
 #include <spdlog/spdlog.h>
-#include <diablo2/d2client.h>
+
+#include "common/strings.h"
+
+#include "diablo2/d2client.h"
+
+#include "d2tweaks/common/asset_manager.h"
+
+#include "d2tweaks/ui/controls/image.h"
+#include "d2tweaks/ui/controls/label.h"
+#include "d2tweaks/ui/controls/checkbox.h"
 
 using namespace diablo2;
 

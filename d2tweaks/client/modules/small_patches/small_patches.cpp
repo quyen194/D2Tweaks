@@ -1,11 +1,13 @@
-#include <d2tweaks/client/modules/small_patches/small_patches.h>
 
 #include <Windows.h>
 
-#include <diablo2/d2client.h>
-#include <diablo2/d2win.h>
-#include <common/hooking.h>
-#include <diablo2/d2gfx.h>
+#include "common/hooking.h"
+
+#include "diablo2/d2client.h"
+#include "diablo2/d2gfx.h"
+#include "diablo2/d2win.h"
+
+#include "d2tweaks/client/modules/small_patches/small_patches.h"
 
 using namespace d2_tweaks;
 using namespace diablo2;

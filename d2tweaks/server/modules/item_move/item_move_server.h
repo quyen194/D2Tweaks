@@ -1,8 +1,8 @@
 #pragma once
 
-#include <d2tweaks/server/modules/server_module.h>
-
 #include <cstdint>
+
+#include "d2tweaks/server/modules/server_module.h"
 
 // Item moving between inventory pages (cube, inventory and stash) by ctrl+click
 // server side

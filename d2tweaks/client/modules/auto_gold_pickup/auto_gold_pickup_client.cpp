@@ -1,27 +1,33 @@
+
+#include <Windows.h>
+
 #include <D2Template.h>
 #include <DllNotify.h>
 
-#include <common/file_ini.h>
+#include "common/file_ini.h"
 
-#include <d2tweaks/client/client.h>
-#include <d2tweaks/client/modules/auto_gold_pickup/auto_gold_pickup_client.h>
-#include <d2tweaks/common/asset_manager.h>
-#include <d2tweaks/common/protocol.h>
-#include <d2tweaks/ui/controls/label.h>
-#include <d2tweaks/ui/menu.h>
-#include <d2tweaks/ui/ui_manager.h>
+#include "diablo2/structures/data/item_types_line.h"
+#include "diablo2/structures/data/items_line.h"
+#include "diablo2/structures/inventory.h"
+#include "diablo2/structures/item_data.h"
+#include "diablo2/structures/player_data.h"
+#include "diablo2/structures/room.h"
+#include "diablo2/structures/unit.h"
 
-#include <diablo2/d2client.h>
-#include <diablo2/d2common.h>
-#include <diablo2/d2gfx.h>
-#include <diablo2/d2win.h>
-#include <diablo2/structures/data/item_types_line.h>
-#include <diablo2/structures/data/items_line.h>
-#include <diablo2/structures/inventory.h>
-#include <diablo2/structures/item_data.h>
-#include <diablo2/structures/player_data.h>
-#include <diablo2/structures/room.h>
-#include <diablo2/structures/unit.h>
+#include "diablo2/d2client.h"
+#include "diablo2/d2common.h"
+#include "diablo2/d2gfx.h"
+#include "diablo2/d2win.h"
+
+#include "d2tweaks/common/asset_manager.h"
+#include "d2tweaks/common/protocol.h"
+
+#include "d2tweaks/ui/controls/label.h"
+#include "d2tweaks/ui/menu.h"
+#include "d2tweaks/ui/ui_manager.h"
+
+#include "d2tweaks/client/client.h"
+#include "d2tweaks/client/modules/auto_gold_pickup/auto_gold_pickup_client.h"
 
 using namespace d2_tweaks;
 using namespace diablo2;

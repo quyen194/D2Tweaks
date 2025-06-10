@@ -1,10 +1,11 @@
 #pragma once
 
-#include <d2tweaks/common/protocol.h>
-#include <fw/singleton.h>
-
 #include <cstdint>
 #include <functional>
+
+#include "fw/singleton.h"
+
+#include "d2tweaks/common/protocol.h"
 
 namespace diablo2 {
 namespace structures {

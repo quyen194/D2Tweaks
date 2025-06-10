@@ -1,15 +1,17 @@
 #pragma once
 
-#include <d2tweaks/client/modules/client_module.h>
-#include <d2tweaks/common/protocol.h>
-
-#include <diablo2/d2win.h>
-#include <diablo2/structures/gfxdata.h>
-#include <fw/singleton.h>
-
 #include <cstdint>
 #include <string>
 #include <vector>
+
+#include "fw/singleton.h"
+
+#include "diablo2/structures/gfxdata.h"
+#include "diablo2/d2win.h"
+
+#include "d2tweaks/common/protocol.h"
+
+#include "d2tweaks/client/modules/client_module.h"
 
 using namespace diablo2;
 using namespace diablo2::structures;

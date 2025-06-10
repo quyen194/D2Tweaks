@@ -1,10 +1,11 @@
 #pragma once
 
-#include <d2tweaks/ui/controls/control.h>
-#include <d2tweaks/ui/rect.h>
-#include <diablo2/structures/gfxdata.h>
-
 #include <pugixml.hpp>
+
+#include "diablo2/structures/gfxdata.h"
+
+#include "d2tweaks/ui/controls/control.h"
+#include "d2tweaks/ui/rect.h"
 
 using namespace diablo2::structures;
 

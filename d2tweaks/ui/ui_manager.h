@@ -1,10 +1,9 @@
 #pragma once
 
-#include <Windows.h>
-#include <fw/singleton.h>
-
 #include <string>
 #include <vector>
+
+#include "fw/singleton.h"
 
 namespace d2_tweaks {
 namespace ui {

@@ -1,18 +1,22 @@
-#include <d2tweaks/common/asset_manager.h>
 
-#include <common/file_ini.h>
-
-#include <d2tweaks/server/modules/auto_gold_pickup/auto_gold_pickup_server.h>
-#include <d2tweaks/server/server.h>
+#include <Windows.h>
 
 #include <spdlog/spdlog.h>
-#include <diablo2/d2game.h>
-#include <diablo2/d2common.h>
-#include <diablo2/structures/unit.h>
-#include <diablo2/structures/room.h>
-#include <diablo2/structures/data/items_line.h>
-#include <diablo2/structures/player_data.h>
-#include <diablo2/structures/unit.h>
+
+#include "common/file_ini.h"
+
+#include "diablo2/structures/data/items_line.h"
+#include "diablo2/structures/player_data.h"
+#include "diablo2/structures/room.h"
+#include "diablo2/structures/unit.h"
+
+#include "diablo2/d2common.h"
+#include "diablo2/d2game.h"
+
+#include "d2tweaks/common/asset_manager.h"
+
+#include "d2tweaks/server/server.h"
+#include "d2tweaks/server/modules/auto_gold_pickup/auto_gold_pickup_server.h"
 
 using namespace d2_tweaks;
 using namespace diablo2;

@@ -1,3 +1,6 @@
+
+#include <Windows.h>
+
 #define _D2VARS_H
 
 #include "D2Template.h"

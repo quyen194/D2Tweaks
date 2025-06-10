@@ -1,41 +1,44 @@
 
-#include "common/strings.h"
-#include "common/file_ini.h"
+#include <Windows.h>
 
-#include <d2tweaks/client/client.h>
-#include <d2tweaks/client/modules/character_stats_display/character_stats_display.h>
-#include <d2tweaks/common/asset_manager.h>
-#include <d2tweaks/common/common.h>
-#include <d2tweaks/common/protocol.h>
-#include <d2tweaks/ui/controls/button.h>
-#include <d2tweaks/ui/controls/control.h>
-#include <d2tweaks/ui/menu.h>
-#include <d2tweaks/ui/ui_manager.h>
-#include <d2tweaks/ui/ui_utils.h>
-
-#include <diablo2/d2client.h>
-#include <diablo2/d2common.h>
-#include <diablo2/d2gfx.h>
-
-#include <diablo2/structures/data/item_types_line.h>
-#include <diablo2/structures/data/items_line.h>
-#include <diablo2/structures/game.h>
-#include <diablo2/structures/inventory.h>
-#include <diablo2/structures/item_data.h>
-#include <diablo2/structures/path.h>
-#include <diablo2/structures/player_data.h>
-#include <diablo2/structures/unit.h>
-
-#include <map>
-#include <random>
-#include <sstream>
-#include <string>
-#include <vector>
 #include <atlstr.h>
 
 #include <filesystem>
 #include <fstream>
 #include <iostream>
+#include <map>
+#include <random>
+#include <sstream>
+#include <string>
+#include <vector>
+
+#include "common/strings.h"
+#include "common/file_ini.h"
+
+#include "diablo2/structures/data/item_types_line.h"
+#include "diablo2/structures/data/items_line.h"
+#include "diablo2/structures/game.h"
+#include "diablo2/structures/inventory.h"
+#include "diablo2/structures/item_data.h"
+#include "diablo2/structures/path.h"
+#include "diablo2/structures/player_data.h"
+#include "diablo2/structures/unit.h"
+
+#include "diablo2/d2client.h"
+#include "diablo2/d2common.h"
+#include "diablo2/d2gfx.h"
+
+#include "d2tweaks/common/asset_manager.h"
+#include "d2tweaks/common/common.h"
+#include "d2tweaks/common/protocol.h"
+
+#include "d2tweaks/ui/controls/button.h"
+#include "d2tweaks/ui/menu.h"
+#include "d2tweaks/ui/ui_manager.h"
+#include "d2tweaks/ui/ui_utils.h"
+
+#include "d2tweaks/client/client.h"
+#include "d2tweaks/client/modules/character_stats_display/character_stats_display.h"
 
 using namespace d2_tweaks;
 using namespace diablo2;

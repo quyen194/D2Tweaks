@@ -1,8 +1,8 @@
 #pragma once
 
-#include <d2tweaks/client/modules/client_module.h>
-
 #include <cstdint>
+
+#include "d2tweaks/client/modules/client_module.h"
 
 namespace d2_tweaks {
 namespace client {

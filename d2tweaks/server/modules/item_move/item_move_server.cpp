@@ -1,33 +1,34 @@
-#include <d2tweaks/common/asset_manager.h>
 
-#include <d2tweaks/server/modules/item_move/item_move_server.h>
-#include <d2tweaks/server/server.h>
-
-#include <diablo2/d2net.h>
-#include <diablo2/d2game.h>
-#include <diablo2/d2common.h>
-#include <diablo2/structures/unit.h>
-#include <diablo2/structures/game.h>
-#include <diablo2/structures/net_client.h>
-#include <diablo2/structures/item_data.h>
-#include <diablo2/structures/player_data.h>
-#include <diablo2/structures/path.h>
-
-#include <spdlog/spdlog.h>
-#include <common/file_ini.h>
+#include <Windows.h>
 
 #include <fstream>
+#include <iomanip> // For std::setw
 #include <iostream>
-#include <diablo2/d2client.h>
-
-#include <iomanip> // For std::setw
 #include <sstream>
-#include <string>
 #include <stdexcept> // For std::invalid_argument
+#include <string>
 
-#include <windows.h> // Include Windows API header for MessageBox
+#include <spdlog/spdlog.h>
 
-#include <iomanip> // For std::setw
+#include "common/file_ini.h"
+
+#include "diablo2/structures/game.h"
+#include "diablo2/structures/item_data.h"
+#include "diablo2/structures/net_client.h"
+#include "diablo2/structures/path.h"
+#include "diablo2/structures/player_data.h"
+#include "diablo2/structures/unit.h"
+
+#include "diablo2/d2client.h"
+#include "diablo2/d2common.h"
+#include "diablo2/d2game.h"
+#include "diablo2/d2net.h"
+
+#include "d2tweaks/common/asset_manager.h"
+
+#include "d2tweaks/server/server.h"
+#include "d2tweaks/server/modules/item_move/item_move_server.h"
+
 
 static uint32_t reverseDWORD(uint32_t dw) {
   return ((dw << 24) & 0xFF000000) | ((dw << 8) & 0x00FF0000) |

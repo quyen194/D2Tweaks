@@ -1,10 +1,10 @@
 #pragma once
 
-#include <fw/singleton.h>
-
 #include <functional>
 #include <string>
 #include <unordered_map>
+
+#include "fw/singleton.h"
 
 namespace d2_tweaks {
 namespace common {

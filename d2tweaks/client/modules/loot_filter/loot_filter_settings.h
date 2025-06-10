@@ -1,8 +1,8 @@
 #pragma once
 
-#include <diablo2/structures/item_data.h>
-
 #include <cstring>
+
+#include "diablo2/structures/item_data.h"
 
 using namespace diablo2::structures;
 

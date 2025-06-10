@@ -1,11 +1,17 @@
-#include <d2tweaks/server/modules/test/test.h>
 
-#include <common/hooking.h>
-#include <diablo2/d2common.h>
+#include <Windows.h>
+
 #include <spdlog/spdlog.h>
-#include <diablo2/structures/unit.h>
-#include <diablo2/d2game.h>
-#include <diablo2/structures/game.h>
+
+#include "common/hooking.h"
+
+#include "diablo2/structures/game.h"
+#include "diablo2/structures/unit.h"
+
+#include "diablo2/d2common.h"
+#include "diablo2/d2game.h"
+
+#include "d2tweaks/server/modules/test/test.h"
 
 using namespace d2_tweaks;
 using namespace diablo2;

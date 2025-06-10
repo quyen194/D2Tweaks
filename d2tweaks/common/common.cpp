@@ -1,12 +1,15 @@
-#include <d2tweaks/common/common.h>
+
+#include <Windows.h>
 
 #include <spdlog/spdlog.h>
 
-#include <d2tweaks/common/protocol.h>
-#include <d2tweaks/common/asset_manager.h>
+#include "common/hooking.h"
 
-#include <diablo2/d2net.h>
-#include <common/hooking.h>
+#include "diablo2/d2net.h"
+
+#include "d2tweaks/common/asset_manager.h"
+#include "d2tweaks/common/common.h"
+#include "d2tweaks/common/protocol.h"
 
 using namespace d2_tweaks;
 using namespace diablo2;

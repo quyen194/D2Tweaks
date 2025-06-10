@@ -1,3 +1,6 @@
+
+#include <Windows.h>
+
 #include "DllNotify.h"
 #include "D2Template.h"
 

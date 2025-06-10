@@ -1,6 +1,11 @@
-#include <diablo2/d2lang.h>
-#include <diablo2/structures/unit.h>
-#include <common/ptr_wrapper.h>
+
+#include <Windows.h>
+
+#include "common/ptr_wrapper.h"
+
+#include "diablo2/structures/unit.h"
+
+#include "diablo2/d2lang.h"
 
 namespace diablo2 {
 

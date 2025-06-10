@@ -1,15 +1,20 @@
-#include <d2tweaks/ui/controls/image.h>
+
+#include <Windows.h>
 
 #include <cstring>
 
-#include <diablo2/d2gfx.h>
-
-#include <d2tweaks/common/asset.h>
-#include <d2tweaks/common/asset_manager.h>
 #include <spdlog/spdlog.h>
-#include <diablo2/structures/cellfile.h>
-#include <diablo2/structures/gfxcell.h>
-#include <diablo2/d2client.h>
+
+#include "diablo2/structures/cellfile.h"
+#include "diablo2/structures/gfxcell.h"
+
+#include "diablo2/d2client.h"
+#include "diablo2/d2gfx.h"
+
+#include "d2tweaks/common/asset.h"
+#include "d2tweaks/common/asset_manager.h"
+
+#include "d2tweaks/ui/controls/image.h"
 
 using namespace diablo2;
 

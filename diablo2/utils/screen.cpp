@@ -1,7 +1,10 @@
-#include <diablo2/utils/screen.h>
 
-#include <diablo2/d2client.h>
-#include <diablo2/d2common.h>
+#include <Windows.h>
+
+#include "diablo2/d2client.h"
+#include "diablo2/d2common.h"
+
+#include "diablo2/utils/screen.h"
 
 namespace diablo2 {
 namespace utils {

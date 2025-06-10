@@ -1,42 +1,41 @@
-#include <d2tweaks/client/client.h>
 
-#include <common/hooking.h>
-#include <common/strings.h>
+#include <Windows.h>
+
+#include <codecvt>
+#include <map>
+#include <regex>
+#include <regex>
+#include <sstream>
+#include <string>
+#include <vector>
 
 #include <spdlog/spdlog.h>
 
-#include <d2tweaks/common/protocol.h>
-#include <d2tweaks/client/modules/client_module.h>
-#include <d2tweaks/ui/ui_manager.h>
+#include "common/hooking.h"
+#include "common/strings.h"
 
-#include <diablo2/structures/unit.h>
-#include <diablo2/structures/client_unit_list.h>
-#include <WinBase.h>
-//debug junk
-//#include <iostream>
-#include <string>
-#include <Windows.h>
+#include "diablo2/structures/client_unit_list.h"
+#include "diablo2/structures/inventory.h"
+#include "diablo2/structures/item_data.h"
+#include "diablo2/structures/player_data.h"
+#include "diablo2/structures/unit.h"
+#include "diablo2/structures/unit.h"
 
-#include <sstream>
-#include <vector>
-#include <map>
-#include <codecvt>
-#include <regex>
-#include <regex>
+#include "diablo2/d2client.h"
+#include "diablo2/d2cmp.h"
+#include "diablo2/d2common.h"
+#include "diablo2/d2game.h"
+#include "diablo2/d2gfx.h"
+#include "diablo2/d2win.h"
 
-#include <d2tweaks/common/asset_manager.h>
-#include <d2tweaks/common/common.h>
+#include "d2tweaks/common/asset_manager.h"
+#include "d2tweaks/common/common.h"
+#include "d2tweaks/common/protocol.h"
 
-#include <diablo2/d2common.h>
-#include <diablo2/d2client.h>
-#include <diablo2/d2cmp.h>
-#include <diablo2/d2win.h>
-#include <diablo2/d2gfx.h>
-#include <diablo2/d2game.h>
-#include <diablo2/structures/unit.h>
-#include <diablo2/structures/inventory.h>
-#include <diablo2/structures/item_data.h>
-#include <diablo2/structures/player_data.h>
+#include "d2tweaks/ui/ui_manager.h"
+
+#include "d2tweaks/client/client.h"
+#include "d2tweaks/client/modules/client_module.h"
 
 using namespace d2_tweaks;
 using namespace diablo2;

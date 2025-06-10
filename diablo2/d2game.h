@@ -4,7 +4,8 @@
 #include <functional>
 
 #include "diablo2/structures/unit.h"
-#include "d2common.h"
+
+#include "diablo2/d2common.h"
 
 namespace diablo2 {
 namespace structures {

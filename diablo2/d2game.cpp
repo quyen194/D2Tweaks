@@ -1,9 +1,14 @@
-#include <diablo2/d2game.h>
-#include <diablo2/structures/game.h>
+
+#include <Windows.h>
+
+#include "common/ptr_wrapper.h"
+
+#include "diablo2/structures/game.h"
+#include "diablo2/structures/npc_record.h"
+#include "diablo2/structures/unit.h"
 #include <diablo2/structures/game_server.h>
-#include <diablo2/structures/unit.h>
-#include <diablo2/structures/npc_record.h>
-#include <common/ptr_wrapper.h>
+
+#include "diablo2/d2game.h"
 
 DWORD D2GAME_BASE = 0x6FC30000;
 

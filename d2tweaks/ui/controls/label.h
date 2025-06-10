@@ -1,10 +1,12 @@
 #pragma once
 
-#include <d2tweaks/ui/controls/control.h>
-#include <diablo2/d2win.h>
+#include <vector>
 
 #include <pugixml.hpp>
-#include <vector>
+
+#include "diablo2/d2win.h"
+
+#include "d2tweaks/ui/controls/control.h"
 
 using namespace diablo2;
 

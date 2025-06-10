@@ -1,10 +1,11 @@
 #pragma once
 
-#include <d2tweaks/ui/controls/control.h>
-#include <d2tweaks/ui/rect.h>
-
 #include <functional>
+
 #include <pugixml.hpp>
+
+#include "d2tweaks/ui/controls/control.h"
+#include "d2tweaks/ui/rect.h"
 
 namespace d2_tweaks {
 namespace common {

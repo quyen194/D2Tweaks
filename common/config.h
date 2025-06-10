@@ -1,8 +1,8 @@
 #pragma once
 
-#include <fw/singleton.h>
-
 #include <nlohmann/json.hpp>
+
+#include "fw/singleton.h"
 
 class config : public singleton<config> {
   nlohmann::json *m_json;

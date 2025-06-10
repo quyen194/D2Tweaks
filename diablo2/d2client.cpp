@@ -1,6 +1,9 @@
-#include <diablo2/d2client.h>
 
-#include <common/ptr_wrapper.h>
+#include <Windows.h>
+
+#include "common/ptr_wrapper.h"
+
+#include "diablo2/d2client.h"
 
 namespace diablo2 {
 

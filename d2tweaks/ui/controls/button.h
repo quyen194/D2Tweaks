@@ -1,11 +1,12 @@
 #pragma once
 
-#include <d2tweaks/ui/controls/control.h>
-#include <d2tweaks/ui/rect.h>
-
 #include <cstdint>
 #include <functional>
+
 #include <pugixml.hpp>
+
+#include "d2tweaks/ui/controls/control.h"
+#include "d2tweaks/ui/rect.h"
 
 namespace diablo2 {
 namespace structures {

@@ -1,6 +1,7 @@
-#include <diablo2/d2launch.h>
 
 #include <Windows.h>
+
+#include "diablo2/d2launch.h"
 
 namespace diablo2 {
 

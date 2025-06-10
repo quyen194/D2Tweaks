@@ -1,9 +1,10 @@
-#include <common/config.h>
 
 #include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <sstream>
+
+#include "common/config.h"
 
 config::config(token)
     : m_unlock_fps(false),

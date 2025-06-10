@@ -1,6 +1,5 @@
 #pragma once
 
-#include <Windows.h>
 #include <cstdint>
 
 // struct UniqueItemsBIN {  // size=0x14C (332)

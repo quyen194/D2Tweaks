@@ -1,8 +1,9 @@
-#include <diablo2/d2cmp.h>
-
-#include <common/ptr_wrapper.h>
 
 #include <Windows.h>
+
+#include "common/ptr_wrapper.h"
+
+#include "diablo2/d2cmp.h"
 
 namespace diablo2 {
 namespace structures {

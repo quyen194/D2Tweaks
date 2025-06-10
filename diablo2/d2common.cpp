@@ -1,6 +1,11 @@
-#include <diablo2/d2common.h>
-#include <common/ptr_wrapper.h>
-#include <d2tweaks/common/protocol.h>
+
+#include <Windows.h>
+
+#include "common/ptr_wrapper.h"
+
+#include "d2tweaks/common/protocol.h"
+
+#include "diablo2/d2common.h"
 
 namespace diablo2 {
 

@@ -1,20 +1,28 @@
-#include <common/file_ini.h>
-#include <common/hooking.h>
-#include <common/ptr_wrapper.h>
-#include <d2tweaks/client/client.h>
-#include <d2tweaks/client/modules/item_move/item_move_client.h>
-#include <d2tweaks/common/asset_manager.h>
-#include <d2tweaks/common/protocol.h>
-#include <diablo2/d2client.h>
-#include <diablo2/d2common.h>
-#include <diablo2/structures/data/items_line.h>
-#include <diablo2/structures/data_tables.h>
-#include <diablo2/structures/inventory.h>
-#include <diablo2/structures/item_data.h>
-#include <diablo2/structures/unit.h>
+
+#include <Windows.h>
+
 #include <spdlog/sinks/basic_file_sink.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <spdlog/spdlog.h>
+
+#include "common/file_ini.h"
+#include "common/hooking.h"
+#include "common/ptr_wrapper.h"
+
+#include "diablo2/structures/data/items_line.h"
+#include "diablo2/structures/data_tables.h"
+#include "diablo2/structures/inventory.h"
+#include "diablo2/structures/item_data.h"
+#include "diablo2/structures/unit.h"
+
+#include "diablo2/d2client.h"
+#include "diablo2/d2common.h"
+
+#include "d2tweaks/common/asset_manager.h"
+#include "d2tweaks/common/protocol.h"
+
+#include "d2tweaks/client/client.h"
+#include "d2tweaks/client/modules/item_move/item_move_client.h"
 
 using namespace d2_tweaks;
 using namespace diablo2;

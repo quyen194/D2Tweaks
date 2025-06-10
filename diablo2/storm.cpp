@@ -1,6 +1,7 @@
-#include <diablo2/storm.h>
 
 #include <Windows.h>
+
+#include "diablo2/storm.h"
 
 namespace diablo2 {
 

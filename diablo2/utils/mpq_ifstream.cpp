@@ -1,7 +1,9 @@
-#include <diablo2/utils/mpq_ifstream.h>
-#include <diablo2/fog.h>
 
 #include <spdlog/spdlog.h>
+
+#include "diablo2/fog.h"
+
+#include "diablo2/utils/mpq_ifstream.h"
 
 namespace diablo2 {
 namespace utils {

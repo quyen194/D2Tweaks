@@ -1,8 +1,11 @@
-#include <d2tweaks/client/modules/loot_filter/loot_filter_settings.h>
-#include <diablo2/fog.h>
-#include <spdlog/spdlog.h>
 
 #include <filesystem>
+
+#include <spdlog/spdlog.h>
+
+#include "diablo2/fog.h"
+
+#include "d2tweaks/client/modules/loot_filter/loot_filter_settings.h"
 
 using namespace d2_tweaks;
 using namespace diablo2;

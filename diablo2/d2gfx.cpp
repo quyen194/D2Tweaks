@@ -1,5 +1,9 @@
-#include <common/ptr_wrapper.h>
-#include <diablo2/d2gfx.h>
+
+#include <Windows.h>
+
+#include "common/ptr_wrapper.h"
+
+#include "diablo2/d2gfx.h"
 
 namespace diablo2 {
 

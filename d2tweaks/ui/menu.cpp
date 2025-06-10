@@ -1,19 +1,24 @@
-#include <d2tweaks/ui/menu.h>
+
+#include <Windows.h>
 
 #include <algorithm>
 #include <pugixml.hpp>
 #include <stdio.h>
 
-#include <diablo2/utils/mpq_ifstream.h>
-#include <diablo2/d2client.h>
 #include <spdlog/spdlog.h>
 
-#include <d2tweaks/ui/controls/control.h>
-#include <d2tweaks/ui/controls/button.h>
-#include <d2tweaks/ui/controls/image.h>
-#include <d2tweaks/ui/controls/label.h>
-#include <d2tweaks/ui/controls/checkbox.h>
-#include <d2tweaks/ui/controls/group.h>
+#include "diablo2/utils/mpq_ifstream.h"
+
+#include "diablo2/d2client.h"
+
+#include "d2tweaks/ui/controls/button.h"
+#include "d2tweaks/ui/controls/checkbox.h"
+#include "d2tweaks/ui/controls/control.h"
+#include "d2tweaks/ui/controls/group.h"
+#include "d2tweaks/ui/controls/image.h"
+#include "d2tweaks/ui/controls/label.h"
+
+#include "d2tweaks/ui/menu.h"
 
 using namespace diablo2;
 

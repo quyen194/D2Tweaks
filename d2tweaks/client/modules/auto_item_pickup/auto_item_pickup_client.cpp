@@ -1,33 +1,42 @@
+
+#include <Windows.h>
+
 #include <D2Template.h>
 #include <DllNotify.h>
-#include <common/autopickup_lootfilter.h>
-#include <common/strings.h>
-#include <common/file_ini.h>
-#include <common/hooking.h>
-#include <d2tweaks/client/client.h>
-#include <d2tweaks/client/modules/auto_item_pickup/auto_item_pickup_client.h>
-#include <d2tweaks/common/asset_manager.h>
-#include <d2tweaks/common/common.h>
-#include <d2tweaks/common/protocol.h>
-#include <d2tweaks/ui/controls/button.h>
-#include <d2tweaks/ui/controls/control.h>
-#include <d2tweaks/ui/menu.h>
-#include <d2tweaks/ui/ui_manager.h>
-#include <diablo2/d2client.h>
-#include <diablo2/d2common.h>
-#include <diablo2/d2gfx.h>
-#include <diablo2/d2lang.h>
-#include <diablo2/d2win.h>
-#include <diablo2/structures/data/item_types_line.h>
-#include <diablo2/structures/data/items_line.h>
-#include <diablo2/structures/inventory.h>
-#include <diablo2/structures/item_data.h>
-#include <diablo2/structures/player_data.h>
-#include <diablo2/structures/room.h>
-#include <diablo2/structures/unit.h>
+
 #include <spdlog/sinks/basic_file_sink.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <spdlog/spdlog.h>
+
+#include "common/autopickup_lootfilter.h"
+#include "common/strings.h"
+#include "common/file_ini.h"
+#include "common/hooking.h"
+
+#include "diablo2/structures/data/item_types_line.h"
+#include "diablo2/structures/data/items_line.h"
+#include "diablo2/structures/inventory.h"
+#include "diablo2/structures/item_data.h"
+#include "diablo2/structures/player_data.h"
+#include "diablo2/structures/room.h"
+#include "diablo2/structures/unit.h"
+
+#include "diablo2/d2client.h"
+#include "diablo2/d2common.h"
+#include "diablo2/d2gfx.h"
+#include "diablo2/d2lang.h"
+#include "diablo2/d2win.h"
+
+#include "d2tweaks/common/asset_manager.h"
+#include "d2tweaks/common/common.h"
+#include "d2tweaks/common/protocol.h"
+
+#include "d2tweaks/ui/controls/button.h"
+#include "d2tweaks/ui/menu.h"
+#include "d2tweaks/ui/ui_manager.h"
+
+#include "d2tweaks/client/client.h"
+#include "d2tweaks/client/modules/auto_item_pickup/auto_item_pickup_client.h"
 
 using namespace d2_tweaks;
 using namespace diablo2;

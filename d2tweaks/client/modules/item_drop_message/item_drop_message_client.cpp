@@ -1,21 +1,28 @@
-﻿#include <d2tweaks/client/modules/item_drop_message/item_drop_message_client.h>
-#include <d2tweaks/client/client.h>
+﻿
+#include <Windows.h>
 
-#include <d2tweaks/common/asset_manager.h>
-#include <d2tweaks/common/protocol.h>
-
-#include <common/hooking.h>
-#include <common/file_ini.h>
-#include <d2tweaks/ui/menu.h>
-#include <d2tweaks/ui/ui_manager.h>
 #include <spdlog/spdlog.h>
-#include <diablo2/d2client.h>
-#include <diablo2/d2win.h>
-#include <diablo2/d2gfx.h>
-#include <diablo2/d2common.h>
-#include <common/autopickup_lootfilter.h>
-#include <diablo2/structures/data/items_line.h>
-#include <diablo2/structures/data/item_types_line.h>
+
+#include "common/autopickup_lootfilter.h"
+#include "common/file_ini.h"
+#include "common/hooking.h"
+
+#include "diablo2/structures/data/items_line.h"
+#include "diablo2/structures/data/item_types_line.h"
+
+#include "diablo2/d2client.h"
+#include "diablo2/d2common.h"
+#include "diablo2/d2gfx.h"
+#include "diablo2/d2win.h"
+
+#include "d2tweaks/common/asset_manager.h"
+#include "d2tweaks/common/protocol.h"
+
+#include "d2tweaks/ui/menu.h"
+#include "d2tweaks/ui/ui_manager.h"
+
+#include "d2tweaks/client/client.h"
+#include "d2tweaks/client/modules/item_drop_message/item_drop_message_client.h"
 
 using namespace d2_tweaks;
 using namespace diablo2;

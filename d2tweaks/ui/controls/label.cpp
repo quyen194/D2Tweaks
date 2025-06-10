@@ -1,6 +1,11 @@
-#include <d2tweaks/ui/controls/label.h>
-#include <common/strings.h>
-#include <diablo2/d2client.h>
+
+#include <Windows.h>
+
+#include "common/strings.h"
+
+#include "diablo2/d2client.h"
+
+#include "d2tweaks/ui/controls/label.h"
 
 using namespace diablo2;
 

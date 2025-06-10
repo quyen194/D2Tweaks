@@ -1,10 +1,11 @@
 
 #include <Windows.h>
 
-#include <common/file_ini.h>
-#include <common/debug.h>
-#include <d2tweaks/common/asset_manager.h>
-#include <d2tweaks/ui/ui_utils.h>
+#include "common/debug.h"
+#include "common/file_ini.h"
+
+#include "d2tweaks/common/asset_manager.h"
+#include "d2tweaks/ui/ui_utils.h"
 
 using namespace d2_tweaks;
 

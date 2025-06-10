@@ -1,6 +1,6 @@
 #pragma once
 
-#include <d2tweaks/client/modules/client_module.h>
+#include "d2tweaks/client/modules/client_module.h"
 
 // Display damage client side
 

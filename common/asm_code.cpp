@@ -1,6 +1,9 @@
+
 #include <Windows.h>
-#include <common/asm_code.h>
-#include <common/hooking.h>
+
+#include "common/hooking.h"
+
+#include "common/asm_code.h"
 
 void asm_code::build() {
   m_code = reinterpret_cast<decltype(m_code)>(

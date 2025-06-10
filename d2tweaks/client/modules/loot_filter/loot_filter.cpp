@@ -1,13 +1,20 @@
-#include <common/file_ini.h>
-#include <common/hooking.h>
-#include <d2tweaks/client/modules/loot_filter/loot_filter.h>
-#include <d2tweaks/client/modules/loot_filter/loot_filter_settings.h>
-#include <d2tweaks/client/modules/loot_filter/loot_filter_settings_menu.h>
-#include <d2tweaks/client/modules/loot_filter/loot_filter_settings_toggle_menu.h>
-#include <d2tweaks/common/asset_manager.h>
-#include <d2tweaks/ui/ui_manager.h>
-#include <diablo2/d2client.h>
-#include <diablo2/d2launch.h>
+
+#include <Windows.h>
+
+#include "common/file_ini.h"
+#include "common/hooking.h"
+
+#include "diablo2/d2client.h"
+#include "diablo2/d2launch.h"
+
+#include "d2tweaks/common/asset_manager.h"
+
+#include "d2tweaks/ui/ui_manager.h"
+
+#include "d2tweaks/client/modules/loot_filter/loot_filter_settings_toggle_menu.h"
+#include "d2tweaks/client/modules/loot_filter/loot_filter_settings_menu.h"
+#include "d2tweaks/client/modules/loot_filter/loot_filter_settings.h"
+#include "d2tweaks/client/modules/loot_filter/loot_filter.h"
 
 using namespace d2_tweaks;
 using namespace diablo2;

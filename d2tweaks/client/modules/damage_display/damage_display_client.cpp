@@ -1,25 +1,33 @@
-#include <d2tweaks/client/modules/damage_display/damage_display_client.h>
 
-#include <d2tweaks/common/asset_manager.h>
-#include <d2tweaks/common/protocol.h>
-#include <d2tweaks/client/client.h>
+#include <Windows.h>
+
 #include <spdlog/spdlog.h>
-#include <diablo2/utils/screen.h>
-#include <diablo2/d2common.h>
-#include <diablo2/structures/unit.h>
-#include <diablo2/d2client.h>
-#include <d2tweaks/ui/ui_manager.h>
-#include <diablo2/d2win.h>
-#include <diablo2/d2gfx.h>
-#include <fw/pool.h>
 
-#include <diablo2/structures/gfxdata.h>
-#include <diablo2/structures/gfxcell.h>
-#include <diablo2/d2cmp.h>
-#include <common/hooking.h>
-#include <common/file_ini.h>
+#include "fw/pool.h"
 
-#include <diablo2/structures/monster_data.h>
+#include "common/hooking.h"
+#include "common/file_ini.h"
+
+#include "diablo2/structures/gfxdata.h"
+#include "diablo2/structures/gfxcell.h"
+#include "diablo2/structures/monster_data.h"
+#include "diablo2/structures/unit.h"
+
+#include "diablo2/utils/screen.h"
+
+#include "diablo2/d2cmp.h"
+#include "diablo2/d2client.h"
+#include "diablo2/d2common.h"
+#include "diablo2/d2gfx.h"
+#include "diablo2/d2win.h"
+
+#include "d2tweaks/common/asset_manager.h"
+#include "d2tweaks/common/protocol.h"
+
+#include "d2tweaks/ui/ui_manager.h"
+
+#include "d2tweaks/client/client.h"
+#include "d2tweaks/client/modules/damage_display/damage_display_client.h"
 
 using namespace d2_tweaks;
 using namespace diablo2;

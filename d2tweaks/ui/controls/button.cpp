@@ -1,13 +1,21 @@
-#include <d2tweaks/ui/controls/button.h>
 
-#include <d2tweaks/ui/controls/image.h>
+#include <Windows.h>
 
-#include <diablo2/d2client.h>
-#include <diablo2/d2win.h>
-#include <diablo2/d2gfx.h>
+#include <map>
+
 #include <spdlog/spdlog.h>
-#include <d2tweaks/common/asset_manager.h>
-#include <common/strings.h>
+
+#include "common/get_default.h"
+#include "common/strings.h"
+
+#include "diablo2/d2client.h"
+#include "diablo2/d2gfx.h"
+#include "diablo2/d2win.h"
+
+#include "d2tweaks/common/asset_manager.h"
+
+#include "d2tweaks/ui/controls/image.h"
+#include "d2tweaks/ui/controls/button.h"
 
 using namespace diablo2;
 

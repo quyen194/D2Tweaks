@@ -1,8 +1,11 @@
-#include <MinHook.h>
-#include <common/hooking.h>
-#include <spdlog/spdlog.h>
 
 #include <cstdint>
+
+#include <MinHook.h>
+#include <spdlog/spdlog.h>
+
+#include "common/hooking.h"
+
 
 namespace detour {
 

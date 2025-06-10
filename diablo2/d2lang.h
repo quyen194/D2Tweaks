@@ -1,9 +1,9 @@
 #pragma once
 
-#include <diablo2/structures/unit.h>
-
 #include <cstdint>
 #include <functional>
+
+#include "diablo2/structures/unit.h"
 
 namespace diablo2 {
 
