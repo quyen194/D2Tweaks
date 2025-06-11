@@ -291,11 +291,11 @@ class inventory_sort_menu : public ui::menu {
   }
 };
 
-MODULE_INIT(autosort)
+MODULE_INIT(AutoSort)
 
-void autosort::init_early() {}
+void AutoSort::init_early() {}
 
-void autosort::init() {
+void AutoSort::init() {
   FileIni config(common::get_config_path());
 
   if (config.Int("modules", "Autosort", 1)) {
@@ -305,7 +305,7 @@ void autosort::init() {
   }
 }
 
-void autosort::handle_packet(common::packet_header* packet) {
+void AutoSort::handle_packet(common::packet_header* packet) {
   static auto& instance = Client::instance();
   const auto inventorySort = static_cast<common::inventory_sort_sc*>(packet);
 
