@@ -36,7 +36,7 @@ using namespace diablo2::structures;
 namespace d2_tweaks {
 namespace client {
 
-MODULE_INIT(damage_display)
+MODULE_INIT(DamageDisplay)
 
 struct damage_label {
   bool screen_space;
@@ -429,10 +429,10 @@ static ui_color_t damage_type_to_color(common::damage_type_t type) {
   }
 }
 
-void damage_display::init_early() {
+void DamageDisplay::init_early() {
 }
 
-void damage_display::init() {
+void DamageDisplay::init() {
   FileIni config(common::get_config_path());
 
   if (config.Int("modules", "DamageDisplay", 1)) {
@@ -449,7 +449,7 @@ void damage_display::init() {
   }
 }
 
-void damage_display::handle_packet(common::packet_header* packet) {
+void DamageDisplay::handle_packet(common::packet_header* packet) {
   static auto& instance = Client::instance();
   static GfxData gfxdata;
   const auto player = d2_client::get_local_player();
@@ -561,7 +561,7 @@ void damage_display::handle_packet(common::packet_header* packet) {
   g_label_pool.put(label); //prevent memory leak if there's no room for another label
 }
 
-void damage_display::tick() {
+void DamageDisplay::tick() {
 }
 
 }  // namespace client

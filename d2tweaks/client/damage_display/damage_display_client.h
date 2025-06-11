@@ -7,7 +7,7 @@
 namespace d2_tweaks {
 namespace client {
 
-class damage_display final : public ModuleBase {
+class DamageDisplay final : public ModuleBase {
  public:
   void init() override;
   void init_early() override;
