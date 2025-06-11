@@ -393,8 +393,8 @@ void transmute::init() {
                reinterpret_cast<void**>(&fn_hook_game_end));
 
   ui::Manager::instance().add_menu(new auto_transmute_menu());
-  client::instance().register_tick_handler(this);
-  client::instance().register_packet_handler(common::message_types_t::MESSAGE_TYPE_TRANSMUTE, this);
+  Client::instance().register_tick_handler(this);
+  Client::instance().register_packet_handler(common::message_types_t::MESSAGE_TYPE_TRANSMUTE, this);
 }
 
 void transmute::tick() {
@@ -515,7 +515,7 @@ L1:;
 }
 
 void transmute::handle_packet(common::packet_header* packet) {
-  static auto& instance = client::instance();
+  static auto& instance = Client::instance();
   const auto income_packet_sc = static_cast<common::transmute_info_sc*>(packet);
   static common::transmute_info_cs request_packet_cs;
 

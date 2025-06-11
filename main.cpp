@@ -73,7 +73,7 @@ void initialize(uint32_t param) {
 
   common::common::instance().init();
   Server::instance().init();
-  client::client::instance().init();
+  Client::instance().init();
 
   MH_EnableHook(nullptr);
 }

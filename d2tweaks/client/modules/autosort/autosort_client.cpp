@@ -301,13 +301,13 @@ void autosort::init() {
 
   if (config.Int("modules", "Autosort", 1)) {
     ui::Manager::instance().add_menu(new inventory_sort_menu());
-    client::instance().register_packet_handler(
+    Client::instance().register_packet_handler(
         common::MESSAGE_TYPE_INVENTORY_SORT, this);
   }
 }
 
 void autosort::handle_packet(common::packet_header* packet) {
-  static auto& instance = client::instance();
+  static auto& instance = Client::instance();
   const auto inventorySort = static_cast<common::inventory_sort_sc*>(packet);
 
   const auto item = instance.get_client_unit(

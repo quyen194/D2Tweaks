@@ -139,10 +139,10 @@ void trader_update::init() {
 
   if (ini.Int("modules", "ReloadTradeGamble", 1)) {
     ui::Manager::instance().add_menu(new trader_update_menu());
-    client::instance().register_packet_handler(
+    Client::instance().register_packet_handler(
         common::message_types_t::MESSAGE_TYPE_TRADER_UPDATE, this);
-    // client::instance().register_tick_handler(this);
-    // client::instance().register_packet_cs_handler(
+    // Client::instance().register_tick_handler(this);
+    // Client::instance().register_packet_cs_handler(
     //     common::packet_types_cs_t::PACKET_0x38,
     //     common::message_types_t::MESSAGE_TYPE_TRADER_UPDATE,
     //     this);
@@ -154,7 +154,7 @@ void trader_update::tick() {
 }
 
 void trader_update::handle_cs_packet(common::packet_header* packet) {
-  static auto& instance = client::instance();
+  static auto& instance = Client::instance();
   const auto income_packet_cs = static_cast<common::d2_entity_action_cs*>(packet);
 
 #ifndef NDEBUG
@@ -170,7 +170,7 @@ void trader_update::handle_cs_packet(common::packet_header* packet) {
 }
 
 void trader_update::handle_packet(common::packet_header* packet) {
-  static auto& instance = client::instance();
+  static auto& instance = Client::instance();
   const auto income_packet_sc = static_cast<common::trader_update_sc*>(packet);
 
   if (!d2_client::get_ui_window_state(UI_WINDOW_NPCSHOP))

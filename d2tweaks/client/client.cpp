@@ -62,9 +62,8 @@ static int32_t(__fastcall* g_game_tick_original)(int32_t a1);
 //static uint32_t g_ret;
 
 namespace d2_tweaks {
-namespace client {
 
-client::client(token) {
+Client::Client(token) {
   m_module_id_counter = 0;
   m_tick_handler_id_counter = 0;
 }
@@ -74,7 +73,7 @@ __declspec(naked) void __stdcall game_tick_wrapper() {
   __asm {
     pushad
     pushfd
-    call[client::game_tick]
+    call[Client::game_tick]
     popfd
     popad
 
@@ -87,7 +86,7 @@ __declspec (naked) void handle_cs_packet_wrapper() {
   __asm {
     pushad;
     pushfd;
-    call[client::handle_cs_packet]
+    call[Client::handle_cs_packet]
       popfd;
     popad;
     // original instructions
@@ -100,7 +99,7 @@ __declspec (naked) void handle_sc_standart_packet_wrapper() {
   __asm {
     pushad;
     pushfd;
-    call[client::handle_standart_packet]
+    call[Client::handle_standart_packet]
       popfd;
     popad;
     // original instructions
@@ -124,7 +123,7 @@ static const DLLPatchStrc gpt_handle_sc_standart_packet[] = {
   {D2DLL_INVALID}
 };
 
-void client::init() {
+void Client::init() {
   // handle packet processes the packet before GamePacketReceivedIntercept
   detour::hook(d2_client::get_base() + 0x11CB0, handle_packet, reinterpret_cast<void**>(&g_handle_packet));
   detour::hook(d2_client::get_base() + 0x9640, game_tick_wrapper, reinterpret_cast<void**>(&g_game_tick_original));
@@ -143,7 +142,7 @@ void client::init() {
 }
 
 static int32_t g_ebp_send_to_client;
-void client::handle_cs_packet(common::packet_header* packet, size_t size) {
+void Client::handle_cs_packet(common::packet_header* packet, size_t size) {
 #ifndef NDEBUG
   __asm {
     push[ebp + 0x2C];
@@ -158,7 +157,7 @@ void client::handle_cs_packet(common::packet_header* packet, size_t size) {
 #endif
 
   static common::packet_header dummy;
-  static auto& instance = singleton<client>::instance();
+  static auto& instance = singleton<Client>::instance();
 
   if (size == -1)
     return;
@@ -171,7 +170,7 @@ void client::handle_cs_packet(common::packet_header* packet, size_t size) {
   handler->handle_cs_packet(packet);
 }
 
-void client::handle_standart_packet(common::packet_header* packet,
+void Client::handle_standart_packet(common::packet_header* packet,
                                     size_t size) {
   if (size == -1)
     return;
@@ -186,9 +185,9 @@ void client::handle_standart_packet(common::packet_header* packet,
   return;
 }
 
-void client::handle_packet(common::packet_header* packet, size_t size) {
+void Client::handle_packet(common::packet_header* packet, size_t size) {
   static common::packet_header dummy;
-  static auto& instance = singleton<client>::instance();
+  static auto& instance = singleton<Client>::instance();
 
   if (size == -1)
     return;
@@ -214,8 +213,8 @@ void client::handle_packet(common::packet_header* packet, size_t size) {
 }
 
 static bool g_is_init = false;
-void client::game_tick() {
-  static auto& instance = singleton<client>::instance();  /// conflict with text on d2 gl
+void Client::game_tick() {
+  static auto& instance = singleton<Client>::instance();  /// conflict with text on d2 gl
 
   if (g_is_init == false) {
     D2TEMPLATE_Init();
@@ -239,7 +238,7 @@ void client::game_tick() {
   return;
 }
 
-int32_t client::draw_game_ui() {
+int32_t Client::draw_game_ui() {
   static auto& ui = ui::Manager::instance();
 
   const auto result = g_draw_game_ui_original();
@@ -249,15 +248,15 @@ int32_t client::draw_game_ui() {
   return result;
 }
 
-void client::register_module(client_module* module) {
+void Client::register_module(client_module* module) {
   m_modules[m_module_id_counter++] = module;
 }
 
-void client::register_tick_handler(client_module* module) {
+void Client::register_tick_handler(client_module* module) {
   m_tick_handlers[m_tick_handler_id_counter++] = module;
 }
 
-void client::register_packet_cs_handler(common::packet_types_cs_t packet,
+void Client::register_packet_cs_handler(common::packet_types_cs_t packet,
                                         common::message_types_t type,
                                         client_module* module) {
   if (m_packet_cs_handlers[packet] != nullptr) {
@@ -268,7 +267,7 @@ void client::register_packet_cs_handler(common::packet_types_cs_t packet,
   m_packet_cs_handlers[packet] = module;
 }
 
-void client::register_packet_handler(common::message_types_t type,
+void Client::register_packet_handler(common::message_types_t type,
                                      client_module* module) {
   if (m_packet_handlers[type] != nullptr) {
     spdlog::warn("Clientside packet handler for {0} is already registered!",
@@ -278,7 +277,7 @@ void client::register_packet_handler(common::message_types_t type,
   m_packet_handlers[type] = module;
 }
 
-Unit* client::get_client_unit(uint32_t type, uint32_t guid) {
+Unit* Client::get_client_unit(uint32_t type, uint32_t guid) {
   static auto units = d2_client::get_client_unit_list();
 
   const auto index = guid & 127;
@@ -292,5 +291,4 @@ Unit* client::get_client_unit(uint32_t type, uint32_t guid) {
   return result;
 }
 
-}  // namespace client
 }  // namespace d2_tweaks

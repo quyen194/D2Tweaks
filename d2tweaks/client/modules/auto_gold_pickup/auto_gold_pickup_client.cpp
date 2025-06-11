@@ -91,9 +91,9 @@ void auto_gold_pickup::init() {
   if (config.Int("modules", "AutoGoldPickup", 1)) {
     m_iDistance = config.Int("AutoGoldPickup", "PickupDistance", 4);
     m_nDisplayTime = config.Int("AutoGoldPickup", "DisplayTime", 2500);
-    client::instance().register_packet_handler(
+    Client::instance().register_packet_handler(
         common::message_types_t::MESSAGE_TYPE_GOLD_PICKUP_INFO, this);
-    client::instance().register_tick_handler(this);
+    Client::instance().register_tick_handler(this);
     ui::Manager::instance().add_menu(new draw_gold_menu());
   }
 }

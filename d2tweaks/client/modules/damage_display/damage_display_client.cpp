@@ -443,7 +443,7 @@ void damage_display::init() {
     g_player_label_posx = config.Int("DamageDisplay", "PlayerDamagePosx", 70);
     g_player_label_posy = config.Int("DamageDisplay", "PlayerDamagePosy", 500);
     DISPLAY_TIME = config.Int("DamageDisplay", "DisplayTime", 1000);
-    client::instance().register_packet_handler(common::MESSAGE_TYPE_DAMAGE_INFO, this);
+    Client::instance().register_packet_handler(common::MESSAGE_TYPE_DAMAGE_INFO, this);
     detour::hook(d2_client::get_base() + 0x80A30,
                  draw_game_ui,
                  reinterpret_cast<void **>(&g_draw_game_ui));
@@ -451,7 +451,7 @@ void damage_display::init() {
 }
 
 void damage_display::handle_packet(common::packet_header* packet) {
-  static auto& instance = client::instance();
+  static auto& instance = Client::instance();
   static GfxData gfxdata;
   const auto player = d2_client::get_local_player();
   const auto info = static_cast<common::damage_info_sc*>(packet);

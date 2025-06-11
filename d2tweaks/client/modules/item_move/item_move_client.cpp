@@ -160,14 +160,14 @@ void item_move::init() {
     detour::hook(d2_client::get_base() + 0x475C0,
                  item_click,
                  reinterpret_cast<void **>(&g_item_click_original));
-    client::instance().register_packet_handler(
+    Client::instance().register_packet_handler(
         common::MESSAGE_TYPE_ITEM_MOVE, this);
   }
 }
 
 // handle packet coming from the server
 void item_move::handle_packet(common::packet_header* packet) {
-  static auto& instance = client::instance();
+  static auto& instance = Client::instance();
 
   const auto itemMove = static_cast<common::item_move_sc*>(packet);
   const auto item = instance.get_client_unit(

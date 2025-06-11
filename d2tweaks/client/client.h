@@ -24,11 +24,10 @@ extern bool m_cube_enabled;
 extern bool m_stash_enabled;
 
 namespace d2_tweaks {
-namespace client {
 
-using namespace modules;
+using namespace client::modules;
 
-class client : public singleton<client> {
+class Client : public singleton<Client> {
   uint8_t m_module_id_counter;
   uint8_t m_tick_handler_id_counter;
   client_module* m_modules[0xFF]{nullptr};  // max 255 modules atm.
@@ -37,8 +36,9 @@ class client : public singleton<client> {
   client_module* m_packet_handlers[0xFF]{nullptr};
   // max 255 handlers because of one-byte packet header
   client_module* m_packet_cs_handlers[0xFF]{nullptr};
+
  public:
-  explicit client(token);
+  explicit Client(token);
 
   void init();
   void register_module(client_module* module);
@@ -63,5 +63,4 @@ class client : public singleton<client> {
   static int32_t __stdcall draw_game_ui();
 };
 
-}  // namespace client
 }  // namespace d2_tweaks

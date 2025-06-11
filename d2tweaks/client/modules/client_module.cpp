@@ -9,7 +9,7 @@ namespace client {
 namespace modules {
 
 client_module::client_module() {
-  client::instance().register_module(this);
+  Client::instance().register_module(this);
 }
 
 void client_module::draw_ui() {}

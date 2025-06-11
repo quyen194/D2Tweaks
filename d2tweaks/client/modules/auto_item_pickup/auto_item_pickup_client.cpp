@@ -309,8 +309,8 @@ void auto_item_pickup::init() {
     ReloadFilters(common::get_config_path());
 
     ui::Manager::instance().add_menu(new auto_item_pickup_menu());
-    client::instance().register_tick_handler(this);
-    client::instance().register_packet_handler(
+    Client::instance().register_tick_handler(this);
+    Client::instance().register_packet_handler(
         common::message_types_t::MESSAGE_TYPE_ITEM_PICKUP_INFO, this);
   }
 }
