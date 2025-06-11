@@ -2,7 +2,7 @@
 
 #include <cstdint>
 
-#include "d2tweaks/server/modules/server_module.h"
+#include "d2tweaks/server/modules/base.h"
 
 // Display damage server side
 
@@ -18,7 +18,7 @@ namespace d2_tweaks {
 namespace server {
 namespace modules {
 
-class damage_display final : public server_module {
+class damage_display final : public Base {
  public:
   void init() override;
 

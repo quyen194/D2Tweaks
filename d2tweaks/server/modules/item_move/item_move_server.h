@@ -2,7 +2,7 @@
 
 #include <cstdint>
 
-#include "d2tweaks/server/modules/server_module.h"
+#include "d2tweaks/server/modules/base.h"
 
 // Item moving between inventory pages (cube, inventory and stash) by ctrl+click
 // server side
@@ -19,7 +19,7 @@ namespace d2_tweaks {
 namespace server {
 namespace modules {
 
-class item_move final : public server_module {
+class item_move final : public Base {
  public:
   void init() override;
 

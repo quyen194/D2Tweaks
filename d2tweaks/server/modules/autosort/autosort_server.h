@@ -2,7 +2,7 @@
 
 #include <cstdint>
 
-#include "d2tweaks/server/modules/server_module.h"
+#include "d2tweaks/server/modules/base.h"
 
 // Inventory auto sort module server side
 
@@ -20,7 +20,7 @@ namespace modules {
 
 using namespace diablo2::structures;
 
-class autosort final : public server_module {
+class autosort final : public Base {
  public:
   void init() override;
 

@@ -25,7 +25,7 @@
     <ClCompile Include="d2tweaks\server\modules\damage_display\damage_display_server.cpp" />
     <ClCompile Include="d2tweaks\server\modules\identify_on_pickup\identify_on_pickup_server.cpp" />
     <ClCompile Include="d2tweaks\server\modules\item_move\item_move_server.cpp" />
-    <ClCompile Include="d2tweaks\server\modules\server_module.cpp" />
+    <ClCompile Include="d2tweaks\server\modules\base.cpp" />
     <ClCompile Include="d2tweaks\server\modules\test\test.cpp" />
     <ClCompile Include="d2tweaks\server\server.cpp" />
     <ClCompile Include="d2tweaks\ui\controls\button.cpp" />
@@ -99,7 +99,7 @@
     <ClInclude Include="d2tweaks\server\modules\damage_display\damage_display_server.h" />
     <ClInclude Include="d2tweaks\server\modules\identify_on_pickup\identify_on_pickup_server.h" />
     <ClInclude Include="d2tweaks\server\modules\item_move\item_move_server.h" />
-    <ClInclude Include="d2tweaks\server\modules\server_module.h" />
+    <ClInclude Include="d2tweaks\server\modules\base.h" />
     <ClInclude Include="d2tweaks\server\modules\test\test.h" />
     <ClInclude Include="d2tweaks\server\server.h" />
     <ClInclude Include="d2tweaks\ui\controls\button.h" />

@@ -21,10 +21,10 @@ using namespace diablo2::structures;
 
 #define MODULE_INIT(module_name) static module_name g_instance;
 
-class server_module {
+class Base {
  public:
-  virtual ~server_module() = default;
-  server_module();
+  virtual ~Base() = default;
+  Base();
 
   virtual void init() = 0;
 

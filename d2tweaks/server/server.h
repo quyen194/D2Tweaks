@@ -7,6 +7,8 @@
 
 #include "d2tweaks/common/protocol.h"
 
+#include "d2tweaks/server/modules/base.h"
+
 namespace diablo2 {
 namespace structures {
 enum class unit_type_t;
@@ -24,21 +26,15 @@ namespace common {
 struct packet_header;
 }
 
-namespace server {
-namespace modules {
-class server_module;
-}  // namespace modules
-}  // namespace server
-
 using namespace server::modules;
 
 class Server : public singleton<Server> {
   uint8_t m_module_id_counter;
   uint8_t m_tick_handler_id_counter;
-  server_module* m_modules[0xFF]{nullptr};        // max 255 modules atm.
-  server_module* m_tick_handlers[0xFF]{nullptr};  // max 255 modules atm.
+  server::modules::Base* m_modules[0xFF]{nullptr};        // max 255 modules atm.
+  server::modules::Base* m_tick_handlers[0xFF]{nullptr};  // max 255 modules atm.
   // max 255 handlers because of one-byte packet header
-  server_module* m_packet_handlers[0xFF]{nullptr};
+  server::modules::Base* m_packet_handlers[0xFF]{nullptr};
 
  public:
   explicit Server(token);
@@ -50,11 +46,10 @@ class Server : public singleton<Server> {
                    size_t size);
   bool handle_packet(Game* game, Unit* player, common::packet_header* packet);
 
-  void register_module(server_module* module);
+  void register_module(server::modules::Base* module);
 
-  void register_tick_handler(server_module* module);
-  void register_packet_handler(common::message_types_t type,
-                               server_module* module);
+  void register_tick_handler(server::modules::Base* module);
+  void register_packet_handler(common::message_types_t type, server::modules::Base* module);
 
   Unit* get_server_unit(Game* game, uint32_t guid, unit_type_t type);
   void iterate_server_units(Game* game,

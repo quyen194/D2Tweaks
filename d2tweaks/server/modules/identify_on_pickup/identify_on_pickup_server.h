@@ -1,12 +1,12 @@
 #pragma once
 
-#include "d2tweaks/server/modules/server_module.h"
+#include "d2tweaks/server/modules/base.h"
 
 namespace d2_tweaks {
 namespace server {
 namespace modules {
 
-class identify_on_pickup final : public server_module {
+class identify_on_pickup final : public Base {
  public:
   void init() override;
 };

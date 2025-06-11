@@ -148,7 +148,7 @@
     <ClCompile Include="d2tweaks\server\modules\identify_on_pickup\identify_on_pickup_server.cpp" />
     <ClCompile Include="d2tweaks\server\modules\item_drop_message\item_drop_message_server.cpp" />
     <ClCompile Include="d2tweaks\server\modules\item_move\item_move_server.cpp" />
-    <ClCompile Include="d2tweaks\server\modules\server_module.cpp" />
+    <ClCompile Include="d2tweaks\server\modules\base.cpp" />
     <ClCompile Include="d2tweaks\server\modules\test\test.cpp" />
     <ClCompile Include="d2tweaks\server\modules\trader_update\trader_update_server.cpp" />
     <ClCompile Include="d2tweaks\server\modules\transmute\transmute_server.cpp" />
@@ -241,7 +241,7 @@
     <ClInclude Include="d2tweaks\server\modules\identify_on_pickup\identify_on_pickup_server.h" />
     <ClInclude Include="d2tweaks\server\modules\item_drop_message\item_drop_message_server.h" />
     <ClInclude Include="d2tweaks\server\modules\item_move\item_move_server.h" />
-    <ClInclude Include="d2tweaks\server\modules\server_module.h" />
+    <ClInclude Include="d2tweaks\server\modules\base.h" />
     <ClInclude Include="d2tweaks\server\modules\test\test.h" />
     <ClInclude Include="d2tweaks\server\modules\trader_update\trader_update_server.h" />
     <ClInclude Include="d2tweaks\server\modules\transmute\transmute_server.h" />

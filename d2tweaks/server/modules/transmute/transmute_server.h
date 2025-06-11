@@ -2,7 +2,7 @@
 
 #include <cstdint>
 
-#include "d2tweaks/server/modules/server_module.h"
+#include "d2tweaks/server/modules/base.h"
 
 namespace diablo2 {
 namespace structures {
@@ -15,7 +15,7 @@ struct Unit;
 namespace d2_tweaks {
 namespace server {
 namespace modules {
-class transmute final : public server_module {
+class transmute final : public Base {
  public:
   void init() override;
   void tick(Game* game, Unit* unit) override;
