@@ -1,6 +1,6 @@
 #pragma once
 
-#include "d2tweaks/client/modules/client_module.h"
+#include "d2tweaks/client/modules/base.h"
 
 // Test client side module
 
@@ -8,7 +8,7 @@ namespace d2_tweaks {
 namespace client {
 namespace modules {
 
-class test final : public client_module {
+class test final : public Base {
  public:
   void init() override;
   void init_early() override;

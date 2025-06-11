@@ -8,7 +8,7 @@
     <ClCompile Include="d2tweaks\client\modules\autosort\autosort_client.cpp" />
     <ClCompile Include="d2tweaks\client\modules\auto_gold_pickup\auto_gold_pickup_client.cpp" />
     <ClCompile Include="d2tweaks\client\modules\auto_item_pickup\auto_item_pickup_client.cpp" />
-    <ClCompile Include="d2tweaks\client\modules\client_module.cpp" />
+    <ClCompile Include="d2tweaks\client\modules\base.cpp" />
     <ClCompile Include="d2tweaks\client\modules\damage_display\damage_display_client.cpp" />
     <ClCompile Include="d2tweaks\client\modules\item_move\item_move_client.cpp" />
     <ClCompile Include="d2tweaks\client\modules\loot_filter\loot_filter.cpp" />
@@ -80,7 +80,7 @@
     <ClInclude Include="d2tweaks\client\modules\autosort\autosort_client.h" />
     <ClInclude Include="d2tweaks\client\modules\auto_gold_pickup\auto_gold_pickup_client.h" />
     <ClInclude Include="d2tweaks\client\modules\auto_item_pickup\auto_item_pickup_client.h" />
-    <ClInclude Include="d2tweaks\client\modules\client_module.h" />
+    <ClInclude Include="d2tweaks\client\modules\base.h" />
     <ClInclude Include="d2tweaks\client\modules\damage_display\damage_display_client.h" />
     <ClInclude Include="d2tweaks\client\modules\item_move\item_move_client.h" />
     <ClInclude Include="d2tweaks\client\modules\loot_filter\loot_filter.h" />

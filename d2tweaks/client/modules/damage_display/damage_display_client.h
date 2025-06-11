@@ -1,6 +1,6 @@
 #pragma once
 
-#include "d2tweaks/client/modules/client_module.h"
+#include "d2tweaks/client/modules/base.h"
 
 // Display damage client side
 
@@ -8,7 +8,7 @@ namespace d2_tweaks {
 namespace client {
 namespace modules {
 
-class damage_display final : public client_module {
+class damage_display final : public Base {
  public:
   void init() override;
   void init_early() override;

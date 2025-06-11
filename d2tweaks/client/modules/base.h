@@ -13,10 +13,10 @@ namespace modules {
 
 #define MODULE_INIT(module_name) static module_name g_instance;
 
-class client_module {
+class Base {
  public:
-  virtual ~client_module() = default;
-  client_module();
+  virtual ~Base() = default;
+  Base();
 
   virtual void init() = 0;
   virtual void init_early() = 0;

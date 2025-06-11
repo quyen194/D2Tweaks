@@ -2,13 +2,13 @@
 
 #include <cstdint>
 
-#include "d2tweaks/client/modules/client_module.h"
+#include "d2tweaks/client/modules/base.h"
 
 namespace d2_tweaks {
 namespace client {
 namespace modules {
 
-class transmute final : public client_module {
+class transmute final : public Base {
  public:
   void init() override;
   void init_early() override;

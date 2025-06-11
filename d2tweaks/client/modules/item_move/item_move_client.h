@@ -1,6 +1,6 @@
 #pragma once
 
-#include "d2tweaks/client/modules/client_module.h"
+#include "d2tweaks/client/modules/base.h"
 
 // Item moving between inventory pages (cube, inventory and stash) by ctrl+click
 // client side
@@ -9,7 +9,7 @@ namespace d2_tweaks {
 namespace client {
 namespace modules {
 
-class item_move final : public client_module {
+class item_move final : public Base {
  public:
   void init() override;
   void init_early() override;

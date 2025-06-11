@@ -1,12 +1,12 @@
 #pragma once
 
-#include "d2tweaks/client/modules/client_module.h"
+#include "d2tweaks/client/modules/base.h"
 
 namespace d2_tweaks {
 namespace client {
 namespace modules {
 
-class auto_gold_pickup final : public client_module {
+class auto_gold_pickup final : public Base {
  public:
   void init() override;
   void init_early() override;

@@ -1,12 +1,12 @@
 #pragma once
 
-#include "d2tweaks/client/modules/client_module.h"
+#include "d2tweaks/client/modules/base.h"
 
 namespace d2_tweaks {
 namespace client {
 namespace modules {
 
-class item_drop_message final : public client_module {
+class item_drop_message final : public Base {
  public:
   void init() override;
   void init_early() override;

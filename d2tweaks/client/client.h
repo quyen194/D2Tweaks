@@ -11,7 +11,7 @@
 
 #include "d2tweaks/common/protocol.h"
 
-#include "d2tweaks/client/modules/client_module.h"
+#include "d2tweaks/client/modules/base.h"
 
 using namespace diablo2;
 using namespace diablo2::structures;
@@ -30,25 +30,25 @@ using namespace client::modules;
 class Client : public singleton<Client> {
   uint8_t m_module_id_counter;
   uint8_t m_tick_handler_id_counter;
-  client_module* m_modules[0xFF]{nullptr};  // max 255 modules atm.
-  client_module* m_tick_handlers[0xFF]{nullptr};  // max 255 handlers
+  client::modules::Base* m_modules[0xFF]{nullptr};  // max 255 modules atm.
+  client::modules::Base* m_tick_handlers[0xFF]{nullptr};  // max 255 handlers
   // max 255 handlers because of one-byte packet header
-  client_module* m_packet_handlers[0xFF]{nullptr};
+  client::modules::Base* m_packet_handlers[0xFF]{nullptr};
   // max 255 handlers because of one-byte packet header
-  client_module* m_packet_cs_handlers[0xFF]{nullptr};
+  client::modules::Base* m_packet_cs_handlers[0xFF]{nullptr};
 
  public:
   explicit Client(token);
 
   void init();
-  void register_module(client_module* module);
+  void register_module(Base* module);
 
-  void register_tick_handler(client_module* module);
+  void register_tick_handler(client::modules::Base* module);
   void register_packet_handler(common::message_types_t type,
-                               client_module* module);
+                               client::modules::Base* module);
   void register_packet_cs_handler(common::packet_types_cs_t packet,
                                   common::message_types_t type,
-                                  client_module* module);
+                                  client::modules::Base* module);
   static Unit* get_client_unit(uint32_t type, uint32_t guid);
 
  private:
