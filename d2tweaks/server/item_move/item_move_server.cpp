@@ -55,7 +55,8 @@ void item_move::init() {
 
 // handle packet coming from the client
 bool item_move::handle_packet(Game* game,
-  Unit* player, common::packet_header* packet) {
+                              Unit* player,
+                              common::packet_header* packet) {
   static common::item_move_sc resp;
   static auto& instance = Server::instance();
 
