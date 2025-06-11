@@ -5,7 +5,7 @@
 namespace d2_tweaks {
 namespace client {
 
-class auto_item_pickup final : public ModuleBase {
+class AutoItemPickup final : public ModuleBase {
  public:
   void init() override;
   void init_early() override;

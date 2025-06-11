@@ -295,11 +295,11 @@ class auto_item_pickup_menu : public ui::menu {
   }
 };
 
-MODULE_INIT(auto_item_pickup)
+MODULE_INIT(AutoItemPickup)
 
-void auto_item_pickup::init_early() {}
+void AutoItemPickup::init_early() {}
 
-void auto_item_pickup::init() {
+void AutoItemPickup::init() {
   FileIni config(common::get_config_path());
 
   if (config.Int("modules", "AutoItemPickup", 1)) {
@@ -346,7 +346,7 @@ bool find_free_space(Inventory* inv,
   return false;
 }
 
-void auto_item_pickup::tick() {
+void AutoItemPickup::tick() {
   static common::item_pickup_info_sc packet;
   const auto unit = d2_client::get_local_player();
 
@@ -517,7 +517,7 @@ void auto_item_pickup::tick() {
   }
 }
 
-void auto_item_pickup::handle_packet(common::packet_header* packet) {
+void AutoItemPickup::handle_packet(common::packet_header* packet) {
   const auto info = static_cast<common::item_pickup_info_sc*>(packet);
 
   // if (info->inventory_full == true) {
