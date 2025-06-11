@@ -5,7 +5,7 @@
 namespace d2_tweaks {
 namespace client {
 
-class loot_filter final : public ModuleBase {
+class LootFilter final : public ModuleBase {
  public:
   void init() override;
   void init_early() override;

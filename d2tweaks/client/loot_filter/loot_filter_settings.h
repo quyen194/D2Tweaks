@@ -9,7 +9,7 @@ using namespace diablo2::structures;
 namespace d2_tweaks {
 namespace client {
 
-struct loot_filter_settings {
+struct LootFilterSettings {
   size_t size;  // struct size
 
   bool alt_only;
@@ -124,15 +124,15 @@ struct loot_filter_settings {
 
   char reserved[888];
 
-  static loot_filter_settings& get();
+  static LootFilterSettings& get();
 
   static void save(const char* name);
   static void load(const char* name);
   static void remove(const char* name);
 
  private:
-  loot_filter_settings()
-      : size(sizeof(loot_filter_settings)),
+  LootFilterSettings()
+      : size(sizeof(LootFilterSettings)),
         alt_only(false),
         show_gold(true),
         show_runes(true),

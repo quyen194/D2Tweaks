@@ -14,14 +14,14 @@ using namespace diablo2::structures;
 namespace d2_tweaks {
 namespace client {
 
-static char g_buffer[sizeof(loot_filter_settings)]{ 0 };
-static loot_filter_settings* g_settings = reinterpret_cast<loot_filter_settings*>(g_buffer);
+static char g_buffer[sizeof(LootFilterSettings)]{ 0 };
+static LootFilterSettings* g_settings = reinterpret_cast<LootFilterSettings*>(g_buffer);
 
-loot_filter_settings& loot_filter_settings::get() {
+LootFilterSettings& LootFilterSettings::get() {
   return *g_settings;
 }
 
-void loot_filter_settings::save(const char* name) {
+void LootFilterSettings::save(const char* name) {
   static char savePath[1024];
   static char buffer[1024];
   fog::get_save_path(savePath, sizeof savePath);
@@ -37,11 +37,11 @@ void loot_filter_settings::save(const char* name) {
     exit(0);
   }
 
-  fwrite(g_buffer, sizeof(loot_filter_settings), 1, file);
+  fwrite(g_buffer, sizeof(LootFilterSettings), 1, file);
   fclose(file);
 }
 
-void loot_filter_settings::load(const char* name) {
+void LootFilterSettings::load(const char* name) {
   static char savePath[1024];
   static char buffer[1024];
   fog::get_save_path(savePath, sizeof savePath);
@@ -58,7 +58,7 @@ void loot_filter_settings::load(const char* name) {
       exit(0);
     }
 
-    loot_filter_settings dummy;
+    LootFilterSettings dummy;
     fwrite(&dummy, sizeof dummy, 1, file);
     fclose(file);
   }
@@ -71,11 +71,11 @@ void loot_filter_settings::load(const char* name) {
     exit(0);
   }
 
-  auto readed = fread(g_buffer, sizeof(loot_filter_settings), 1, file);
+  auto readed = fread(g_buffer, sizeof(LootFilterSettings), 1, file);
   fclose(file);
 }
 
-void loot_filter_settings::remove(const char* name) {
+void LootFilterSettings::remove(const char* name) {
   static char savePath[1024];
   static char buffer[1024];
   fog::get_save_path(savePath, sizeof savePath);

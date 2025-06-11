@@ -19,9 +19,9 @@ using namespace ui::controls;
 namespace d2_tweaks {
 namespace client {
 
-class loot_filter_settings_menu final
+class LootFilterSettingsMenu final
     : public ui::menu,
-      public singleton<loot_filter_settings_menu> {
+      public singleton<LootFilterSettingsMenu> {
   int m_iBagStatsX;
   int m_iBagStatsY;
   int m_iBagStatsZ;
@@ -137,7 +137,7 @@ class loot_filter_settings_menu final
   void(__fastcall* m_handle_dropped_items_original)(void*, void*);
 
  public:
-  explicit loot_filter_settings_menu(token);
+  explicit LootFilterSettingsMenu(token);
 
   void reload_settings();
 

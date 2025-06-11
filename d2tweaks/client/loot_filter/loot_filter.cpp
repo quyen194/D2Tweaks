@@ -24,25 +24,25 @@ using namespace ui::controls;
 namespace d2_tweaks {
 namespace client {
 
-MODULE_INIT(loot_filter)
+MODULE_INIT(LootFilter)
 
 static char*(__fastcall* g_set_player_name_original)(void*, void*);
 static char* __fastcall set_player_name(void* player, void* edx) {
   const auto result = g_set_player_name_original(player, edx);
 
-  loot_filter_settings::load(d2_client::get_local_player_name());
-  loot_filter_settings_menu::instance().reload_settings();
+  LootFilterSettings::load(d2_client::get_local_player_name());
+  LootFilterSettingsMenu::instance().reload_settings();
 
   return result;
 }
 
 static HANDLE(__fastcall* g_delete_save_file_original)(char*, char*);
 static HANDLE __fastcall delete_save_file(char* name, char* a2) {
-  loot_filter_settings::remove(name);
+  LootFilterSettings::remove(name);
   return g_delete_save_file_original(name, a2);
 }
 
-void loot_filter::init_early() {
+void LootFilter::init_early() {
   FileIni config(common::get_config_path());
 
   if (config.Int("modules", "LootFilter", 1)) {
@@ -55,11 +55,11 @@ void loot_filter::init_early() {
   }
 }
 
-void loot_filter::init() {
+void LootFilter::init() {
   FileIni config(common::get_config_path());
 
   if (config.Int("modules", "LootFilter", 1)) {
-    ui::Manager::instance().add_menu(&loot_filter_settings_menu::instance());
+    ui::Manager::instance().add_menu(&LootFilterSettingsMenu::instance());
     ui::Manager::instance().add_menu(&loot_filter_settings_toggle_menu::instance());
   }
 }
