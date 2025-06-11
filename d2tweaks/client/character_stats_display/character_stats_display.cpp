@@ -107,7 +107,7 @@ ui_color_t mapColorToEnum(const std::string& colorName) {
   return ui_color_t::UI_COLOR_WHITE;
 }
 
-class character_stats_menu : public ui::menu {
+class CharacterStatsMenu : public ui::menu {
   int m_StatsFont;
 
   int m_PlayerBarsWidth;
@@ -124,7 +124,7 @@ class character_stats_menu : public ui::menu {
   std::vector<StatEntry> globalStatsVector;
 
  public:
-  character_stats_menu()
+  CharacterStatsMenu()
       : m_StatsFont(0),
         m_PlayerBarsWidth(200),
         m_PlayerBarsHeight(16),
@@ -654,7 +654,7 @@ void CharacterStatsDisplay::init() {
   FileIni ini(common::get_config_path());
 
   if (ini.Int("modules", "CharacterStatsDisplay", 0)) {
-    ui::Manager::instance().add_menu(new character_stats_menu());
+    ui::Manager::instance().add_menu(new CharacterStatsMenu());
   }
 }
 
