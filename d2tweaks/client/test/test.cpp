@@ -33,7 +33,7 @@ using namespace ui::controls;
 namespace d2_tweaks {
 namespace client {
 
-MODULE_INIT(test)
+MODULE_INIT(Test)
 
 class test_menu : public ui::menu {
  public:
@@ -70,17 +70,17 @@ class test_menu : public ui::menu {
 
 static test_menu* g_test_menu;
 
-void test::init_early() {
+void Test::init_early() {
 }
 
-void test::init() {
+void Test::init() {
 #ifndef NDEBUG
   g_test_menu = new test_menu();
   ui::Manager::instance().add_menu(g_test_menu);
 #endif
 }
 
-void test::handle_packet(common::packet_header* packet) {}
+void Test::handle_packet(common::packet_header* packet) {}
 
 }  // namespace client
 }  // namespace d2_tweaks

@@ -7,7 +7,7 @@
 namespace d2_tweaks {
 namespace client {
 
-class test final : public ModuleBase {
+class Test final : public ModuleBase {
  public:
   void init() override;
   void init_early() override;
