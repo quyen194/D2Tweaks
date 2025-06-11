@@ -47,13 +47,13 @@
 #include "d2tweaks/ui/ui_manager.h"
 
 #include "d2tweaks/client/client.h"
-#include "d2tweaks/client/modules/autosort/autosort_client.h"
-#include "d2tweaks/client/modules/loot_filter/loot_filter_settings_toggle_menu.h"
+#include "d2tweaks/client/autosort/autosort_client.h"
+#include "d2tweaks/client/loot_filter/loot_filter_settings_toggle_menu.h"
 
 using namespace std::chrono;
 
 using namespace d2_tweaks;
-using namespace d2_tweaks::client::modules;
+using namespace d2_tweaks::client;
 using namespace diablo2;
 using namespace diablo2::structures;
 using namespace ui::controls;

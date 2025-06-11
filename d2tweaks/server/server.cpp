@@ -19,7 +19,7 @@
 #include "d2tweaks/common/common.h"
 #include "d2tweaks/common/protocol.h"
 
-#include "d2tweaks/server/modules/base.h"
+#include "d2tweaks/server/module_base.h"
 #include "d2tweaks/server/server.h"
 
 using namespace d2_tweaks;
@@ -196,16 +196,16 @@ bool Server::handle_packet(Game* game,
   return handler->handle_packet(game, player, packet);
 }
 
-void Server::register_module(modules::Base* module) {
+void Server::register_module(ModuleBase* module) {
   m_modules[m_module_id_counter++] = module;
 }
 
-void Server::register_tick_handler(modules::Base* module) {
+void Server::register_tick_handler(ModuleBase* module) {
   m_tick_handlers[m_tick_handler_id_counter++] = module;
 }
 
 void Server::register_packet_handler(common::message_types_t type,
-                                     modules::Base* module) {
+                                     ModuleBase* module) {
   if (m_packet_handlers[type] != nullptr) {
     spdlog::warn("Serverside packet handler for {0} is already registered!",
                  type);

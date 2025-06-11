@@ -35,9 +35,10 @@
 #include "d2tweaks/ui/ui_manager.h"
 
 #include "d2tweaks/client/client.h"
-#include "d2tweaks/client/modules/base.h"
+#include "d2tweaks/client/module_base.h"
 
 using namespace d2_tweaks;
+using namespace d2_tweaks::client;
 using namespace diablo2;
 using namespace diablo2::structures;
 
@@ -248,17 +249,17 @@ int32_t Client::draw_game_ui() {
   return result;
 }
 
-void Client::register_module(Base* module) {
+void Client::register_module(ModuleBase* module) {
   m_modules[m_module_id_counter++] = module;
 }
 
-void Client::register_tick_handler(Base* module) {
+void Client::register_tick_handler(ModuleBase* module) {
   m_tick_handlers[m_tick_handler_id_counter++] = module;
 }
 
 void Client::register_packet_cs_handler(common::packet_types_cs_t packet,
                                         common::message_types_t type,
-                                        Base* module) {
+                                        ModuleBase* module) {
   if (m_packet_cs_handlers[packet] != nullptr) {
     spdlog::warn("Clientside packet cs handler for {0} is already registered!",
                  type);
@@ -268,7 +269,7 @@ void Client::register_packet_cs_handler(common::packet_types_cs_t packet,
 }
 
 void Client::register_packet_handler(common::message_types_t type,
-                                     Base* module) {
+                                     ModuleBase* module) {
   if (m_packet_handlers[type] != nullptr) {
     spdlog::warn("Clientside packet handler for {0} is already registered!",
                  type);
