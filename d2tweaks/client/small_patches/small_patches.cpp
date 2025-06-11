@@ -16,17 +16,17 @@ using namespace diablo2::structures;
 namespace d2_tweaks {
 namespace client {
 
-MODULE_INIT(small_patches)
+MODULE_INIT(SmallPatches)
 
 static int(__cdecl* g_is_iconic_original)();
 static int __cdecl is_iconic() {
   return 0;
 }
 
-void small_patches::init_early() {
+void SmallPatches::init_early() {
 }
 
-void small_patches::init() {
+void SmallPatches::init() {
   // // Ingame FPS unlock
   // DWORD oldProtect;
   // const char* config_path = common::get_config_path();

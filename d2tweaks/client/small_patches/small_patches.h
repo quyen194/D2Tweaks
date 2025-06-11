@@ -7,7 +7,7 @@
 namespace d2_tweaks {
 namespace client {
 
-class small_patches final : public ModuleBase {
+class SmallPatches final : public ModuleBase {
  public:
   void init() override;
   void init_early() override;
