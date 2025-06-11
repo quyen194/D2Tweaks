@@ -2,13 +2,14 @@
 
 #include "fw/singleton.h"
 
+#include "d2tweaks/common/protocol.h"
+
 namespace d2_tweaks {
 namespace common {
-struct packet_header;
 
-class common : public singleton<common> {
+class Common : public singleton<Common> {
  public:
-  explicit common(token);
+  explicit Common(token);
 
   void init();
 

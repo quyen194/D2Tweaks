@@ -75,7 +75,7 @@ static int32_t __fastcall get_packet_size_client_to_server(packet_header* data,
                                                            size_t size,
                                                            size_t* sizeOut) {
   static packet_header dummy;
-  static auto& instance = singleton<common>::instance();
+  static auto& instance = Common::instance();
 
   if (data->d2_packet_type == dummy.d2_packet_type) {
     size_t packetSize;
@@ -94,7 +94,7 @@ static char __fastcall get_packet_size_server_to_client(packet_header* data,
                                                         size_t size,
                                                         size_t* sizeOut) {
   static packet_header dummy;
-  static auto& instance = singleton<common>::instance();
+  static auto& instance = Common::instance();
 
   if (data->d2_packet_type == dummy.d2_packet_type) {
     size_t packetSize;
@@ -109,9 +109,9 @@ static char __fastcall get_packet_size_server_to_client(packet_header* data,
   return g_get_packet_size_server_to_client(data, size, sizeOut);
 }
 
-common::common(token) {}
+Common::Common(token) {}
 
-void common::init() {
+void Common::init() {
   asset_manager::instance().init();
 
   detour::hook(reinterpret_cast<void*>(d2_net::get_base() + 0x1B60),
@@ -131,7 +131,7 @@ void common::init() {
 #endif
 }
 
-bool common::get_packet_size_cs(packet_header* packet, size_t& size) {
+bool Common::get_packet_size_cs(packet_header* packet, size_t& size) {
   switch (packet->message_type) {
     case MESSAGE_TYPE_ITEM_MOVE: {
       size = sizeof item_move_cs;
@@ -170,7 +170,7 @@ bool common::get_packet_size_cs(packet_header* packet, size_t& size) {
   }
 }
 
-bool common::get_packet_size_sc(packet_header* packet, size_t& size) {
+bool Common::get_packet_size_sc(packet_header* packet, size_t& size) {
   switch (packet->message_type) {
     case MESSAGE_TYPE_ITEM_MOVE: {
       size = sizeof item_move_sc;

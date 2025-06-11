@@ -71,7 +71,7 @@ void initialize(uint32_t param) {
 
   Debugger("Main").WaitForDebugger();
 
-  common::common::instance().init();
+  common::Common::instance().init();
   Server::instance().init();
   Client::instance().init();
 
