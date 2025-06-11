@@ -71,7 +71,7 @@ namespace client {
 
 #pragma pack(push, 1)
 
-loot_filter_settings_toggle_menu::loot_filter_settings_toggle_menu(token) {
+LootFilterSettingsToggleMenu::LootFilterSettingsToggleMenu(token) {
   FileIni config(common::get_config_path());
 
   m_show = false;
@@ -102,7 +102,7 @@ loot_filter_settings_toggle_menu::loot_filter_settings_toggle_menu(token) {
   m_toggle_filter_settings_btn->set_enabled(false);
   m_toggle_filter_settings_btn->set_visible(false);
   m_toggle_filter_settings_btn->set_on_click(std::bind(
-      &loot_filter_settings_toggle_menu::toggle_filter_settings_click, this));
+      &LootFilterSettingsToggleMenu::toggle_filter_settings_click, this));
 
   m_filter_settings_menu = ui::Manager::instance().get_menu(
       "loot_filter_settings_menu");
@@ -112,7 +112,7 @@ loot_filter_settings_toggle_menu::loot_filter_settings_toggle_menu(token) {
   m_btn_toggle_stats->set_enabled(true);
   m_btn_toggle_stats->set_visible(true);
   m_btn_toggle_stats->set_on_click(std::bind(
-      &loot_filter_settings_toggle_menu::toggle_stats_settings_click, this));
+      &LootFilterSettingsToggleMenu::toggle_stats_settings_click, this));
 
   if (!config.Int("LootFilter", "ShowButtonToggleStats", 0)) {
     m_btn_toggle_stats->set_enabled(false);
@@ -124,7 +124,7 @@ loot_filter_settings_toggle_menu::loot_filter_settings_toggle_menu(token) {
   m_btn_toggle_help->set_enabled(true);
   m_btn_toggle_help->set_visible(true);
   m_btn_toggle_help->set_on_click(
-      std::bind(&loot_filter_settings_toggle_menu::toggle_help_click, this));
+      std::bind(&LootFilterSettingsToggleMenu::toggle_help_click, this));
 
   if (!config.Int("LootFilter", "ShowButtonHelp", 0)) {
     m_btn_toggle_help->set_enabled(false);
@@ -136,7 +136,7 @@ loot_filter_settings_toggle_menu::loot_filter_settings_toggle_menu(token) {
   m_btn_toggle_cube->set_enabled(true);
   m_btn_toggle_cube->set_visible(true);
   m_btn_toggle_cube->set_on_click(
-      std::bind(&loot_filter_settings_toggle_menu::toggle_cube_click, this));
+      std::bind(&LootFilterSettingsToggleMenu::toggle_cube_click, this));
 
   auto player = d2_client::get_local_player();
 
@@ -166,7 +166,7 @@ loot_filter_settings_toggle_menu::loot_filter_settings_toggle_menu(token) {
   m_btn_toggle_stash->set_enabled(true);
   m_btn_toggle_stash->set_visible(true);
   m_btn_toggle_stash->set_on_click(
-      std::bind(&loot_filter_settings_toggle_menu::toggle_stash_click, this));
+      std::bind(&LootFilterSettingsToggleMenu::toggle_stash_click, this));
 
   // iterate over all items in player inventory
   for (auto item = player->inventory->first_item; item != nullptr;
@@ -190,7 +190,7 @@ loot_filter_settings_toggle_menu::loot_filter_settings_toggle_menu(token) {
   }
 }
 
-void loot_filter_settings_toggle_menu::toggle_filter_settings_click() {
+void LootFilterSettingsToggleMenu::toggle_filter_settings_click() {
   m_show = !m_show;
   m_stats_enabled = !m_stats_enabled;
 
@@ -203,11 +203,11 @@ void loot_filter_settings_toggle_menu::toggle_filter_settings_click() {
   // toggle_cube_click();
 }
 
-void loot_filter_settings_toggle_menu::toggle_stats_settings_click() {
+void LootFilterSettingsToggleMenu::toggle_stats_settings_click() {
   m_stats_enabled = !m_stats_enabled;
 }
 
-void loot_filter_settings_toggle_menu::toggle_cube_click() {
+void LootFilterSettingsToggleMenu::toggle_cube_click() {
   m_cube_enabled = !m_cube_enabled;
   if (!d2_client::get_ui_window_state(UI_WINDOW_CUBE)) {
     const auto player = d2_client::get_local_player();
@@ -247,7 +247,7 @@ void loot_filter_settings_toggle_menu::toggle_cube_click() {
   }
 }
 
-void loot_filter_settings_toggle_menu::toggle_stash_click() {
+void LootFilterSettingsToggleMenu::toggle_stash_click() {
   m_stash_enabled = !m_stash_enabled;
   if (!d2_client::get_ui_window_state(UI_WINDOW_STASH)) {
     const auto player = d2_client::get_local_player();
@@ -300,7 +300,7 @@ void loot_filter_settings_toggle_menu::toggle_stash_click() {
   }
 }
 
-void loot_filter_settings_toggle_menu::toggle_help_click() {
+void LootFilterSettingsToggleMenu::toggle_help_click() {
   //m_help_enabled = !m_help_enabled;
   // Open the default OS browser to the URL
 
@@ -309,7 +309,7 @@ void loot_filter_settings_toggle_menu::toggle_help_click() {
   }
 }
 
-void loot_filter_settings_toggle_menu::draw() {
+void LootFilterSettingsToggleMenu::draw() {
   // m_btn_toggle_stats->set_enabled(d2_client::get_ui_window_state(UI_WINDOW_INTERFACE));
   // m_btn_toggle_stats->set_visible(d2_client::get_ui_window_state(UI_WINDOW_INTERFACE));
   m_toggle_filter_settings_btn->set_enabled(d2_client::get_ui_window_state(UI_WINDOW_INTERFACE));
@@ -318,7 +318,7 @@ void loot_filter_settings_toggle_menu::draw() {
   menu::draw();
 }
 
-bool loot_filter_settings_toggle_menu::key_event(uint32_t key, bool up) {
+bool LootFilterSettingsToggleMenu::key_event(uint32_t key, bool up) {
   if (key == shortcut_key &&
       up &&
       !d2_client::get_ui_window_state(UI_WINDOW_MSGS) &&

@@ -1249,7 +1249,7 @@ void LootFilterSettingsMenu::extract_item(bool value, int prop, uint32_t val, ui
 #include <d2tweaks/client/loot_filter/loot_filter_settings_toggle_menu.h>
 
 void LootFilterSettingsMenu::close_window(bool value) {
-  auto& toggle_menu = loot_filter_settings_toggle_menu::instance();
+  auto& toggle_menu = LootFilterSettingsToggleMenu::instance();
   toggle_menu.m_show = false;
   // m_stats_enabled = true;
   toggle_menu.m_filter_settings_menu->set_enabled(false);

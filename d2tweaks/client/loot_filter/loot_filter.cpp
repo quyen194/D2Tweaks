@@ -60,7 +60,7 @@ void LootFilter::init() {
 
   if (config.Int("modules", "LootFilter", 1)) {
     ui::Manager::instance().add_menu(&LootFilterSettingsMenu::instance());
-    ui::Manager::instance().add_menu(&loot_filter_settings_toggle_menu::instance());
+    ui::Manager::instance().add_menu(&LootFilterSettingsToggleMenu::instance());
   }
 }
 

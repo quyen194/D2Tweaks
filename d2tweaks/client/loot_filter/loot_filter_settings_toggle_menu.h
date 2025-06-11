@@ -13,9 +13,9 @@ using namespace ui::controls;
 namespace d2_tweaks {
 namespace client {
 
-class loot_filter_settings_toggle_menu final
+class LootFilterSettingsToggleMenu final
     : public ui::menu,
-      public singleton<loot_filter_settings_toggle_menu> {
+      public singleton<LootFilterSettingsToggleMenu> {
   button* m_toggle_filter_settings_btn;
   button* m_btn_toggle_stats;
   button* m_btn_toggle_help;
@@ -32,7 +32,7 @@ class loot_filter_settings_toggle_menu final
   bool m_show;
   bool m_show_bag;
 
-  explicit loot_filter_settings_toggle_menu(token);
+  explicit LootFilterSettingsToggleMenu(token);
 
   void toggle_show() {
     m_show = !m_show;
