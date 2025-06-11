@@ -80,11 +80,11 @@ class draw_gold_menu final : public ui::menu {
   }
 };
 
-MODULE_INIT(auto_gold_pickup)
+MODULE_INIT(AutoGoldPickup)
 
-void auto_gold_pickup::init_early() {}
+void AutoGoldPickup::init_early() {}
 
-void auto_gold_pickup::init() {
+void AutoGoldPickup::init() {
   FileIni config(common::get_config_path());
 
   if (config.Int("modules", "AutoGoldPickup", 1)) {
@@ -97,7 +97,7 @@ void auto_gold_pickup::init() {
   }
 }
 
-void auto_gold_pickup::tick() {
+void AutoGoldPickup::tick() {
   const auto unit = d2_client::get_local_player();
 
   if (!unit)
@@ -139,7 +139,7 @@ void auto_gold_pickup::tick() {
   }
 }
 
-void auto_gold_pickup::handle_packet(common::packet_header* packet) {
+void AutoGoldPickup::handle_packet(common::packet_header* packet) {
   const auto info = static_cast<common::gold_pickup_info_sc*>(packet);
   m_nLastUpdate = GetTickCount();
   m_nGoldValue += info->gold;

@@ -5,7 +5,7 @@
 namespace d2_tweaks {
 namespace client {
 
-class auto_gold_pickup final : public ModuleBase {
+class AutoGoldPickup final : public ModuleBase {
  public:
   void init() override;
   void init_early() override;
