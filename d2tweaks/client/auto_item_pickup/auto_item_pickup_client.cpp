@@ -210,12 +210,12 @@ void ReloadFilters(std::string szPathToIni) {
 namespace d2_tweaks {
 namespace client {
 
-class auto_item_pickup_menu : public ui::menu {
+class AutoItemPickupMenu : public ui::menu {
   common::asset* m_buttons_img;
   button* m_auto_pickup_btn;
 
  public:
-  auto_item_pickup_menu() {
+  AutoItemPickupMenu() {
     menu::set_enabled(true);
     menu::set_visible(true);
 
@@ -231,7 +231,7 @@ class auto_item_pickup_menu : public ui::menu {
         "d2tweaks\\assets\\buttons", common::MPQ_FILE_TYPE_DC6);
     m_auto_pickup_btn = get_button(
         "m_auto_pickup_btn",
-        std::bind(&auto_item_pickup_menu::auto_item_pickup_click, this));
+        std::bind(&AutoItemPickupMenu::auto_item_pickup_click, this));
   }
 
   void draw() override {
@@ -307,7 +307,7 @@ void AutoItemPickup::init() {
 
     ReloadFilters(common::get_config_path());
 
-    ui::Manager::instance().add_menu(new auto_item_pickup_menu());
+    ui::Manager::instance().add_menu(new AutoItemPickupMenu());
     Client::instance().register_tick_handler(this);
     Client::instance().register_packet_handler(
         common::message_types_t::MESSAGE_TYPE_ITEM_PICKUP_INFO, this);
