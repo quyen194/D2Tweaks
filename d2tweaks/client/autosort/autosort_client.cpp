@@ -73,7 +73,7 @@ enum ColorEnum {
   LIGHT_GREY = ui_color_t::UI_COLOR_LIGHT_GREY
 };
 
-class inventory_sort_menu : public ui::menu {
+class InventorySortMenu : public ui::menu {
   common::asset* m_buttons_img;
 
   button* m_sort_inventory_btn;
@@ -81,7 +81,7 @@ class inventory_sort_menu : public ui::menu {
   button* m_sort_cube_btn;
 
  public:
-  inventory_sort_menu() {
+  InventorySortMenu() {
     menu::set_enabled(true);
     menu::set_visible(true);
 
@@ -98,13 +98,13 @@ class inventory_sort_menu : public ui::menu {
 
     m_sort_inventory_btn =
         get_button("m_sort_inventory_btn",
-                   std::bind(&inventory_sort_menu::sort_inventory_click, this));
+                   std::bind(&InventorySortMenu::sort_inventory_click, this));
     m_sort_stash_btn =
         get_button("m_sort_stash_btn",
-                   std::bind(&inventory_sort_menu::sort_stash_click, this));
+                   std::bind(&InventorySortMenu::sort_stash_click, this));
     m_sort_cube_btn =
         get_button("m_sort_cube_btn",
-                   std::bind(&inventory_sort_menu::sort_cube_click, this));
+                   std::bind(&InventorySortMenu::sort_cube_click, this));
   }
 
   // Function to draw a filled rectangle using GDI
@@ -299,7 +299,7 @@ void AutoSort::init() {
   FileIni config(common::get_config_path());
 
   if (config.Int("modules", "Autosort", 1)) {
-    ui::Manager::instance().add_menu(new inventory_sort_menu());
+    ui::Manager::instance().add_menu(new InventorySortMenu());
     Client::instance().register_packet_handler(
         common::MESSAGE_TYPE_INVENTORY_SORT, this);
   }
