@@ -31,7 +31,7 @@ using namespace diablo2::structures;
 namespace d2_tweaks {
 namespace client {
 
-MODULE_INIT(item_move)
+MODULE_INIT(ItemMove)
 
 int32_t(__fastcall* g_item_click_original)(Unit* playerUnit,
                                            Inventory* inventory,
@@ -149,10 +149,10 @@ int32_t __fastcall item_click(Unit* owner,
   return 0;
 }
 
-void item_move::init_early() {
+void ItemMove::init_early() {
 }
 
-void item_move::init() {
+void ItemMove::init() {
   FileIni config(common::get_config_path());
 
   if (config.Int("modules", "ItemMover", 1)) {
@@ -165,7 +165,7 @@ void item_move::init() {
 }
 
 // handle packet coming from the server
-void item_move::handle_packet(common::packet_header* packet) {
+void ItemMove::handle_packet(common::packet_header* packet) {
   static auto& instance = Client::instance();
 
   const auto itemMove = static_cast<common::item_move_sc*>(packet);
