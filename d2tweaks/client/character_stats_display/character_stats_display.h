@@ -7,7 +7,7 @@
 namespace d2_tweaks {
 namespace client {
 
-class character_stats_display final : public ModuleBase {
+class CharacterStatsDisplay final : public ModuleBase {
  public:
   void init() override;
   void init_early() override;

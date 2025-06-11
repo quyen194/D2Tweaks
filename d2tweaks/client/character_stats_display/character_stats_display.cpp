@@ -646,11 +646,11 @@ class character_stats_menu : public ui::menu {
   }
 };
 
-MODULE_INIT(character_stats_display)
+MODULE_INIT(CharacterStatsDisplay)
 
-void character_stats_display::init_early() {}
+void CharacterStatsDisplay::init_early() {}
 
-void character_stats_display::init() {
+void CharacterStatsDisplay::init() {
   FileIni ini(common::get_config_path());
 
   if (ini.Int("modules", "CharacterStatsDisplay", 0)) {
