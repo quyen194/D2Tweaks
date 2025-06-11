@@ -5,7 +5,7 @@
 namespace d2_tweaks {
 namespace client {
 
-class item_drop_message final : public ModuleBase {
+class ItemDropMessage final : public ModuleBase {
  public:
   void init() override;
   void init_early() override;

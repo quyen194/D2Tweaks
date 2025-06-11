@@ -30,7 +30,7 @@ using namespace diablo2;
 namespace d2_tweaks {
 namespace client {
 
-MODULE_INIT(item_drop_message)
+MODULE_INIT(ItemDropMessage)
 
 struct message {
   bool active;
@@ -101,8 +101,8 @@ class draw_item_menu final : public ui::menu {
   }
 };
 
-void item_drop_message::GamePacketReceivedIntercept(uint8_t* packet,
-                                                    size_t size) {
+void ItemDropMessage::GamePacketReceivedIntercept(uint8_t* packet,
+                                                  size_t size) {
   if (packet == 0 || size == 0)
     return;
 
@@ -125,14 +125,14 @@ void item_drop_message::GamePacketReceivedIntercept(uint8_t* packet,
   }
 }
 
-__declspec (naked) void item_drop_message::GamePacketReceivedInterceptASM() {
+__declspec (naked) void ItemDropMessage::GamePacketReceivedInterceptASM() {
   __asm {
     // call our function (__fastcall)
     pushad;
     pushfd;
     mov edx, ecx;
     mov ecx, ebp;
-    call item_drop_message::GamePacketReceivedIntercept;
+    call ItemDropMessage::GamePacketReceivedIntercept;
     popfd;
     popad;
 
@@ -140,10 +140,10 @@ __declspec (naked) void item_drop_message::GamePacketReceivedInterceptASM() {
   }
 }
 
-void item_drop_message::init_early() {
+void ItemDropMessage::init_early() {
 }
 
-void item_drop_message::init() {
+void ItemDropMessage::init() {
   FileIni config(common::get_config_path());
 
   if (config.Int("modules", "ItemDropMessage", 1) != FALSE) {
@@ -182,7 +182,7 @@ void item_drop_message::init() {
   }
 }
 
-void item_drop_message::handle_packet(common::packet_header* packet) {
+void ItemDropMessage::handle_packet(common::packet_header* packet) {
   const auto info = static_cast<common::item_pickup_info_sc*>(packet);
   const auto item_dropped_packet =
       static_cast<common::item_dropped_info_sc*>(packet);
