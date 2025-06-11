@@ -43,7 +43,7 @@ using namespace ui::controls;
 namespace d2_tweaks {
 namespace client {
 
-MODULE_INIT(trader_update)
+MODULE_INIT(TraderUpdate)
 
 static uint8_t m_nMenuOpen;
 static uint8_t m_nNpcId;
@@ -130,10 +130,10 @@ class trader_update_menu : public ui::menu {
   }
 };
 
-void trader_update::init_early() {
+void TraderUpdate::init_early() {
 }
 
-void trader_update::init() {
+void TraderUpdate::init() {
   FileIni ini(common::get_config_path());
 
   if (ini.Int("modules", "ReloadTradeGamble", 1)) {
@@ -148,11 +148,11 @@ void trader_update::init() {
   }
 }
 
-void trader_update::tick() {
+void TraderUpdate::tick() {
   // const auto unit = d2_client::get_local_player();
 }
 
-void trader_update::handle_cs_packet(common::packet_header* packet) {
+void TraderUpdate::handle_cs_packet(common::packet_header* packet) {
   static auto& instance = Client::instance();
   const auto income_packet_cs = static_cast<common::d2_entity_action_cs*>(packet);
 
@@ -168,7 +168,7 @@ void trader_update::handle_cs_packet(common::packet_header* packet) {
   m_nNpcId = (income_packet_cs->action >> 24);
 }
 
-void trader_update::handle_packet(common::packet_header* packet) {
+void TraderUpdate::handle_packet(common::packet_header* packet) {
   static auto& instance = Client::instance();
   const auto income_packet_sc = static_cast<common::trader_update_sc*>(packet);
 

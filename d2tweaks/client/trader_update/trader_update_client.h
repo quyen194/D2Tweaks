@@ -7,7 +7,7 @@
 namespace d2_tweaks {
 namespace client {
 
-class trader_update final : public ModuleBase {
+class TraderUpdate final : public ModuleBase {
  public:
   void init() override;
   void init_early() override;
