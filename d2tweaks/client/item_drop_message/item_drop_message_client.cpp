@@ -87,9 +87,9 @@ static wchar_t m_aawcItemtypeEquiv[10][8] = { 0 };
 static void(__fastcall* fn_GamePacketReceivedIntercept)(
     common::packet_header* packet, size_t size);
 
-class draw_item_menu final : public ui::menu {
+class DrawItemMenu final : public ui::menu {
  public:
-  draw_item_menu() {
+  DrawItemMenu() {
     menu::set_visible(true);
     menu::set_enabled(true);
   }
@@ -178,7 +178,7 @@ void ItemDropMessage::init() {
 
     Client::instance().register_packet_handler(
         common::message_types_t::MESSAGE_TYPE_ITEM_DROPPED_INFO, this);
-    ui::Manager::instance().add_menu(new draw_item_menu());
+    ui::Manager::instance().add_menu(new DrawItemMenu());
   }
 }
 
