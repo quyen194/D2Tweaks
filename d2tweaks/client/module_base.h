@@ -2,12 +2,9 @@
 
 #include <cstdint>
 
+#include "d2tweaks/common/protocol.h"
+
 namespace d2_tweaks {
-
-namespace common {
-struct packet_header;
-}
-
 namespace client {
 
 #define MODULE_INIT(module_name) static module_name g_instance;

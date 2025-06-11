@@ -19,8 +19,9 @@ using namespace ui::controls;
 namespace d2_tweaks {
 namespace client {
 
-class loot_filter_settings_menu final : public ui::menu,
-                                        public singleton<loot_filter_settings_menu> {
+class loot_filter_settings_menu final
+    : public ui::menu,
+      public singleton<loot_filter_settings_menu> {
   int m_iBagStatsX;
   int m_iBagStatsY;
   int m_iBagStatsZ;

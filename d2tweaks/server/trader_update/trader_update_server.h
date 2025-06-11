@@ -2,15 +2,9 @@
 
 #include <cstdint>
 
-#include "d2tweaks/server/module_base.h"
+// #include "diablo2/structures/inventory.h"
 
-namespace diablo2 {
-namespace structures {
-struct Inventory;
-struct Game;
-struct Unit;
-}  // namespace structures
-}  // namespace diablo2
+#include "d2tweaks/server/module_base.h"
 
 namespace d2_tweaks {
 namespace server {

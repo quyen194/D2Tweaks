@@ -2,18 +2,12 @@
 
 #include <cstdint>
 
-namespace diablo2 {
-namespace structures {
-struct Game;
-struct Unit;
-}  // namespace structures
-}  // namespace diablo2
+#include "diablo2/structures/game.h"
+#include "diablo2/structures/unit.h"
+
+#include "d2tweaks/common/protocol.h"
 
 namespace d2_tweaks {
-namespace common {
-struct packet_header;
-}
-
 namespace server {
 
 using namespace diablo2::structures;

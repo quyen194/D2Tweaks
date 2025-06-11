@@ -6,14 +6,6 @@
 
 // Display damage server side
 
-namespace diablo2 {
-namespace structures {
-struct Inventory;
-struct Game;
-struct Unit;
-}  // namespace structures
-}  // namespace diablo2
-
 namespace d2_tweaks {
 namespace server {
 

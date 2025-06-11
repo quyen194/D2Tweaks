@@ -2,17 +2,11 @@
 
 #include <cstdint>
 
+#include "diablo2/structures/inventory.h"
+
 #include "d2tweaks/server/module_base.h"
 
 // Inventory auto sort module server side
-
-namespace diablo2 {
-namespace structures {
-struct Game;
-struct Inventory;
-struct Unit;
-}  // namespace structures
-}  // namespace diablo2
 
 namespace d2_tweaks {
 namespace server {

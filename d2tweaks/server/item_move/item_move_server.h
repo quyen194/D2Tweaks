@@ -2,18 +2,12 @@
 
 #include <cstdint>
 
+#include "diablo2/structures/inventory.h"
+
 #include "d2tweaks/server/module_base.h"
 
 // Item moving between inventory pages (cube, inventory and stash) by ctrl+click
 // server side
-
-namespace diablo2 {
-namespace structures {
-struct Inventory;
-struct Game;
-struct Unit;
-}  // namespace structures
-}  // namespace diablo2
 
 namespace d2_tweaks {
 namespace server {
