@@ -4,8 +4,6 @@
 
 namespace d2_tweaks {
 namespace server {
-class server;
-
 namespace modules {
 
 class auto_gold_pickup final : public server_module {

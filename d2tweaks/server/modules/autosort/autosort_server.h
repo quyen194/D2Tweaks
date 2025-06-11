@@ -16,8 +16,6 @@ struct Unit;
 
 namespace d2_tweaks {
 namespace server {
-class server;
-
 namespace modules {
 
 using namespace diablo2::structures;

@@ -51,8 +51,8 @@ void transmute::init() {
   FileIni config(common::get_config_path());
 
   if (config.Int("modules", "AutoTransmute", 0)) {
-    // server::instance().register_tick_handler(this);
-    server::instance().register_packet_handler(common::MESSAGE_TYPE_TRANSMUTE, this);
+    // Server::instance().register_tick_handler(this);
+    Server::instance().register_packet_handler(common::MESSAGE_TYPE_TRANSMUTE, this);
   }
 }
 
@@ -91,9 +91,9 @@ bool transmute::handle_packet(Game* game,
     // returns the generated item, or getmaxcuberecipes if unsuccessful
     if (d2_game::transmogrify(game, player) == d2_common::get_max_cube_recipes()) {
       response_packet_sc.command = COMMAND_ABORT;
-      singleton<server>::instance().send_packet(player->player_data->net_client,
-                                                &response_packet_sc,
-                                                sizeof response_packet_sc);
+      Server::instance().send_packet(player->player_data->net_client,
+                                     &response_packet_sc,
+                                     sizeof response_packet_sc);
       // d2_net::send_to_client(
       //     1, client->client_id, &response_packet_sc, sizeof response_packet_sc);
     }
@@ -114,7 +114,7 @@ bool transmute::move_item_to(Game* game,
                              Unit* player,
                              common::packet_header* packet) {
   static common::transmute_info_sc resp;
-  static auto& instance = singleton<server>::instance();
+  static auto& instance = Server::instance();
   const auto itemMove = static_cast<common::transmute_info_cs*>(packet);
   const auto item = instance.get_server_unit(
       game, itemMove->item_guid, unit_type_t::UNIT_TYPE_ITEM);  // 0x4 = item
@@ -156,7 +156,7 @@ bool transmute::move_item_to(Game* game,
 
   const auto client = player->player_data->net_client;
   // d2_net::send_to_client(1, client->client_id, &resp, sizeof resp);
-  server::instance().send_packet(
+  Server::instance().send_packet(
       player->player_data->net_client, &resp, sizeof resp);
   return true;
 }

@@ -27,11 +27,12 @@ struct packet_header;
 namespace server {
 namespace modules {
 class server_module;
-}
+}  // namespace modules
+}  // namespace server
 
-using namespace modules;
+using namespace server::modules;
 
-class server : public singleton<server> {
+class Server : public singleton<Server> {
   uint8_t m_module_id_counter;
   uint8_t m_tick_handler_id_counter;
   server_module* m_modules[0xFF]{nullptr};        // max 255 modules atm.
@@ -40,7 +41,7 @@ class server : public singleton<server> {
   server_module* m_packet_handlers[0xFF]{nullptr};
 
  public:
-  explicit server(token);
+  explicit Server(token);
 
   void init();
 
@@ -67,5 +68,4 @@ class server : public singleton<server> {
                                      int32_t a4);
 };
 
-}  // namespace server
 }  // namespace d2_tweaks

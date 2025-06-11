@@ -4,9 +4,8 @@
 
 namespace d2_tweaks {
 namespace server {
-class server;
-
 namespace modules {
+
 class auto_item_pickup final : public server_module {
  public:
   void init() override;
@@ -16,6 +15,7 @@ class auto_item_pickup final : public server_module {
                      common::packet_header* packet) override;
   bool au_pickup_item(Game* game, Unit* unit, uint32_t guid);
 };
+
 }  // namespace modules
 }  // namespace server
 }  // namespace d2_tweaks

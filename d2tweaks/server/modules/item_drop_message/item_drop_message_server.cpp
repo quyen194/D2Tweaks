@@ -190,13 +190,13 @@ void item_drop_message::init() {
     m_stItemTypes.push_back(item_type);
   }
 
-  // server::instance().register_tick_handler(this);
-  server::instance().register_packet_handler(common::MESSAGE_TYPE_ITEM_DROPPED_INFO, this);
+  // Server::instance().register_tick_handler(this);
+  Server::instance().register_packet_handler(common::MESSAGE_TYPE_ITEM_DROPPED_INFO, this);
 }
 
 void item_drop_message::tick(Game* game, Unit* unit) {
   static common::item_pickup_info_sc packet;
-  static auto& instance = server::instance();
+  static auto& instance = Server::instance();
   if (!game || !unit)
     return;
 
@@ -286,7 +286,7 @@ bool item_drop_message::handle_packet(Game* game,
 
             memcpy(response_item_dropped_packet.namestr, string_mb, 128);
             // spdlog::debug("[item_drop_message_s] Code={} Type.Code={} Type.Equiv1={} Type.Equiv2={}", response_item_dropped_packet.code, response_item_dropped_packet.itemtype_code, response_item_dropped_packet.itemtype_equiv1, response_item_dropped_packet.itemtype_equiv2);
-            server::instance().send_packet(player->player_data->net_client, &response_item_dropped_packet, sizeof response_item_dropped_packet);
+            Server::instance().send_packet(player->player_data->net_client, &response_item_dropped_packet, sizeof response_item_dropped_packet);
             break;
           }
 
@@ -305,7 +305,7 @@ bool item_drop_message::handle_packet(Game* game,
 
                   memcpy(response_item_dropped_packet.namestr, string_mb, 128);
                   //spdlog::debug("[item_drop_message_s_itemtypes] Code={} Type.Code={} Type.Equiv1={} Type.Equiv2={}", response_item_dropped_packet.code, response_item_dropped_packet.itemtype_code, response_item_dropped_packet.itemtype_equiv1, response_item_dropped_packet.itemtype_equiv2);
-                  server::instance().send_packet(player->player_data->net_client, &response_item_dropped_packet, sizeof response_item_dropped_packet);
+                  Server::instance().send_packet(player->player_data->net_client, &response_item_dropped_packet, sizeof response_item_dropped_packet);
                   goto L1;
                 } else {
                   response_item_dropped_packet.showthis = FALSE;
@@ -335,7 +335,7 @@ bool item_drop_message::handle_packet(Game* game,
                 //     response_item_dropped_packet.itemtype_code,
                 //     response_item_dropped_packet.itemtype_equiv1,
                 //     response_item_dropped_packet.itemtype_equiv2);
-                server::instance().send_packet(
+                Server::instance().send_packet(
                     player->player_data->net_client,
                     &response_item_dropped_packet,
                     sizeof response_item_dropped_packet);

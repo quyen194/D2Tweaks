@@ -148,7 +148,7 @@ void trader_update::init() {
   FileIni config(common::get_config_path());
 
   if (config.Int("modules", "ReloadTradeGamble", 1)) {
-    server::instance().register_packet_handler(
+    Server::instance().register_packet_handler(
         common::MESSAGE_TYPE_TRADER_UPDATE, this);
     // D2TEMPLATE_ApplyPatch(gpt_click_trade_menu);
     // D2TEMPLATE_ApplyPatch(gpt_click_gamble_menu);
@@ -191,7 +191,7 @@ bool trader_update::handle_packet(Game* game,
         response_packet_sc.command = COMMAND_FREE_NPC_INVENTORY;
         response_packet_sc.npc_id = income_packet_cs->npc_id;
         response_packet_sc.is_gamble_menu_open = income_packet_cs->is_gamble_menu_open;
-        server::instance().send_packet(
+        Server::instance().send_packet(
             netclient, &response_packet_sc, sizeof response_packet_sc);
       }
     }
@@ -204,7 +204,7 @@ bool trader_update::handle_packet(Game* game,
     response_packet_sc.command = COMMAND_FREE_NPC_GAMBLE;
     response_packet_sc.npc_id = income_packet_cs->npc_id;
     response_packet_sc.is_gamble_menu_open = income_packet_cs->is_gamble_menu_open;
-    server::instance().send_packet(player->player_data->net_client,
+    Server::instance().send_packet(player->player_data->net_client,
                                    &response_packet_sc,
                                    sizeof response_packet_sc);
   }
@@ -223,7 +223,7 @@ bool trader_update::handle_packet(Game* game,
         response_packet_sc.command = COMMAND_FILL_NPC_INVENTORY;
         response_packet_sc.npc_id = income_packet_cs->npc_id;
         response_packet_sc.is_gamble_menu_open = income_packet_cs->is_gamble_menu_open;
-        server::instance().send_packet(
+        Server::instance().send_packet(
             netclient, &response_packet_sc, sizeof response_packet_sc);
       }
     }
@@ -234,7 +234,7 @@ bool trader_update::handle_packet(Game* game,
     response_packet_sc.command = COMMAND_FILL_NPC_GAMBLE;
     response_packet_sc.npc_id = income_packet_cs->npc_id;
     response_packet_sc.is_gamble_menu_open = income_packet_cs->is_gamble_menu_open;
-    server::instance().send_packet(player->player_data->net_client,
+    Server::instance().send_packet(player->player_data->net_client,
                                    &response_packet_sc,
                                    sizeof response_packet_sc);
   }

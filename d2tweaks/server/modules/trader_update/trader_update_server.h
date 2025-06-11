@@ -14,8 +14,6 @@ struct Unit;
 
 namespace d2_tweaks {
 namespace server {
-class server;
-
 namespace modules {
 
 class trader_update final : public server_module {

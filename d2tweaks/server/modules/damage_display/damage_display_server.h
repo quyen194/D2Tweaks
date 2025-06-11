@@ -16,9 +16,8 @@ struct Unit;
 
 namespace d2_tweaks {
 namespace server {
-class server;
-
 namespace modules {
+
 class damage_display final : public server_module {
  public:
   void init() override;
@@ -28,6 +27,7 @@ class damage_display final : public server_module {
                      common::packet_header* packet) override;
   void tick(Game* game, Unit* unit) override;
 };
+
 }  // namespace modules
 }  // namespace server
 }  // namespace d2_tweaks

@@ -4,13 +4,13 @@
 
 namespace d2_tweaks {
 namespace server {
-class server;
-
 namespace modules {
+
 class test final : public server_module {
  public:
   void init() override;
 };
+
 }  // namespace modules
 }  // namespace server
 }  // namespace d2_tweaks

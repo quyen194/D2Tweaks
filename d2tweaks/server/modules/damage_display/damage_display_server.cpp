@@ -73,7 +73,7 @@ common::damage_type_t get_damage_type(Damage* dmg) {
 static void send_damage_data(Unit* defender,
   NetClient* client,
   Damage* dmg) {
-  static auto& instance = server::instance();
+  static auto& instance = Server::instance();
   static common::damage_info_sc packet;
 
   if (dmg->dmg_total <= 0)
@@ -179,7 +179,7 @@ static bool has_pets(Unit* attacker, Unit* defender) {
 }
 
 static Unit* get_hireling_owner(Game* game, Unit* pUnit) {
-  static auto& instance = server::instance();
+  static auto& instance = Server::instance();
 
   if (!pUnit)
     return nullptr;
@@ -210,7 +210,7 @@ static Unit* get_hireling_owner(Game* game, Unit* pUnit) {
 }
 
 static Unit* get_pet_owner(Game* pGame, Unit* pUnit) {
-  static auto& instance = server::instance();
+  static auto& instance = Server::instance();
 
   if (!pUnit)
     return nullptr;
@@ -294,7 +294,7 @@ static char __fastcall apply_attack_results(Game* game,
                                             Unit* defender,
                                             BOOL recalculateDamage,
                                             Damage* dmg) {
-  static auto& instance = server::instance();
+  static auto& instance = Server::instance();
 
   static char result = 0;
 
@@ -326,7 +326,7 @@ void damage_display::init() {
     detour::hook(d2_game::get_base() + 0x8FE90,
                  apply_attack_results,
                  reinterpret_cast<void **>(&g_apply_attack_results_origin));
-    server::instance().register_packet_handler(
+    Server::instance().register_packet_handler(
         common::MESSAGE_TYPE_DAMAGE_INFO, this);
   }
 }

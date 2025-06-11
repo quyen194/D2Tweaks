@@ -23,6 +23,7 @@
 #include "d2tweaks/server/server.h"
 
 using namespace d2_tweaks;
+using namespace d2_tweaks::server;
 using namespace diablo2;
 using namespace diablo2::structures;
 
@@ -76,7 +77,7 @@ static int32_t __fastcall handle_packet(Game* game,
                                         common::packet_header* data,
                                         size_t size) {
   static common::packet_header dummy;
-  static auto& instance = singleton<server::server>::instance();
+  static auto& instance = singleton<Server>::instance();
 
   if (data->d2_packet_type == dummy.d2_packet_type) {
     if (!instance.handle_packet(game, player, data))
@@ -89,9 +90,8 @@ static int32_t __fastcall handle_packet(Game* game,
 }
 
 namespace d2_tweaks {
-namespace server {
 
-server::server(token) {
+Server::Server(token) {
   m_module_id_counter = 0;
   m_tick_handler_id_counter = 0;
 }
@@ -144,7 +144,7 @@ static const DLLPatchStrc gpt_hook_sc_packet_before_sent[] =
   {D2DLL_INVALID}
 };
 
-void server::init() {
+void Server::init() {
   detour::hook(reinterpret_cast<void*>(d2_game::get_base() + 0x59320),
                ::handle_packet,
                &g_handle_packet_original);
@@ -179,13 +179,13 @@ void server::init() {
   }
 }
 
-void server::send_packet(NetClient* client,
+void Server::send_packet(NetClient* client,
                          common::packet_header* packet,
                          size_t size) {
   d2_game::enqueue_packet(client, packet, size);
 }
 
-bool server::handle_packet(Game* game,
+bool Server::handle_packet(Game* game,
                            Unit *player,
                            common::packet_header *packet) {
   auto handler = m_packet_handlers[packet->message_type];
@@ -196,15 +196,15 @@ bool server::handle_packet(Game* game,
   return handler->handle_packet(game, player, packet);
 }
 
-void server::register_module(modules::server_module* module) {
+void Server::register_module(modules::server_module* module) {
   m_modules[m_module_id_counter++] = module;
 }
 
-void server::register_tick_handler(modules::server_module* module) {
+void Server::register_tick_handler(modules::server_module* module) {
   m_tick_handlers[m_tick_handler_id_counter++] = module;
 }
 
-void server::register_packet_handler(common::message_types_t type,
+void Server::register_packet_handler(common::message_types_t type,
                                      modules::server_module* module) {
   if (m_packet_handlers[type] != nullptr) {
     spdlog::warn("Serverside packet handler for {0} is already registered!",
@@ -214,7 +214,7 @@ void server::register_packet_handler(common::message_types_t type,
   m_packet_handlers[type] = module;
 }
 
-Unit* server::get_server_unit(Game* game, uint32_t guid, unit_type_t type) {
+Unit* Server::get_server_unit(Game* game, uint32_t guid, unit_type_t type) {
   if (game == nullptr)
     return nullptr;
 
@@ -237,7 +237,7 @@ Unit* server::get_server_unit(Game* game, uint32_t guid, unit_type_t type) {
   return result;
 }
 
-void server::iterate_server_units(Game* game, unit_type_t type,
+void Server::iterate_server_units(Game* game, unit_type_t type,
                                   const std::function<bool(Unit*)>& cb) {
   if (!cb)
     return;
@@ -265,8 +265,8 @@ void server::iterate_server_units(Game* game, unit_type_t type,
   }
 }
 
-int32_t server::net_tick(Game* game, Unit* unit, int32_t a3, int32_t a4) {
-  static auto& instance = singleton<server>::instance();
+int32_t Server::net_tick(Game* game, Unit* unit, int32_t a3, int32_t a4) {
+  static auto& instance = Server::instance();
 
   for (size_t i = 0; i < sizeof instance.m_modules / sizeof(void*); i++) {
     if (instance.m_tick_handlers[i] == nullptr)
@@ -278,5 +278,4 @@ int32_t server::net_tick(Game* game, Unit* unit, int32_t a3, int32_t a4) {
   return g_net_tick_original(game, unit, a3, a4);
 }
 
-}  // namespace server
 }  // namespace d2_tweaks

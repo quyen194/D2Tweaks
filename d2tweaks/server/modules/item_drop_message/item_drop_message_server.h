@@ -4,9 +4,8 @@
 
 namespace d2_tweaks {
 namespace server {
-class server;
-
 namespace modules {
+
 class item_drop_message final : public server_module {
  public:
   void init() override;
@@ -15,6 +14,7 @@ class item_drop_message final : public server_module {
                      Unit* player,
                      common::packet_header* packet) override;
 };
+
 }  // namespace modules
 }  // namespace server
 }  // namespace d2_tweaks

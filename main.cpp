@@ -72,7 +72,7 @@ void initialize(uint32_t param) {
   Debugger("Main").WaitForDebugger();
 
   common::common::instance().init();
-  server::server::instance().init();
+  Server::instance().init();
   client::client::instance().init();
 
   MH_EnableHook(nullptr);

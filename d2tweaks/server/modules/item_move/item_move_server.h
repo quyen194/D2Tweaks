@@ -17,9 +17,8 @@ struct Unit;
 
 namespace d2_tweaks {
 namespace server {
-class server;
-
 namespace modules {
+
 class item_move final : public server_module {
  public:
   void init() override;
@@ -36,6 +35,7 @@ class item_move final : public server_module {
                        uint32_t& x,
                        uint32_t& y);
 };
+
 }  // namespace modules
 }  // namespace server
 }  // namespace d2_tweaks

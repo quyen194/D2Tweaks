@@ -49,7 +49,7 @@ void item_move::init() {
   FileIni config(common::get_config_path());
 
   if (config.Int("modules", "ItemMover", 1)) {
-    server::instance().register_packet_handler(
+    Server::instance().register_packet_handler(
         common::MESSAGE_TYPE_ITEM_MOVE, this);
   }
 }
@@ -58,7 +58,7 @@ void item_move::init() {
 bool item_move::handle_packet(Game* game,
   Unit* player, common::packet_header* packet) {
   static common::item_move_sc resp;
-  static auto& instance = server::instance();
+  static auto& instance = Server::instance();
 
   const auto itemMove = static_cast<common::item_move_cs*>(packet);
   const auto key = static_cast<common::item_move_cs*>(packet)->item_code;
