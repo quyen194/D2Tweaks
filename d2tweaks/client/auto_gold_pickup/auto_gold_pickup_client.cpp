@@ -42,11 +42,11 @@ static int32_t m_iDistance = 4;
 namespace d2_tweaks {
 namespace client {
 
-class draw_gold_menu final : public ui::menu {
+class DrawGoldMenu final : public ui::menu {
  public:
   label* m_label;
 
-  draw_gold_menu() {
+  DrawGoldMenu() {
     // load_xml("d2tweaks\\interfaces\\autogoldpickup.xml");
     if (DLLBASE_D2EXPRES != 0)
       load_xml("d2tweaks\\interface_d2expres\\autogoldpickup.xml");
@@ -93,7 +93,7 @@ void AutoGoldPickup::init() {
     Client::instance().register_packet_handler(
         common::message_types_t::MESSAGE_TYPE_GOLD_PICKUP_INFO, this);
     Client::instance().register_tick_handler(this);
-    ui::Manager::instance().add_menu(new draw_gold_menu());
+    ui::Manager::instance().add_menu(new DrawGoldMenu());
   }
 }
 
