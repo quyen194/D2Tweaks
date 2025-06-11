@@ -240,7 +240,7 @@ void client::game_tick() {
 }
 
 int32_t client::draw_game_ui() {
-  static auto& ui = ui::ui_manager::instance();
+  static auto& ui = ui::Manager::instance();
 
   const auto result = g_draw_game_ui_original();
 

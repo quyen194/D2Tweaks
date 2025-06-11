@@ -300,7 +300,7 @@ void autosort::init() {
   FileIni config(common::get_config_path());
 
   if (config.Int("modules", "Autosort", 1)) {
-    ui::ui_manager::instance().add_menu(new inventory_sort_menu());
+    ui::Manager::instance().add_menu(new inventory_sort_menu());
     client::instance().register_packet_handler(
         common::MESSAGE_TYPE_INVENTORY_SORT, this);
   }

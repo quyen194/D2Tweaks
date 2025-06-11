@@ -138,7 +138,7 @@ void trader_update::init() {
   FileIni ini(common::get_config_path());
 
   if (ini.Int("modules", "ReloadTradeGamble", 1)) {
-    ui::ui_manager::instance().add_menu(new trader_update_menu());
+    ui::Manager::instance().add_menu(new trader_update_menu());
     client::instance().register_packet_handler(
         common::message_types_t::MESSAGE_TYPE_TRADER_UPDATE, this);
     // client::instance().register_tick_handler(this);

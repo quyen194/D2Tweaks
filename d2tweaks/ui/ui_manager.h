@@ -10,7 +10,7 @@ namespace ui {
 
 class menu;
 
-class ui_manager final : public singleton<ui_manager> {
+class Manager final : public singleton<Manager> {
   std::vector<menu*> m_menus;
 
   bool m_was_down_before_left = false;
@@ -19,7 +19,7 @@ class ui_manager final : public singleton<ui_manager> {
   bool m_mouse_state_right = false;
 
  public:
-  explicit ui_manager(token);
+  explicit Manager(token);
 
   void add_menu(menu* m);
   menu* get_menu(const std::string& name);

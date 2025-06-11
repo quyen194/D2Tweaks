@@ -60,8 +60,8 @@ void loot_filter::init() {
   FileIni config(common::get_config_path());
 
   if (config.Int("modules", "LootFilter", 1)) {
-    ui::ui_manager::instance().add_menu(&loot_filter_settings_menu::instance());
-    ui::ui_manager::instance().add_menu(&loot_filter_settings_toggle_menu::instance());
+    ui::Manager::instance().add_menu(&loot_filter_settings_menu::instance());
+    ui::Manager::instance().add_menu(&loot_filter_settings_toggle_menu::instance());
   }
 }
 

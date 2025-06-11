@@ -94,7 +94,7 @@ void auto_gold_pickup::init() {
     client::instance().register_packet_handler(
         common::message_types_t::MESSAGE_TYPE_GOLD_PICKUP_INFO, this);
     client::instance().register_tick_handler(this);
-    ui::ui_manager::instance().add_menu(new draw_gold_menu());
+    ui::Manager::instance().add_menu(new draw_gold_menu());
   }
 }
 

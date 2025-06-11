@@ -392,7 +392,7 @@ void transmute::init() {
                hook_game_end_asm,
                reinterpret_cast<void**>(&fn_hook_game_end));
 
-  ui::ui_manager::instance().add_menu(new auto_transmute_menu());
+  ui::Manager::instance().add_menu(new auto_transmute_menu());
   client::instance().register_tick_handler(this);
   client::instance().register_packet_handler(common::message_types_t::MESSAGE_TYPE_TRANSMUTE, this);
 }

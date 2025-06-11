@@ -70,13 +70,13 @@ Unit* g_item1;
 
 static LRESULT(__stdcall* g_wnd_proc_original)(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
-ui_manager::ui_manager(token) {
+Manager::Manager(token) {
   detour::hook(d2_win::get_base() + 0xD9B0,
                wnd_proc,
                reinterpret_cast<void **>(&g_wnd_proc_original));
 }
 
-void ui_manager::add_menu(menu* m) {
+void Manager::add_menu(menu* m) {
   if (m == nullptr)
     return;
 
@@ -88,7 +88,7 @@ void ui_manager::add_menu(menu* m) {
   m_menus.push_back(m);
 }
 
-menu* ui_manager::get_menu(const std::string& name) {
+menu* Manager::get_menu(const std::string& name) {
   if (name.empty())
     return nullptr;
 
@@ -101,14 +101,14 @@ menu* ui_manager::get_menu(const std::string& name) {
   return nullptr;
 }
 
-void ui_manager::remove_menu(menu* m) {
+void Manager::remove_menu(menu* m) {
   if (m == nullptr)
     return;
 
   m_menus.erase(std::remove(m_menus.begin(), m_menus.end(), m), m_menus.end());
 }
 
-void ui_manager::draw() {
+void Manager::draw() {
   //process_inputs();
 
   for (auto menu : m_menus) {
@@ -566,11 +566,11 @@ void sendPacketAndUpdateProperty(int gemBagGuid,
   }
 }
 
-LRESULT ui_manager::wnd_proc(HWND hWnd,
+LRESULT Manager::wnd_proc(HWND hWnd,
                              UINT msg,
                              WPARAM wParam,
                              LPARAM lParam) {
-  static auto& instance = singleton<ui_manager>::instance();
+  static auto& instance = singleton<Manager>::instance();
 
   bool block;
 
@@ -1546,7 +1546,7 @@ LRESULT ui_manager::wnd_proc(HWND hWnd,
 }
 
 // This function, belonging to the 'ui_manager' class within the 'ui' namespace of the 'd2_tweaks' namespace, is responsible for processing user inputs.
-void ui_manager::process_inputs() {
+void Manager::process_inputs() {
   // Check if the left mouse button is pressed asynchronously.
   if (GetAsyncKeyState(VK_LBUTTON)) {
     // If the left mouse button was not previously pressed (indicating a new press event),
@@ -1597,7 +1597,7 @@ void ui_manager::process_inputs() {
 }
 
 // This function processes the left mouse button event, either up or down.
-bool ui_manager::process_left_mouse(bool up) {
+bool Manager::process_left_mouse(bool up) {
   // Initialize a flag to determine if the event was handled or not.
   auto block = false;
 
@@ -1616,7 +1616,7 @@ bool ui_manager::process_left_mouse(bool up) {
 }
 
 // Similar to the previous function, this one processes the middle mouse button event.
-bool ui_manager::process_middle_mouse(bool up) {
+bool Manager::process_middle_mouse(bool up) {
   auto block = false;
 
   for (auto menu : m_menus) {
@@ -1630,7 +1630,7 @@ bool ui_manager::process_middle_mouse(bool up) {
 }
 
 // This function processes the mouse wheel event.
-bool ui_manager::process_mouse_wheel(bool up) {
+bool Manager::process_mouse_wheel(bool up) {
   auto block = false;
 
   for (auto menu : m_menus) {
@@ -1644,7 +1644,7 @@ bool ui_manager::process_mouse_wheel(bool up) {
 }
 
 // This function processes the right mouse button event, either up or down.
-bool ui_manager::process_right_mouse(bool up) {
+bool Manager::process_right_mouse(bool up) {
   auto block = false;
 
   for (auto menu : m_menus) {
@@ -1658,7 +1658,7 @@ bool ui_manager::process_right_mouse(bool up) {
 }
 
 // This function processes key events (e.g., keyboard keys pressed or released).
-bool ui_manager::process_key_event(uint32_t key, bool up) {
+bool Manager::process_key_event(uint32_t key, bool up) {
   auto block = false;
 
   for (auto menu : m_menus) {

@@ -105,7 +105,7 @@ loot_filter_settings_toggle_menu::loot_filter_settings_toggle_menu(token) {
   m_toggle_filter_settings_btn->set_on_click(std::bind(
       &loot_filter_settings_toggle_menu::toggle_filter_settings_click, this));
 
-  m_filter_settings_menu = ui::ui_manager::instance().get_menu(
+  m_filter_settings_menu = ui::Manager::instance().get_menu(
       "loot_filter_settings_menu");
 
   // toggle stats button

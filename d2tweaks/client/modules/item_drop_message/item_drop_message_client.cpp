@@ -179,7 +179,7 @@ void item_drop_message::init() {
 
     client::instance().register_packet_handler(
         common::message_types_t::MESSAGE_TYPE_ITEM_DROPPED_INFO, this);
-    ui::ui_manager::instance().add_menu(new draw_item_menu());
+    ui::Manager::instance().add_menu(new draw_item_menu());
   }
 }
 
