@@ -190,7 +190,7 @@ void ItemDropMessage::init() {
   }
 
   // Server::instance().register_tick_handler(this);
-  Server::instance().register_packet_handler(common::MESSAGE_TYPE_ITEM_DROPPED_INFO, this);
+  Server::instance().register_packet_handler(MessageType::kItemDroppedInfo, this);
 }
 
 void ItemDropMessage::tick(Game* game, Unit* unit) {
@@ -211,7 +211,7 @@ bool ItemDropMessage::handle_packet(Game* game,
   static item_dropped_info_sc response_item_dropped_packet;
 
   switch (income_item_dropped_packet->message_type) {
-  case message_types_t::MESSAGE_TYPE_ITEM_DROPPED_INFO:
+  case MessageType::kItemDroppedInfo:
       auto current_unit =
           d2_game::get_server_unit(game,
                                    unit_type_t::UNIT_TYPE_ITEM,

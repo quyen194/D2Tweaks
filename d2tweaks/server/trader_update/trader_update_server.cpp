@@ -147,8 +147,8 @@ void TraderUpdate::init() {
   FileIni config(common::get_config_path());
 
   if (config.Int("modules", "ReloadTradeGamble", 1)) {
-    Server::instance().register_packet_handler(
-        common::MESSAGE_TYPE_TRADER_UPDATE, this);
+    Server::instance().register_packet_handler(MessageType::kTraderUpdate,
+                                               this);
     // D2TEMPLATE_ApplyPatch(gpt_click_trade_menu);
     // D2TEMPLATE_ApplyPatch(gpt_click_gamble_menu);
     // D2TEMPLATE_ApplyPatch(gpt_click_menu);

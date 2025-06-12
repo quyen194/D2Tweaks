@@ -75,8 +75,8 @@ void AutoSort::init() {
   cmaxValidY = config.Int("CharmZone", "MaxValidY", 0);
 
   if (config.Int("modules", "Autosort", 1)) {
-    Server::instance().register_packet_handler(
-        common::MESSAGE_TYPE_INVENTORY_SORT, this);
+    Server::instance().register_packet_handler(MessageType::kInventorySort,
+                                               this);
   }
 }
 

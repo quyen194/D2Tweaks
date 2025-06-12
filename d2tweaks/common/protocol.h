@@ -199,19 +199,21 @@ enum T {
 };
 }  // namespace PacketTypeCs
 
-enum message_types_t {
-  MESSAGE_TYPE_ITEM_MOVE = 1,
-  MESSAGE_TYPE_INVENTORY_SORT,
-  MESSAGE_TYPE_DAMAGE_INFO,
-  MESSAGE_TYPE_GOLD_PICKUP_INFO,
-  MESSAGE_TYPE_ITEM_PICKUP_INFO,
-  MESSAGE_TYPE_ITEM_DROPPED_INFO,
-  MESSAGE_TYPE_TRANSMUTE,
-  MESSAGE_TYPE_TRADER_UPDATE,
-  MESSAGE_TYPE_INTERACT = 1,
+namespace MessageType {
+enum T {
+  kItemMove = 1,
+  kInventorySort,
+  kDamageInfo,
+  kGoldPickupInfo,
+  kItemPickupInfo,
+  kItemDroppedInfo,
+  kTransmute,
+  kTraderUpdate,
+  // MessageType::kInteract = 1,
 
-  MESSAGE_TYPE_COUNT
+  kMaxValue,
 };
+}  // namespace MessageType
 
 enum damage_type_t : uint8_t {
   DAMAGE_TYPE_PHYSICAL = 0,
@@ -258,7 +260,7 @@ struct item_move_cs : packet_header {
   uint32_t iCode;
 
   item_move_cs() : item_guid(0), target_page(0) {
-    message_type = MESSAGE_TYPE_ITEM_MOVE;
+    message_type = MessageType::kItemMove;
   }
 };
 
@@ -272,7 +274,7 @@ struct item_move_sc : packet_header {
   int prop;
   int val;
   item_move_sc() : item_guid(0), tx(0), ty(0), target_page(0) {
-    message_type = MESSAGE_TYPE_ITEM_MOVE;
+    message_type = MessageType::kItemMove;
   }
 };
 
@@ -281,7 +283,7 @@ struct inventory_sort_cs : packet_header {
   Unit* item_to_remove;
   bool remItem;
 
-  inventory_sort_cs() : page(0) { message_type = MESSAGE_TYPE_INVENTORY_SORT; }
+  inventory_sort_cs() : page(0) { message_type = MessageType::kInventorySort; }
 };
 
 struct inventory_sort_sc : packet_header {
@@ -291,14 +293,14 @@ struct inventory_sort_sc : packet_header {
   uint32_t guid;
 
   inventory_sort_sc() : page(0), tx(0), ty(0), guid(0) {
-    message_type = MESSAGE_TYPE_INVENTORY_SORT;
+    message_type = MessageType::kInventorySort;
   }
 };
 
 struct damage_info_cs : packet_header {
   uint8_t state;  // on or off
 
-  damage_info_cs() : state(0) { message_type = MESSAGE_TYPE_DAMAGE_INFO; }
+  damage_info_cs() : state(0) { message_type = MessageType::kDamageInfo; }
 };
 
 struct damage_info_sc : packet_header {
@@ -329,35 +331,35 @@ struct damage_info_sc : packet_header {
         isChampion(0),
         isUnique(0),
         isSuperUnique(0) {
-    message_type = MESSAGE_TYPE_DAMAGE_INFO;
+    message_type = MessageType::kDamageInfo;
   }
 };
 
 struct gold_pickup_info_sc : packet_header {
   uint32_t gold;
   gold_pickup_info_sc() : gold(0) {
-    message_type = MESSAGE_TYPE_GOLD_PICKUP_INFO;
+    message_type = MessageType::kGoldPickupInfo;
   }
 };
 
 struct gold_pickup_info_cs : packet_header {
   uint32_t item_guid;
   gold_pickup_info_cs() : item_guid(0) {
-    message_type = MESSAGE_TYPE_GOLD_PICKUP_INFO;
+    message_type = MessageType::kGoldPickupInfo;
   }
 };
 
 struct item_pickup_info_cs : packet_header {
   uint32_t item_guid;
   item_pickup_info_cs() : item_guid(0) {
-    message_type = MESSAGE_TYPE_ITEM_PICKUP_INFO;
+    message_type = MessageType::kItemPickupInfo;
   }
 };
 
 struct item_pickup_info_sc : packet_header {
   bool inventory_full;
   item_pickup_info_sc() : inventory_full(false) {
-    message_type = MESSAGE_TYPE_ITEM_PICKUP_INFO;
+    message_type = MessageType::kItemPickupInfo;
   }
 };
 
@@ -365,7 +367,7 @@ struct item_dropped_info_cs : packet_header {
   uint16_t item_id;
   uint8_t code[4];
   item_dropped_info_cs() : item_id(0), code{0} {
-    message_type = MESSAGE_TYPE_ITEM_DROPPED_INFO;
+    message_type = MessageType::kItemDroppedInfo;
   }
 };
 
@@ -385,7 +387,7 @@ struct item_dropped_info_sc : packet_header {
         code{0},
         arr_itemtype_codestr_equivstr{0},
         namestr{0} {
-    message_type = MESSAGE_TYPE_ITEM_DROPPED_INFO;
+    message_type = MessageType::kItemDroppedInfo;
   }
 };
 
@@ -397,7 +399,7 @@ struct transmute_info_sc : packet_header {
   uint8_t command;
 
   transmute_info_sc() : item_guid(0), tx(0), ty(0), target_page(0), command(0) {
-    message_type = MESSAGE_TYPE_TRANSMUTE;
+    message_type = MessageType::kTransmute;
   }
 };
 
@@ -409,7 +411,7 @@ struct transmute_info_cs : packet_header {
 
   transmute_info_cs()
       : item_guid(0), target_page(0), command(0), transmute_start_flag(0) {
-    message_type = MESSAGE_TYPE_TRANSMUTE;
+    message_type = MessageType::kTransmute;
   }
 };
 
@@ -420,7 +422,7 @@ struct trader_update_cs : packet_header {
   bool is_gamble_menu_open;
   trader_update_cs()
       : npc_id(0), client_id(0), command(0), is_gamble_menu_open(0) {
-    message_type = MESSAGE_TYPE_TRADER_UPDATE;
+    message_type = MessageType::kTraderUpdate;
   }
 };
 
@@ -431,7 +433,7 @@ struct trader_update_sc : packet_header {
   bool is_gamble_menu_open;
   trader_update_sc()
       : npc_id(0), client_id(0), command(0), is_gamble_menu_open(0) {
-    message_type = MESSAGE_TYPE_TRADER_UPDATE;
+    message_type = MessageType::kTraderUpdate;
   }
 };
 

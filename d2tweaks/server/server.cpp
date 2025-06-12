@@ -206,8 +206,7 @@ void Server::register_tick_handler(ModuleBase* module) {
   m_tick_handlers[m_tick_handler_id_counter++] = module;
 }
 
-void Server::register_packet_handler(message_types_t type,
-                                     ModuleBase* module) {
+void Server::register_packet_handler(MessageType::T type, ModuleBase* module) {
   if (m_packet_handlers[type] != nullptr) {
     spdlog::warn("Serverside packet handler for {0} is already registered!",
                  type);

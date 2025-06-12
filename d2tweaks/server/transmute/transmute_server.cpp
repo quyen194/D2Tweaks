@@ -51,7 +51,7 @@ void Transmute::init() {
 
   if (config.Int("modules", "AutoTransmute", 0)) {
     // Server::instance().register_tick_handler(this);
-    Server::instance().register_packet_handler(common::MESSAGE_TYPE_TRANSMUTE, this);
+    Server::instance().register_packet_handler(MessageType::kTransmute, this);
   }
 }
 

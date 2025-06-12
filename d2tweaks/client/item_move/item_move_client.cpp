@@ -159,8 +159,7 @@ void ItemMove::init() {
     detour::hook(d2_client::get_base() + 0x475C0,
                  item_click,
                  reinterpret_cast<void **>(&g_item_click_original));
-    Client::instance().register_packet_handler(
-        common::MESSAGE_TYPE_ITEM_MOVE, this);
+    Client::instance().register_packet_handler(MessageType::kItemMove, this);
   }
 }
 

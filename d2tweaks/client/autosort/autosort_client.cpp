@@ -300,8 +300,8 @@ void AutoSort::init() {
 
   if (config.Int("modules", "Autosort", 1)) {
     ui::Manager::instance().add_menu(new InventorySortMenu());
-    Client::instance().register_packet_handler(
-        common::MESSAGE_TYPE_INVENTORY_SORT, this);
+    Client::instance().register_packet_handler(MessageType::kInventorySort,
+                                               this);
   }
 }
 

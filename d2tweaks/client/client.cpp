@@ -257,7 +257,7 @@ void Client::register_tick_handler(ModuleBase* module) {
 }
 
 void Client::register_packet_cs_handler(PacketTypeCS::T packet,
-                                        message_types_t type,
+                                        MessageType::T type,
                                         ModuleBase* module) {
   if (m_packet_cs_handlers[packet] != nullptr) {
     spdlog::warn("Clientside packet cs handler for {0} is already registered!",
@@ -267,7 +267,7 @@ void Client::register_packet_cs_handler(PacketTypeCS::T packet,
   m_packet_cs_handlers[packet] = module;
 }
 
-void Client::register_packet_handler(message_types_t type, ModuleBase* module) {
+void Client::register_packet_handler(MessageType::T type, ModuleBase* module) {
   if (m_packet_handlers[type] != nullptr) {
     spdlog::warn("Clientside packet handler for {0} is already registered!",
                  type);

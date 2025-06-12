@@ -43,10 +43,10 @@ class Client : public singleton<Client> {
   void register_module(client::ModuleBase* module);
 
   void register_tick_handler(client::ModuleBase* module);
-  void register_packet_handler(message_types_t type,
+  void register_packet_handler(MessageType::T type,
                                client::ModuleBase* module);
   void register_packet_cs_handler(PacketTypeCS::T packet,
-                                  message_types_t type,
+                                  MessageType::T type,
                                   client::ModuleBase* module);
   static Unit* get_client_unit(uint32_t type, uint32_t guid);
 

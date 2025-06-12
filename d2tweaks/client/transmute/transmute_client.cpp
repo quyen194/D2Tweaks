@@ -393,7 +393,7 @@ void Transmute::init() {
 
   ui::Manager::instance().add_menu(new AutoTransmuteMenu());
   Client::instance().register_tick_handler(this);
-  Client::instance().register_packet_handler(message_types_t::MESSAGE_TYPE_TRANSMUTE, this);
+  Client::instance().register_packet_handler(MessageType::kTransmute, this);
 }
 
 void Transmute::tick() {

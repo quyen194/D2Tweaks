@@ -309,8 +309,8 @@ void AutoItemPickup::init() {
 
     ui::Manager::instance().add_menu(new AutoItemPickupMenu());
     Client::instance().register_tick_handler(this);
-    Client::instance().register_packet_handler(
-        message_types_t::MESSAGE_TYPE_ITEM_PICKUP_INFO, this);
+    Client::instance().register_packet_handler(MessageType::kItemPickupInfo,
+                                               this);
   }
 }
 

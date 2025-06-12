@@ -138,12 +138,12 @@ void TraderUpdate::init() {
 
   if (ini.Int("modules", "ReloadTradeGamble", 1)) {
     ui::Manager::instance().add_menu(new trader_update_menu());
-    Client::instance().register_packet_handler(
-        message_types_t::MESSAGE_TYPE_TRADER_UPDATE, this);
+    Client::instance().register_packet_handler(MessageType::kTraderUpdate,
+                                               this);
     // Client::instance().register_tick_handler(this);
     // Client::instance().register_packet_cs_handler(
     //     PacketTypeCS::k38,
-    //     message_types_t::MESSAGE_TYPE_TRADER_UPDATE,
+    //     MessageType::kTraderUpdate,
     //     this);
   }
 }

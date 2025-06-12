@@ -38,8 +38,7 @@ class Server : public singleton<Server> {
   void register_module(server::ModuleBase* module);
 
   void register_tick_handler(server::ModuleBase* module);
-  void register_packet_handler(message_types_t type,
-                               server::ModuleBase* module);
+  void register_packet_handler(MessageType::T type, server::ModuleBase* module);
 
   Unit* get_server_unit(Game* game, uint32_t guid, unit_type_t type);
   void iterate_server_units(Game* game,

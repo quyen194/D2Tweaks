@@ -48,8 +48,7 @@ void ItemMove::init() {
   FileIni config(common::get_config_path());
 
   if (config.Int("modules", "ItemMover", 1)) {
-    Server::instance().register_packet_handler(
-        common::MESSAGE_TYPE_ITEM_MOVE, this);
+    Server::instance().register_packet_handler(MessageType::kItemMove, this);
   }
 }
 

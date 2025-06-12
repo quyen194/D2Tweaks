@@ -133,35 +133,35 @@ void Common::init() {
 
 bool Common::get_packet_size_cs(packet_header* packet, size_t& size) {
   switch (packet->message_type) {
-    case MESSAGE_TYPE_ITEM_MOVE: {
+    case MessageType::kItemMove: {
       size = sizeof item_move_cs;
       return true;
     }
-    case MESSAGE_TYPE_INVENTORY_SORT: {
+    case MessageType::kInventorySort: {
       size = sizeof inventory_sort_cs;
       return true;
     }
-    case MESSAGE_TYPE_DAMAGE_INFO: {
+    case MessageType::kDamageInfo: {
       size = sizeof damage_info_cs;
       return true;
     }
-    case MESSAGE_TYPE_GOLD_PICKUP_INFO: {
+    case MessageType::kGoldPickupInfo: {
       size = sizeof gold_pickup_info_cs;
       return true;
     }
-    case MESSAGE_TYPE_ITEM_PICKUP_INFO: {
+    case MessageType::kItemPickupInfo: {
       size = sizeof item_pickup_info_cs;
       return true;
     }
-    case MESSAGE_TYPE_ITEM_DROPPED_INFO: {
+    case MessageType::kItemDroppedInfo: {
       size = sizeof item_dropped_info_cs;
       return true;
     }
-    case MESSAGE_TYPE_TRANSMUTE: {
+    case MessageType::kTransmute: {
       size = sizeof transmute_info_cs;
       return true;
     }
-    case MESSAGE_TYPE_TRADER_UPDATE: {
+    case MessageType::kTraderUpdate: {
       size = sizeof trader_update_cs;
       return true;
     }
@@ -172,35 +172,35 @@ bool Common::get_packet_size_cs(packet_header* packet, size_t& size) {
 
 bool Common::get_packet_size_sc(packet_header* packet, size_t& size) {
   switch (packet->message_type) {
-    case MESSAGE_TYPE_ITEM_MOVE: {
+    case MessageType::kItemMove: {
       size = sizeof item_move_sc;
       return true;
     }
-    case MESSAGE_TYPE_INVENTORY_SORT: {
+    case MessageType::kInventorySort: {
       size = sizeof inventory_sort_sc;
       return true;
     }
-    case MESSAGE_TYPE_DAMAGE_INFO: {
+    case MessageType::kDamageInfo: {
       size = sizeof damage_info_sc;
       return true;
     }
-    case MESSAGE_TYPE_GOLD_PICKUP_INFO: {
+    case MessageType::kGoldPickupInfo: {
       size = sizeof gold_pickup_info_sc;
       return true;
     }
-    case MESSAGE_TYPE_ITEM_PICKUP_INFO: {
+    case MessageType::kItemPickupInfo: {
       size = sizeof item_pickup_info_sc;
       return true;
     }
-    case MESSAGE_TYPE_ITEM_DROPPED_INFO: {
+    case MessageType::kItemDroppedInfo: {
       size = sizeof item_dropped_info_sc;
       return true;
     }
-    case MESSAGE_TYPE_TRANSMUTE: {
+    case MessageType::kTransmute: {
       size = sizeof transmute_info_sc;
       return true;
     }
-    case MESSAGE_TYPE_TRADER_UPDATE: {
+    case MessageType::kTraderUpdate: {
       size = sizeof trader_update_sc;
       return true;
     }

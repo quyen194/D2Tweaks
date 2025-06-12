@@ -176,8 +176,8 @@ void ItemDropMessage::init() {
                    reinterpret_cast<void **>(&fn_GamePacketReceivedIntercept));
     }
 
-    Client::instance().register_packet_handler(
-        message_types_t::MESSAGE_TYPE_ITEM_DROPPED_INFO, this);
+    Client::instance().register_packet_handler(MessageType::kItemDroppedInfo,
+                                               this);
     ui::Manager::instance().add_menu(new DrawItemMenu());
   }
 }
@@ -191,8 +191,7 @@ void ItemDropMessage::handle_packet(packet_header* packet) {
                 item_dropped_packet->message_type,
                 sizeof item_dropped_packet);
 
-  if (item_dropped_packet->message_type ==
-      message_types_t::MESSAGE_TYPE_ITEM_DROPPED_INFO) {
+  if (item_dropped_packet->message_type == MessageType::kItemDroppedInfo) {
     for (uint32_t i = 0; i < m_nMsgCount; i++) {
       if (m_stMsg[i].active == false) {
         static wchar_t buffer[512];

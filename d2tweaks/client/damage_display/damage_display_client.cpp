@@ -442,7 +442,7 @@ void DamageDisplay::init() {
     g_player_label_posx = config.Int("DamageDisplay", "PlayerDamagePosx", 70);
     g_player_label_posy = config.Int("DamageDisplay", "PlayerDamagePosy", 500);
     DISPLAY_TIME = config.Int("DamageDisplay", "DisplayTime", 1000);
-    Client::instance().register_packet_handler(common::MESSAGE_TYPE_DAMAGE_INFO, this);
+    Client::instance().register_packet_handler(MessageType::kDamageInfo, this);
     detour::hook(d2_client::get_base() + 0x80A30,
                  draw_game_ui,
                  reinterpret_cast<void **>(&g_draw_game_ui));

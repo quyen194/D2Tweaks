@@ -31,8 +31,8 @@ void AutoGoldPickup::init() {
   FileIni config(common::get_config_path());
 
   if (config.Int("modules", "AutoGoldPickup", 1)) {
-    Server::instance().register_packet_handler(
-        common::MESSAGE_TYPE_GOLD_PICKUP_INFO, this);
+    Server::instance().register_packet_handler(MessageType::kGoldPickupInfo,
+                                               this);
     // Server::instance().register_tick_handler(this);
   }
 }
