@@ -13,7 +13,7 @@ namespace server {
 
 using namespace diablo2::structures;
 
-class autosort final : public ModuleBase {
+class AutoSort final : public ModuleBase {
  public:
   void init() override;
 

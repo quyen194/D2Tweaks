@@ -32,7 +32,7 @@ using namespace diablo2::structures;
 namespace d2_tweaks {
 namespace server {
 
-MODULE_INIT(autosort)
+MODULE_INIT(AutoSort)
 
 struct backup_item {
   Unit* item;
@@ -61,7 +61,7 @@ int cmaxValidX = 0;
 int cminValidY = 0;
 int cmaxValidY = 0;
 
-void autosort::init() {
+void AutoSort::init() {
   FileIni config(common::get_config_path());
 
   iminValidX = config.Int("InventoryZone", "MinValidX", 0);
@@ -80,7 +80,7 @@ void autosort::init() {
   }
 }
 
-bool autosort::handle_packet(Game* game,
+bool AutoSort::handle_packet(Game* game,
   Unit* player, common::packet_header* packet) {
   if (static_cast<common::inventory_sort_cs*>(packet)->remItem == 1) {
     d2_common::inv_remove_item(
@@ -107,7 +107,7 @@ bool autosort::handle_packet(Game* game,
   return true;
 }
 
-bool autosort::sort(Game* game, Unit* player, uint8_t page) {
+bool AutoSort::sort(Game* game, Unit* player, uint8_t page) {
   static common::inventory_sort_sc packet;
   static auto& instance = Server::instance();
 
@@ -369,7 +369,7 @@ bool autosort::sort(Game* game, Unit* player, uint8_t page) {
   return false;
 }
 
-bool autosort::find_free_space(Inventory* inv,
+bool AutoSort::find_free_space(Inventory* inv,
                                Unit* item,
                                int32_t inventoryIndex,
                                char page,
