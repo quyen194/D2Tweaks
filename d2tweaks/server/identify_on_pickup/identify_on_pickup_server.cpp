@@ -21,7 +21,7 @@ using namespace diablo2::structures;
 namespace d2_tweaks {
 namespace server {
 
-MODULE_INIT(identify_on_pickup)
+MODULE_INIT(IdentifyOnPickup)
 
 static unsigned int g_item_Normal = 0;
 static unsigned int g_item_Superior = 0;
@@ -130,7 +130,7 @@ static uint32_t __fastcall pickup_item_cursor(Game* game,
   return g_pickup_item_cursor_original(game, player, guid, a4);
 }
 
-void identify_on_pickup::init() {
+void IdentifyOnPickup::init() {
   FileIni config(common::get_config_path());
 
   if (config.Int("modules", "IdentifyOnPickup", 1)) {

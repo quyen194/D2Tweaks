@@ -5,7 +5,7 @@
 namespace d2_tweaks {
 namespace server {
 
-class identify_on_pickup final : public ModuleBase {
+class IdentifyOnPickup final : public ModuleBase {
  public:
   void init() override;
 };
