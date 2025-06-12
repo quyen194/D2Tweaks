@@ -29,9 +29,9 @@ using namespace diablo2::structures;
 namespace d2_tweaks {
 namespace server {
 
-MODULE_INIT(auto_item_pickup)
+MODULE_INIT(AutoItemPickup)
 
-void auto_item_pickup::init() {
+void AutoItemPickup::init() {
   FileIni config(common::get_config_path());
 
   if (config.Int("modules", "AutoItemPickup", 1)) {
@@ -40,7 +40,7 @@ void auto_item_pickup::init() {
   }
 }
 
-void auto_item_pickup::tick(Game* game, Unit* unit) {
+void AutoItemPickup::tick(Game* game, Unit* unit) {
   // static common::item_pickup_info_sc packet;
   // static auto& instance = Server::instance();
   // if (!game || !unit)
@@ -147,7 +147,7 @@ void auto_item_pickup::tick(Game* game, Unit* unit) {
   // //spdlog::info("current {0}", g_tick_between_item_pickup);
 }
 
-bool auto_item_pickup::au_pickup_item(Game* game, Unit* unit, uint32_t guid)
+bool AutoItemPickup::au_pickup_item(Game* game, Unit* unit, uint32_t guid)
 {
   static common::item_pickup_info_sc packet;
 
@@ -164,7 +164,7 @@ bool auto_item_pickup::au_pickup_item(Game* game, Unit* unit, uint32_t guid)
   return true;
 }
 
-bool auto_item_pickup::handle_packet(Game* game,
+bool AutoItemPickup::handle_packet(Game* game,
                                      Unit* player,
                                      common::packet_header* packet) {
   const auto income_packet_cs =
