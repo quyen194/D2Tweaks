@@ -35,7 +35,7 @@ using namespace diablo2::structures;
 namespace d2_tweaks {
 namespace server {
 
-MODULE_INIT(transmute)
+MODULE_INIT(Transmute)
 
 enum transmute_command {
   COMMAND_NULL,
@@ -46,7 +46,7 @@ enum transmute_command {
   COMMAND_ABORT
 };
 
-void transmute::init() {
+void Transmute::init() {
   FileIni config(common::get_config_path());
 
   if (config.Int("modules", "AutoTransmute", 0)) {
@@ -59,7 +59,7 @@ void transmute::init() {
 // topfunc d2game:$62130 int __fastcall CRAFT_Transmogrify(D2GameStrc* pGame, D2UnitStrc* pPlayer)
 // subfunc d2game:$0x60010 int __fastcall CRAFT_Transmogrify(D2GameStrc* pGame, D2UnitStrc* pPlayer, D2CubemainTXT* pCubeTxt, void* pUnknown)
 
-void transmute::tick(Game* game, Unit* unit) {
+void Transmute::tick(Game* game, Unit* unit) {
   return;
 }
 
@@ -76,7 +76,7 @@ inline uint64_t TimeEnd() {
   }
 }
 
-bool transmute::handle_packet(Game* game,
+bool Transmute::handle_packet(Game* game,
                               Unit* player,
                               common::packet_header* packet) {
   const auto income_packet_cs = static_cast<common::transmute_info_cs*>(packet);
@@ -103,13 +103,13 @@ bool transmute::handle_packet(Game* game,
   }
 
   if (income_packet_cs->command == COMMAND_MOVE_ITEM) {
-    transmute::move_item_to(game, player, packet);
+    Transmute::move_item_to(game, player, packet);
   }
 
   return true;
 }
 
-bool transmute::move_item_to(Game* game,
+bool Transmute::move_item_to(Game* game,
                              Unit* player,
                              common::packet_header* packet) {
   static common::transmute_info_sc resp;
@@ -160,7 +160,7 @@ bool transmute::move_item_to(Game* game,
   return true;
 }
 
-bool transmute::find_free_space(Inventory* inv,
+bool Transmute::find_free_space(Inventory* inv,
                                 Unit* item,
                                 int32_t inventoryIndex,
                                 char page,

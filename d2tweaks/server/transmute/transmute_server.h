@@ -8,7 +8,8 @@
 
 namespace d2_tweaks {
 namespace server {
-class transmute final : public ModuleBase {
+
+class Transmute final : public ModuleBase {
  public:
   void init() override;
   void tick(Game* game, Unit* unit) override;
@@ -26,5 +27,6 @@ class transmute final : public ModuleBase {
   bool send_to_cube(Game* game, Unit* player, Unit* item);
   bool move_item_to(Game* game, Unit* player, common::packet_header* packet);
 };
+
 }  // namespace server
 }  // namespace d2_tweaks
