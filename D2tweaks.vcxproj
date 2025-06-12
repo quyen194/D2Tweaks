@@ -209,7 +209,7 @@
     <ClInclude Include="common\file_ini.h" />
     <ClInclude Include="common\get_default.h" />
     <ClInclude Include="common\hooking.h" />
-    <ClInclude Include="common\autopickup_lootfilter.h" />
+    <ClInclude Include="d2tweaks\common\autopickup_lootfilter.h" />
     <ClInclude Include="common\ptr_wrapper.h" />
     <ClInclude Include="common\strings.h" />
     <ClInclude Include="common\timer.h" />

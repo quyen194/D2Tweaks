@@ -145,7 +145,7 @@
     <ClInclude Include="vendor\minhook\src\hde\table64.h" />
     <ClInclude Include="vendor\minhook\src\trampoline.h" />
     <ClInclude Include="diablo2\d2lang.h" />
-    <ClInclude Include="common\autopickup_lootfilter.h" />
+    <ClInclude Include="d2tweaks\common\autopickup_lootfilter.h" />
     <ClInclude Include="diablo2\structures\npc_record.h" />
     <ClInclude Include="vendor\D2Template\D2Template.h" />
     <ClInclude Include="vendor\D2Template\D2TemplateConstants.h" />

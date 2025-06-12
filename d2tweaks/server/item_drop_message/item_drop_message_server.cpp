@@ -3,7 +3,6 @@
 
 #include <spdlog/spdlog.h>
 
-#include "common/autopickup_lootfilter.h"
 #include "common/file_ini.h"
 #include "common/strings.h"
 
@@ -18,6 +17,7 @@
 #include "diablo2/d2lang.h"
 
 #include "d2tweaks/common/asset_manager.h"
+#include "d2tweaks/common/autopickup_lootfilter.h"
 
 #include "d2tweaks/server/server.h"
 #include "d2tweaks/server/item_drop_message/item_drop_message_server.h"

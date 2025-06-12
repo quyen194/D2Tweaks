@@ -3,7 +3,6 @@
 
 #include <spdlog/spdlog.h>
 
-#include "common/autopickup_lootfilter.h"
 #include "common/file_ini.h"
 
 #include "diablo2/structures/data/item_types_line.h"
@@ -17,6 +16,7 @@
 #include "diablo2/d2lang.h"
 
 #include "d2tweaks/common/asset_manager.h"
+#include "d2tweaks/common/autopickup_lootfilter.h"
 
 #include "d2tweaks/server/server.h"
 #include "d2tweaks/server/auto_item_pickup/auto_item_pickup_server.h"
