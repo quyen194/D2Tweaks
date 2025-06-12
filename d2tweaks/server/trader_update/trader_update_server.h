@@ -9,7 +9,7 @@
 namespace d2_tweaks {
 namespace server {
 
-class trader_update final : public ModuleBase {
+class TraderUpdate final : public ModuleBase {
  public:
   void init() override;
   void tick(Game* game, Unit* unit) override;

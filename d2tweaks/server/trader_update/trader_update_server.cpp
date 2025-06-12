@@ -40,7 +40,7 @@ using namespace diablo2::structures;
 namespace d2_tweaks {
 namespace server {
 
-MODULE_INIT(trader_update)
+MODULE_INIT(TraderUpdate)
 
 enum trader_command {
   COMMAND_NULL,
@@ -143,7 +143,7 @@ static uint32_t m_nParam4 = 1;
 //   {D2DLL_INVALID}
 // };
 
-void trader_update::init() {
+void TraderUpdate::init() {
   FileIni config(common::get_config_path());
 
   if (config.Int("modules", "ReloadTradeGamble", 1)) {
@@ -155,7 +155,7 @@ void trader_update::init() {
   }
 }
 
-void trader_update::tick(Game* game, Unit* unit) {
+void TraderUpdate::tick(Game* game, Unit* unit) {
   return;
 }
 
@@ -164,7 +164,7 @@ struct ClientFromNumber {
   NetClient* net_cleint;
 };
 
-bool trader_update::handle_packet(Game* game,
+bool TraderUpdate::handle_packet(Game* game,
                                   Unit* player,
                                   common::packet_header* packet) {
   const auto income_packet_cs = static_cast<common::trader_update_cs*>(packet);
