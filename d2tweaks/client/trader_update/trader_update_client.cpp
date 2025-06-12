@@ -142,7 +142,7 @@ void TraderUpdate::init() {
         message_types_t::MESSAGE_TYPE_TRADER_UPDATE, this);
     // Client::instance().register_tick_handler(this);
     // Client::instance().register_packet_cs_handler(
-    //     packet_types_cs_t::PACKET_0x38,
+    //     PacketTypeCS::k38,
     //     message_types_t::MESSAGE_TYPE_TRADER_UPDATE,
     //     this);
   }

@@ -45,7 +45,7 @@ class Client : public singleton<Client> {
   void register_tick_handler(client::ModuleBase* module);
   void register_packet_handler(message_types_t type,
                                client::ModuleBase* module);
-  void register_packet_cs_handler(packet_types_cs_t packet,
+  void register_packet_cs_handler(PacketTypeCS::T packet,
                                   message_types_t type,
                                   client::ModuleBase* module);
   static Unit* get_client_unit(uint32_t type, uint32_t guid);

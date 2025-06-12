@@ -256,7 +256,7 @@ void Client::register_tick_handler(ModuleBase* module) {
   m_tick_handlers[m_tick_handler_id_counter++] = module;
 }
 
-void Client::register_packet_cs_handler(packet_types_cs_t packet,
+void Client::register_packet_cs_handler(PacketTypeCS::T packet,
                                         message_types_t type,
                                         ModuleBase* module) {
   if (m_packet_cs_handlers[packet] != nullptr) {
