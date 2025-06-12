@@ -9,7 +9,7 @@
 namespace d2_tweaks {
 namespace server {
 
-class damage_display final : public ModuleBase {
+class DamageDisplay final : public ModuleBase {
  public:
   void init() override;
 

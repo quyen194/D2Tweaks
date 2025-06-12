@@ -29,7 +29,7 @@ using namespace diablo2::structures;
 namespace d2_tweaks {
 namespace server {
 
-MODULE_INIT(damage_display)
+MODULE_INIT(DamageDisplay)
 
 static char(__fastcall* g_apply_attack_results_origin)(Game* game,
                                                        Unit* attacker,
@@ -318,7 +318,7 @@ static char __fastcall apply_attack_results(Game* game,
   return result;
 }
 
-void damage_display::init() {
+void DamageDisplay::init() {
   FileIni config(common::get_config_path());
 
   if (config.Int("modules", "DamageDisplay", 1)) {
@@ -330,12 +330,12 @@ void damage_display::init() {
   }
 }
 
-bool damage_display::handle_packet(Game* game,
+bool DamageDisplay::handle_packet(Game* game,
   Unit* player, common::packet_header* packet) {
   return true;
 }
 
-void damage_display::tick(Game* game, Unit* unit) {}
+void DamageDisplay::tick(Game* game, Unit* unit) {}
 
 }  // namespace server
 }  // namespace d2_tweaks
