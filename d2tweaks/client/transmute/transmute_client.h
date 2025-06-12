@@ -7,7 +7,7 @@
 namespace d2_tweaks {
 namespace client {
 
-class transmute final : public ModuleBase {
+class Transmute final : public ModuleBase {
  public:
   void init() override;
   void init_early() override;

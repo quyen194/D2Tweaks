@@ -47,7 +47,7 @@ using namespace timer;
 namespace d2_tweaks {
 namespace client {
 
-MODULE_INIT(transmute)
+MODULE_INIT(Transmute)
 
 static uint32_t m_nTransmuteSound = 0;
 static bool m_bToggleTransmute = 0;
@@ -208,10 +208,10 @@ __declspec (naked) void hook_game_end_asm() {
   }
 }
 
-void transmute::init_early() {
+void Transmute::init_early() {
 }
 
-void transmute::init() {
+void Transmute::init() {
   FileIni config(common::get_config_path());
 
   // CIni recipes(config_path);
@@ -396,7 +396,7 @@ void transmute::init() {
   Client::instance().register_packet_handler(common::message_types_t::MESSAGE_TYPE_TRANSMUTE, this);
 }
 
-void transmute::tick() {
+void Transmute::tick() {
   const auto unit = d2_client::get_local_player();
 
   if (m_game_init_done == false) {
@@ -513,7 +513,7 @@ L1:;
   m_nCountFrames++;
 }
 
-void transmute::handle_packet(common::packet_header* packet) {
+void Transmute::handle_packet(common::packet_header* packet) {
   static auto& instance = Client::instance();
   const auto income_packet_sc = static_cast<common::transmute_info_sc*>(packet);
   static common::transmute_info_cs request_packet_cs;
