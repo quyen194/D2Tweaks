@@ -20,7 +20,7 @@ using namespace structures;
 namespace d2_tweaks {
 namespace server {
 
-MODULE_INIT(test)
+MODULE_INIT(Test)
 
 static int(__stdcall* g_set_stat_original)(Unit* unit,
                                            unit_stats_t stat,
@@ -60,7 +60,7 @@ static int __fastcall regen_tick(Game* game,
   return g_regen_tick_original(game, unit, a3, a4);
 }
 
-void test::init() {
+void Test::init() {
   return;
 
   detour::hook<10463>(d2_common::get_base(), set_stat_in_list, &g_set_stat_in_list_original);

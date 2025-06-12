@@ -5,7 +5,7 @@
 namespace d2_tweaks {
 namespace server {
 
-class test final : public ModuleBase {
+class Test final : public ModuleBase {
  public:
   void init() override;
 };
