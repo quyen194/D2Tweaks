@@ -5,7 +5,7 @@
 namespace d2_tweaks {
 namespace server {
 
-class auto_gold_pickup final : public ModuleBase {
+class AutoGoldPickup final : public ModuleBase {
  public:
   void init() override;
   void tick(Game* game, Unit* unit) override;
