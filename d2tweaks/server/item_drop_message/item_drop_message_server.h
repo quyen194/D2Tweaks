@@ -5,7 +5,7 @@
 namespace d2_tweaks {
 namespace server {
 
-class item_drop_message final : public ModuleBase {
+class ItemDropMessage final : public ModuleBase {
  public:
   void init() override;
   void tick(Game* game, Unit* unit) override;

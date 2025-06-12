@@ -30,12 +30,12 @@ using namespace diablo2::structures;
 namespace d2_tweaks {
 namespace server {
 
-MODULE_INIT(item_drop_message)
+MODULE_INIT(ItemDropMessage)
 
 static std::vector<ItemCode> m_stItemList;
 static std::vector<ItemType> m_stItemTypes;
 
-void item_drop_message::init() {
+void ItemDropMessage::init() {
   FileIni config(common::get_config_path());
   uint32_t dwLenght = 0;
 
@@ -193,7 +193,7 @@ void item_drop_message::init() {
   Server::instance().register_packet_handler(common::MESSAGE_TYPE_ITEM_DROPPED_INFO, this);
 }
 
-void item_drop_message::tick(Game* game, Unit* unit) {
+void ItemDropMessage::tick(Game* game, Unit* unit) {
   static common::item_pickup_info_sc packet;
   static auto& instance = Server::instance();
   if (!game || !unit)
@@ -203,7 +203,7 @@ void item_drop_message::tick(Game* game, Unit* unit) {
     return;
 }
 
-bool item_drop_message::handle_packet(Game* game,
+bool ItemDropMessage::handle_packet(Game* game,
                                       Unit* player,
                                       common::packet_header* packet) {
   const auto income_item_dropped_packet =
