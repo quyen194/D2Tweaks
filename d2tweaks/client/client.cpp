@@ -53,9 +53,9 @@ struct Section {
 
 #include <D2Template.h>
 
-static void(__fastcall* g_handle_packet)(common::packet_header* packet, size_t size);
-static void(__fastcall* g_handle_packet_standart)(common::packet_header* packet, size_t size);
-static void(__fastcall* g_handle_cs_packet)(common::packet_header* packet, size_t size);
+static void(__fastcall* g_handle_packet)(packet_header* packet, size_t size);
+static void(__fastcall* g_handle_packet_standart)(packet_header* packet, size_t size);
+static void(__fastcall* g_handle_cs_packet)(packet_header* packet, size_t size);
 static int32_t(__stdcall* g_draw_game_ui_original)();
 static int32_t(__fastcall* g_game_tick_original)(int32_t a1);
 //void(__fastcall* g_game_loop_start)();
@@ -143,7 +143,7 @@ void Client::init() {
 }
 
 static int32_t g_ebp_send_to_client;
-void Client::handle_cs_packet(common::packet_header* packet, size_t size) {
+void Client::handle_cs_packet(packet_header* packet, size_t size) {
 #ifndef NDEBUG
   __asm {
     push[ebp + 0x2C];
@@ -157,7 +157,7 @@ void Client::handle_cs_packet(common::packet_header* packet, size_t size) {
                utils::BytesToHexString(utils::ToBytes(packet, size)));
 #endif
 
-  static common::packet_header dummy;
+  static packet_header dummy;
   static auto& instance = singleton<Client>::instance();
 
   if (size == -1)
@@ -171,8 +171,7 @@ void Client::handle_cs_packet(common::packet_header* packet, size_t size) {
   handler->handle_cs_packet(packet);
 }
 
-void Client::handle_standart_packet(common::packet_header* packet,
-                                    size_t size) {
+void Client::handle_standart_packet(packet_header* packet, size_t size) {
   if (size == -1)
     return;
 
@@ -186,8 +185,8 @@ void Client::handle_standart_packet(common::packet_header* packet,
   return;
 }
 
-void Client::handle_packet(common::packet_header* packet, size_t size) {
-  static common::packet_header dummy;
+void Client::handle_packet(packet_header* packet, size_t size) {
+  static packet_header dummy;
   static auto& instance = singleton<Client>::instance();
 
   if (size == -1)
@@ -257,8 +256,8 @@ void Client::register_tick_handler(ModuleBase* module) {
   m_tick_handlers[m_tick_handler_id_counter++] = module;
 }
 
-void Client::register_packet_cs_handler(common::packet_types_cs_t packet,
-                                        common::message_types_t type,
+void Client::register_packet_cs_handler(packet_types_cs_t packet,
+                                        message_types_t type,
                                         ModuleBase* module) {
   if (m_packet_cs_handlers[packet] != nullptr) {
     spdlog::warn("Clientside packet cs handler for {0} is already registered!",
@@ -268,8 +267,7 @@ void Client::register_packet_cs_handler(common::packet_types_cs_t packet,
   m_packet_cs_handlers[packet] = module;
 }
 
-void Client::register_packet_handler(common::message_types_t type,
-                                     ModuleBase* module) {
+void Client::register_packet_handler(message_types_t type, ModuleBase* module) {
   if (m_packet_handlers[type] != nullptr) {
     spdlog::warn("Clientside packet handler for {0} is already registered!",
                  type);

@@ -9,9 +9,7 @@ class AutoItemPickup final : public ModuleBase {
  public:
   void init() override;
   void tick(Game* game, Unit* unit) override;
-  bool handle_packet(Game* game,
-                     Unit* player,
-                     common::packet_header* packet) override;
+  bool handle_packet(Game* game, Unit* player, packet_header* packet) override;
   bool au_pickup_item(Game* game, Unit* unit, uint32_t guid);
 };
 

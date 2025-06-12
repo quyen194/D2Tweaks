@@ -54,7 +54,7 @@ char get_target_page(char currentPage) {
 }
 
 void request_item_move(Unit* item, char targetPage) {
-  static common::item_move_cs packet;
+  static item_move_cs packet;
 
   packet.item_guid = item->guid;
   packet.target_page = targetPage;
@@ -165,10 +165,10 @@ void ItemMove::init() {
 }
 
 // handle packet coming from the server
-void ItemMove::handle_packet(common::packet_header* packet) {
+void ItemMove::handle_packet(packet_header* packet) {
   static auto& instance = Client::instance();
 
-  const auto itemMove = static_cast<common::item_move_sc*>(packet);
+  const auto itemMove = static_cast<item_move_sc*>(packet);
   const auto item = instance.get_client_unit(
       0x04, itemMove->item_guid);  // 0x03 -> 0x04 - item
 

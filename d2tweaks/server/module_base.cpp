@@ -12,8 +12,8 @@ ModuleBase::ModuleBase() {
 }
 
 bool ModuleBase::handle_packet(Game* game,
-                         Unit* player,
-                         common::packet_header* packet) {
+                               Unit* player,
+                               packet_header* packet) {
   return false;
 }
 

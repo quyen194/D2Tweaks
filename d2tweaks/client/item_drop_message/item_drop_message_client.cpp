@@ -85,7 +85,7 @@ static wchar_t m_awcItemtypeCode[8] = { 0 };
 static wchar_t m_aawcItemtypeEquiv[10][8] = { 0 };
 
 static void(__fastcall* fn_GamePacketReceivedIntercept)(
-    common::packet_header* packet, size_t size);
+    packet_header* packet, size_t size);
 
 class DrawItemMenu final : public ui::menu {
  public:
@@ -108,7 +108,7 @@ void ItemDropMessage::GamePacketReceivedIntercept(uint8_t* packet,
 
   if ((packet[0] == 0x9C || (packet[0] == 0x9D)) &&
       (packet[1] == 0x00 || packet[1] == 0x02 || packet[1] == 0x03)) {
-    static common::item_dropped_info_cs info;
+    static item_dropped_info_cs info;
     info.item_id = *(WORD*) &packet[4];
 
     spdlog::debug(
@@ -121,7 +121,7 @@ void ItemDropMessage::GamePacketReceivedIntercept(uint8_t* packet,
         (void*) packet[1],
         size);
 
-    d2_client::send_to_server(&info, sizeof common::item_dropped_info_cs);
+    d2_client::send_to_server(&info, sizeof item_dropped_info_cs);
   }
 }
 
@@ -177,22 +177,22 @@ void ItemDropMessage::init() {
     }
 
     Client::instance().register_packet_handler(
-        common::message_types_t::MESSAGE_TYPE_ITEM_DROPPED_INFO, this);
+        message_types_t::MESSAGE_TYPE_ITEM_DROPPED_INFO, this);
     ui::Manager::instance().add_menu(new DrawItemMenu());
   }
 }
 
-void ItemDropMessage::handle_packet(common::packet_header* packet) {
-  const auto info = static_cast<common::item_pickup_info_sc*>(packet);
+void ItemDropMessage::handle_packet(packet_header* packet) {
+  const auto info = static_cast<item_pickup_info_sc*>(packet);
   const auto item_dropped_packet =
-      static_cast<common::item_dropped_info_sc*>(packet);
+      static_cast<item_dropped_info_sc*>(packet);
 
   spdlog::debug("[MyPacketReceived] Message {} Size {}",
                 item_dropped_packet->message_type,
                 sizeof item_dropped_packet);
 
   if (item_dropped_packet->message_type ==
-      common::message_types_t::MESSAGE_TYPE_ITEM_DROPPED_INFO) {
+      message_types_t::MESSAGE_TYPE_ITEM_DROPPED_INFO) {
     for (uint32_t i = 0; i < m_nMsgCount; i++) {
       if (m_stMsg[i].active == false) {
         static wchar_t buffer[512];

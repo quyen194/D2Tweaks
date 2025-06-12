@@ -1224,7 +1224,7 @@ void LootFilterSettingsMenu::extract_item(bool value, int prop, uint32_t val, ui
   if (250 < GetTickCount() - D2CLIENT_StoredTickCount) {
     D2CLIENT_StoredTickCount = GetTickCount();
     if (statValue >= val) {
-      static common::item_move_cs packet;
+      static item_move_cs packet;
       packet.item_guid = bagGuid;
       packet.bag_guid = bagGuid;
       packet.target_page = 0;

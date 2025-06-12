@@ -547,7 +547,7 @@ void sendPacketAndUpdateProperty(int gemBagGuid,
     D2CLIENT_StoredTickCount1 = GetTickCount();
 
     // Create the packet
-    static common::item_move_cs packet;
+    static item_move_cs packet;
     packet.bag_guid = gemBagGuid;
     packet.updateBag = 1;
     packet.iCode = iCode;
@@ -653,7 +653,7 @@ LRESULT Manager::wnd_proc(HWND hWnd,
       char currentPage = d2_common::get_item_page(g_hoverItem);
 
       // Create the packet
-      static common::item_move_cs packet;
+      static item_move_cs packet;
       packet.item_guid = g_hoverItem->guid;
 
       if (currentPage == 0) { //item is in inventory
@@ -689,7 +689,7 @@ LRESULT Manager::wnd_proc(HWND hWnd,
         char currentPage = d2_common::get_item_page(g_hoverItem);
 
         // Create the packet
-        static common::item_move_cs packet;
+        static item_move_cs packet;
         packet.item_guid = g_hoverItem->guid;
 
         if (currentPage == 0) { //item is in inventory
@@ -833,7 +833,7 @@ LRESULT Manager::wnd_proc(HWND hWnd,
                 d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
 
                 // Create and send a packet to the server to move the item
-                static common::item_move_cs packet;
+                static item_move_cs packet;
                 packet.item_guid = g_hoverItem->guid;
                 packet.item_code = key;
                 packet.bag_guid = gemBagGuid;
@@ -867,7 +867,7 @@ LRESULT Manager::wnd_proc(HWND hWnd,
                 char currentPage = d2_common::get_item_page(g_hoverItem);
 
                 // Create and send a packet to the server to move the item to the inventory
-                static common::item_move_cs packet;
+                static item_move_cs packet;
                 packet.item_guid = g_hoverItem->guid;
                 packet.target_page = 0;
                 d2_client::send_to_server(&packet, sizeof packet);
@@ -904,7 +904,7 @@ LRESULT Manager::wnd_proc(HWND hWnd,
                 d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
 
                 // Create and send a packet to the server to move the item
-                static common::item_move_cs packet;
+                static item_move_cs packet;
                 packet.item_guid = g_hoverItem->guid;
                 packet.item_code = key;
                 packet.bag_guid = gemBagGuid;
@@ -961,13 +961,13 @@ LRESULT Manager::wnd_proc(HWND hWnd,
                 char currentPage = d2_common::get_item_page(g_hoverItem);
 
                 // Create a packet to move the hovered item to the cube
-                static common::item_move_cs packet;
+                static item_move_cs packet;
                 packet.item_guid = g_hoverItem->guid;
                 packet.target_page = 3; // Target page for the cube
                 d2_client::send_to_server(&packet, sizeof packet);
 
                 // Create a packet to move the gem bag to the cube
-                static common::item_move_cs packetBag;
+                static item_move_cs packetBag;
                 packetBag.item_guid = gemBag->guid;
                 packetBag.target_page = 3; // Target page for the cube
                 d2_client::send_to_server(&packetBag, sizeof packetBag);
@@ -1004,7 +1004,7 @@ LRESULT Manager::wnd_proc(HWND hWnd,
               }
               else {
                 // Create a packet to move the item from the cube to the inventory
-                static common::item_move_cs movePacket;
+                static item_move_cs movePacket;
                 movePacket.item_guid = item->guid;
                 movePacket.target_page = 0; // Move to inventory
                 d2_client::send_to_server(&movePacket, sizeof movePacket);
@@ -1043,7 +1043,7 @@ LRESULT Manager::wnd_proc(HWND hWnd,
           || record->type == 31 - 3
           || record->type == 32 - 3) {
           // Create a packet to move an item
-          static common::item_move_cs packet;
+          static item_move_cs packet;
 
           // Set the GUID of the item to be moved
           packet.item_guid = g_hoverItem->guid;
@@ -1110,7 +1110,7 @@ LRESULT Manager::wnd_proc(HWND hWnd,
           // //auto rubyGolem = d2_game::D2GAME_SpawnMonster_6FC69F10(pGame, pRoom, nX, nY, nMonsterId, nMode, -1, 0);
 
           // // Create a packet to move an item
-          // static common::item_move_cs packet;
+          // static item_move_cs packet;
           // packet.item_guid = g_hoverItem->guid;
           // packet.item_code = normCode;
           // packet.target_page = 99;
@@ -1162,7 +1162,7 @@ LRESULT Manager::wnd_proc(HWND hWnd,
           char* normCode = record->string_code;
 
           // Create the packet
-          static common::item_move_cs packet;
+          static item_move_cs packet;
           packet.item_guid = g_hoverItem->guid;
           packet.target_page = 0;
           packet.tmog = 1;
@@ -1193,7 +1193,7 @@ LRESULT Manager::wnd_proc(HWND hWnd,
           char* normCode = record->string_code;
 
           // Create the packet
-          static common::item_move_cs packet;
+          static item_move_cs packet;
           packet.item_guid = g_hoverItem->guid;
           packet.target_page = 0;
           packet.tmog = 1;
@@ -1405,7 +1405,7 @@ LRESULT Manager::wnd_proc(HWND hWnd,
             d2_client::play_sound(record->drop_sound, nullptr, 0, 0, 0);
 
             // Create and send a packet to the server to move the item
-            static common::item_move_cs packet;
+            static item_move_cs packet;
             packet.item_guid = g_hoverItem->guid;
             packet.item_code = key;
             packet.bag_guid = gemBagGuid;
@@ -1474,14 +1474,14 @@ LRESULT Manager::wnd_proc(HWND hWnd,
 
             // now move the harvester guid to the cube
             // Create the packet
-            static common::item_move_cs hpacket;
+            static item_move_cs hpacket;
             hpacket.item_guid = harvesterGuid;
             hpacket.target_page = 3;
             d2_client::send_to_server(&hpacket, sizeof hpacket);
 
             currentPage = d2_common::get_item_page(g_hoverItem);
             // Create the packet
-            static common::item_move_cs packet;
+            static item_move_cs packet;
             packet.item_guid = g_hoverItem->guid;
             if (currentPage == 0) { //item is in inventory
               if (d2_client::get_ui_window_state(UI_WINDOW_STASH))
@@ -1497,7 +1497,7 @@ LRESULT Manager::wnd_proc(HWND hWnd,
             d2_client::send_to_server_7(0x4F, 0x18, 0, 0);
 
             // now move the harvester back to the inv
-            //static common::item_move_cs h1packet;
+            //static item_move_cs h1packet;
             //h1packet.item_guid = harvesterGuid;
             //h1packet.target_page = 0;
             //d2_client::send_to_server(&h1packet, sizeof h1packet);

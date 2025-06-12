@@ -42,7 +42,7 @@ static char(__fastcall* g_apply_attack_results_origin)(Game* game,
   spdlog::debug(#name ": {0}", dmg->name / delimiter)
 #define PRINT_DMG(name) PRINT_DMG_DELIMITER(name, 256)
 
-common::damage_type_t get_damage_type(Damage* dmg) {
+damage_type_t get_damage_type(Damage* dmg) {
   uint32_t damage[common::DAMAGE_TYPE_COUNT]{0};
 
   if (dmg == nullptr || dmg->dmg_total == 0)
@@ -62,7 +62,7 @@ common::damage_type_t get_damage_type(Damage* dmg) {
     if (damage[i] <= damage_temp)
       continue;
 
-    result = static_cast<common::damage_type_t>(i);
+    result = static_cast<damage_type_t>(i);
     damage_temp = damage[i];
   }
 
@@ -73,7 +73,7 @@ static void send_damage_data(Unit* defender,
   NetClient* client,
   Damage* dmg) {
   static auto& instance = Server::instance();
-  static common::damage_info_sc packet;
+  static damage_info_sc packet;
 
   if (dmg->dmg_total <= 0)
     return;
@@ -331,7 +331,8 @@ void DamageDisplay::init() {
 }
 
 bool DamageDisplay::handle_packet(Game* game,
-  Unit* player, common::packet_header* packet) {
+                                  Unit* player,
+                                  packet_header* packet) {
   return true;
 }
 

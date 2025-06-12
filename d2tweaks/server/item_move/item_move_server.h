@@ -16,9 +16,7 @@ class ItemMove final : public ModuleBase {
  public:
   void init() override;
 
-  bool handle_packet(Game* game,
-                     Unit* player,
-                     common::packet_header* packet) override;
+  bool handle_packet(Game* game, Unit* player, packet_header* packet) override;
 
  private:
   bool find_free_space(Inventory* inv,

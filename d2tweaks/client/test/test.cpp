@@ -80,7 +80,7 @@ void Test::init() {
 #endif
 }
 
-void Test::handle_packet(common::packet_header* packet) {}
+void Test::handle_packet(packet_header* packet) {}
 
 }  // namespace client
 }  // namespace d2_tweaks

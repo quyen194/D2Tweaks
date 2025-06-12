@@ -80,20 +80,18 @@ void AutoSort::init() {
   }
 }
 
-bool AutoSort::handle_packet(Game* game,
-  Unit* player, common::packet_header* packet) {
-  if (static_cast<common::inventory_sort_cs*>(packet)->remItem == 1) {
+bool AutoSort::handle_packet(Game* game, Unit* player, packet_header* packet) {
+  if (static_cast<inventory_sort_cs*>(packet)->remItem == 1) {
     d2_common::inv_remove_item(
         player->inventory,
-        static_cast<common::inventory_sort_cs*>(packet)->item_to_remove);
+        static_cast<inventory_sort_cs*>(packet)->item_to_remove);
     d2_game::update_inventory_items(game, player);
 
-    static_cast<common::inventory_sort_cs*>(packet)->item_to_remove = nullptr;
+    static_cast<inventory_sort_cs*>(packet)->item_to_remove = nullptr;
 
     for (auto item = player->inventory->first_item; item != nullptr;
          item = item->item_data->pt_next_item) {
-      if (item ==
-          static_cast<common::inventory_sort_cs*>(packet)->item_to_remove) {
+      if (item == static_cast<inventory_sort_cs*>(packet)->item_to_remove) {
         d2_common::inv_remove_item(player->inventory, item);
         d2_game::update_inventory_items(game, player);
       }
@@ -102,13 +100,13 @@ bool AutoSort::handle_packet(Game* game,
     MessageBoxA(NULL, "Item removed", "Item removed", MB_OK);
   }
   else {
-    sort(game, player, static_cast<common::inventory_sort_cs*>(packet)->page);
+    sort(game, player, static_cast<inventory_sort_cs*>(packet)->page);
   }
   return true;
 }
 
 bool AutoSort::sort(Game* game, Unit* player, uint8_t page) {
-  static common::inventory_sort_sc packet;
+  static inventory_sort_sc packet;
   static auto& instance = Server::instance();
 
   if (player == nullptr)

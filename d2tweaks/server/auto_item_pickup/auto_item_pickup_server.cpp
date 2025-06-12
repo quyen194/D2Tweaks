@@ -41,7 +41,7 @@ void AutoItemPickup::init() {
 }
 
 void AutoItemPickup::tick(Game* game, Unit* unit) {
-  // static common::item_pickup_info_sc packet;
+  // static item_pickup_info_sc packet;
   // static auto& instance = Server::instance();
   // if (!game || !unit)
   //   return;
@@ -149,7 +149,7 @@ void AutoItemPickup::tick(Game* game, Unit* unit) {
 
 bool AutoItemPickup::au_pickup_item(Game* game, Unit* unit, uint32_t guid)
 {
-  static common::item_pickup_info_sc packet;
+  static item_pickup_info_sc packet;
 
   uint32_t ptrNull = 0;
   // true - if item picked up
@@ -165,10 +165,10 @@ bool AutoItemPickup::au_pickup_item(Game* game, Unit* unit, uint32_t guid)
 }
 
 bool AutoItemPickup::handle_packet(Game* game,
-                                     Unit* player,
-                                     common::packet_header* packet) {
+                                   Unit* player,
+                                   packet_header* packet) {
   const auto income_packet_cs =
-      static_cast<common::item_pickup_info_cs*>(packet);
+      static_cast<item_pickup_info_cs*>(packet);
   static auto& instance = Server::instance();
 
   // const auto item =

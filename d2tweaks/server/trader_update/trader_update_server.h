@@ -13,9 +13,7 @@ class TraderUpdate final : public ModuleBase {
  public:
   void init() override;
   void tick(Game* game, Unit* unit) override;
-  bool handle_packet(Game* game,
-                     Unit* player,
-                     common::packet_header* packet) override;
+  bool handle_packet(Game* game, Unit* player, packet_header* packet) override;
 
  // private:
  //  bool find_free_space(Inventory* inv,
@@ -27,7 +25,7 @@ class TraderUpdate final : public ModuleBase {
  // bool send_to_cube(Game* game, Unit* player, Unit* item);
  //  bool move_item_to(Game* game,
  //                    Unit* player,
- //                    common::packet_header* packet);
+ //                    packet_header* packet);
 };
 
 }  // namespace server

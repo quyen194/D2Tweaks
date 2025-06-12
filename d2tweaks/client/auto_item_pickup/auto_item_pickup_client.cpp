@@ -310,7 +310,7 @@ void AutoItemPickup::init() {
     ui::Manager::instance().add_menu(new AutoItemPickupMenu());
     Client::instance().register_tick_handler(this);
     Client::instance().register_packet_handler(
-        common::message_types_t::MESSAGE_TYPE_ITEM_PICKUP_INFO, this);
+        message_types_t::MESSAGE_TYPE_ITEM_PICKUP_INFO, this);
   }
 }
 
@@ -347,7 +347,7 @@ bool find_free_space(Inventory* inv,
 }
 
 void AutoItemPickup::tick() {
-  static common::item_pickup_info_sc packet;
+  static item_pickup_info_sc packet;
   const auto unit = d2_client::get_local_player();
 
   // spdlog::debug("g_tick_between_item_pickup {0}",
@@ -389,7 +389,7 @@ void AutoItemPickup::tick() {
     // if (record->string_code[0] == 'g' &&
     //     record->string_code[1] == 'l' &&
     //     record->string_code[2] == 'd') {
-    //   static common::gold_pickup_info_cs request_packet_cs;
+    //   static gold_pickup_info_cs request_packet_cs;
     //   request_packet_cs.item_guid = item->guid;
     //   d2_client::send_to_server(&request_packet_cs, sizeof request_packet_cs);
     //   continue;
@@ -454,7 +454,7 @@ void AutoItemPickup::tick() {
       }
     }
 
-    static common::item_pickup_info_cs request_packet_cs;
+    static item_pickup_info_cs request_packet_cs;
     request_packet_cs.item_guid = 0;
 
     for (uint32_t i = 0; i < m_stItemTypes.size(); i++) {
@@ -517,8 +517,8 @@ void AutoItemPickup::tick() {
   }
 }
 
-void AutoItemPickup::handle_packet(common::packet_header* packet) {
-  const auto info = static_cast<common::item_pickup_info_sc*>(packet);
+void AutoItemPickup::handle_packet(packet_header* packet) {
+  const auto info = static_cast<item_pickup_info_sc*>(packet);
 
   // if (info->inventory_full == true) {
   //   m_nTick = 0;

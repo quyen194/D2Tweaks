@@ -165,10 +165,10 @@ struct ClientFromNumber {
 };
 
 bool TraderUpdate::handle_packet(Game* game,
-                                  Unit* player,
-                                  common::packet_header* packet) {
-  const auto income_packet_cs = static_cast<common::trader_update_cs*>(packet);
-  static common::trader_update_sc response_packet_sc;
+                                 Unit* player,
+                                 packet_header* packet) {
+  const auto income_packet_cs = static_cast<trader_update_cs*>(packet);
+  static trader_update_sc response_packet_sc;
 
   Unit* temp_ptNPC = d2_game::get_server_unit(
       game, unit_type_t::UNIT_TYPE_MONSTER, income_packet_cs->npc_id);

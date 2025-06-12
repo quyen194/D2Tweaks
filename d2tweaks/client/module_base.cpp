@@ -15,9 +15,9 @@ void ModuleBase::draw_ui() {}
 
 void ModuleBase::tick() {}
 
-void ModuleBase::handle_packet(common::packet_header* packet) {}
+void ModuleBase::handle_packet(packet_header* packet) {}
 
-void ModuleBase::handle_cs_packet(common::packet_header* packet) {}
+void ModuleBase::handle_cs_packet(packet_header* packet) {}
 
 }  // namespace client
 }  // namespace d2_tweaks

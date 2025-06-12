@@ -15,6 +15,7 @@
 
 using namespace diablo2;
 using namespace diablo2::structures;
+using namespace d2_tweaks::common;
 
 extern GfxData g_gfxdata;  // global gfxdata
 
@@ -42,21 +43,19 @@ class Client : public singleton<Client> {
   void register_module(client::ModuleBase* module);
 
   void register_tick_handler(client::ModuleBase* module);
-  void register_packet_handler(common::message_types_t type,
+  void register_packet_handler(message_types_t type,
                                client::ModuleBase* module);
-  void register_packet_cs_handler(common::packet_types_cs_t packet,
-                                  common::message_types_t type,
+  void register_packet_cs_handler(packet_types_cs_t packet,
+                                  message_types_t type,
                                   client::ModuleBase* module);
   static Unit* get_client_unit(uint32_t type, uint32_t guid);
 
  private:
   // static void __fastcall game_loop_start();
-  static void __fastcall handle_standart_packet(common::packet_header* packet,
+  static void __fastcall handle_standart_packet(packet_header* packet,
                                                 size_t size);
-  static void __fastcall handle_cs_packet(common::packet_header* packet,
-                                          size_t size);
-  static void __fastcall handle_packet(common::packet_header* packet,
-                                       size_t size);
+  static void __fastcall handle_cs_packet(packet_header* packet, size_t size);
+  static void __fastcall handle_packet(packet_header* packet, size_t size);
   static void __fastcall game_tick();
   static int32_t __stdcall draw_game_ui();
 };

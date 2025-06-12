@@ -11,7 +11,7 @@ class DamageDisplay final : public ModuleBase {
  public:
   void init() override;
   void init_early() override;
-  void handle_packet(common::packet_header* packet) override;
+  void handle_packet(packet_header* packet) override;
   void tick() override;
 };
 

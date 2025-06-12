@@ -113,7 +113,7 @@ class trader_update_menu : public ui::menu {
   void trader_update_click() {
     const auto unit = d2_client::get_local_player();
 
-    static common::trader_update_cs request_packet_cs;
+    static trader_update_cs request_packet_cs;
     request_packet_cs.client_id = unit->guid;
     request_packet_cs.npc_id = d2_client::current_vendor_guid();
     request_packet_cs.is_gamble_menu_open = d2_client::is_gamble_open();
@@ -139,11 +139,11 @@ void TraderUpdate::init() {
   if (ini.Int("modules", "ReloadTradeGamble", 1)) {
     ui::Manager::instance().add_menu(new trader_update_menu());
     Client::instance().register_packet_handler(
-        common::message_types_t::MESSAGE_TYPE_TRADER_UPDATE, this);
+        message_types_t::MESSAGE_TYPE_TRADER_UPDATE, this);
     // Client::instance().register_tick_handler(this);
     // Client::instance().register_packet_cs_handler(
-    //     common::packet_types_cs_t::PACKET_0x38,
-    //     common::message_types_t::MESSAGE_TYPE_TRADER_UPDATE,
+    //     packet_types_cs_t::PACKET_0x38,
+    //     message_types_t::MESSAGE_TYPE_TRADER_UPDATE,
     //     this);
   }
 }
@@ -152,9 +152,9 @@ void TraderUpdate::tick() {
   // const auto unit = d2_client::get_local_player();
 }
 
-void TraderUpdate::handle_cs_packet(common::packet_header* packet) {
+void TraderUpdate::handle_cs_packet(packet_header* packet) {
   static auto& instance = Client::instance();
-  const auto income_packet_cs = static_cast<common::d2_entity_action_cs*>(packet);
+  const auto income_packet_cs = static_cast<d2_entity_action_cs*>(packet);
 
 #ifndef NDEBUG
   spdlog::debug(
@@ -168,9 +168,9 @@ void TraderUpdate::handle_cs_packet(common::packet_header* packet) {
   m_nNpcId = (income_packet_cs->action >> 24);
 }
 
-void TraderUpdate::handle_packet(common::packet_header* packet) {
+void TraderUpdate::handle_packet(packet_header* packet) {
   static auto& instance = Client::instance();
-  const auto income_packet_sc = static_cast<common::trader_update_sc*>(packet);
+  const auto income_packet_sc = static_cast<trader_update_sc*>(packet);
 
   if (!d2_client::get_ui_window_state(UI_WINDOW_NPCSHOP))
     return;
@@ -190,7 +190,7 @@ void TraderUpdate::handle_packet(common::packet_header* packet) {
       d2_client::resync_vendor_inventory(ptNPC);
       // d2_common::empty_inventory_2(ptNPC->inventory);
 
-      static common::trader_update_cs request_packet_cs;
+      static trader_update_cs request_packet_cs;
       request_packet_cs.command = COMMAND_FILL_NPC_INVENTORY;
       request_packet_cs.npc_id = m_nNpcId;
       request_packet_cs.is_gamble_menu_open = d2_client::is_gamble_open();
@@ -206,7 +206,7 @@ void TraderUpdate::handle_packet(common::packet_header* packet) {
       d2_client::resync_vendor_inventory(ptNPC);
       // d2_common::empty_inventory_2(ptNPC->inventory);
 
-      static common::trader_update_cs request_packet_cs;
+      static trader_update_cs request_packet_cs;
       request_packet_cs.command = COMMAND_FILL_NPC_GAMBLE;
       request_packet_cs.npc_id = m_nNpcId;
       request_packet_cs.is_gamble_menu_open = d2_client::is_gamble_open();

@@ -19,7 +19,7 @@ class AutoSort final : public ModuleBase {
 
   bool handle_packet(Game* game,
                      Unit* player,
-                     common::packet_header* packet) override;
+                     packet_header* packet) override;
 
  private:
   bool sort(Game* game, Unit* player, uint8_t page);

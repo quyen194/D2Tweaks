@@ -38,10 +38,10 @@ void AutoGoldPickup::init() {
 }
 
 bool AutoGoldPickup::handle_packet(Game* game,
-                                     Unit* player,
-                                     common::packet_header* packet) {
+                                   Unit* player,
+                                   packet_header* packet) {
   const auto income_packet_cs =
-      static_cast<common::gold_pickup_info_cs*>(packet);
+      static_cast<gold_pickup_info_cs*>(packet);
   static auto& instance = Server::instance();
   const auto item =
       instance.get_server_unit(game,
@@ -57,7 +57,7 @@ bool AutoGoldPickup::handle_packet(Game* game,
 }
 
 bool AutoGoldPickup::au_pickup_gold(Game* game, Unit* pUnit, Unit* item) {
-  static common::gold_pickup_info_sc packet;
+  static gold_pickup_info_sc packet;
 
   const auto currentGold = d2_common::get_stat(pUnit, UNIT_STAT_GOLD, 0);
   const auto goldToPickup = d2_common::get_stat(item, UNIT_STAT_GOLD, 0);
@@ -75,7 +75,7 @@ bool AutoGoldPickup::au_pickup_gold(Game* game, Unit* pUnit, Unit* item) {
 }
 
 void AutoGoldPickup::tick(Game* game, Unit* unit) {
-  // static common::gold_pickup_info_sc packet;
+  // static gold_pickup_info_sc packet;
   // static auto& instance = Server::instance();
   // if (!game || !unit)
   //   return;

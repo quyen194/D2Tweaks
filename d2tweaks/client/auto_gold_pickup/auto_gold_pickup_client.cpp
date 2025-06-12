@@ -91,7 +91,7 @@ void AutoGoldPickup::init() {
     m_iDistance = config.Int("AutoGoldPickup", "PickupDistance", 4);
     m_nDisplayTime = config.Int("AutoGoldPickup", "DisplayTime", 2500);
     Client::instance().register_packet_handler(
-        common::message_types_t::MESSAGE_TYPE_GOLD_PICKUP_INFO, this);
+        message_types_t::MESSAGE_TYPE_GOLD_PICKUP_INFO, this);
     Client::instance().register_tick_handler(this);
     ui::Manager::instance().add_menu(new DrawGoldMenu());
   }
@@ -130,7 +130,7 @@ void AutoGoldPickup::tick() {
     if (record->string_code[0] == 'g' &&
         record->string_code[1] == 'l' &&
         record->string_code[2] == 'd') {
-      static common::gold_pickup_info_cs request_packet_cs;
+      static gold_pickup_info_cs request_packet_cs;
       request_packet_cs.item_guid = item->guid;
       d2_client::send_to_server(&request_packet_cs, sizeof request_packet_cs);
     }
@@ -139,8 +139,8 @@ void AutoGoldPickup::tick() {
   }
 }
 
-void AutoGoldPickup::handle_packet(common::packet_header* packet) {
-  const auto info = static_cast<common::gold_pickup_info_sc*>(packet);
+void AutoGoldPickup::handle_packet(packet_header* packet) {
+  const auto info = static_cast<gold_pickup_info_sc*>(packet);
   m_nLastUpdate = GetTickCount();
   m_nGoldValue += info->gold;
 }

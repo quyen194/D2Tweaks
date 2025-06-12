@@ -194,7 +194,7 @@ void ItemDropMessage::init() {
 }
 
 void ItemDropMessage::tick(Game* game, Unit* unit) {
-  static common::item_pickup_info_sc packet;
+  static item_pickup_info_sc packet;
   static auto& instance = Server::instance();
   if (!game || !unit)
     return;
@@ -204,14 +204,14 @@ void ItemDropMessage::tick(Game* game, Unit* unit) {
 }
 
 bool ItemDropMessage::handle_packet(Game* game,
-                                      Unit* player,
-                                      common::packet_header* packet) {
+                                    Unit* player,
+                                    packet_header* packet) {
   const auto income_item_dropped_packet =
-      static_cast<common::item_dropped_info_cs*>(packet);
-  static common::item_dropped_info_sc response_item_dropped_packet;
+      static_cast<item_dropped_info_cs*>(packet);
+  static item_dropped_info_sc response_item_dropped_packet;
 
   switch (income_item_dropped_packet->message_type) {
-  case common::message_types_t::MESSAGE_TYPE_ITEM_DROPPED_INFO:
+  case message_types_t::MESSAGE_TYPE_ITEM_DROPPED_INFO:
       auto current_unit =
           d2_game::get_server_unit(game,
                                    unit_type_t::UNIT_TYPE_ITEM,

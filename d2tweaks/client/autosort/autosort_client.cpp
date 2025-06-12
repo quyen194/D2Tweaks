@@ -271,7 +271,7 @@ class InventorySortMenu : public ui::menu {
   void sort_cube_click() { request_sort(0x03); }
 
   void request_sort(const uint8_t page) {
-    static common::inventory_sort_cs packet;
+    static inventory_sort_cs packet;
 
     const auto player = d2_client::get_local_player();
 
@@ -305,9 +305,9 @@ void AutoSort::init() {
   }
 }
 
-void AutoSort::handle_packet(common::packet_header* packet) {
+void AutoSort::handle_packet(packet_header* packet) {
   static auto& instance = Client::instance();
-  const auto inventorySort = static_cast<common::inventory_sort_sc*>(packet);
+  const auto inventorySort = static_cast<inventory_sort_sc*>(packet);
 
   const auto item = instance.get_client_unit(
       0x04, inventorySort->guid);  // 0x03 -> 0x04 - item

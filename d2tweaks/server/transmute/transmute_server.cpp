@@ -76,11 +76,9 @@ inline uint64_t TimeEnd() {
   }
 }
 
-bool Transmute::handle_packet(Game* game,
-                              Unit* player,
-                              common::packet_header* packet) {
-  const auto income_packet_cs = static_cast<common::transmute_info_cs*>(packet);
-  static common::transmute_info_sc response_packet_sc;
+bool Transmute::handle_packet(Game* game, Unit* player, packet_header* packet) {
+  const auto income_packet_cs = static_cast<transmute_info_cs*>(packet);
+  static transmute_info_sc response_packet_sc;
 
   // process request from client
   if (income_packet_cs->command == COMMAND_CALL_TRANSMUTE) {
@@ -111,10 +109,10 @@ bool Transmute::handle_packet(Game* game,
 
 bool Transmute::move_item_to(Game* game,
                              Unit* player,
-                             common::packet_header* packet) {
-  static common::transmute_info_sc resp;
+                             packet_header* packet) {
+  static transmute_info_sc resp;
   static auto& instance = Server::instance();
-  const auto itemMove = static_cast<common::transmute_info_cs*>(packet);
+  const auto itemMove = static_cast<transmute_info_cs*>(packet);
   const auto item = instance.get_server_unit(
       game, itemMove->item_guid, unit_type_t::UNIT_TYPE_ITEM);  // 0x4 = item
 

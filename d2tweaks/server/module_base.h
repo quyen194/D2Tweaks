@@ -7,6 +7,8 @@
 
 #include "d2tweaks/common/protocol.h"
 
+using namespace d2_tweaks::common;
+
 namespace d2_tweaks {
 namespace server {
 
@@ -28,11 +30,8 @@ class ModuleBase {
    * \param packet
    * \return true - block further packet processing, false - pass packet to game
    */
-  virtual bool handle_packet(Game* game,
-                             Unit* player,
-                             common::packet_header* packet);
-  virtual void tick(Game* game,
-                    Unit* unit);
+  virtual bool handle_packet(Game* game, Unit* player, packet_header* packet);
+  virtual void tick(Game* game, Unit* unit);
 };
 
 }  // namespace server

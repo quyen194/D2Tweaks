@@ -28,7 +28,7 @@ using namespace diablo2;
 using namespace diablo2::structures;
 
 static int32_t(__fastcall* g_get_incoming_packet_info_original)(
-    common::packet_header* data,
+    packet_header* data,
     unsigned int dataSize,
     size_t* packetSizeOut,
     size_t* someOffset,
@@ -37,12 +37,14 @@ static int32_t(__fastcall* g_get_incoming_packet_info_original)(
     int a7,
     int a8);
 
-static int32_t(__fastcall* g_handle_packet_original)(
-    Game* game, Unit* player, common::packet_header* data, size_t size);
+static int32_t(__fastcall* g_handle_packet_original)(Game* game,
+                                                     Unit* player,
+                                                     packet_header* data,
+                                                     size_t size);
 static int32_t(__fastcall* g_net_tick_original)(Game*, Unit*, int32_t, int32_t);
 
 //returns some kind of processing type (i.e. resultGroup == 0x04 means drop packet)
-static int32_t __fastcall get_incoming_packet_info(common::packet_header* data,
+static int32_t __fastcall get_incoming_packet_info(packet_header* data,
                                                    unsigned int dataSize,
                                                    size_t* packetSizeOut,
                                                    size_t* someOffset,
@@ -50,7 +52,7 @@ static int32_t __fastcall get_incoming_packet_info(common::packet_header* data,
                                                    int32_t* a6,
                                                    int a7,
                                                    int a8) {
-  static common::packet_header dummy;
+  static packet_header dummy;
   static auto& instance = common::Common::instance();
 
   const auto resultGroup = g_get_incoming_packet_info_original(
@@ -74,9 +76,9 @@ static int32_t __fastcall get_incoming_packet_info(common::packet_header* data,
 
 static int32_t __fastcall handle_packet(Game* game,
                                         Unit* player,
-                                        common::packet_header* data,
+                                        packet_header* data,
                                         size_t size) {
-  static common::packet_header dummy;
+  static packet_header dummy;
   static auto& instance = singleton<Server>::instance();
 
   if (data->d2_packet_type == dummy.d2_packet_type) {
@@ -98,7 +100,7 @@ Server::Server(token) {
 
 static int32_t g_ebp_send_to_client;
 void __fastcall hook_sc_packet_before_sent(uint32_t* client_strc,
-                                           common::packet_header* packet,
+                                           packet_header* packet,
                                            size_t size) {
 #ifndef NDEBUG
   __asm {
@@ -180,14 +182,14 @@ void Server::init() {
 }
 
 void Server::send_packet(NetClient* client,
-                         common::packet_header* packet,
+                         packet_header* packet,
                          size_t size) {
   d2_game::enqueue_packet(client, packet, size);
 }
 
 bool Server::handle_packet(Game* game,
                            Unit *player,
-                           common::packet_header *packet) {
+                           packet_header *packet) {
   auto handler = m_packet_handlers[packet->message_type];
 
   if (!handler)
@@ -204,7 +206,7 @@ void Server::register_tick_handler(ModuleBase* module) {
   m_tick_handlers[m_tick_handler_id_counter++] = module;
 }
 
-void Server::register_packet_handler(common::message_types_t type,
+void Server::register_packet_handler(message_types_t type,
                                      ModuleBase* module) {
   if (m_packet_handlers[type] != nullptr) {
     spdlog::warn("Serverside packet handler for {0} is already registered!",
@@ -237,7 +239,8 @@ Unit* Server::get_server_unit(Game* game, uint32_t guid, unit_type_t type) {
   return result;
 }
 
-void Server::iterate_server_units(Game* game, unit_type_t type,
+void Server::iterate_server_units(Game* game,
+                                  unit_type_t type,
                                   const std::function<bool(Unit*)>& cb) {
   if (!cb)
     return;

@@ -417,7 +417,7 @@ static void __fastcall draw_game_ui(int32_t a1) {
   g_draw_game_ui(a1);
 }
 
-static ui_color_t damage_type_to_color(common::damage_type_t type) {
+static ui_color_t damage_type_to_color(damage_type_t type) {
   switch (type) {
   case common::DAMAGE_TYPE_PHYSICAL: return UI_COLOR_GREY;
   case common::DAMAGE_TYPE_COLD: return UI_COLOR_BLUE;
@@ -449,11 +449,11 @@ void DamageDisplay::init() {
   }
 }
 
-void DamageDisplay::handle_packet(common::packet_header* packet) {
+void DamageDisplay::handle_packet(packet_header* packet) {
   static auto& instance = Client::instance();
   static GfxData gfxdata;
   const auto player = d2_client::get_local_player();
-  const auto info = static_cast<common::damage_info_sc*>(packet);
+  const auto info = static_cast<damage_info_sc*>(packet);
 
   if (player == nullptr)
     return;

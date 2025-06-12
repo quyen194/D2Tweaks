@@ -54,14 +54,12 @@ void ItemMove::init() {
 }
 
 // handle packet coming from the client
-bool ItemMove::handle_packet(Game* game,
-                             Unit* player,
-                             common::packet_header* packet) {
-  static common::item_move_sc resp;
+bool ItemMove::handle_packet(Game* game, Unit* player, packet_header* packet) {
+  static item_move_sc resp;
   static auto& instance = Server::instance();
 
-  const auto itemMove = static_cast<common::item_move_cs*>(packet);
-  const auto key = static_cast<common::item_move_cs*>(packet)->item_code;
+  const auto itemMove = static_cast<item_move_cs*>(packet);
+  const auto key = static_cast<item_move_cs*>(packet)->item_code;
 
   // Display key in a message box
   // MessageBox(NULL, key, "Item code", MB_OK | MB_ICONINFORMATION);

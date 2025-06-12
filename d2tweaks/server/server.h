@@ -5,26 +5,19 @@
 
 #include "fw/singleton.h"
 
+#include "diablo2/structures/game.h"
+#include "diablo2/structures/inventory.h"
+#include "diablo2/structures/net_client.h"
+#include "diablo2/structures/unit.h"
+
 #include "d2tweaks/common/protocol.h"
 
 #include "d2tweaks/server/module_base.h"
 
-namespace diablo2 {
-namespace structures {
-enum class unit_type_t;
-struct Game;
-struct Inventory;
-struct Unit;
-struct NetClient;
-}  // namespace structures
-}  // namespace diablo2
-
 using namespace diablo2::structures;
+using namespace d2_tweaks::common;
 
 namespace d2_tweaks {
-namespace common {
-struct packet_header;
-}
 
 class Server : public singleton<Server> {
   uint8_t m_module_id_counter;
@@ -39,15 +32,14 @@ class Server : public singleton<Server> {
 
   void init();
 
-  void send_packet(NetClient* client,
-                   common::packet_header* packet,
-                   size_t size);
-  bool handle_packet(Game* game, Unit* player, common::packet_header* packet);
+  void send_packet(NetClient* client, packet_header* packet, size_t size);
+  bool handle_packet(Game* game, Unit* player, packet_header* packet);
 
   void register_module(server::ModuleBase* module);
 
   void register_tick_handler(server::ModuleBase* module);
-  void register_packet_handler(common::message_types_t type, server::ModuleBase* module);
+  void register_packet_handler(message_types_t type,
+                               server::ModuleBase* module);
 
   Unit* get_server_unit(Game* game, uint32_t guid, unit_type_t type);
   void iterate_server_units(Game* game,

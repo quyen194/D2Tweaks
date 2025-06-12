@@ -164,7 +164,7 @@ class AutoTransmuteMenu : public ui::menu {
   }
 
   void send_request(const uint8_t page) {
-    static common::transmute_info_cs request_packet_cs;
+    static transmute_info_cs request_packet_cs;
 
     m_bToggleTransmute ^= true;
 
@@ -393,7 +393,7 @@ void Transmute::init() {
 
   ui::Manager::instance().add_menu(new AutoTransmuteMenu());
   Client::instance().register_tick_handler(this);
-  Client::instance().register_packet_handler(common::message_types_t::MESSAGE_TYPE_TRANSMUTE, this);
+  Client::instance().register_packet_handler(message_types_t::MESSAGE_TYPE_TRANSMUTE, this);
 }
 
 void Transmute::tick() {
@@ -480,7 +480,7 @@ void Transmute::tick() {
           for (uint32_t count = 0; count < index_arr_itemtype; count++) {
             if (*(DWORD*)arr_itemtype_codestr_equivstr[count] == (DWORD)m_stItemTypes[i].dwtype) {
               if (m_stItemTypes[i].qualityinclude[quality] == true) {
-                static common::transmute_info_cs request_packet_cs;
+                static transmute_info_cs request_packet_cs;
                 request_packet_cs.command = COMMAND_MOVE_ITEM;
                 request_packet_cs.item_guid = item->guid;
                 request_packet_cs.target_page = PAGE_CUBE;
@@ -496,7 +496,7 @@ void Transmute::tick() {
             record->string_code[1] == m_stItemList[i].code1 &&
             record->string_code[2] == m_stItemList[i].code2) {
             if (m_stItemList[i].qualityinclude[quality] == true) {
-              static common::transmute_info_cs request_packet_cs;
+              static transmute_info_cs request_packet_cs;
               request_packet_cs.command = COMMAND_MOVE_ITEM;
               request_packet_cs.item_guid = item->guid;
               request_packet_cs.target_page = PAGE_CUBE;
@@ -513,10 +513,10 @@ L1:;
   m_nCountFrames++;
 }
 
-void Transmute::handle_packet(common::packet_header* packet) {
+void Transmute::handle_packet(packet_header* packet) {
   static auto& instance = Client::instance();
-  const auto income_packet_sc = static_cast<common::transmute_info_sc*>(packet);
-  static common::transmute_info_cs request_packet_cs;
+  const auto income_packet_sc = static_cast<transmute_info_sc*>(packet);
+  static transmute_info_cs request_packet_cs;
 
   if (income_packet_sc->command == COMMAND_MOVE_ITEM) {
     const auto item = instance.get_client_unit(0x04, income_packet_sc->item_guid); //0x03 -> 0x04 - item
