@@ -12,7 +12,7 @@
 namespace d2_tweaks {
 namespace server {
 
-class item_move final : public ModuleBase {
+class ItemMove final : public ModuleBase {
  public:
   void init() override;
 

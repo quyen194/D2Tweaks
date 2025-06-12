@@ -42,9 +42,9 @@ using namespace diablo2::structures;
 namespace d2_tweaks {
 namespace server {
 
-MODULE_INIT(item_move)
+MODULE_INIT(ItemMove)
 
-void item_move::init() {
+void ItemMove::init() {
   FileIni config(common::get_config_path());
 
   if (config.Int("modules", "ItemMover", 1)) {
@@ -54,9 +54,9 @@ void item_move::init() {
 }
 
 // handle packet coming from the client
-bool item_move::handle_packet(Game* game,
-                              Unit* player,
-                              common::packet_header* packet) {
+bool ItemMove::handle_packet(Game* game,
+                             Unit* player,
+                             common::packet_header* packet) {
   static common::item_move_sc resp;
   static auto& instance = Server::instance();
 
@@ -162,12 +162,12 @@ bool item_move::handle_packet(Game* game,
   return false;
 }
 
-bool item_move::find_free_space(Inventory* inv,
-                                Unit* item,
-                                int32_t inventoryIndex,
-                                char page,
-                                uint32_t& x,
-                                uint32_t& y) {
+bool ItemMove::find_free_space(Inventory* inv,
+                               Unit* item,
+                               int32_t inventoryIndex,
+                               char page,
+                               uint32_t& x,
+                               uint32_t& y) {
   char data[0x18];
 
   d2_common::get_inventory_data(inventoryIndex, 0, data);
