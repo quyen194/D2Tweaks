@@ -42,27 +42,27 @@ static char(__fastcall* g_apply_attack_results_origin)(Game* game,
   spdlog::debug(#name ": {0}", dmg->name / delimiter)
 #define PRINT_DMG(name) PRINT_DMG_DELIMITER(name, 256)
 
-damage_type_t get_damage_type(Damage* dmg) {
-  uint32_t damage[common::DAMAGE_TYPE_COUNT]{0};
+DamageType::T get_damage_type(Damage* dmg) {
+  uint32_t damage[common::DamageType::kCount]{0};
 
   if (dmg == nullptr || dmg->dmg_total == 0)
-    return common::DAMAGE_TYPE_UNKNOWN;
+    return common::DamageType::kUnknown;
 
-  damage[common::DAMAGE_TYPE_PHYSICAL] = dmg->phys_damage;
-  damage[common::DAMAGE_TYPE_COLD] = dmg->cold_damage;
-  damage[common::DAMAGE_TYPE_FIRE] = dmg->fire_damage;
-  damage[common::DAMAGE_TYPE_LIGHTNING] = dmg->ltng_damage;
-  damage[common::DAMAGE_TYPE_POISON] = dmg->pois_damage;
-  damage[common::DAMAGE_TYPE_MAGIC] = dmg->mag_damage;
+  damage[common::DamageType::kPhysical] = dmg->phys_damage;
+  damage[common::DamageType::kCold] = dmg->cold_damage;
+  damage[common::DamageType::kFire] = dmg->fire_damage;
+  damage[common::DamageType::kLightning] = dmg->ltng_damage;
+  damage[common::DamageType::kPoison] = dmg->pois_damage;
+  damage[common::DamageType::kMagic] = dmg->mag_damage;
 
-  auto result = common::DAMAGE_TYPE_UNKNOWN;
+  auto result = common::DamageType::kUnknown;
   uint32_t damage_temp = 0;
 
-  for (size_t i = 0; i < common::DAMAGE_TYPE_COUNT; i++) {
+  for (size_t i = 0; i < common::DamageType::kCount; i++) {
     if (damage[i] <= damage_temp)
       continue;
 
-    result = static_cast<damage_type_t>(i);
+    result = static_cast<DamageType::T>(i);
     damage_temp = damage[i];
   }
 
@@ -154,7 +154,7 @@ static void send_damage_data(Unit* defender,
   // spdlog::info("maxHp: {0}", packet.maxHp);
   // spdlog::info("damage: {0}", packet.damage);
 
-  if (packet.damage_type == common::DAMAGE_TYPE_UNKNOWN)
+  if (packet.damage_type == common::DamageType::kUnknown)
     return;
 
   if (packet.damage <= 0)

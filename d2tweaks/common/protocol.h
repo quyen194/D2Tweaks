@@ -215,18 +215,20 @@ enum T {
 };
 }  // namespace MessageType
 
-enum damage_type_t : uint8_t {
-  DAMAGE_TYPE_PHYSICAL = 0,
+namespace DamageType {
+enum T : uint8_t {
+  kPhysical = 0,
 
-  DAMAGE_TYPE_COLD = 1,
-  DAMAGE_TYPE_FIRE = 2,
-  DAMAGE_TYPE_LIGHTNING = 3,
-  DAMAGE_TYPE_POISON = 4,
-  DAMAGE_TYPE_MAGIC = 5,
+  kCold = 1,
+  kFire = 2,
+  kLightning = 3,
+  kPoison = 4,
+  kMagic = 5,
 
-  DAMAGE_TYPE_COUNT,
-  DAMAGE_TYPE_UNKNOWN = 0xFF
+  kCount,
+  kUnknown = 0xFF,
 };
+}  // namespace MessageType
 
 struct packet_header {
   uint8_t d2_packet_type;
@@ -306,7 +308,7 @@ struct damage_info_cs : packet_header {
 struct damage_info_sc : packet_header {
   uint8_t unit_type;
   uint32_t guid;
-  damage_type_t damage_type;
+  DamageType::T damage_type;
   uint32_t damage;
 
   uint32_t currentHp;  // New field for current hit points
@@ -324,7 +326,7 @@ struct damage_info_sc : packet_header {
   damage_info_sc()
       : unit_type(0),
         guid(0),
-        damage_type(DAMAGE_TYPE_UNKNOWN),
+        damage_type(DamageType::kUnknown),
         damage(0),
         currentHp(0),
         maxHp(0),

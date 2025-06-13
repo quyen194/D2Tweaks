@@ -417,14 +417,14 @@ static void __fastcall draw_game_ui(int32_t a1) {
   g_draw_game_ui(a1);
 }
 
-static ui_color_t damage_type_to_color(damage_type_t type) {
+static ui_color_t damage_type_to_color(DamageType::T type) {
   switch (type) {
-  case common::DAMAGE_TYPE_PHYSICAL: return UI_COLOR_GREY;
-  case common::DAMAGE_TYPE_COLD: return UI_COLOR_BLUE;
-  case common::DAMAGE_TYPE_FIRE: return UI_COLOR_RED;
-  case common::DAMAGE_TYPE_LIGHTNING: return UI_COLOR_YELLOW;
-  case common::DAMAGE_TYPE_POISON: return UI_COLOR_GREEN;
-  case common::DAMAGE_TYPE_MAGIC: return UI_COLOR_PURPLE;
+  case common::DamageType::kPhysical: return UI_COLOR_GREY;
+  case common::DamageType::kCold: return UI_COLOR_BLUE;
+  case common::DamageType::kFire: return UI_COLOR_RED;
+  case common::DamageType::kLightning: return UI_COLOR_YELLOW;
+  case common::DamageType::kPoison: return UI_COLOR_GREEN;
+  case common::DamageType::kMagic: return UI_COLOR_PURPLE;
   default: return UI_COLOR_BLACK;
   }
 }
