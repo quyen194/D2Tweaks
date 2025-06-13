@@ -76,7 +76,7 @@ enum transmute_command {
   COMMAND_ABORT
 };
 
-class auto_transmute_menu : public ui::menu {
+class AutoTransmuteMenu : public ui::menu {
   common::asset* m_buttons_img;
   button* m_auto_transmute_btn;
 #ifndef NDEBUG
@@ -84,14 +84,14 @@ class auto_transmute_menu : public ui::menu {
 #endif
 
  public:
-  auto_transmute_menu() {
+  AutoTransmuteMenu() {
     menu::set_enabled(true);
     menu::set_visible(true);
 
     load_settings();
 
     m_buttons_img = common::asset_manager::instance().get_mpq_file("d2tweaks\\assets\\buttons", common::MPQ_FILE_TYPE_DC6);
-    m_auto_transmute_btn = get_button("m_auto_transmute_btn", std::bind(&auto_transmute_menu::auto_transmute_click, this));
+    m_auto_transmute_btn = get_button("m_auto_transmute_btn", std::bind(&AutoTransmuteMenu::auto_transmute_click, this));
 
 #ifndef NDEBUG
     reload_setting_timer.setDuration(1000);
@@ -391,7 +391,7 @@ void Transmute::init() {
                hook_game_end_asm,
                reinterpret_cast<void**>(&fn_hook_game_end));
 
-  ui::Manager::instance().add_menu(new auto_transmute_menu());
+  ui::Manager::instance().add_menu(new AutoTransmuteMenu());
   Client::instance().register_tick_handler(this);
   Client::instance().register_packet_handler(common::message_types_t::MESSAGE_TYPE_TRANSMUTE, this);
 }
